@@ -64,7 +64,7 @@ export default function Header() {
         </nav>
 
         {/* Mobile toggle */}
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="mobile-toggle" style={{
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="mobile-toggle" aria-label={mobileOpen ? "Close menu" : "Open menu"} style={{
           display: "none", background: "none", border: "none", cursor: "pointer", color: "#1A1A2E",
           alignItems: "center", justifyContent: "center",
         }}>

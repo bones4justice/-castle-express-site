@@ -94,39 +94,39 @@ export default function EstimateForm({ dark = false }) {
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <div>
-          <label style={labelStyle}>Name</label>
-          <input style={inputStyle} placeholder="Your full name" value={formData.name} onChange={update("name")} required />
+          <label htmlFor="est-name" style={labelStyle}>Name</label>
+          <input id="est-name" style={inputStyle} placeholder="Your full name" value={formData.name} onChange={update("name")} required />
         </div>
         <div>
-          <label style={labelStyle}>Phone</label>
-          <input style={inputStyle} placeholder="(860) 555-0123" type="tel" value={formData.phone} onChange={update("phone")} required />
+          <label htmlFor="est-phone" style={labelStyle}>Phone</label>
+          <input id="est-phone" style={inputStyle} placeholder="(860) 555-0123" type="tel" value={formData.phone} onChange={update("phone")} required />
         </div>
         <div>
-          <label style={labelStyle}>Email</label>
-          <input style={inputStyle} placeholder="you@email.com" type="email" value={formData.email} onChange={update("email")} required />
+          <label htmlFor="est-email" style={labelStyle}>Email</label>
+          <input id="est-email" style={inputStyle} placeholder="you@email.com" type="email" value={formData.email} onChange={update("email")} required />
         </div>
         <div>
-          <label style={labelStyle}>Move Date</label>
-          <input style={inputStyle} type="date" value={formData.moveDate} onChange={update("moveDate")} />
+          <label htmlFor="est-date" style={labelStyle}>Move Date</label>
+          <input id="est-date" style={inputStyle} type="date" value={formData.moveDate} onChange={update("moveDate")} />
         </div>
         <div>
-          <label style={labelStyle}>Moving From</label>
-          <input style={inputStyle} placeholder="City, State or ZIP" value={formData.moveFrom} onChange={update("moveFrom")} />
+          <label htmlFor="est-from" style={labelStyle}>Moving From</label>
+          <input id="est-from" style={inputStyle} placeholder="City, State or ZIP" value={formData.moveFrom} onChange={update("moveFrom")} />
         </div>
         <div>
-          <label style={labelStyle}>Moving To</label>
-          <input style={inputStyle} placeholder="City, State or ZIP" value={formData.moveTo} onChange={update("moveTo")} />
+          <label htmlFor="est-to" style={labelStyle}>Moving To</label>
+          <input id="est-to" style={inputStyle} placeholder="City, State or ZIP" value={formData.moveTo} onChange={update("moveTo")} />
         </div>
         <div>
-          <label style={labelStyle}>Move Size</label>
-          <select style={{ ...inputStyle, appearance: "auto" }} value={formData.moveSize} onChange={update("moveSize")}>
+          <label htmlFor="est-size" style={labelStyle}>Move Size</label>
+          <select id="est-size" style={{ ...inputStyle, appearance: "auto" }} value={formData.moveSize} onChange={update("moveSize")}>
             <option value="">Select size...</option>
             {MOVE_SIZES.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
         <div>
-          <label style={labelStyle}>How did you find us?</label>
-          <select style={{ ...inputStyle, appearance: "auto" }} value={formData.source} onChange={update("source")}>
+          <label htmlFor="est-source" style={labelStyle}>How did you find us?</label>
+          <select id="est-source" style={{ ...inputStyle, appearance: "auto" }} value={formData.source} onChange={update("source")}>
             <option value="">Select...</option>
             {LEAD_SOURCES.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
