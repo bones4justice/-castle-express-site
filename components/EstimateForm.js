@@ -18,26 +18,17 @@ export default function EstimateForm({ dark = false }) {
     setLoading(true);
 
     // ──────────────────────────────────────────────────
-    // FORM BACKEND: Replace this with your preferred solution.
-    //
-    // Option 1: Formspree (free tier: 50 submissions/month)
-    //   await fetch("https://formspree.io/f/YOUR_FORM_ID", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(formData),
-    //   });
-    //
-    // Option 2: Your own API endpoint (e.g., on your EC2 server)
-    //   await fetch("https://your-api.com/leads", {
-    //     method: "POST",
-    //     headers: { "Content-Type": "application/json" },
-    //     body: JSON.stringify(formData),
-    //   });
-    //
-    // Option 3: Direct email via EmailJS, Resend, etc.
+    // Formspree — sends leads to your email
     // ──────────────────────────────────────────────────
-
-    try { await fetch("https://formspree.io/f/xpqjkjga", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData) }); } catch (err) { console.error("Form error:", err); }
+    try {
+      await fetch("https://formspree.io/f/xpqjkjga", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+    } catch (err) {
+      console.error("Form submission error:", err);
+    }
     setLoading(false);
     setSubmitted(true);
   };
@@ -128,14 +119,14 @@ export default function EstimateForm({ dark = false }) {
         </div>
         <div>
           <label style={labelStyle}>Move Size</label>
-          <select style={{ ...inputStyle, appearance: "auto", color: "#1A1A2E" }} value={formData.moveSize} onChange={update("moveSize")}>
+          <select style={{ ...inputStyle, appearance: "auto" }} value={formData.moveSize} onChange={update("moveSize")}>
             <option value="">Select size...</option>
             {MOVE_SIZES.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
         <div>
           <label style={labelStyle}>How did you find us?</label>
-          <select style={{ ...inputStyle, appearance: "auto", color: "#1A1A2E" }} value={formData.source} onChange={update("source")}>
+          <select style={{ ...inputStyle, appearance: "auto" }} value={formData.source} onChange={update("source")}>
             <option value="">Select...</option>
             {LEAD_SOURCES.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
@@ -157,4 +148,3 @@ export default function EstimateForm({ dark = false }) {
     </form>
   );
 }
-

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SERVICES, SERVICE_PAGES, FAQ } from "@/content";
 import { Home, Building, Box, Shield, Truck, Check, ArrowRight } from "@/components/Icons";
 
-export const metadata = { title: "Services — Castle Express Moving & Storage" };
+export const metadata = { title: "Services — Castle Express Moving & Storage", description: "Residential moving, commercial relocations, full-service packing, climate-controlled storage, and specialty moving. Flat-rate pricing, no hidden fees. Serving CT and Western MA." };
 
 const ICONS = { residential: <Home />, commercial: <Building />, packing: <Box />, storage: <Shield />, specialty: <Truck /> };
 

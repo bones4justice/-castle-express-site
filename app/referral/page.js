@@ -2,7 +2,7 @@ import Link from "next/link";
 import { COMPANY } from "@/content";
 import { Users, Truck, DollarSign, ArrowRight } from "@/components/Icons";
 
-export const metadata = { title: "Golden Star Referral Program" };
+export const metadata = { title: "Golden Star Referral Program", description: "Earn 10% cash back when you refer a friend to Castle Express Moving & Storage. Simple referral process — they move, you get paid." };
 
 const STEPS = [
   { step: "1", icon: <Users />, title: "Refer a Friend", desc: "Fill out the referral form with your friend's details." },

@@ -191,14 +191,14 @@ export default function HomePage() {
       <section style={{ padding: "0", overflow: "hidden" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 0 }}>
           {[
-            { src: "/images/truck-residential.jpg", pos: "center" },
-            { src: "/images/truck-tobacco-barn.jpg", pos: "center" },
-            { src: "/images/truck-loading.jpg", pos: "center" },
-            { src: "/images/truck-brick-building.jpg", pos: "center" },
-            { src: "/images/crew-commercial.jpg", pos: "top" },
-            { src: "/images/truck-aframe.jpg", pos: "center" },
+            { src: "/images/truck-residential.jpg", pos: "center", alt: "Castle Express truck at residential home" },
+            { src: "/images/truck-tobacco-barn.jpg", pos: "center", alt: "Castle Express truck at Connecticut tobacco barn" },
+            { src: "/images/truck-loading.jpg", pos: "center", alt: "Castle Express truck being loaded with furniture" },
+            { src: "/images/truck-brick-building.jpg", pos: "center", alt: "Castle Express at commercial building move" },
+            { src: "/images/crew-commercial.jpg", pos: "top", alt: "Castle Express crew performing commercial move" },
+            { src: "/images/truck-aframe.jpg", pos: "center", alt: "Castle Express moving truck at A-frame house" },
           ].map((img, i) => (
-            <img key={i} src={img.src} alt="" style={{ width: "100%", height: 160, objectFit: "cover", objectPosition: img.pos }} />
+            <img key={i} src={img.src} alt={img.alt} style={{ width: "100%", height: 160, objectFit: "cover", objectPosition: img.pos }} />
           ))}
         </div>
       </section>

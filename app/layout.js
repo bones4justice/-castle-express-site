@@ -44,6 +44,73 @@ export default function RootLayout({ children }) {
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
       </head>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "MovingCompany",
+              "name": "Castle Express Moving & Storage",
+              "image": "https://castle-express-site.vercel.app/images/logo.jpg",
+              "url": "https://castle-express-site.vercel.app",
+              "telephone": "1-888-553-4503",
+              "priceRange": "$$",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "4 Niblick Rd Unit A",
+                "addressLocality": "Enfield",
+                "addressRegion": "CT",
+                "postalCode": "06082",
+                "addressCountry": "US"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 41.9762,
+                "longitude": -72.5918
+              },
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+                "opens": "07:00",
+                "closes": "20:00"
+              },
+              "sameAs": [
+                "https://www.facebook.com/cemoving",
+                "https://www.instagram.com/castleexpressmovingandstorage/",
+                "https://www.tiktok.com/@castleexpressmovi",
+                "https://www.linkedin.com/in/joseph-caronna-767a616",
+                "https://linktr.ee/castleexpressmovingandstorage"
+              ],
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "200",
+                "bestRating": "5"
+              },
+              "areaServed": [
+                { "@type": "State", "name": "Connecticut" },
+                { "@type": "State", "name": "Massachusetts" }
+              ],
+              "foundingDate": "2008",
+              "founder": {
+                "@type": "Person",
+                "name": "Joseph Caronna"
+              },
+              "description": "Family-owned moving company serving Hartford County, CT and Western Massachusetts since 2008. Residential, commercial, packing, and climate-controlled storage. Flat-rate pricing, no hidden fees.",
+              "hasOfferCatalog": {
+                "@type": "OfferCatalog",
+                "name": "Moving Services",
+                "itemListElement": [
+                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Residential Moving" } },
+                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Commercial Moving" } },
+                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Packing Services" } },
+                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Climate-Controlled Storage" } },
+                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Specialty Moving" } }
+                ]
+              }
+            })
+          }}
+        />
         <Header />
         <main>{children}</main>
         <Footer />

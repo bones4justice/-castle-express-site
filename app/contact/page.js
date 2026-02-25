@@ -2,7 +2,7 @@ import { COMPANY } from "@/content";
 import { Phone, MapPin, Clock, Shield } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
 
-export const metadata = { title: "Contact Us" };
+export const metadata = { title: "Contact Us", description: "Get a free moving estimate from Castle Express. Call 1-888-553-4503 or fill out our form. Serving Hartford County CT and Western MA with flat-rate pricing." };
 
 export default function ContactPage() {
   return (
