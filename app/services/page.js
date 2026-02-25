@@ -2,7 +2,12 @@ import Link from "next/link";
 import { SERVICES, SERVICE_PAGES, FAQ } from "@/content";
 import { Home, Building, Box, Shield, Truck, Check, ArrowRight } from "@/components/Icons";
 
-export const metadata = { title: "Services — Castle Express Moving & Storage", description: "Residential moving, commercial relocations, full-service packing, climate-controlled storage, and specialty moving. Flat-rate pricing, no hidden fees. Serving CT and Western MA." };
+export const metadata = {
+  title: "Our Moving Services",
+  description: "Residential moving, commercial relocations, full-service packing, climate-controlled storage, and specialty moving. Flat-rate pricing, no hidden fees. Serving CT and Western MA.",
+  alternates: { canonical: "/services/" },
+  openGraph: { title: "Moving Services | Castle Express Moving & Storage", description: "Residential, commercial, packing, storage, and specialty moving in CT & MA.", url: "/services/" },
+};
 
 const ICONS = { residential: <Home />, commercial: <Building />, packing: <Box />, storage: <Shield />, specialty: <Truck /> };
 

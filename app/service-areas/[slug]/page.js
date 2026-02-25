@@ -11,9 +11,17 @@ export function generateStaticParams() {
 export function generateMetadata({ params }) {
   const city = CITY_PAGES[params.slug];
   if (!city) return {};
+  const title = `Movers in ${city.fullName}`;
+  const description = `Professional moving services in ${city.fullName}. Flat-rate pricing, licensed & insured, A+ BBB rated. Family-owned since 2008. Call ${COMPANY.phone} for a free estimate.`;
   return {
-    title: `Movers in ${city.fullName} — Castle Express Moving & Storage`,
-    description: `Professional moving services in ${city.fullName}. Flat-rate pricing, licensed & insured, A+ BBB rated. Family-owned since 2008. Call ${COMPANY.phone} for a free estimate.`,
+    title,
+    description,
+    alternates: { canonical: `/service-areas/${params.slug}/` },
+    openGraph: {
+      title: `${title} | Castle Express Moving & Storage`,
+      description,
+      url: `/service-areas/${params.slug}/`,
+    },
   };
 }
 
@@ -26,8 +34,19 @@ export default function CityPage({ params }) {
     return match ? { name: n, slug: match[0], state: match[1].state } : null;
   }).filter(Boolean);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://castleexpressmoving.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Service Areas", "item": "https://castleexpressmoving.com/service-areas/" },
+      { "@type": "ListItem", "position": 3, "name": city.fullName },
+    ]
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {/* ─── HERO ─── */}
       <section className="section-dark" style={{ padding: "70px 24px 50px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-residential.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.1, pointerEvents: "none" }} />

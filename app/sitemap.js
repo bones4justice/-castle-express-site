@@ -1,6 +1,6 @@
 import { CITY_PAGES, SERVICE_PAGES } from "@/content";
 
-const BASE = "https://castle-express-site.vercel.app";
+const BASE = "https://castleexpressmoving.com";
 
 export default function sitemap() {
   const now = new Date().toISOString();

@@ -2,7 +2,12 @@ import Link from "next/link";
 import { COMPANY, ABOUT_TEXT } from "@/content";
 import { ArrowRight } from "@/components/Icons";
 
-export const metadata = { title: "About Us", description: "Meet Joe Caronna and the Castle Express team. Family-owned moving company in Enfield, CT since 2008. Learn our story, values, and commitment to treating every customer like family." };
+export const metadata = {
+  title: "About Us",
+  description: "Meet Joe Caronna and the Castle Express team. Family-owned moving company in Enfield, CT since 2008. Learn our story, values, and commitment to treating every customer like family.",
+  alternates: { canonical: "/about/" },
+  openGraph: { title: "About Us | Castle Express Moving & Storage", description: "Meet Joe Caronna and the Castle Express team. Family-owned since 2008.", url: "/about/" },
+};
 
 export default function AboutPage() {
   return (

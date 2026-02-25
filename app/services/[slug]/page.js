@@ -14,6 +14,13 @@ export function generateMetadata({ params }) {
   return {
     title: svc.metaTitle,
     description: svc.metaDesc,
+    alternates: { canonical: `/services/${params.slug}/` },
+    openGraph: {
+      title: `${svc.metaTitle} | Castle Express Moving & Storage`,
+      description: svc.metaDesc,
+      url: `/services/${params.slug}/`,
+      images: svc.heroImage ? [{ url: svc.heroImage, alt: svc.title }] : undefined,
+    },
   };
 }
 
@@ -26,8 +33,30 @@ export default function ServiceDetailPage({ params }) {
     return r ? { slug, title: r.title } : null;
   }).filter(Boolean);
 
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://castleexpressmoving.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://castleexpressmoving.com/services/" },
+      { "@type": "ListItem", "position": 3, "name": svc.title },
+    ]
+  };
+
+  const faqSchema = svc.faq && svc.faq.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": svc.faq.map(item => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": { "@type": "Answer", "text": item.a }
+    }))
+  } : null;
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+      {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
       {/* ─── HERO ─── */}
       <section className="section-dark" style={{ padding: "70px 24px 50px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `url(${svc.heroImage})`, backgroundSize: "cover", backgroundPosition: "center", opacity: 0.12, pointerEvents: "none" }} />

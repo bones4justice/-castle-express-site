@@ -20,21 +20,33 @@ const merriweather = Merriweather({
   style: ["normal", "italic"],
 });
 
+const SITE_URL = "https://castleexpressmoving.com";
+
 export const metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Castle Express Moving & Storage | CT & MA Movers Since 2008",
     template: "%s | Castle Express Moving & Storage",
   },
   description: "Family-owned moving company serving Hartford County, CT and Western Massachusetts since 2008. Residential, commercial, packing, and climate-controlled storage. Flat-rate pricing, no hidden fees. A+ BBB. 4.9★ Google.",
   keywords: ["movers", "moving company", "Enfield CT", "Hartford CT", "Springfield MA", "storage", "packing", "local movers", "long distance movers"],
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://castleexpressmoving.com",
+    url: SITE_URL,
     siteName: "Castle Express Moving & Storage",
     title: "Castle Express Moving & Storage | CT & MA Movers Since 2008",
     description: "Family-owned moving company serving Hartford County, CT and Western MA. Flat-rate pricing, professional crews, 200+ 5-star reviews.",
+    images: [{ url: "/images/logo.jpg", width: 1200, height: 630, alt: "Castle Express Moving & Storage" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Castle Express Moving & Storage | CT & MA Movers Since 2008",
+    description: "Family-owned moving company serving Hartford County, CT and Western MA. Flat-rate pricing, professional crews, 200+ 5-star reviews.",
+    images: ["/images/logo.jpg"],
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({ children }) {
@@ -51,8 +63,8 @@ export default function RootLayout({ children }) {
               "@context": "https://schema.org",
               "@type": "MovingCompany",
               "name": "Castle Express Moving & Storage",
-              "image": "https://castle-express-site.vercel.app/images/logo.jpg",
-              "url": "https://castle-express-site.vercel.app",
+              "image": "https://castleexpressmoving.com/images/logo.jpg",
+              "url": "https://castleexpressmoving.com",
               "telephone": "1-888-553-4503",
               "priceRange": "$$",
               "address": {

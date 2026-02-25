@@ -2,7 +2,12 @@ import Link from "next/link";
 import { COMPANY, SERVICE_AREAS, CITY_PAGES } from "@/content";
 import { MapPin } from "@/components/Icons";
 
-export const metadata = { title: "Service Areas — Castle Express Moving & Storage", description: "Castle Express serves 21+ cities across Hartford County CT and Western Massachusetts. Find professional movers in Enfield, Glastonbury, West Hartford, Springfield MA and more." };
+export const metadata = {
+  title: "Service Areas in CT & MA",
+  description: "Castle Express serves 21+ cities across Hartford County CT and Western Massachusetts. Find professional movers in Enfield, Glastonbury, West Hartford, Springfield MA and more.",
+  alternates: { canonical: "/service-areas/" },
+  openGraph: { title: "Service Areas | Castle Express Moving & Storage", description: "Serving 21+ cities across Hartford County CT and Western Massachusetts.", url: "/service-areas/" },
+};
 
 function citySlug(cityName) {
   const match = Object.entries(CITY_PAGES).find(([, v]) => v.fullName === cityName);
