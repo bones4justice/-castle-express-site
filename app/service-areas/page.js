@@ -1,7 +1,13 @@
-import { COMPANY, SERVICE_AREAS } from "@/content";
+import Link from "next/link";
+import { COMPANY, SERVICE_AREAS, CITY_PAGES } from "@/content";
 import { MapPin } from "@/components/Icons";
 
-export const metadata = { title: "Service Areas" };
+export const metadata = { title: "Service Areas — Castle Express Moving & Storage" };
+
+function citySlug(cityName) {
+  const match = Object.entries(CITY_PAGES).find(([, v]) => v.fullName === cityName);
+  return match ? match[0] : null;
+}
 
 export default function ServiceAreasPage() {
   return (
@@ -25,12 +31,23 @@ export default function ServiceAreasPage() {
                 <span className="text-gold">●</span> {region}
               </h2>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 }}>
-                {cities.map(city => (
-                  <div key={city} className="card" style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 18px" }}>
-                    <span className="text-gold"><MapPin size={18} /></span>
-                    <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "#1A1A2E" }}>{city}</span>
-                  </div>
-                ))}
+                {cities.map(city => {
+                  const slug = citySlug(city);
+                  if (slug) {
+                    return (
+                      <Link key={city} href={`/service-areas/${slug}`} className="card" style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 18px", textDecoration: "none", cursor: "pointer", transition: "border-color 0.2s" }}>
+                        <span className="text-gold"><MapPin size={18} /></span>
+                        <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "#1A1A2E" }}>{city}</span>
+                      </Link>
+                    );
+                  }
+                  return (
+                    <div key={city} className="card" style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 18px" }}>
+                      <span className="text-gold"><MapPin size={18} /></span>
+                      <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "#1A1A2E" }}>{city}</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           ))}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { COMPANY, SERVICES, REVIEWS, ALL_CITIES } from "@/content";
+import { COMPANY, SERVICES, REVIEWS, ALL_CITIES, CITY_PAGES } from "@/content";
 import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, MapPin, Phone } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
 
@@ -116,8 +116,8 @@ export default function HomePage() {
           </div>
           <div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12 }}>
-              <img src="/images/truck-aframe.jpg" alt="Castle Express truck at residential home" style={{ width: "100%", height: 180, objectFit: "cover", borderRadius: 10 }} />
-              <img src="/images/joe-with-customers.jpg" alt="Joe with happy customers" style={{ width: "100%", height: 180, objectFit: "cover", borderRadius: 10 }} />
+              <img src="/images/truck-aframe.jpg" alt="Castle Express truck at A-frame home" style={{ width: "100%", height: 200, objectFit: "cover", objectPosition: "center", borderRadius: 10 }} />
+              <img src="/images/joe-with-customers.jpg" alt="Joe with happy customers" style={{ width: "100%", height: 200, objectFit: "cover", objectPosition: "top", borderRadius: 10 }} />
             </div>
             <div className="hero-stats" style={{ background: "#FFF9EC", borderRadius: 12, padding: 24, display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12 }}>
             {[
@@ -168,9 +168,9 @@ export default function HomePage() {
             <h2 className="heading-2">Proudly Serving CT & Western MA</h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
-            {ALL_CITIES.map(city => (
-              <Link key={city} href="/service-areas" className="location-chip">
-                <MapPin size={16} /> {city}
+            {Object.entries(CITY_PAGES).map(([slug, city]) => (
+              <Link key={slug} href={`/service-areas/${slug}`} className="location-chip">
+                <MapPin size={16} /> {city.name}, {city.state}
               </Link>
             ))}
           </div>
@@ -184,21 +184,21 @@ export default function HomePage() {
       <section style={{ padding: "0", overflow: "hidden" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 0 }}>
           {[
-            "/images/truck-residential.jpg",
-            "/images/packed-truck.jpg",
-            "/images/crew-commercial.jpg",
-            "/images/truck-brick-building.jpg",
-            "/images/storage-crates.jpg",
-            "/images/truck-wash.jpg",
-          ].map((src, i) => (
-            <img key={i} src={src} alt="" style={{ width: "100%", height: 140, objectFit: "cover" }} />
+            { src: "/images/truck-residential.jpg", pos: "center" },
+            { src: "/images/truck-tobacco-barn.jpg", pos: "center" },
+            { src: "/images/truck-loading.jpg", pos: "center" },
+            { src: "/images/truck-brick-building.jpg", pos: "center" },
+            { src: "/images/crew-commercial.jpg", pos: "top" },
+            { src: "/images/truck-aframe.jpg", pos: "center" },
+          ].map((img, i) => (
+            <img key={i} src={img.src} alt="" style={{ width: "100%", height: 160, objectFit: "cover", objectPosition: img.pos }} />
           ))}
         </div>
       </section>
 
       {/* ─── PRINCESS PACKING CALLOUT ─── */}
       <section style={{ padding: "60px 24px", background: "#0d0d0d" }}>
-        <div className="container" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }} className="container grid-2">
+        <div className="container grid-2" style={{ alignItems: "center" }}>
           <div>
             <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#F72585", marginBottom: 12 }}>NEW SERVICE</div>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(28px, 4vw, 40px)", color: "#fff", lineHeight: 1.1, marginBottom: 16 }}>
@@ -219,9 +219,9 @@ export default function HomePage() {
               View Packages & Book →
             </a>
           </div>
-          <div style={{ background: "linear-gradient(160deg, #fce4ef 0%, rgba(247,37,133,0.15) 100%)", borderRadius: 0, padding: 40, textAlign: "center", border: "1px solid rgba(247,37,133,0.2)" }}>
-            <img src="/images/packed-truck.jpg" alt="Professionally packed truck" style={{ width: "100%", height: 280, objectFit: "cover", marginBottom: 16 }} />
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 18, color: "#0d0d0d" }}>Professional Packing. Done Right.</div>
+          <div style={{ background: "linear-gradient(160deg, #fce4ef 0%, rgba(247,37,133,0.15) 100%)", padding: 40, textAlign: "center", border: "1px solid rgba(247,37,133,0.2)" }}>
+            <img src="/images/princess-packing-crew.jpg" alt="Princess Packing crew in pink polos" style={{ width: "100%", height: 280, objectFit: "cover", objectPosition: "top" }} />
+            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 18, color: "#0d0d0d", marginTop: 16 }}>Professional Packing. Done Right.</div>
           </div>
         </div>
       </section>

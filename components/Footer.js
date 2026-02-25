@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-              <img src="/images/logo.png" alt="Castle Express" style={{ height: 40, width: "auto", filter: "brightness(0) invert(1)" }} />
+              <img src="/images/logo.jpg" alt="Castle Express" style={{ height: 40, width: "auto", filter: "brightness(0) invert(1)" }} />
             </div>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.7 }}>
               Family-owned & operated since {COMPANY.founded}. Serving Hartford County, CT and Western Massachusetts with professional moving, packing, and climate-controlled storage.

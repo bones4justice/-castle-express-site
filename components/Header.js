@@ -37,7 +37,7 @@ export default function Header() {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}>
         {/* Logo */}
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <img src="/images/logo.png" alt="Castle Express Moving & Storage" style={{ height: 48, width: "auto" }} />
+          <img src="/images/logo.jpg" alt="Castle Express Moving & Storage" style={{ height: 48, width: "auto" }} />
         </Link>
 
         {/* Desktop Nav */}
