@@ -24,7 +24,7 @@ export default function HomePage() {
           <div>
             <SectionLabel>Connecticut & Massachusetts</SectionLabel>
             <h1 className="heading-1" style={{ color: "#fff", marginBottom: 20 }}>
-              Your Move, <span className="text-gold">Our Mission.</span>
+              Professional Movers in <span className="text-gold">CT & MA</span>
             </h1>
             <p className="body-lg text-white-muted" style={{ marginBottom: 28, maxWidth: 520 }}>
               Family-owned since 2008. Flat-rate pricing, no hidden fees, and professional crews who treat your belongings like their own.
@@ -278,7 +278,7 @@ export default function HomePage() {
           <div style={{ marginTop: 32 }}>
             {FAQ.map((item, i) => (
               <div key={i} style={{ padding: "16px 0", borderBottom: "1px solid #E5E7EB" }}>
-                <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 8 }}>{item.q}</h3>
+                <p style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 8 }}>{item.q}</p>
                 <p className="body-sm text-gray" style={{ lineHeight: 1.7 }}>{item.a}</p>
               </div>
             ))}
