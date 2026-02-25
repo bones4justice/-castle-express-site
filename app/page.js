@@ -160,6 +160,13 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── LIVE GOOGLE REVIEWS ─── */}
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className="elfsight-app-b017ae90-a962-4044-8d86-0fef65fff1db" data-elfsight-app-lazy></div>
+        </div>
+      </section>
+
       {/* ─── AREAS ─── */}
       <section className="section">
         <div className="container">
@@ -223,6 +230,17 @@ export default function HomePage() {
             <img src="/images/princess-packing-crew.jpg" alt="Princess Packing crew in pink polos" style={{ width: "100%", height: 280, objectFit: "cover", objectPosition: "top" }} />
             <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 18, color: "#0d0d0d", marginTop: 16 }}>Professional Packing. Done Right.</div>
           </div>
+        </div>
+      </section>
+
+      {/* ─── INSTAGRAM FEED ─── */}
+      <section className="section section-light">
+        <div className="container">
+          <div className="text-center" style={{ marginBottom: 32 }}>
+            <div className="section-label" style={{ justifyContent: "center" }}><span>Follow Us</span></div>
+            <h2 className="heading-2">@castleexpressmovingandstorage</h2>
+          </div>
+          <div className="elfsight-app-e6b831df-56db-467d-bc64-e8cbdf442d90" data-elfsight-app-lazy></div>
         </div>
       </section>
 
