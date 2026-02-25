@@ -37,8 +37,7 @@ export default function EstimateForm({ dark = false }) {
     // Option 3: Direct email via EmailJS, Resend, etc.
     // ──────────────────────────────────────────────────
 
-    // Simulate submission for now
-    await new Promise(resolve => setTimeout(resolve, 800));
+    try { await fetch("https://formspree.io/f/xpqjkjga", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(formData) }); } catch (err) { console.error("Form error:", err); }
     setLoading(false);
     setSubmitted(true);
   };
@@ -158,3 +157,4 @@ export default function EstimateForm({ dark = false }) {
     </form>
   );
 }
+
