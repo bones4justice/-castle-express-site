@@ -540,7 +540,7 @@ export const FAQ = [
   },
   {
     q: "Are you licensed and insured?",
-    a: "Yes. We're fully licensed (USDOT 2307446, CT Permit C-1768) and insured for your protection and peace of mind.",
+    a: "Yes. Castle Express is fully licensed (USDOT 2307446, CT Permit C-1768) and insured. We hold an A+ rating with the Better Business Bureau.",
   },
   {
     q: "Do I need to tip the movers?",
@@ -549,6 +549,34 @@ export const FAQ = [
   {
     q: "What if I need to change my move date?",
     a: "Contact us as soon as possible and we'll give you the next best date for your move. We're flexible and understand plans change.",
+  },
+  {
+    q: "What areas does Castle Express serve?",
+    a: "Castle Express serves all of Hartford County and Tolland County in Connecticut, plus Western Massachusetts including Springfield and Agawam. We dispatch from our Enfield, CT headquarters and cover 21+ cities.",
+  },
+  {
+    q: "How much does it cost to hire movers in Connecticut?",
+    a: "Castle Express provides flat-rate pricing based on the size of your home and distance — not hourly rates. There are no hidden fees, fuel surcharges, or surprise charges. Contact us for a free estimate.",
+  },
+  {
+    q: "What is Princess Packing?",
+    a: "Princess Packing™ is Castle Express's boutique white-glove packing service. A trained professional team packs your entire home before move day. All materials are included. Packages start at $595 for 25 boxes.",
+  },
+  {
+    q: "Can Castle Express move a piano or gun safe?",
+    a: "Yes. Castle Express has a specialty moving team equipped with piano boards, heavy-duty dollies, and stair climbers for safely moving pianos, gun safes, fire safes, and other heavy or oversized items.",
+  },
+  {
+    q: "Does Castle Express offer storage?",
+    a: "Yes. Castle Express operates a secure, climate-controlled storage facility in Enfield, CT with numbered wooden vault storage. Short-term and long-term options are available — ideal between closings or during renovations.",
+  },
+  {
+    q: "What makes Castle Express different from other movers?",
+    a: "Castle Express is family-owned by Joe Caronna since 2008, not a franchise or broker. We provide flat-rate pricing with no hidden fees, employ our own professional crews, and maintain a 4.9-star Google rating with over 200 reviews. We're A+ BBB rated and fully licensed.",
+  },
+  {
+    q: "Do you offer commercial and office moving?",
+    a: "Yes. Castle Express handles office relocations, retail moves, and commercial relocations with minimal downtime. We offer after-hours and weekend scheduling, IT equipment coordination, and custom move planning.",
   },
 ];
 

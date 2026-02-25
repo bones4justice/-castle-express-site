@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { COMPANY, SERVICES, REVIEWS, ALL_CITIES, CITY_PAGES } from "@/content";
+import { COMPANY, SERVICES, REVIEWS, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
 import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, MapPin, Phone } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
 
@@ -241,6 +241,48 @@ export default function HomePage() {
             <h2 className="heading-2">@castleexpressmovingandstorage</h2>
           </div>
           <div className="elfsight-app-e6b831df-56db-467d-bc64-e8cbdf442d90" data-elfsight-app-lazy></div>
+        </div>
+      </section>
+
+      {/* ─── FAQ — Schema + Crawlable HTML + Elfsight Visual ─── */}
+      <section className="section">
+        <div className="container-sm">
+          {/* FAQ Schema for Google & AI */}
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": FAQ.map(item => ({
+                  "@type": "Question",
+                  "name": item.q,
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": item.a,
+                  },
+                })),
+              }),
+            }}
+          />
+
+          <div className="text-center" style={{ marginBottom: 40 }}>
+            <div className="section-label" style={{ justifyContent: "center" }}><span>Common Questions</span></div>
+            <h2 className="heading-2">Frequently Asked Questions</h2>
+          </div>
+
+          {/* Elfsight visual widget */}
+          <div className="elfsight-app-f4e21ae8-4f51-4e3e-ad56-8f2f0dba67e9" data-elfsight-app-lazy></div>
+
+          {/* Crawlable HTML fallback — visible to AI/LLMs even if Elfsight doesn't load */}
+          <div style={{ marginTop: 32 }}>
+            {FAQ.map((item, i) => (
+              <div key={i} style={{ padding: "16px 0", borderBottom: "1px solid #E5E7EB" }}>
+                <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 8 }}>{item.q}</h3>
+                <p className="body-sm text-gray" style={{ lineHeight: 1.7 }}>{item.a}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
