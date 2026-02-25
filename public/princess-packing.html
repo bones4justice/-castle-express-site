@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Princess Packing™ — A White-Glove Service by Castle Express</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #F72585;
+    --pink-soft: #fce4ef;
+    --pink-mid: #fbb6cf;
+    --black: #0d0d0d;
+    --white: #ffffff;
+    --gray: #6b6b6b;
+    --gray-light: #f5f5f5;
+    --border: #e8e8e8;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER ── */
+  header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .header-brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  .header-brand .main-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+    color: var(--black);
+  }
+  .header-brand .sub-name {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gray);
+    font-weight: 500;
+  }
+  .header-brand .pink-bar {
+    display: inline-block;
+    color: var(--pink);
+    font-weight: 700;
+  }
+
+  .header-cta {
+    background: var(--pink);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: none;
+    padding: 0.65rem 1.4rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .header-cta:hover { background: #d01b6e; transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 68px;
+  }
+
+  .hero-left {
+    background: var(--black);
+    padding: 7rem 4rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(247,37,133,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.1s forwards;
+  }
+
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 5vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 1.8rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.25s forwards;
+  }
+
+  .hero-headline .accent { color: var(--pink); }
+
+  .hero-subline {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.65);
+    max-width: 420px;
+    margin-bottom: 2.8rem;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.4s forwards;
+  }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.55s forwards;
+  }
+
+  .btn-primary {
+    background: var(--pink);
+    color: var(--white);
+    font-size: 0.82rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    padding: 1rem 2.2rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #d01b6e; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(247,37,133,0.35); }
+
+  .btn-ghost {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.82rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--white); border-color: var(--white); }
+
+  .hero-trust {
+    margin-top: 3.5rem;
+    display: flex;
+    gap: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.7s 0.7s forwards;
+  }
+  .trust-item { display: flex; flex-direction: column; }
+  .trust-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1;
+  }
+  .trust-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-top: 0.2rem;
+  }
+  .trust-divider {
+    width: 1px;
+    background: rgba(255,255,255,0.15);
+    align-self: stretch;
+  }
+
+  .hero-right {
+    background: var(--pink-soft);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-right-inner {
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 3rem;
+    position: relative;
+  }
+
+  /* Decorative pink grid lines */
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(247,37,133,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(247,37,133,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .hero-image-placeholder {
+    width: 100%;
+    max-width: 420px;
+    aspect-ratio: 3/4;
+    background: linear-gradient(160deg, var(--pink-mid) 0%, rgba(247,37,133,0.15) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px solid rgba(247,37,133,0.2);
+    opacity: 0;
+    animation: fadeIn 1s 0.6s forwards;
+  }
+
+  .placeholder-text {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 600;
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .placeholder-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.4;
+  }
+
+  /* ── STRIP ── */
+  .brand-strip {
+    background: var(--pink);
+    padding: 1rem 2rem;
+    overflow: hidden;
+  }
+  .strip-inner {
+    display: flex;
+    gap: 4rem;
+    animation: ticker 20s linear infinite;
+    white-space: nowrap;
+  }
+  .strip-item {
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--white);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .strip-dot { color: rgba(255,255,255,0.5); }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── WHAT IS ── */
+  .section-what {
+    padding: 7rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .section-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+  }
+
+  .section-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    color: var(--black);
+  }
+
+  .section-body {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--gray);
+    font-weight: 300;
+    margin-bottom: 1.5rem;
+  }
+
+  .what-points {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 2.5rem;
+  }
+
+  .what-point {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .point-marker {
+    width: 24px;
+    height: 24px;
+    background: var(--pink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .point-marker svg {
+    width: 12px;
+    height: 12px;
+    stroke: white;
+    stroke-width: 2.5;
+    fill: none;
+  }
+
+  .point-text {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--black);
+    font-weight: 400;
+  }
+  .point-text strong { font-weight: 600; }
+
+  .what-right {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .what-stat {
+    background: var(--white);
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .what-stat:nth-child(odd) { background: var(--gray-light); }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: var(--pink);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    color: var(--gray);
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* ── PROCESS ── */
+  .section-process {
+    background: var(--black);
+    padding: 7rem 2rem;
+  }
+  .section-process-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .process-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+  .process-header .section-eyebrow { color: var(--pink); }
+  .process-header .section-headline { color: var(--white); }
+
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 12.5%;
+    right: 12.5%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--pink), rgba(247,37,133,0.2));
+  }
+
+  .process-step {
+    padding: 0 1.5rem 0 0;
+    position: relative;
+  }
+
+  .step-num {
+    width: 56px;
+    height: 56px;
+    border: 1px solid var(--pink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.8rem;
+    position: relative;
+    z-index: 1;
+    background: var(--black);
+  }
+
+  .step-num span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--pink);
+  }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 0.8rem;
+  }
+
+  .step-desc {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+  }
+
+  /* ── PRICING ── */
+  .section-pricing {
+    padding: 7rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .pricing-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    align-items: start;
+  }
+
+  .pricing-card {
+    border: 1px solid var(--border);
+    padding: 3rem 2.5rem;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background: var(--white);
+  }
+  .pricing-card:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
+
+  .pricing-card.featured {
+    border-color: var(--pink);
+    border-width: 2px;
+    transform: translateY(-8px);
+  }
+  .pricing-card.featured:hover { transform: translateY(-12px); box-shadow: 0 20px 56px rgba(247,37,133,0.15); }
+
+  .pricing-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--pink);
+    color: var(--white);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.4rem 1.2rem;
+    white-space: nowrap;
+  }
+
+  .card-tier {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+  }
+
+  .card-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 0.4rem;
+  }
+
+  .card-tagline {
+    font-size: 0.82rem;
+    color: var(--gray);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  .card-price {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.3rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .price-dollar {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--black);
+    margin-top: 0.4rem;
+  }
+
+  .price-amount {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--black);
+  }
+
+  .card-bundle {
+    font-size: 0.78rem;
+    color: var(--gray);
+    margin-bottom: 2rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+
+  .card-divider {
+    height: 1px;
+    background: var(--border);
+    margin-bottom: 1.8rem;
+  }
+
+  .card-includes-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gray);
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+  }
+
+  .card-items {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .card-item {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.88rem;
+    color: var(--black);
+    line-height: 1.4;
+  }
+
+  .card-item::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--pink);
+    flex-shrink: 0;
+    margin-top: 0.45rem;
+  }
+
+  .card-cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+
+  .card-cta-primary {
+    background: var(--pink);
+    color: var(--white);
+  }
+  .card-cta-primary:hover { background: #d01b6e; }
+
+  .card-cta-outline {
+    background: transparent;
+    color: var(--black);
+    border: 1px solid var(--black);
+  }
+  .card-cta-outline:hover { background: var(--black); color: var(--white); }
+
+  /* Overage */
+  .overage-section {
+    max-width: 1200px;
+    margin: 3rem auto 0;
+    padding: 0 2rem;
+  }
+
+  .overage-box {
+    background: var(--gray-light);
+    border-left: 3px solid var(--pink);
+    padding: 2rem 2.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .overage-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--pink);
+    font-weight: 600;
+    white-space: nowrap;
+    padding-top: 2px;
+  }
+
+  .overage-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .overage-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--black);
+  }
+
+  .overage-rates {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 0.4rem;
+  }
+
+  .overage-rate {
+    font-size: 0.85rem;
+    color: var(--gray);
+  }
+  .overage-rate strong { color: var(--black); font-weight: 600; }
+
+  .overage-note {
+    font-size: 0.8rem;
+    color: var(--gray);
+    line-height: 1.6;
+    margin-top: 0.5rem;
+    font-style: italic;
+  }
+
+  /* ── PROMISE ── */
+  .section-promise {
+    background: var(--pink);
+    padding: 7rem 2rem;
+    text-align: center;
+  }
+
+  .promise-eyebrow {
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .promise-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
+    max-width: 760px;
+    margin: 0 auto 1.5rem;
+  }
+
+  .promise-sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.8);
+    max-width: 520px;
+    margin: 0 auto 3rem;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  .promise-cta {
+    display: inline-block;
+    background: var(--white);
+    color: var(--pink);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 1.1rem 2.8rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .promise-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+
+  /* ── AVAILABILITY ── */
+  .section-availability {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .avail-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    margin: 3rem 0;
+  }
+
+  .avail-item {
+    background: var(--white);
+    padding: 2.5rem 1.5rem;
+  }
+
+  .avail-icon {
+    width: 48px;
+    height: 48px;
+    border: 1px solid var(--pink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.2rem;
+  }
+
+  .avail-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--pink);
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  .avail-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 0.5rem;
+  }
+
+  .avail-desc {
+    font-size: 0.82rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* ── FORM ── */
+  .section-form {
+    background: var(--black);
+    padding: 7rem 2rem;
+  }
+
+  .form-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .form-header {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+
+  .form-header .section-eyebrow { color: var(--pink); }
+  .form-header .section-headline { color: var(--white); }
+  .form-header .section-body { color: rgba(255,255,255,0.5); }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-field.full { grid-column: 1 / -1; }
+
+  .form-field label {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    font-weight: 600;
+  }
+
+  .form-field input,
+  .form-field select,
+  .form-field textarea {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    padding: 0.85rem 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .form-field select option { background: #1a1a1a; color: var(--white); }
+
+  .form-field input:focus,
+  .form-field select:focus,
+  .form-field textarea:focus {
+    border-color: var(--pink);
+  }
+
+  .form-field textarea { resize: vertical; min-height: 120px; }
+
+  .form-submit {
+    grid-column: 1 / -1;
+    background: var(--pink);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: none;
+    padding: 1.2rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s, transform 0.15s;
+    margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: #d01b6e; transform: translateY(-1px); }
+
+  .form-note {
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    margin-top: 1.5rem;
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 2.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .footer-brand span { color: var(--pink); }
+
+  .footer-sub {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-info {
+    text-align: right;
+  }
+
+  .footer-lic {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.8;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 5rem 2rem 4rem; }
+    .section-what { grid-template-columns: 1fr; gap: 3rem; padding: 5rem 1.5rem; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .process-steps::before { display: none; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .pricing-card.featured { transform: none; }
+    .avail-grid { grid-template-columns: 1fr; }
+    .form-grid { grid-template-columns: 1fr; }
+    .form-field.full { grid-column: 1; }
+    footer { flex-direction: column; text-align: center; }
+    .footer-info { text-align: center; }
+    .overage-box { grid-template-columns: 1fr; gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-brand">
+    <span class="main-name"><span class="pink-bar">Princess Packing™</span></span>
+    <span class="sub-name">A White-Glove Service by Castle Express</span>
+  </div>
+  <a href="#request" class="header-cta">Request a Quote</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">White-Glove Packing Service — Hartford County, CT &amp; Western MA</p>
+    <h1 class="hero-headline">Professional<br>Packing.<br><span class="accent">Done Right.</span></h1>
+    <p class="hero-subline">Reduces stress. Protects what matters. Completed by a polished professional team — before your move even begins.</p>
+    <div class="hero-cta-group">
+      <a href="#request" class="btn-primary">Request a Packing Quote</a>
+      <a href="#pricing" class="btn-ghost">View Packages</a>
+    </div>
+    <div class="hero-trust">
+      <div class="trust-item">
+        <span class="trust-number">4.9★</span>
+        <span class="trust-label">Google Rating</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <span class="trust-number">200+</span>
+        <span class="trust-label">Reviews</span>
+      </div>
+      <div class="trust-divider"></div>
+      <div class="trust-item">
+        <span class="trust-number">2008</span>
+        <span class="trust-label">Est. by Castle Express</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-inner">
+      <div class="hero-image-placeholder">
+        <div class="placeholder-icon">📸</div>
+        <p class="placeholder-text">Princess Packing Team<br>Photo Placeholder</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER STRIP -->
+<div class="brand-strip">
+  <div class="strip-inner">
+    <span class="strip-item">White-Glove Service</span><span class="strip-dot"> · </span>
+    <span class="strip-item">Professional Team</span><span class="strip-dot"> · </span>
+    <span class="strip-item">Room-by-Room Labeling</span><span class="strip-dot"> · </span>
+    <span class="strip-item">All Materials Included</span><span class="strip-dot"> · </span>
+    <span class="strip-item">Reserved in Advance</span><span class="strip-dot"> · </span>
+    <span class="strip-item">Maximum 1 Major Pack Per Day</span><span class="strip-dot"> · </span>
+    <span class="strip-item">A+ BBB Rating</span><span class="strip-dot"> · </span>
+    <span class="strip-item">Castle Express Since 2008</span><span class="strip-dot"> · </span>
+    <!-- duplicate for seamless loop -->
+    <span class="strip-item">White-Glove Service</span><span class="strip-dot"> · </span>
+    <span class="strip-item">Professional Team</span><span class="strip-dot"> · </span>
+    <span class="strip-item">Room-by-Room Labeling</span><span class="strip-dot"> · </span>
+    <span class="strip-item">All Materials Included</span><span class="strip-dot"> · </span>
+    <span class="strip-item">Reserved in Advance</span><span class="strip-dot"> · </span>
+    <span class="strip-item">Maximum 1 Major Pack Per Day</span><span class="strip-dot"> · </span>
+    <span class="strip-item">A+ BBB Rating</span><span class="strip-dot"> · </span>
+    <span class="strip-item">Castle Express Since 2008</span><span class="strip-dot"> · </span>
+  </div>
+</div>
+
+<!-- WHAT IS PRINCESS PACKING -->
+<section class="section-what">
+  <div>
+    <p class="section-eyebrow">What It Is</p>
+    <h2 class="section-headline">Your home,<br>packed before<br>move day.</h2>
+    <p class="section-body">Princess Packing™ is a boutique residential packing service — scheduled in advance, completed by a trained team, and built around one goal: protecting what matters before the chaos of move day begins.</p>
+    <p class="section-body">This is not a last-minute rush. It is not discount packing. It is a structured, professional service worth the investment.</p>
+    <div class="what-points">
+      <div class="what-point">
+        <div class="point-marker"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <span class="point-text"><strong>Completed before move day</strong> — your crew arrives to a fully packed, labeled home.</span>
+      </div>
+      <div class="what-point">
+        <div class="point-marker"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <span class="point-text"><strong>All packing materials included</strong> — newsprint, bubble wrap, tape, and boxes are part of every package.</span>
+      </div>
+      <div class="what-point">
+        <div class="point-marker"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <span class="point-text"><strong>Room-by-room labeling</strong> — every box identified clearly for seamless unloading at your new home.</span>
+      </div>
+      <div class="what-point">
+        <div class="point-marker"><svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg></div>
+        <span class="point-text"><strong>Limited availability</strong> — Princess Packing accepts one major pack per day. Reserve early.</span>
+      </div>
+    </div>
+  </div>
+  <div class="what-right">
+    <div class="what-stat">
+      <span class="stat-num">1</span>
+      <span class="stat-label">Major Pack<br>Per Day Max</span>
+    </div>
+    <div class="what-stat">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">Materials<br>Included</span>
+    </div>
+    <div class="what-stat">
+      <span class="stat-num">0</span>
+      <span class="stat-label">Same-Day<br>Bookings</span>
+    </div>
+    <div class="what-stat">
+      <span class="stat-num">4.9</span>
+      <span class="stat-label">Google Star<br>Average</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section-process">
+  <div class="section-process-inner">
+    <div class="process-header">
+      <p class="section-eyebrow">How It Works</p>
+      <h2 class="section-headline" style="color:white;">Four steps to a<br>fully packed home.</h2>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num"><span>01</span></div>
+        <h3 class="step-title">Request a Quote</h3>
+        <p class="step-desc">Tell us about your home and move date. We'll match you to the right package and confirm availability.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num"><span>02</span></div>
+        <h3 class="step-title">Reserve Your Date</h3>
+        <p class="step-desc">Capacity is limited to one major pack per day. Your date is secured upon booking confirmation.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num"><span>03</span></div>
+        <h3 class="step-title">Team Arrives</h3>
+        <p class="step-desc">A polished, trained Princess Packing team arrives with all materials and works room by room.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-num"><span>04</span></div>
+        <h3 class="step-title">Move Day Ready</h3>
+        <p class="step-desc">Your home is packed, labeled, and organized. Your moving crew arrives to a job already done.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="section-pricing" id="pricing">
+  <div class="pricing-header">
+    <p class="section-eyebrow">Packages</p>
+    <h2 class="section-headline">Choose your bundle.</h2>
+    <p class="section-body" style="max-width:520px; margin: 0 auto;">All packages include the Princess Packing team, all materials, and room-by-room labeling. No hidden fees.</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- PRO -->
+    <div class="pricing-card">
+      <p class="card-tier">Pro Package</p>
+      <h3 class="card-name">25 Box Bundle</h3>
+      <p class="card-tagline">Pack Your Kitchen — the most time-consuming room in your home.</p>
+      <div class="card-price">
+        <span class="price-dollar">$</span>
+        <span class="price-amount">595</span>
+      </div>
+      <p class="card-bundle">Flat-rate bundle</p>
+      <div class="card-divider"></div>
+      <p class="card-includes-label">Includes</p>
+      <ul class="card-items">
+        <li class="card-item">Princess Packing Team</li>
+        <li class="card-item">16 Small Boxes</li>
+        <li class="card-item">5 Medium Boxes</li>
+        <li class="card-item">2 Medium-Large Boxes</li>
+        <li class="card-item">Newsprint, bubble wrap &amp; tape</li>
+        <li class="card-item">Room-by-room labeling</li>
+      </ul>
+      <a href="#request" class="card-cta card-cta-outline">Request This Package</a>
+    </div>
+
+    <!-- PLUS -->
+    <div class="pricing-card featured">
+      <div class="pricing-badge">⭐ Most Popular</div>
+      <p class="card-tier">Plus Package</p>
+      <h3 class="card-name">50 Box Bundle</h3>
+      <p class="card-tagline">Pack Your Kitchen + Two Additional Rooms. Ideal for busy families and working professionals.</p>
+      <div class="card-price">
+        <span class="price-dollar">$</span>
+        <span class="price-amount">995</span>
+      </div>
+      <p class="card-bundle">Flat-rate bundle</p>
+      <div class="card-divider"></div>
+      <p class="card-includes-label">Includes</p>
+      <ul class="card-items">
+        <li class="card-item">Princess Packing Team</li>
+        <li class="card-item">28 Small Boxes</li>
+        <li class="card-item">9 Medium Boxes</li>
+        <li class="card-item">4 Medium-Large Boxes</li>
+        <li class="card-item">5 Wardrobe Boxes</li>
+        <li class="card-item">Newsprint, bubble wrap &amp; tape</li>
+        <li class="card-item">Room-by-room labeling</li>
+      </ul>
+      <a href="#request" class="card-cta card-cta-primary">Request This Package</a>
+    </div>
+
+    <!-- PREMIUM -->
+    <div class="pricing-card">
+      <p class="card-tier">Premium Package</p>
+      <h3 class="card-name">100 Box Bundle</h3>
+      <p class="card-tagline">Pack Your Whole House. For households that want everything handled.</p>
+      <div class="card-price">
+        <span class="price-dollar">$</span>
+        <span class="price-amount">1,895</span>
+      </div>
+      <p class="card-bundle">Flat-rate bundle</p>
+      <div class="card-divider"></div>
+      <p class="card-includes-label">Includes</p>
+      <ul class="card-items">
+        <li class="card-item">Princess Packing Team</li>
+        <li class="card-item">46 Small Boxes</li>
+        <li class="card-item">28 Medium Boxes</li>
+        <li class="card-item">9 Medium-Large Boxes</li>
+        <li class="card-item">10 Wardrobe Boxes</li>
+        <li class="card-item">Newsprint, bubble wrap &amp; tape</li>
+        <li class="card-item">Room-by-room labeling</li>
+        <li class="card-item">Priority scheduling</li>
+      </ul>
+      <a href="#request" class="card-cta card-cta-outline">Request This Package</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- OVERAGE -->
+<div class="overage-section" style="padding-bottom: 7rem;">
+  <div class="overage-box">
+    <span class="overage-label">If You<br>Go Over</span>
+    <div class="overage-content">
+      <p class="overage-title">Additional Boxes — Billed Only If Bundle Is Exceeded</p>
+      <div class="overage-rates">
+        <span class="overage-rate">Small — <strong>$10</strong></span>
+        <span class="overage-rate">Medium — <strong>$15</strong></span>
+        <span class="overage-rate">Medium-Large — <strong>$20</strong></span>
+        <span class="overage-rate">Wardrobe — <strong>$35</strong></span>
+      </div>
+      <p class="overage-note">Box distribution is based on typical home layouts. Final box mix may adjust based on actual contents. Your team will communicate before exceeding your selected bundle — no surprises.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PROMISE / CTA BAND -->
+<section class="section-promise">
+  <p class="promise-eyebrow">The Princess Packing Promise</p>
+  <h2 class="promise-headline">Safe. Structured. Polished. Worth every dollar.</h2>
+  <p class="promise-sub">Reduces stress. Protects what matters. Before your move even begins.</p>
+  <a href="#request" class="promise-cta">Request a Packing Quote</a>
+</section>
+
+<!-- AVAILABILITY CALLOUTS -->
+<section class="section-availability">
+  <p class="section-eyebrow">Before You Book</p>
+  <h2 class="section-headline">What to know.</h2>
+  <div class="avail-grid">
+    <div class="avail-item">
+      <div class="avail-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <h3 class="avail-title">Advance Booking Required</h3>
+      <p class="avail-desc">No same-day bookings. Princess Packing is reserved in advance to ensure proper crew and materials allocation.</p>
+    </div>
+    <div class="avail-item">
+      <div class="avail-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3 class="avail-title">Limited Capacity</h3>
+      <p class="avail-desc">We accept a maximum of one major pack per day. This ensures quality, consistency, and full team attention on your home.</p>
+    </div>
+    <div class="avail-item">
+      <div class="avail-icon">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+      </div>
+      <h3 class="avail-title">Packing Only</h3>
+      <p class="avail-desc">Princess Packing covers packing only — not unpacking, not organizing. Focused scope means exceptional results.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD FORM -->
+<section class="section-form" id="request">
+  <div class="form-inner">
+    <div class="form-header">
+      <p class="section-eyebrow">Request a Quote</p>
+      <h2 class="section-headline" style="font-size:2.2rem;">Reserve your packing date.</h2>
+      <p class="section-body">Fill out the form below and a member of our team will follow up within one business day to confirm availability and package details.</p>
+    </div>
+    <div class="form-grid">
+      <div class="form-field">
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" name="fname" placeholder="Jane">
+      </div>
+      <div class="form-field">
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" name="lname" placeholder="Smith">
+      </div>
+      <div class="form-field">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="(860) 555-0100">
+      </div>
+      <div class="form-field">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="jane@email.com">
+      </div>
+      <div class="form-field full">
+        <label for="address">Home Address to Be Packed</label>
+        <input type="text" id="address" name="address" placeholder="123 Main St, Enfield, CT">
+      </div>
+      <div class="form-field">
+        <label for="movedate">Estimated Move Date</label>
+        <input type="date" id="movedate" name="movedate">
+      </div>
+      <div class="form-field">
+        <label for="package">Package of Interest</label>
+        <select id="package" name="package">
+          <option value="">Select a Package</option>
+          <option value="pro">Pro — 25 Box Bundle ($595)</option>
+          <option value="plus">Plus — 50 Box Bundle ($995) ⭐</option>
+          <option value="premium">Premium — 100 Box Bundle ($1,895)</option>
+          <option value="unsure">Not Sure Yet</option>
+        </select>
+      </div>
+      <div class="form-field full">
+        <label for="notes">Anything Else We Should Know?</label>
+        <textarea id="notes" name="notes" placeholder="Rooms of concern, fragile items, tight timeline, etc."></textarea>
+      </div>
+      <button type="button" class="form-submit" onclick="handleSubmit()">Submit Packing Quote Request →</button>
+    </div>
+    <p class="form-note">By submitting this form, you'll be contacted by a Castle Express team member within one business day.<br>No commitment required. Limited dates available.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-brand"><span>Princess Packing™</span></div>
+    <div class="footer-sub">A White-Glove Service by Castle Express Moving &amp; Storage</div>
+  </div>
+  <div class="footer-info">
+    <div class="footer-lic">
+      USDOT #2307446 &nbsp;|&nbsp; CT Permit C-1768 &nbsp;|&nbsp; A+ BBB Rating<br>
+      4 Niblick Rd Unit A, Enfield, CT 06082 &nbsp;|&nbsp; Serving Hartford County &amp; Western MA<br>
+      © 2025 Castle Express Moving &amp; Storage. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+<script>
+  function handleSubmit() {
+    const fields = ['fname','lname','phone','email','address','movedate','package'];
+    let valid = true;
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        el.style.borderColor = '#F72585';
+        valid = false;
+      } else {
+        el.style.borderColor = 'rgba(255,255,255,0.12)';
+      }
+    });
+    if (!valid) return;
+
+    const btn = document.querySelector('.form-submit');
+    btn.textContent = '✓ Request Received — We\'ll Be in Touch';
+    btn.style.background = '#1a7a4a';
+    btn.disabled = true;
+  }
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Scroll-triggered fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.pricing-card, .what-stat, .avail-item, .process-step').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
