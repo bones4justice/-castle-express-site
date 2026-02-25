@@ -1,10 +1,18 @@
 import Link from "next/link";
-import { SERVICES, FAQ } from "@/content";
+import { SERVICES, SERVICE_PAGES, FAQ } from "@/content";
 import { Home, Building, Box, Shield, Truck, Check, ArrowRight } from "@/components/Icons";
 
-export const metadata = { title: "Services" };
+export const metadata = { title: "Services — Castle Express Moving & Storage" };
 
 const ICONS = { residential: <Home />, commercial: <Building />, packing: <Box />, storage: <Shield />, specialty: <Truck /> };
+
+const SERVICE_SLUGS = {
+  residential: "residential-moving",
+  commercial: "commercial-moving",
+  packing: "packing-services",
+  storage: "storage",
+  specialty: "specialty-moving",
+};
 
 export default function ServicesPage() {
   return (
@@ -18,24 +26,32 @@ export default function ServicesPage() {
 
       <section className="section section-light">
         <div className="container-md" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          {SERVICES.map((svc) => (
-            <div key={svc.id} className="card grid-2" style={{ alignItems: "start", gap: 32 }}>
-              <div>
-                <div className="icon-badge" style={{ marginBottom: 16 }}>{ICONS[svc.id]}</div>
-                <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontStyle: "italic", fontSize: 22, color: "#1A1A2E", marginBottom: 10 }}>{svc.title}</h2>
-                <p className="body-sm text-gray" style={{ lineHeight: 1.7 }}>{svc.fullDesc}</p>
+          {SERVICES.map((svc) => {
+            const slug = SERVICE_SLUGS[svc.id];
+            return (
+              <div key={svc.id} className="card grid-2" style={{ alignItems: "start", gap: 32 }}>
+                <div>
+                  <div className="icon-badge" style={{ marginBottom: 16 }}>{ICONS[svc.id]}</div>
+                  <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontStyle: "italic", fontSize: 22, color: "#1A1A2E", marginBottom: 10 }}>{svc.title}</h2>
+                  <p className="body-sm text-gray" style={{ lineHeight: 1.7, marginBottom: 16 }}>{svc.fullDesc}</p>
+                  {slug && (
+                    <Link href={`/services/${slug}`} style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                      Learn More <ArrowRight />
+                    </Link>
+                  )}
+                </div>
+                <div>
+                  <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, color: "#D4A017", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 12 }}>What's Included</h3>
+                  {svc.features.map((f, j) => (
+                    <div key={j} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
+                      <Check />
+                      <span className="body-sm" style={{ color: "#1A1A2E" }}>{f}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
-              <div>
-                <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, color: "#D4A017", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 12 }}>What's Included</h3>
-                {svc.features.map((f, j) => (
-                  <div key={j} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                    <Check />
-                    <span className="body-sm" style={{ color: "#1A1A2E" }}>{f}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 

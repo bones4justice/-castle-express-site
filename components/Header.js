@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { label: "Services", href: "/services" },
   { label: "Service Areas", href: "/service-areas" },
   { label: "Princess Packing™", href: "/princess-packing.html", pink: true },
+  { label: "Referral Program", href: "/referral", gold: true },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -44,8 +45,8 @@ export default function Header() {
         <nav style={{ display: "flex", alignItems: "center", gap: 4 }} className="desktop-nav">
           {NAV_ITEMS.map(item => {
             const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
-            const color = item.pink ? "#F72585" : isActive ? "#D4A017" : "#1A1A2E";
-            const fontWeight = item.pink ? 700 : 600;
+            const color = item.pink ? "#F72585" : item.gold ? "#D4A017" : isActive ? "#D4A017" : "#1A1A2E";
+            const fontWeight = (item.pink || item.gold) ? 700 : 600;
             return (
               <a key={item.href} href={item.href} style={{
                 fontFamily: "var(--font-heading)", fontWeight, fontSize: 14,

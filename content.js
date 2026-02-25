@@ -103,6 +103,216 @@ export const SERVICES = [
   },
 ];
 
+export const SERVICE_PAGES = {
+  "residential-moving": {
+    id: "residential",
+    title: "Residential Moving",
+    headline: "Your Home Move, Handled With Care",
+    metaTitle: "Residential Moving Services — Castle Express Moving & Storage",
+    metaDesc: "Professional residential movers serving Hartford County CT & Western MA. Flat-rate pricing, no hidden fees. Houses, apartments, condos & senior relocations. Call 1-888-553-4503.",
+    heroImage: "/images/truck-residential.jpg",
+    intro: "Moving is one of life's biggest transitions — and Castle Express has been helping Connecticut and Massachusetts families navigate it since 2008. Whether you're moving across town or across the state, our professional crews handle every detail so you can focus on settling into your new home.",
+    sections: [
+      {
+        heading: "What's Included in Every Residential Move",
+        items: [
+          "Pre-move walkthrough and flat-rate estimate — no surprises on move day",
+          "Professional loading with furniture pads, shrink wrap, and floor protection",
+          "Safe transport in our clean, well-maintained fleet",
+          "Careful unloading and furniture placement in your new home",
+          "Furniture disassembly and reassembly as needed",
+        ],
+      },
+      {
+        heading: "Types of Home Moves We Handle",
+        items: [
+          "Single-family homes — from starter homes to large estates",
+          "Apartments and condos — including walk-ups and elevator buildings",
+          "Townhouses and multi-level homes",
+          "Senior relocations and downsizing — patient, respectful crews",
+          "Double closings — we can hold your belongings overnight if needed",
+          "Local moves within CT and MA, plus long-distance relocations",
+        ],
+      },
+    ],
+    callout: "Every residential move includes padded furniture protection, floor coverings, and a dedicated crew leader who manages your move from start to finish.",
+    faq: [
+      { q: "How far in advance should I book?", a: "We recommend 2-3 weeks, especially during peak season (May-September). We accommodate last-minute moves when possible — just call." },
+      { q: "Do you charge by the hour?", a: "No. We provide flat-rate estimates based on the size of your home and distance. Your quote is your price." },
+      { q: "Can you handle stairs and tight spaces?", a: "Absolutely. Our crews are experienced with walk-ups, narrow doorways, spiral staircases, and tight hallways." },
+    ],
+    relatedServices: ["packing-services", "storage", "specialty-moving"],
+    photo1: "/images/truck-aframe.jpg",
+    photo2: "/images/joe-with-customers.jpg",
+  },
+  "commercial-moving": {
+    id: "commercial",
+    title: "Commercial & Office Moving",
+    headline: "Business Moves That Minimize Downtime",
+    metaTitle: "Commercial & Office Movers — Castle Express Moving & Storage",
+    metaDesc: "Office and commercial movers serving Hartford County CT & Western MA. Minimal downtime, after-hours scheduling, IT coordination. Licensed & insured. Call 1-888-553-4503.",
+    heroImage: "/images/truck-brick-building.jpg",
+    intro: "Your business doesn't stop for a move — and neither do we. Castle Express plans and executes commercial relocations around your schedule, minimizing disruption to your operations and getting your team back to work fast.",
+    sections: [
+      {
+        heading: "Commercial Moving Services",
+        items: [
+          "Office relocations — desks, cubicles, conference rooms, and common areas",
+          "Retail and storefront moves",
+          "Medical and dental office relocations",
+          "Warehouse and industrial moves",
+          "IT equipment coordination — servers, workstations, and networking gear",
+          "After-hours and weekend scheduling available",
+        ],
+      },
+      {
+        heading: "Our Commercial Moving Process",
+        items: [
+          "Initial walkthrough and space assessment with your team",
+          "Custom move plan with timeline and crew assignments",
+          "Labeling system for desks, departments, and floors",
+          "Professional packing of office equipment and files",
+          "Setup and placement at your new location",
+          "Post-move walkthrough to confirm everything is in place",
+        ],
+      },
+    ],
+    callout: "We've relocated offices, retail stores, and medical practices across Connecticut and Western Massachusetts — always on time, always on budget.",
+    faq: [
+      { q: "Can you move us after business hours?", a: "Yes. We offer evening and weekend scheduling to minimize disruption to your business." },
+      { q: "Do you handle IT equipment?", a: "We coordinate with your IT team to safely disconnect, transport, and reconnect workstations and servers." },
+      { q: "How do you handle a multi-floor office?", a: "We create a detailed floor plan with labeling systems so every item ends up in the right spot at your new location." },
+    ],
+    relatedServices: ["residential-moving", "storage", "specialty-moving"],
+    photo1: "/images/truck-brick-building.jpg",
+    photo2: "/images/crew-commercial.jpg",
+  },
+  "packing-services": {
+    id: "packing",
+    title: "Packing Services",
+    headline: "Professional Packing. Every Item Protected.",
+    metaTitle: "Packing Services — Castle Express Moving & Storage",
+    metaDesc: "Full-service and partial packing for your move. All materials included. Princess Packing™ white-glove service available. Serving Hartford County CT & Western MA. Call 1-888-553-4503.",
+    heroImage: "/images/truck-loading.jpg",
+    intro: "Packing is the most time-consuming part of any move — and the part where damage is most likely to happen. Castle Express offers both full-service and partial packing by trained professionals who know how to protect your belongings.",
+    sections: [
+      {
+        heading: "Packing Options",
+        items: [
+          "Full-service packing — we pack your entire home, room by room",
+          "Partial packing — we handle the kitchen, fragile items, or specific rooms",
+          "Princess Packing™ — our boutique white-glove service, completed before move day",
+          "Unpacking services available at your new home",
+        ],
+      },
+      {
+        heading: "Materials & Techniques",
+        items: [
+          "Double-walled boxes for heavy items and dishes",
+          "Bubble wrap and newsprint for fragile items",
+          "Wardrobe boxes for hanging clothes",
+          "Custom crating for artwork, mirrors, and oversized items",
+          "Shrink wrap for upholstered furniture",
+          "Clear labeling system for easy unpacking",
+        ],
+      },
+    ],
+    callout: "Looking for a premium experience? Princess Packing™ is our boutique white-glove packing service — your home packed by a trained team before move day even begins. Starting at $595.",
+    calloutLink: "/princess-packing.html",
+    calloutLabel: "Learn About Princess Packing™",
+    faq: [
+      { q: "Do I need to provide boxes and materials?", a: "No. We bring everything — boxes, tape, bubble wrap, newsprint, and wardrobe boxes. It's all included in your packing quote." },
+      { q: "How long does packing take?", a: "A typical 3-bedroom home takes 4-6 hours for a full pack. Larger homes may require a full day." },
+      { q: "What's the difference between standard packing and Princess Packing?", a: "Standard packing happens on move day. Princess Packing™ is a separate service completed before your move — by a dedicated team, with boutique-level care and room-by-room labeling." },
+    ],
+    relatedServices: ["residential-moving", "commercial-moving", "storage"],
+    photo1: "/images/packed-truck.jpg",
+    photo2: "/images/princess-packing-crew.jpg",
+  },
+  "storage": {
+    id: "storage",
+    title: "Climate-Controlled Storage",
+    headline: "Secure Storage in Our Enfield Facility",
+    metaTitle: "Climate-Controlled Storage — Castle Express Moving & Storage",
+    metaDesc: "Secure, climate-controlled storage in Enfield CT. Short and long-term options. Wooden vault storage. Perfect between closings or during renovations. Call 1-888-553-4503.",
+    heroImage: "/images/storage-crates.jpg",
+    intro: "Need somewhere safe for your belongings? Our secure, climate-controlled facility in Enfield, CT keeps your items protected — whether you need storage for a week between closings or several months during a renovation.",
+    sections: [
+      {
+        heading: "Storage Features",
+        items: [
+          "Climate-controlled environment — no extreme heat, cold, or humidity",
+          "Secure wooden vault storage — your items in dedicated, numbered containers",
+          "24/7 facility monitoring",
+          "Clean, well-maintained warehouse space",
+          "Convenient Enfield, CT location off I-91",
+        ],
+      },
+      {
+        heading: "When You Might Need Storage",
+        items: [
+          "Between closings — your old home closes before your new one is ready",
+          "Home renovations or remodeling projects",
+          "Downsizing — hold items while you decide what to keep",
+          "Staging your home for sale",
+          "Seasonal storage for businesses",
+          "Long-term storage during extended travel or relocation",
+        ],
+      },
+    ],
+    callout: "Our numbered wooden vault system means your belongings are organized and protected — not stacked on a warehouse floor. Each vault is assigned to your account and accessible when you need it.",
+    faq: [
+      { q: "Is your storage climate-controlled?", a: "Yes. Our Enfield facility maintains a stable environment year-round to protect your belongings from temperature and humidity damage." },
+      { q: "How does pricing work?", a: "Storage is billed monthly based on the number of vaults you need. We'll estimate this during your move consultation." },
+      { q: "Can I access my items?", a: "Yes. Contact us to schedule access to your vault during business hours." },
+    ],
+    relatedServices: ["residential-moving", "commercial-moving", "packing-services"],
+    photo1: "/images/storage-crates.jpg",
+    photo2: "/images/truck-loading.jpg",
+  },
+  "specialty-moving": {
+    id: "specialty",
+    title: "Specialty Moving",
+    headline: "Special Items Need Special Handling",
+    metaTitle: "Specialty Movers — Pianos, Safes, Fine Art — Castle Express",
+    metaDesc: "Specialty movers for pianos, gun safes, fine art, and white-glove deliveries. Serving Hartford County CT & Western MA. Licensed & insured. Call 1-888-553-4503.",
+    heroImage: "/images/truck-tobacco-barn.jpg",
+    intro: "Some items can't go on a regular moving truck without special preparation. Castle Express has the equipment, training, and experience to safely move pianos, gun safes, fine art, antiques, and other high-value or oversized items.",
+    sections: [
+      {
+        heading: "Specialty Items We Move",
+        items: [
+          "Pianos — uprights, baby grands, and concert grands",
+          "Gun safes and fire safes — including staircase and basement extraction",
+          "Fine art, sculptures, and framed pieces",
+          "Antique furniture requiring extra protection",
+          "Pool tables and hot tubs",
+          "Heavy machinery and commercial equipment",
+        ],
+      },
+      {
+        heading: "Our Specialty Moving Process",
+        items: [
+          "Pre-move assessment — we evaluate the item, the path, and any obstacles",
+          "Custom protection — padding, wrapping, and crating as needed",
+          "Specialized equipment — piano boards, heavy-duty dollies, stair climbers",
+          "Trained crew — our specialty team handles these items regularly",
+          "Placement at destination — positioned exactly where you want it",
+        ],
+      },
+    ],
+    callout: "Moving a piano or safe is not a DIY job. These items require specific equipment and technique to move safely without damaging your home or the item itself. Let our specialty crew handle it.",
+    faq: [
+      { q: "How much does it cost to move a piano?", a: "Pricing depends on the type of piano, number of stairs, and distance. Contact us for a specific quote." },
+      { q: "Can you move a gun safe from a basement?", a: "Yes. We have stair climbers and experienced crews who regularly handle basement safe extractions." },
+      { q: "Do you provide custom crating?", a: "Yes. For fine art, mirrors, and fragile oversized items, we build custom crates to ensure safe transport." },
+    ],
+    relatedServices: ["residential-moving", "commercial-moving", "storage"],
+    photo1: "/images/truck-tobacco-barn.jpg",
+    photo2: "/images/truck-aframe.jpg",
+  },
+};
+
 export const SERVICE_AREAS = {
   "Enfield, CT Hub": [
     "Enfield, CT", "Bloomfield, CT", "East Granby, CT", "East Windsor, CT",
