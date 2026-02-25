@@ -128,14 +128,14 @@ export default function EstimateForm({ dark = false }) {
         </div>
         <div>
           <label style={labelStyle}>Move Size</label>
-          <select style={{ ...inputStyle, appearance: "auto" }} value={formData.moveSize} onChange={update("moveSize")}>
+          <select style={{ ...inputStyle, appearance: "auto", color: "#1A1A2E" }} value={formData.moveSize} onChange={update("moveSize")}>
             <option value="">Select size...</option>
             {MOVE_SIZES.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
         <div>
           <label style={labelStyle}>How did you find us?</label>
-          <select style={{ ...inputStyle, appearance: "auto" }} value={formData.source} onChange={update("source")}>
+          <select style={{ ...inputStyle, appearance: "auto", color: "#1A1A2E" }} value={formData.source} onChange={update("source")}>
             <option value="">Select...</option>
             {LEAD_SOURCES.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
