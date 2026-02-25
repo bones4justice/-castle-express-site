@@ -117,7 +117,7 @@ export default function HomePage() {
           <div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12 }}>
               <img src="/images/truck-aframe.jpg" alt="Castle Express truck at A-frame home" style={{ width: "100%", height: 200, objectFit: "cover", objectPosition: "center", borderRadius: 10 }} />
-              <img src="/images/joe-with-customers.jpg" alt="Joe with happy customers" style={{ width: "100%", height: 200, objectFit: "cover", objectPosition: "top", borderRadius: 10 }} />
+              <img src="/images/joe-with-customers.jpg" alt="Joe with happy customers" style={{ width: "100%", height: 200, objectFit: "cover", objectPosition: "center 20%", borderRadius: 10 }} />
             </div>
             <div className="hero-stats" style={{ background: "#FFF9EC", borderRadius: 12, padding: 24, display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12 }}>
             {[
@@ -220,7 +220,7 @@ export default function HomePage() {
             </a>
           </div>
           <div style={{ background: "linear-gradient(160deg, #fce4ef 0%, rgba(247,37,133,0.15) 100%)", padding: 40, textAlign: "center", border: "1px solid rgba(247,37,133,0.2)" }}>
-            <img src="/images/princess-packing-crew.jpg" alt="Princess Packing crew in pink polos" style={{ width: "100%", height: 280, objectFit: "cover", objectPosition: "top" }} />
+            <img src="/images/princess-packing-crew.jpg" alt="Princess Packing crew in pink polos" style={{ width: "100%", height: 280, objectFit: "cover", objectPosition: "center 20%" }} />
             <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 18, color: "#0d0d0d", marginTop: 16 }}>Professional Packing. Done Right.</div>
           </div>
         </div>
