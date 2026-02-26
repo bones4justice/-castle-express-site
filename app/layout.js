@@ -28,7 +28,7 @@ export const metadata = {
     default: "Castle Express Moving & Storage | CT & MA Movers Since 2008",
     template: "%s | Castle Express Moving & Storage",
   },
-  description: "Family-owned CT & MA movers since 2008. Residential, commercial, packing & storage. Flat-rate pricing, no hidden fees.",
+  description: "Family-owned moving company serving Hartford County CT & Western MA since 2008. Residential, commercial, packing & storage. Flat-rate pricing. Free estimates.",
   keywords: ["movers", "moving company", "Enfield CT", "Hartford CT", "Springfield MA", "storage", "packing", "local movers", "long distance movers"],
   alternates: { canonical: "/" },
   openGraph: {

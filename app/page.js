@@ -27,7 +27,7 @@ export default function HomePage() {
               Professional Movers in <span className="text-gold">CT & MA</span>
             </h1>
             <p className="body-lg text-white-muted" style={{ marginBottom: 28, maxWidth: 520 }}>
-              Family-owned since 2008. Flat-rate pricing, no hidden fees, and professional crews who treat your belongings like their own.
+              Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2008. Flat-rate pricing, no hidden fees, and professional crews who treat your belongings like their own.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
               {["Licensed & Insured", "Flat-Rate Pricing", `${COMPANY.reviewCount} 5-Star Reviews`].map(item => (
@@ -94,8 +94,11 @@ export default function HomePage() {
           <div>
             <SectionLabel>Why Castle Express</SectionLabel>
             <h2 className="heading-2">Built on Values, Not Just Trucks</h2>
-            <p className="body-md text-gray" style={{ marginBottom: 28 }}>
+            <p className="body-md text-gray" style={{ marginBottom: 16 }}>
               Joe Caronna started Castle Express in {COMPANY.founded} with one truck and a commitment to treat every customer like family. Today we operate a fleet of {COMPANY.truckCount} trucks from our {COMPANY.facilitySize} sq ft facility in {COMPANY.city}, {COMPANY.state}—but the values haven't changed.
+            </p>
+            <p className="body-md text-gray" style={{ marginBottom: 28 }}>
+              Whether you're moving across town in Enfield or relocating from Hartford to Springfield, our moving company handles residential moves, commercial relocations, full-service packing, climate-controlled storage, and specialty items like pianos and gun safes. Every move includes a detailed walkthrough, furniture protection, and careful placement at your new home.
             </p>
             {[
               { title: "Flat-Rate Pricing", desc: "No surprise charges. Your estimate is your price." },
@@ -173,6 +176,9 @@ export default function HomePage() {
           <div className="text-center" style={{ marginBottom: 40 }}>
             <SectionLabel>Coverage Area</SectionLabel>
             <h2 className="heading-2">Proudly Serving CT & Western MA</h2>
+            <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
+              Our moving company provides local and long-distance service throughout Hartford County, the Connecticut River Valley, and Western Massachusetts. From Suffield to Glastonbury, Manchester to West Hartford—we know every neighborhood.
+            </p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
             {Object.entries(CITY_PAGES).map(([slug, city]) => (
