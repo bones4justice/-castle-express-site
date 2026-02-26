@@ -31,6 +31,7 @@ export default function Header() {
     <header style={{
       position: "sticky", top: 0, zIndex: 100,
       background: scrolled ? "rgba(255,255,255,0.97)" : "#fff",
+      WebkitBackdropFilter: "blur(8px)",
       backdropFilter: "blur(8px)",
       borderBottom: `1px solid ${scrolled ? "#E5E7EB" : "transparent"}`,
       transition: "all 0.3s ease",

@@ -49,7 +49,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── TRUST BAR ─── */}
-      <section className="trust-bar">
+      <section className="trust-bar" aria-label="Trust indicators">
         {[
           { icon: <Shield size={18} />, label: "A+ BBB Rating" },
           { icon: <Star />, label: `${COMPANY.reviewAvg}★ Google (${COMPANY.reviewCount} Reviews)` },
@@ -161,7 +161,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── LIVE GOOGLE REVIEWS ─── */}
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section" style={{ paddingTop: 0 }} aria-label="Google reviews">
         <div className="container">
           <div className="elfsight-app-b017ae90-a962-4044-8d86-0fef65fff1db" data-elfsight-app-lazy></div>
         </div>
@@ -188,7 +188,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── PHOTO STRIP ─── */}
-      <section style={{ padding: "0", overflow: "hidden" }}>
+      <section style={{ padding: "0", overflow: "hidden" }} aria-label="Photo gallery">
         <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 0 }}>
           {[
             { src: "/images/truck-residential.jpg", pos: "center", alt: "Castle Express truck at residential home" },
