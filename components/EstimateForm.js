@@ -38,7 +38,7 @@ export default function EstimateForm({ dark = false }) {
   const inputBg = dark ? "rgba(255,255,255,0.1)" : "#F3F4F6";
   const inputColor = dark ? "#fff" : "#1A1A2E";
   const inputBorder = dark ? "rgba(255,255,255,0.15)" : "#E5E7EB";
-  const labelColor = dark ? "rgba(255,255,255,0.7)" : "#6B7280";
+  const labelColor = dark ? "rgba(255,255,255,0.75)" : "#6B7280";
 
   const inputStyle = {
     width: "100%", padding: "12px 14px", borderRadius: 6,
@@ -89,7 +89,7 @@ export default function EstimateForm({ dark = false }) {
       }}>Get Your Free Estimate</h3>
       <p style={{
         fontFamily: "var(--font-body)", fontSize: 13,
-        color: dark ? "rgba(255,255,255,0.6)" : "#6B7280", margin: "0 0 20px 0",
+        color: dark ? "rgba(255,255,255,0.75)" : "#6B7280", margin: "0 0 20px 0",
       }}>Typically responds in 20 min. or less</p>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
@@ -140,7 +140,7 @@ export default function EstimateForm({ dark = false }) {
       </div>
       <p style={{
         fontFamily: "var(--font-body)", fontSize: 11,
-        color: dark ? "rgba(255,255,255,0.4)" : "#999",
+        color: dark ? "rgba(255,255,255,0.75)" : "#999",
         marginTop: 10, textAlign: "center",
       }}>
         By submitting, you agree to our Terms of Service and Privacy Policy.

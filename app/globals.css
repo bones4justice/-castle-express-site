@@ -84,7 +84,7 @@ button:hover { opacity: 0.92; }
 .text-gray { color: var(--gray); }
 .text-gold { color: var(--gold); }
 .text-white { color: var(--white); }
-.text-white-muted { color: rgba(255,255,255,0.7); }
+.text-white-muted { color: rgba(255,255,255,0.75); }
 .text-center { text-align: center; }
 .font-heading { font-family: var(--font-heading); }
 
@@ -223,6 +223,14 @@ button:hover { opacity: 0.92; }
 }
 
 .location-chip svg { color: var(--gold); }
+
+/* ─── TOUCH TARGETS ─── */
+a, button, [role="button"], input, select, textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+a { touch-action: manipulation; }
 
 /* ─── RESPONSIVE ─── */
 @media (max-width: 768px) {

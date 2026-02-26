@@ -17,7 +17,7 @@ export default function HomePage() {
   return (
     <>
       {/* ─── HERO ─── */}
-      <section className="section-dark" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
+      <section className="section-dark" aria-label="Hero" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-residential.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.12, pointerEvents: "none" }} />
         <div style={{ position: "absolute", top: 0, right: 0, width: "40%", height: "100%", background: "linear-gradient(135deg, transparent 40%, rgba(212,160,23,0.07) 100%)", pointerEvents: "none" }} />
         <div className="container grid-2" style={{ alignItems: "center" }}>
@@ -61,7 +61,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── SERVICES ─── */}
-      <section className="section section-light">
+      <section className="section section-light" aria-label="Services">
         <div className="container">
           <div className="text-center" style={{ marginBottom: 48 }}>
             <SectionLabel>What We Do</SectionLabel>
@@ -89,7 +89,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── WHY CASTLE ─── */}
-      <section className="section">
+      <section className="section" aria-label="Why Castle Express">
         <div className="container grid-2">
           <div>
             <SectionLabel>Why Castle Express</SectionLabel>
@@ -140,7 +140,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── REVIEWS ─── */}
-      <section className="section section-light">
+      <section className="section section-light" aria-label="Customer reviews">
         <div className="container">
           <div className="text-center" style={{ marginBottom: 48 }}>
             <SectionLabel>Customer Reviews</SectionLabel>
@@ -171,7 +171,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── AREAS ─── */}
-      <section className="section">
+      <section className="section" aria-label="Service areas">
         <div className="container">
           <div className="text-center" style={{ marginBottom: 40 }}>
             <SectionLabel>Coverage Area</SectionLabel>
@@ -210,21 +210,21 @@ export default function HomePage() {
       </section>
 
       {/* ─── PRINCESS PACKING CALLOUT ─── */}
-      <section style={{ padding: "60px 24px", background: "#0d0d0d" }}>
+      <section style={{ padding: "60px 24px", background: "#0d0d0d" }} aria-label="Princess Packing service">
         <div className="container grid-2" style={{ alignItems: "center" }}>
           <div>
             <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#F72585", marginBottom: 12 }}>NEW SERVICE</div>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(28px, 4vw, 40px)", color: "#fff", lineHeight: 1.1, marginBottom: 16 }}>
               Princess Packing<span style={{ color: "#F72585" }}>™</span>
             </h2>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, marginBottom: 24 }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 24 }}>
               A boutique, white-glove packing service. Your home packed before move day by a trained professional team. All materials included. Limited to one major pack per day.
             </p>
             <div style={{ display: "flex", gap: 24, marginBottom: 24 }}>
               {[{ num: "$595", label: "Pro (25 boxes)" }, { num: "$995", label: "Plus (50 boxes)" }, { num: "$1,895", label: "Premium (100 boxes)" }].map((p, i) => (
                 <div key={i}>
                   <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 22, color: "#F72585" }}>{p.num}</div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{p.label}</div>
+                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.75)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{p.label}</div>
                 </div>
               ))}
             </div>
@@ -240,7 +240,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── INSTAGRAM FEED ─── */}
-      <section className="section section-light">
+      <section className="section section-light" aria-label="Instagram feed">
         <div className="container">
           <div className="text-center" style={{ marginBottom: 32 }}>
             <div className="section-label" style={{ justifyContent: "center" }}><span>Follow Us</span></div>
@@ -251,7 +251,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── FAQ — Schema + Crawlable HTML + Elfsight Visual ─── */}
-      <section className="section">
+      <section className="section" aria-label="Frequently asked questions">
         <div className="container-sm">
           {/* FAQ Schema for Google & AI */}
           <script
@@ -293,7 +293,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── FINAL CTA ─── */}
-      <section className="section section-dark text-center">
+      <section className="section section-dark text-center" aria-label="Get a free estimate">
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
           <SectionLabel>Ready to Move?</SectionLabel>
           <h2 className="heading-2 text-white">Let's Get You Where You're Going</h2>

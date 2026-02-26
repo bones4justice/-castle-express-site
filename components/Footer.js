@@ -4,7 +4,7 @@ import { Shield } from "@/components/Icons";
 
 function SocialIcon({ href, label, children }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.6)", textDecoration: "none", transition: "all 0.2s" }}>
+    <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} style={{ width: 36, height: 36, borderRadius: "50%", background: "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.75)", textDecoration: "none", transition: "all 0.2s" }}>
       {children}
     </a>
   );
@@ -20,7 +20,7 @@ export default function Footer() {
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
               <img src="/images/logo.jpg" alt="Castle Express" style={{ height: 40, width: "auto", background: "#fff", padding: "6px 10px", borderRadius: "8px" }} />
             </div>
-            <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.7, marginBottom: 16 }}>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 16 }}>
               Family-owned & operated since {COMPANY.founded}. Serving Hartford County, CT and Western Massachusetts with professional moving, packing, and climate-controlled storage.
             </p>
             {/* Social Icons */}
@@ -53,7 +53,7 @@ export default function Footer() {
               { label: "Climate-Controlled Storage", href: "/services/storage" },
               { label: "Specialty Moving", href: "/services/specialty-moving" },
             ].map(s => (
-              <Link key={s.href} href={s.href} style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.6)", marginBottom: 8, textDecoration: "none" }}>{s.label}</Link>
+              <Link key={s.href} href={s.href} style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.75)", marginBottom: 8, textDecoration: "none" }}>{s.label}</Link>
             ))}
             <a href="/princess-packing.html" style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "#F72585", fontWeight: 600, marginBottom: 8, textDecoration: "none", marginTop: 4 }}>Princess Packing™</a>
             <Link href="/referral" style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "#D4A017", fontWeight: 600, marginBottom: 8, textDecoration: "none" }}>Referral Program</Link>
@@ -62,7 +62,7 @@ export default function Footer() {
           {/* Contact */}
           <div>
             <h4 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em" }}>Contact</h4>
-            <div style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 2 }}>
+            <div style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.75)", lineHeight: 2 }}>
               <div>{COMPANY.address}</div>
               <div>{COMPANY.city}, {COMPANY.state} {COMPANY.zip}</div>
               <a href={COMPANY.phoneLink} style={{ display: "block", color: "#D4A017", fontWeight: 600, marginTop: 4, textDecoration: "none" }}>{COMPANY.phone}</a>
@@ -73,7 +73,7 @@ export default function Footer() {
           {/* Licensing */}
           <div>
             <h4 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em" }}>Licensing</h4>
-            <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.5)", lineHeight: 2 }}>
+            <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.75)", lineHeight: 2 }}>
               <div>{COMPANY.mc}</div>
               <div>USDOT {COMPANY.usdot}</div>
               <div>CT Permit {COMPANY.ctPermit}</div>
@@ -86,12 +86,12 @@ export default function Footer() {
 
         {/* Bottom */}
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.4)" }}>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.75)" }}>
             &copy; {COMPANY.founded}–{new Date().getFullYear()} {COMPANY.name} LLC. All rights reserved.
           </p>
           <div style={{ display: "flex", gap: 16 }}>
-            <Link href="/privacy" style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Privacy Policy</Link>
-            <Link href="/terms" style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>Terms & Conditions</Link>
+            <Link href="/privacy" style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>Privacy Policy</Link>
+            <Link href="/terms" style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>Terms & Conditions</Link>
           </div>
         </div>
       </div>
