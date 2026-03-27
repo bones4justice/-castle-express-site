@@ -1376,7 +1376,7 @@
 </footer>
 
 <script>
-  function handleSubmit() {
+  async function handleSubmit() {
     const fields = ['fname','lname','phone','email','address','movedate','package'];
     let valid = true;
     fields.forEach(id => {
@@ -1391,9 +1391,27 @@
     if (!valid) return;
 
     const btn = document.querySelector('.form-submit');
-    btn.textContent = '✓ Request Received — We\'ll Be in Touch';
-    btn.style.background = '#1a7a4a';
+    btn.textContent = 'Submitting...';
     btn.disabled = true;
+
+    const data = {};
+    fields.concat(['notes']).forEach(id => {
+      data[id] = document.getElementById(id).value;
+    });
+
+    try {
+      await fetch("https://formspree.io/f/xpqjkjga", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      btn.textContent = '\u2713 Request Received \u2014 We\'ll Get You Taken Care Of';
+      btn.style.background = '#1a7a4a';
+    } catch (err) {
+      btn.textContent = 'Something went wrong \u2014 please call 1-888-553-4503';
+      btn.style.background = '#c0392b';
+      btn.disabled = false;
+    }
   }
 
   // Smooth scroll for anchor links
