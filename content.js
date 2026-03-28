@@ -581,14 +581,11 @@ export const FAQ = [
 ];
 
 export const MOVE_SIZES = [
-  "Small / Studio",
-  "1 Bedroom Apt",
-  "1 Bedroom House",
-  "2 Bedroom Apt",
-  "2 Bedroom House",
-  "3 Bedroom Apt",
-  "3 Bedroom House",
-  "4+ Bedroom",
+  "Studio",
+  "1 Bedroom",
+  "2 Bedrooms",
+  "3 Bedrooms",
+  "4+ Bedrooms",
   "Office / Commercial",
   "Piano / Gun Safe",
   "Other / Small Move",

@@ -35,22 +35,29 @@ export default function EstimateForm({ dark = false }) {
     // 2. SmartMoving — sends leads to CRM via API
     // ──────────────────────────────────────────────────
     try {
-      await fetch("https://api.smartmoving.com/api/leads/from-provider/v2?providerId=8f882454-9968-445e-8f50-ac5d011a33fc", {
+      const smPayload = {
+        FullName: formData.name,
+        PhoneNumber: formData.phone,
+        Email: formData.email,
+        BranchId: "352498a1-e171-40cd-8b35-ac5d011720d0",
+        UserOptIn: true,
+      };
+      // Only include optional fields if they have values
+      if (formData.moveDate) smPayload.MoveDate = formData.moveDate;
+      if (formData.moveSize) smPayload.MoveSize = formData.moveSize;
+      if (formData.source) smPayload.ReferralSource = formData.source;
+      if (formData.moveFrom) smPayload.OriginAddressFull = formData.moveFrom;
+      if (formData.moveTo) smPayload.DestinationAddressFull = formData.moveTo;
+
+      const smRes = await fetch("https://api.smartmoving.com/api/leads/from-provider/v2?providerId=8f882454-9968-445e-8f50-ac5d011a33fc", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          FullName: formData.name,
-          PhoneNumber: formData.phone,
-          Email: formData.email,
-          MoveDate: formData.moveDate,
-          MoveSize: formData.moveSize,
-          ReferralSource: formData.source,
-          OriginAddressFull: formData.moveFrom,
-          DestinationAddressFull: formData.moveTo,
-          BranchId: "352498a1-e171-40cd-8b35-ac5d011720d0",
-          UserOptIn: true,
-        }),
+        body: JSON.stringify(smPayload),
       });
+      if (!smRes.ok) {
+        const smErr = await smRes.text();
+        console.error("SmartMoving API error:", smRes.status, smErr);
+      }
     } catch (err) {
       console.error("SmartMoving submission error:", err);
     }
