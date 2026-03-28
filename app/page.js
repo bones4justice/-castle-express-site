@@ -27,7 +27,7 @@ export default function HomePage() {
               Professional Movers in <span className="text-gold">CT & MA</span>
             </h1>
             <p className="body-lg text-white-muted" style={{ marginBottom: 28, maxWidth: 520 }}>
-              Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2008. Flat-rate pricing, no hidden fees, and professional crews who treat your belongings like their own.
+              Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2013. Flat-rate pricing, no hidden fees, and professional crews who treat your belongings like their own.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
               {["Licensed & Insured", "Flat-Rate Pricing", `${COMPANY.reviewCount} 5-Star Reviews`].map(item => (

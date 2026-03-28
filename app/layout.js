@@ -25,10 +25,10 @@ const SITE_URL = "https://castleexpressmoving.com";
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Castle Express Moving & Storage | CT & MA Movers Since 2008",
+    default: "Castle Express Moving & Storage | CT & MA Movers Since 2013",
     template: "%s | Castle Express Moving & Storage",
   },
-  description: "Family-owned moving company serving Hartford County CT & Western MA since 2008. Residential, commercial, packing & storage. Flat-rate pricing. Free estimates.",
+  description: "Family-owned moving company serving Hartford County CT & Western MA since 2013. Residential, commercial, packing & storage. Flat-rate pricing. Free estimates.",
   keywords: ["movers", "moving company", "Enfield CT", "Hartford CT", "Springfield MA", "storage", "packing", "local movers", "long distance movers"],
   alternates: { canonical: "/" },
   openGraph: {
@@ -36,13 +36,13 @@ export const metadata = {
     locale: "en_US",
     url: SITE_URL,
     siteName: "Castle Express Moving & Storage",
-    title: "Castle Express Moving & Storage | CT & MA Movers Since 2008",
+    title: "Castle Express Moving & Storage | CT & MA Movers Since 2013",
     description: "Family-owned moving company serving Hartford County, CT and Western MA. Flat-rate pricing, professional crews, 200+ 5-star reviews.",
     images: [{ url: "/images/logo.jpg", width: 1200, height: 630, alt: "Castle Express Moving & Storage" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Castle Express Moving & Storage | CT & MA Movers Since 2008",
+    title: "Castle Express Moving & Storage | CT & MA Movers Since 2013",
     description: "Family-owned moving company serving Hartford County, CT and Western MA. Flat-rate pricing, professional crews, 200+ 5-star reviews.",
     images: ["/images/logo.jpg"],
   },
@@ -107,12 +107,12 @@ export default function RootLayout({ children }) {
                 { "@type": "State", "name": "Connecticut" },
                 { "@type": "State", "name": "Massachusetts" }
               ],
-              "foundingDate": "2008",
+              "foundingDate": "2013",
               "founder": {
                 "@type": "Person",
                 "name": "Joseph Caronna"
               },
-              "description": "Family-owned moving company serving Hartford County, CT and Western Massachusetts since 2008. Residential, commercial, packing, and climate-controlled storage. Flat-rate pricing, no hidden fees.",
+              "description": "Family-owned moving company serving Hartford County, CT and Western Massachusetts since 2013. Residential, commercial, packing, and climate-controlled storage. Flat-rate pricing, no hidden fees.",
               "hasOfferCatalog": {
                 "@type": "OfferCatalog",
                 "name": "Moving Services",

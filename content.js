@@ -17,7 +17,7 @@ export const COMPANY = {
   zip: "06082",
   fullAddress: "4 Niblick Rd, Unit A, Enfield, CT 06082",
   email: "info@castleexpressmoving.com",
-  founded: 2008,
+  founded: 2013,
   hours: "24 hours a day, 7 days a week",
 
   // Licensing
@@ -111,7 +111,7 @@ export const SERVICE_PAGES = {
     metaTitle: "Residential Moving Services in CT & MA",
     metaDesc: "Professional residential movers serving Hartford County CT & Western MA. Flat-rate pricing, no hidden fees. Houses, apartments, condos & senior relocations. Call 1-888-553-4503.",
     heroImage: "/images/truck-residential.jpg",
-    intro: "Moving is one of life's biggest transitions — and Castle Express has been helping Connecticut and Massachusetts families navigate it since 2008. Whether you're moving across town or across the state, our professional crews handle every detail so you can focus on settling into your new home.",
+    intro: "Moving is one of life's biggest transitions — and Castle Express has been helping Connecticut and Massachusetts families navigate it since 2013. Whether you're moving across town or across the state, our professional crews handle every detail so you can focus on settling into your new home.",
     sections: [
       {
         heading: "What's Included in Every Residential Move",
@@ -387,7 +387,7 @@ export const CITY_PAGES = {
     name: "East Windsor", state: "CT", fullName: "East Windsor, CT",
     hub: "Enfield, CT Hub",
     headline: "Trusted Movers in East Windsor, CT",
-    intro: "Whether you're moving from a condo off Route 5 or a farmhouse on Scantic Road, Castle Express delivers the same professional, flat-rate service East Windsor residents have trusted since 2008.",
+    intro: "Whether you're moving from a condo off Route 5 or a farmhouse on Scantic Road, Castle Express delivers the same professional, flat-rate service East Windsor residents have trusted since 2013.",
     features: ["Familiar with East Windsor neighborhoods and condo complexes", "Short drive from our Enfield headquarters", "Flat-rate pricing with no surprises"],
     nearby: ["Enfield", "Ellington", "Somers", "Windsor Locks", "Vernon"],
   },
@@ -467,7 +467,7 @@ export const CITY_PAGES = {
     name: "Farmington", state: "CT", fullName: "Farmington, CT",
     hub: "Glastonbury, CT Hub",
     headline: "Farmington Moving Services",
-    intro: "From the Farmington Valley to the Unionville section, Castle Express has been helping Farmington families relocate with confidence since 2008. Fully licensed, insured, and A+ BBB rated.",
+    intro: "From the Farmington Valley to the Unionville section, Castle Express has been helping Farmington families relocate with confidence since 2013. Fully licensed, insured, and A+ BBB rated.",
     features: ["Serving all Farmington neighborhoods including Unionville", "Experienced with both residential and commercial moves", "Climate-controlled storage available"],
     nearby: ["Avon", "Simsbury", "Newington", "West Hartford", "Bloomfield"],
   },
@@ -523,7 +523,7 @@ export const CITY_PAGES = {
     name: "Agawam", state: "MA", fullName: "Agawam, MA",
     hub: "Western Massachusetts",
     headline: "Agawam, MA Moving Services",
-    intro: "Just across the Connecticut border, Agawam is a quick trip from our Enfield headquarters. Castle Express brings the same licensed, insured, flat-rate moving service that Hartford County residents have trusted since 2008.",
+    intro: "Just across the Connecticut border, Agawam is a quick trip from our Enfield headquarters. Castle Express brings the same licensed, insured, flat-rate moving service that Hartford County residents have trusted since 2013.",
     features: ["Just over the CT border — fast response from Enfield", "Licensed for interstate moves between CT and MA", "Serving Agawam, Feeding Hills, and surrounding areas"],
     nearby: ["Springfield", "Suffield", "Enfield", "Granby", "East Granby"],
   },
@@ -572,7 +572,7 @@ export const FAQ = [
   },
   {
     q: "What makes Castle Express different from other movers?",
-    a: "Castle Express is family-owned by Joe Caronna since 2008, not a franchise or broker. We provide flat-rate pricing with no hidden fees, employ our own professional crews, and maintain a 4.9-star Google rating with over 200 reviews. We're A+ BBB rated and fully licensed.",
+    a: "Castle Express is family-owned by Joe Caronna since 2013, not a franchise or broker. We provide flat-rate pricing with no hidden fees, employ our own professional crews, and maintain a 4.9-star Google rating with over 200 reviews. We're A+ BBB rated and fully licensed.",
   },
   {
     q: "Do you offer commercial and office moving?",
