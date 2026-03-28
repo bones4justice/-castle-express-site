@@ -138,7 +138,7 @@ export const SERVICE_PAGES = {
     callout: "Every residential move includes padded furniture protection, floor coverings, and a dedicated crew leader who manages your move from start to finish.",
     faq: [
       { q: "How far in advance should I book?", a: "We recommend 2-3 weeks, especially during peak season (May-September). We accommodate last-minute moves when possible — just call." },
-      { q: "Do you charge by the hour?", a: "No. We provide flat-rate estimates based on the size of your home and distance. Your quote is your price." },
+      { q: "Do you charge by the hour?", a: "Yes, we charge hourly, but we do a detailed inventory and move analysis so our estimates are accurate within 10%. No surprises on move day." },
       { q: "Can you handle stairs and tight spaces?", a: "Absolutely. Our crews are experienced with walk-ups, narrow doorways, spiral staircases, and tight hallways." },
     ],
     relatedServices: ["packing-services", "storage", "specialty-moving"],
@@ -460,7 +460,7 @@ export const CITY_PAGES = {
     hub: "Glastonbury, CT Hub",
     headline: "Professional Movers in Avon, CT",
     intro: "Avon's beautiful properties deserve movers who match the standard. Castle Express provides meticulous moving services with accurate, upfront estimates — no hidden fees, no corner-cutting, just professional crews who protect your home and belongings.",
-    features: ["Experience with Avon's luxury properties", "Princess Packing™ available for pre-move day packing", "Flat-rate pricing — your estimate is your price"],
+    features: ["Experience with Avon's luxury properties", "Princess Packing™ available for pre-move day packing", "Accurate estimates — your quote is what you can expect to pay"],
     nearby: ["Simsbury", "Farmington", "Bloomfield", "Granby", "West Hartford"],
   },
   "farmington-ct": {
@@ -492,7 +492,7 @@ export const CITY_PAGES = {
     hub: "Glastonbury, CT Hub",
     headline: "Professional Movers in Vernon, CT",
     intro: "Whether you're moving from the Rockville section or a home near Fox Hill, Castle Express provides the same reliable, professional service Vernon families have come to count on.",
-    features: ["Serving all Vernon neighborhoods including Rockville", "Quick access from both our Enfield and Glastonbury hubs", "No hidden fees — flat-rate pricing guaranteed"],
+    features: ["Serving all Vernon neighborhoods including Rockville", "Quick access from both our Enfield and Glastonbury hubs", "No hidden fees — accurate, detailed estimates every time"],
     nearby: ["Tolland", "Ellington", "East Windsor", "Glastonbury", "Wethersfield"],
   },
   "west-hartford-ct": {
@@ -556,7 +556,7 @@ export const FAQ = [
   },
   {
     q: "How much does it cost to hire movers in Connecticut?",
-    a: "Castle Express provides flat-rate pricing based on the size of your home and distance — not hourly rates. There are no hidden fees, fuel surcharges, or surprise charges. Contact us for a free estimate.",
+    a: "Castle Express charges hourly but provides detailed, accurate estimates based on a thorough inventory and move analysis — we aim to be within 10% of every estimate. No hidden fees, no fuel surcharges, no surprise charges. Contact us for a free estimate.",
   },
   {
     q: "What is Princess Packing?",

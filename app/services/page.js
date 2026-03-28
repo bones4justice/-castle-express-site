@@ -64,7 +64,7 @@ export default function ServicesPage() {
         <div className="container-sm">
           <h2 className="heading-2">How Our Pricing Works</h2>
           <p className="body-md text-gray" style={{ lineHeight: 1.8, marginBottom: 24 }}>
-            We believe in transparent, upfront pricing. Your estimate is based on the size of your home, distance, and any special services you need. Once we assess your move, you get a clear, flat-rate quote—no surprises, no hidden fees.
+            We believe in transparent, upfront pricing. Your estimate is based on the size of your home, distance, and any special services you need. Once we assess your move, you get a clear, detailed estimate accurate within 10%—no surprises, no hidden fees.
           </p>
           {FAQ.map((faq, i) => (
             <div key={i} style={{ padding: "16px 0", borderBottom: "1px solid #E5E7EB" }}>
