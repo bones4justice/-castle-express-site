@@ -92,11 +92,7 @@ export default function ReferralForm() {
       };
       if (formData.referredEmail) smPayload.Email = formData.referredEmail;
       if (formData.moveDate) smPayload.MoveDate = formData.moveDate.replace(/-/g, "");
-      const noteParts = ["Referred by: " + formData.referrerFirstName + " " + formData.referrerLastName];
-      if (formData.referrerCompany) noteParts[0] += " (" + formData.referrerCompany + ")";
-      if (formData.referrerType) noteParts.push("Role: " + formData.referrerType);
-      if (formData.notes) noteParts.push(formData.notes);
-      smPayload.Notes = noteParts.join(" - ");
+      smPayload.Notes = `REFERRAL - Referred by: ${formData.referrerFirstName} ${formData.referrerLastName} | Phone: ${formData.referrerPhone} | Email: ${formData.referrerEmail} | Company: ${formData.referrerCompany} | Role: ${formData.referrerType}${formData.notes ? " | Notes: " + formData.notes : ""}`;
 
       const smRes = await fetch("https://api.smartmoving.com/api/leads/from-provider/v2?providerKey=d1cc3234-4fdc-4b3d-ad89-b0ec010a0ee8&branchId=352498a1-e171-40cd-8b35-ac5d011720d0", {
         method: "POST",
