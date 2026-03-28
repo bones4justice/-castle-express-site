@@ -63,20 +63,55 @@ export default function ReferralForm() {
     e.preventDefault();
     setSubmitting(true);
     setError(false);
+
+    // 1. Formspree — email notifications
     try {
       const response = await fetch("https://formspree.io/f/xnjojwly", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(formData),
       });
-      if (response.ok) {
-        setSubmitted(true);
-      } else {
+      if (!response.ok) {
         setError(true);
+        setSubmitting(false);
+        return;
       }
     } catch {
       setError(true);
+      setSubmitting(false);
+      return;
     }
+
+    // 2. SmartMoving — create lead from referred person's info
+    try {
+      const smPayload = {
+        FullName: (formData.referredFirstName + " " + formData.referredLastName).trim(),
+        PhoneNumber: formData.referredPhone,
+        ReferralSource: "Referral Program",
+        UserOptIn: true,
+      };
+      if (formData.referredEmail) smPayload.Email = formData.referredEmail;
+      if (formData.moveDate) smPayload.MoveDate = formData.moveDate.replace(/-/g, "");
+      const noteParts = ["Referred by: " + formData.referrerFirstName + " " + formData.referrerLastName];
+      if (formData.referrerCompany) noteParts[0] += " (" + formData.referrerCompany + ")";
+      if (formData.referrerType) noteParts.push("Role: " + formData.referrerType);
+      if (formData.notes) noteParts.push(formData.notes);
+      smPayload.Notes = noteParts.join(" - ");
+
+      const smRes = await fetch("https://api.smartmoving.com/api/leads/from-provider/v2?providerKey=d1cc3234-4fdc-4b3d-ad89-b0ec010a0ee8&branchId=352498a1-e171-40cd-8b35-ac5d011720d0", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(smPayload),
+      });
+      if (!smRes.ok) {
+        const smErr = await smRes.text();
+        console.error("SmartMoving API error:", smRes.status, smErr);
+      }
+    } catch (err) {
+      console.error("SmartMoving submission error:", err);
+    }
+
+    setSubmitted(true);
     setSubmitting(false);
   };
 
