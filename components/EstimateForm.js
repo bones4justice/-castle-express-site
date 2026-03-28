@@ -32,24 +32,29 @@ export default function EstimateForm({ dark = false }) {
     }
 
     // ──────────────────────────────────────────────────
-    // 2. SmartMoving — trigger native form submit so
-    //    SmartMoving's own script handles the submission
+    // 2. SmartMoving — POST to leads API
     // ──────────────────────────────────────────────────
     try {
-      const form = document.getElementById("smartmoving-form");
-      if (form) {
-        // Ensure DOM field values are in sync with React state
-        const setVal = (id, val) => { const el = form.querySelector("#" + id); if (el) el.value = val; };
-        setVal("customer-name", formData.name);
-        setVal("phone-number", formData.phone);
-        setVal("email", formData.email);
-        setVal("date", formData.moveDate);
-        setVal("origin-full", formData.moveFrom);
-        setVal("destination-full", formData.moveTo);
-        setVal("move-size", formData.moveSize);
-        setVal("how-did-you-hear-about-us", formData.source);
-        // Native submit bypasses React's onSubmit, lets SmartMoving's listener catch it
-        HTMLFormElement.prototype.submit.call(form);
+      const smPayload = {
+        FullName: formData.name,
+        PhoneNumber: formData.phone,
+        Email: formData.email,
+        UserOptIn: true,
+      };
+      if (formData.moveDate) smPayload.MoveDate = formData.moveDate.replace(/-/g, "");
+      if (formData.moveSize) smPayload.MoveSize = formData.moveSize;
+      if (formData.source) smPayload.ReferralSource = formData.source;
+      if (formData.moveFrom) smPayload.OriginAddressFull = formData.moveFrom;
+      if (formData.moveTo) smPayload.DestinationAddressFull = formData.moveTo;
+
+      const smRes = await fetch("https://api.smartmoving.com/api/leads/from-provider/v2?providerKey=8f882454-9968-445e-8f50-ac5d011a33fc&branchId=352498a1-e171-40cd-8b35-ac5d011720d0", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(smPayload),
+      });
+      if (!smRes.ok) {
+        const smErr = await smRes.text();
+        console.error("SmartMoving API error:", smRes.status, smErr);
       }
     } catch (err) {
       console.error("SmartMoving submission error:", err);
