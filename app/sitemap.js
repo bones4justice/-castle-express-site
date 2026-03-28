@@ -1,6 +1,7 @@
-import { CITY_PAGES, SERVICE_PAGES } from "@/content";
+import { CITY_DATA } from "@/lib/cityData";
+import { SERVICE_PAGES } from "@/content";
 
-const BASE = "https://castleexpressmoving.com";
+const BASE = "https://www.castleexpressmoving.com";
 
 export default function sitemap() {
   const now = new Date().toISOString();
@@ -8,12 +9,11 @@ export default function sitemap() {
   // Static pages
   const staticPages = [
     { url: `${BASE}/`, changeFrequency: "weekly", priority: 1.0 },
+    { url: `${BASE}/service-areas/`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/about/`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/services/`, changeFrequency: "monthly", priority: 0.9 },
-    { url: `${BASE}/service-areas/`, changeFrequency: "monthly", priority: 0.9 },
     { url: `${BASE}/contact/`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/referral/`, changeFrequency: "monthly", priority: 0.6 },
-    { url: `${BASE}/princess-packing.html`, changeFrequency: "monthly", priority: 0.7 },
   ].map(p => ({ ...p, lastModified: now }));
 
   // Service pages
@@ -24,12 +24,14 @@ export default function sitemap() {
     priority: 0.8,
   }));
 
-  // City pages
-  const cityPages = Object.keys(CITY_PAGES).map(slug => ({
-    url: `${BASE}/service-areas/${slug}/`,
+  // City pages — 82 town landing pages
+  const cityPages = CITY_DATA.map(city => ({
+    url: `${BASE}/${city.slug}/`,
     lastModified: now,
     changeFrequency: "monthly",
-    priority: 0.7,
+    priority: city.tier === "Tier 1 - Priority" ? 0.9 :
+              city.tier === "Tier 2 - Core" ? 0.8 :
+              city.tier === "Tier 3 - Extended" ? 0.7 : 0.6,
   }));
 
   return [...staticPages, ...servicePages, ...cityPages];
