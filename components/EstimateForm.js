@@ -32,20 +32,25 @@ export default function EstimateForm({ dark = false }) {
     }
 
     // ──────────────────────────────────────────────────
-    // 2. SmartMoving — sends leads to CRM
+    // 2. SmartMoving — sends leads to CRM via API
     // ──────────────────────────────────────────────────
     try {
-      console.log("SmartMoving object:", window.SmartMoving);
-      if (window.SmartMoving && typeof window.SmartMoving.submit === "function") {
-        window.SmartMoving.submit();
-      } else {
-        // Fallback: dispatch native submit so SmartMoving's listener catches it
-        const form = document.getElementById("smartmoving-form");
-        if (form) {
-          const nativeSubmit = Object.getOwnPropertyDescriptor(HTMLFormElement.prototype, "submit");
-          if (nativeSubmit) nativeSubmit.value.call(form);
-        }
-      }
+      await fetch("https://api.smartmoving.com/api/leads/from-provider/v2?providerId=8f882454-9968-445e-8f50-ac5d011a33fc", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          FullName: formData.name,
+          PhoneNumber: formData.phone,
+          Email: formData.email,
+          MoveDate: formData.moveDate,
+          MoveSize: formData.moveSize,
+          ReferralSource: formData.source,
+          OriginAddressFull: formData.moveFrom,
+          DestinationAddressFull: formData.moveTo,
+          BranchId: "352498a1-e171-40cd-8b35-ac5d011720d0",
+          UserOptIn: true,
+        }),
+      });
     } catch (err) {
       console.error("SmartMoving submission error:", err);
     }
