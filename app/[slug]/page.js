@@ -137,7 +137,7 @@ export default function CityPage({ params }) {
             {city.h1}
           </h1>
           <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: 12 }}>
-            Castle Express Moving &amp; Storage — family-owned, licensed &amp; insured, serving {city.town} and all of {city.stateFull} since {COMPANY.founded}. Located in Enfield, CT, just {city.drive} away.
+            Castle Express Moving &amp; Storage — family-owned, licensed &amp; insured, serving {city.town} and all of {city.stateFull} since {COMPANY.founded}. {city.slug === 'movers-enfield-ct' ? 'Based right here in Enfield.' : `Located in Enfield, CT, just ${city.drive} away.`}
           </p>
           {city.localBlurb && (
             <p className="body-md text-white-muted" style={{ maxWidth: 640, marginBottom: 24, opacity: 0.9 }}>
@@ -221,7 +221,7 @@ export default function CityPage({ params }) {
                 `Licensed & insured — USDOT# ${COMPANY.usdot}, CT Permit ${COMPANY.ctPermit}`,
                 "Accurate estimates — no hidden fees",
                 `${COMPANY.reviewCount} five-star Google reviews`,
-                `Serving ${city.town} from our Enfield, CT facility — just ${city.drive} away`,
+                city.slug === 'movers-enfield-ct' ? 'Based right here in Enfield, CT' : `Serving ${city.town} from our Enfield, CT facility - just ${city.drive} away`,
                 "Climate-controlled storage available",
                 "Same-day quotes, typically respond in 20 minutes",
               ].map((feat, i) => (
