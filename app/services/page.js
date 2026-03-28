@@ -4,7 +4,7 @@ import { Home, Building, Box, Shield, Truck, Check, ArrowRight } from "@/compone
 
 export const metadata = {
   title: "Our Moving Services",
-  description: "Residential moving, commercial relocations, full-service packing, climate-controlled storage, and specialty moving. Flat-rate pricing, no hidden fees. Serving CT and Western MA.",
+  description: "Residential moving, commercial relocations, full-service packing, climate-controlled storage, and specialty moving. Accurate estimates, no hidden fees. Serving CT and Western MA.",
   alternates: { canonical: "/services/" },
   openGraph: { title: "Moving Services | Castle Express Moving & Storage", description: "Residential, commercial, packing, storage, and specialty moving in CT & MA.", url: "/services/" },
 };
@@ -26,7 +26,7 @@ export default function ServicesPage() {
         <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-loading.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.1, pointerEvents: "none" }} />
         <div className="section-label" style={{ justifyContent: "center" }}><span>Our Services</span></div>
         <h1 className="heading-2 text-white">Everything You Need for a Stress-Free Move</h1>
-        <p className="body-md text-white-muted" style={{ maxWidth: 520, margin: "8px auto 0" }}>Flat-rate pricing. No hidden fees. Professional crews. Every time.</p>
+        <p className="body-md text-white-muted" style={{ maxWidth: 520, margin: "8px auto 0" }}>Accurate estimates. No hidden fees. Professional crews. Every time.</p>
       </section>
 
       <section className="section section-light">

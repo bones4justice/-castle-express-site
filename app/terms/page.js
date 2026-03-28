@@ -26,7 +26,7 @@ export default function TermsPage() {
 
           <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 16 }}>Estimates & Pricing</h2>
           <p style={{ marginBottom: 24 }}>
-            We provide flat-rate estimates based on the information you provide about your move. Final pricing may be
+            We provide detailed estimates based on the information you provide about your move. Final pricing may be
             adjusted if the actual move differs significantly from the estimate (e.g., additional items, access
             issues, or services not originally quoted). Any changes will be communicated before work begins.
           </p>

@@ -12,7 +12,7 @@ export function generateMetadata({ params }) {
   const city = CITY_PAGES[params.slug];
   if (!city) return {};
   const title = `Movers in ${city.fullName}`;
-  const description = `Professional moving services in ${city.fullName}. Flat-rate pricing, licensed & insured, A+ BBB rated. Family-owned since 2013. Call ${COMPANY.phone} for a free estimate.`;
+  const description = `Professional moving services in ${city.fullName}. Accurate estimates, licensed & insured, A+ BBB rated. Family-owned since 2013. Call ${COMPANY.phone} for a free estimate.`;
   return {
     title,
     description,

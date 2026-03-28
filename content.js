@@ -109,14 +109,14 @@ export const SERVICE_PAGES = {
     title: "Residential Moving",
     headline: "Your Home Move, Handled With Care",
     metaTitle: "Residential Moving Services in CT & MA",
-    metaDesc: "Professional residential movers serving Hartford County CT & Western MA. Flat-rate pricing, no hidden fees. Houses, apartments, condos & senior relocations. Call 1-888-553-4503.",
+    metaDesc: "Professional residential movers serving Hartford County CT & Western MA. Accurate, detailed estimates — no surprises. Houses, apartments, condos & senior relocations. Call 1-888-553-4503.",
     heroImage: "/images/truck-residential.jpg",
     intro: "Moving is one of life's biggest transitions — and Castle Express has been helping Connecticut and Massachusetts families navigate it since 2013. Whether you're moving across town or across the state, our professional crews handle every detail so you can focus on settling into your new home.",
     sections: [
       {
         heading: "What's Included in Every Residential Move",
         items: [
-          "Pre-move walkthrough and flat-rate estimate — no surprises on move day",
+          "Pre-move walkthrough and detailed estimate — no surprises on move day",
           "Professional loading with furniture pads, shrink wrap, and floor protection",
           "Safe transport in our clean, well-maintained fleet",
           "Careful unloading and furniture placement in your new home",
@@ -387,8 +387,8 @@ export const CITY_PAGES = {
     name: "East Windsor", state: "CT", fullName: "East Windsor, CT",
     hub: "Enfield, CT Hub",
     headline: "Trusted Movers in East Windsor, CT",
-    intro: "Whether you're moving from a condo off Route 5 or a farmhouse on Scantic Road, Castle Express delivers the same professional, flat-rate service East Windsor residents have trusted since 2013.",
-    features: ["Familiar with East Windsor neighborhoods and condo complexes", "Short drive from our Enfield headquarters", "Flat-rate pricing with no surprises"],
+    intro: "Whether you're moving from a condo off Route 5 or a farmhouse on Scantic Road, Castle Express delivers the same professional, reliable, professionally estimated service East Windsor residents have trusted since 2013.",
+    features: ["Familiar with East Windsor neighborhoods and condo complexes", "Short drive from our Enfield headquarters", "Accurate estimates with no surprises"],
     nearby: ["Enfield", "Ellington", "Somers", "Windsor Locks", "Vernon"],
   },
   "ellington-ct": {
@@ -404,7 +404,7 @@ export const CITY_PAGES = {
     hub: "Enfield, CT Hub",
     headline: "Reliable Moving Services in Granby, CT",
     intro: "Granby's mix of classic New England colonials and modern builds requires movers who pay attention. Castle Express crews protect hardwood floors, navigate narrow staircases, and treat every piece of furniture like their own.",
-    features: ["Careful with Granby's historic and custom homes", "Full-service packing and unpacking available", "Consistent flat-rate pricing"],
+    features: ["Careful with Granby's historic and custom homes", "Full-service packing and unpacking available", "Accurate, transparent pricing"],
     nearby: ["East Granby", "Simsbury", "Suffield", "Bloomfield", "Avon"],
   },
   "simsbury-ct": {
@@ -459,7 +459,7 @@ export const CITY_PAGES = {
     name: "Avon", state: "CT", fullName: "Avon, CT",
     hub: "Glastonbury, CT Hub",
     headline: "Professional Movers in Avon, CT",
-    intro: "Avon's beautiful properties deserve movers who match the standard. Castle Express provides meticulous, flat-rate moving services — no hidden fees, no corner-cutting, just professional crews who protect your home and belongings.",
+    intro: "Avon's beautiful properties deserve movers who match the standard. Castle Express provides meticulous moving services with accurate, upfront estimates — no hidden fees, no corner-cutting, just professional crews who protect your home and belongings.",
     features: ["Experience with Avon's luxury properties", "Princess Packing™ available for pre-move day packing", "Flat-rate pricing — your estimate is your price"],
     nearby: ["Simsbury", "Farmington", "Bloomfield", "Granby", "West Hartford"],
   },
@@ -476,7 +476,7 @@ export const CITY_PAGES = {
     hub: "Glastonbury, CT Hub",
     headline: "Newington's Trusted Moving Company",
     intro: "Newington's mix of split-levels, raised ranches, and newer construction means every move is different. Castle Express crews adapt to the property and get the job done right — every time.",
-    features: ["Experienced with Newington's diverse home styles", "Easy access via Route 175 and I-91", "Competitive flat-rate pricing for local moves"],
+    features: ["Experienced with Newington's diverse home styles", "Easy access via Route 175 and I-91", "Competitive, transparent pricing for local moves"],
     nearby: ["Wethersfield", "West Hartford", "Farmington", "Glastonbury", "Bloomfield"],
   },
   "tolland-ct": {
@@ -508,7 +508,7 @@ export const CITY_PAGES = {
     hub: "Glastonbury, CT Hub",
     headline: "Moving Services in Wethersfield, CT",
     intro: "As one of Connecticut's oldest towns, Wethersfield has homes that require extra care — and Castle Express delivers. Our crews are trained to handle antiques, narrow doorways, and the unique character of historic properties.",
-    features: ["Expertise with Wethersfield's historic Old Wethersfield homes", "Careful handling of antiques and delicate items", "Flat-rate pricing with no surprises"],
+    features: ["Expertise with Wethersfield's historic Old Wethersfield homes", "Careful handling of antiques and delicate items", "Accurate estimates with no surprises"],
     nearby: ["Glastonbury", "Newington", "West Hartford", "Farmington", "Vernon"],
   },
   "springfield-ma": {
@@ -523,7 +523,7 @@ export const CITY_PAGES = {
     name: "Agawam", state: "MA", fullName: "Agawam, MA",
     hub: "Western Massachusetts",
     headline: "Agawam, MA Moving Services",
-    intro: "Just across the Connecticut border, Agawam is a quick trip from our Enfield headquarters. Castle Express brings the same licensed, insured, flat-rate moving service that Hartford County residents have trusted since 2013.",
+    intro: "Just across the Connecticut border, Agawam is a quick trip from our Enfield headquarters. Castle Express brings the same licensed, insured, professionally estimated moving service that Hartford County residents have trusted since 2013.",
     features: ["Just over the CT border — fast response from Enfield", "Licensed for interstate moves between CT and MA", "Serving Agawam, Feeding Hills, and surrounding areas"],
     nearby: ["Springfield", "Suffield", "Enfield", "Granby", "East Granby"],
   },
@@ -572,7 +572,7 @@ export const FAQ = [
   },
   {
     q: "What makes Castle Express different from other movers?",
-    a: "Castle Express is family-owned by Joe Caronna since 2013, not a franchise or broker. We provide flat-rate pricing with no hidden fees, employ our own professional crews, and maintain a 4.9-star Google rating with over 200 reviews. We're A+ BBB rated and fully licensed.",
+    a: "Castle Express is family-owned by Joe Caronna since 2013, not a franchise or broker. We provide accurate, detailed estimates with no hidden fees, employ our own professional crews, and maintain a 4.9-star Google rating with over 200 reviews. We're A+ BBB rated and fully licensed.",
   },
   {
     q: "Do you offer commercial and office moving?",

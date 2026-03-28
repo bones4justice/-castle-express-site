@@ -27,10 +27,10 @@ export default function HomePage() {
               Professional Movers in <span className="text-gold">CT & MA</span>
             </h1>
             <p className="body-lg text-white-muted" style={{ marginBottom: 28, maxWidth: 520 }}>
-              Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2013. Flat-rate pricing, no hidden fees, and professional crews who treat your belongings like their own.
+              Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2013. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
-              {["Licensed & Insured", "Flat-Rate Pricing", `${COMPANY.reviewCount} 5-Star Reviews`].map(item => (
+              {["Licensed & Insured", "Accurate Estimates", `${COMPANY.reviewCount} 5-Star Reviews`].map(item => (
                 <div key={item} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <Check />
                   <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "rgba(255,255,255,0.85)" }}>{item}</span>
@@ -101,7 +101,7 @@ export default function HomePage() {
               Whether you're moving across town in Enfield or relocating from Hartford to Springfield, our moving company handles residential moves, commercial relocations, full-service packing, climate-controlled storage, and specialty items like pianos and gun safes. Every move includes a detailed walkthrough, furniture protection, and careful placement at your new home.
             </p>
             {[
-              { title: "Flat-Rate Pricing", desc: "No surprise charges. Your estimate is your price." },
+              { title: "Accurate Estimates", desc: "No surprise charges. Your estimate is your price." },
               { title: "Family-Owned & Operated", desc: "Not a franchise. Real people who care about your move." },
               { title: "Professional, Vetted Crews", desc: "Respectful movers who handle your belongings like their own." },
             ].map((item, i) => (
