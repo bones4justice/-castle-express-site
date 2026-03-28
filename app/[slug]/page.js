@@ -73,7 +73,7 @@ export default function CityPage({ params }) {
         name: `How much do movers cost in ${city.town}, ${city.state}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `The cost of movers in ${city.town} varies by job size and distance. Castle Express Moving & Storage offers flat-rate pricing with free quotes. Most local moves in ${city.town} range from $400–$1,200 depending on home size. Call us at ${COMPANY.phone} for a free estimate.`,
+          text: `The cost of movers in ${city.town} varies by job size and distance. Castle Express Moving & Storage offers accurate, transparent estimates with free quotes. Most local moves in ${city.town} range from $400–$1,200 depending on home size. Call us at ${COMPANY.phone} for a free estimate.`,
         },
       },
       {
@@ -168,7 +168,7 @@ export default function CityPage({ params }) {
               Local Moving in <span className="text-gold">{city.town}</span>
             </h2>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 24 }}>
-              Whether you&apos;re moving across town or to a neighboring community, our local moving team in {city.town} makes the process simple and stress-free. We show up on time, handle your belongings with care, and get you moved without the headaches. Our flat-rate pricing means no surprises on move day.
+              Whether you&apos;re moving across town or to a neighboring community, our local moving team in {city.town} makes the process simple and stress-free. We show up on time, handle your belongings with care, and get you moved without the headaches. Our accurate, upfront estimates mean no surprises on move day.
             </p>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
               As local movers serving {city.town}, {city.state}, we bring years of experience navigating {city.stateFull} roads, buildings, and neighborhoods — so your move goes smoothly from start to finish.
@@ -214,7 +214,7 @@ export default function CityPage({ params }) {
               {[
                 `Family-owned and operated since ${COMPANY.founded}`,
                 `Licensed & insured — USDOT# ${COMPANY.usdot}, CT Permit ${COMPANY.ctPermit}`,
-                "Flat-rate pricing — no hidden fees",
+                "Accurate estimates — no hidden fees",
                 `${COMPANY.reviewCount} five-star Google reviews`,
                 `Serving ${city.town} from our Enfield, CT facility — just ${city.drive} away`,
                 "Climate-controlled storage available",
@@ -255,7 +255,7 @@ export default function CityPage({ params }) {
             <div style={{ marginBottom: 32 }}>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>How much do movers cost in {city.town}, {city.state}?</summary>
-                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>The cost varies by home size and distance. Most local moves in {city.town} range from $400–$1,200. We offer free flat-rate quotes — call {COMPANY.phone} or fill out the form.</p>
+                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>The cost varies by home size and distance. Most local moves in {city.town} range from $400–$1,200. We offer free accurate estimates — call {COMPANY.phone} or fill out the form.</p>
               </details>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>Is Castle Express licensed and insured in {city.state}?</summary>
