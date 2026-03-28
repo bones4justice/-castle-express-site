@@ -136,9 +136,14 @@ export default function CityPage({ params }) {
           <h1 className="heading-1" style={{ color: "#fff", marginBottom: 16, fontSize: "clamp(28px, 4vw, 44px)" }}>
             {city.h1}
           </h1>
-          <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: 24 }}>
+          <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: 12 }}>
             Castle Express Moving &amp; Storage — family-owned, licensed &amp; insured, serving {city.town} and all of {city.stateFull} since {COMPANY.founded}. Located in Enfield, CT, just {city.drive} away.
           </p>
+          {city.localBlurb && (
+            <p className="body-md text-white-muted" style={{ maxWidth: 640, marginBottom: 24, opacity: 0.9 }}>
+              {city.localBlurb}
+            </p>
+          )}
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
             <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> {COMPANY.phone}</a>
