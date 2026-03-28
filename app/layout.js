@@ -62,6 +62,16 @@ export default function RootLayout({ children }) {
           src="https://api.smartmoving.com/api/public/lead-provider-settings/8f882454-9968-445e-8f50-ac5d011a33fc/script"
           strategy="afterInteractive"
         />
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-97Z4EHJM63"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">{`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-97Z4EHJM63');
+        `}</Script>
       </head>
       <body>
         <script
