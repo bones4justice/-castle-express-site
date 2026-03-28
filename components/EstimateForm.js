@@ -19,7 +19,7 @@ export default function EstimateForm({ dark = false }) {
     setLoading(true);
 
     // ──────────────────────────────────────────────────
-    // Formspree — sends leads to your email
+    // 1. Formspree — sends leads to your email
     // ──────────────────────────────────────────────────
     try {
       await fetch("https://formspree.io/f/xpqjkjga", {
@@ -28,8 +28,28 @@ export default function EstimateForm({ dark = false }) {
         body: JSON.stringify(formData),
       });
     } catch (err) {
-      console.error("Form submission error:", err);
+      console.error("Formspree submission error:", err);
     }
+
+    // ──────────────────────────────────────────────────
+    // 2. SmartMoving — sends leads to CRM
+    // ──────────────────────────────────────────────────
+    try {
+      console.log("SmartMoving object:", window.SmartMoving);
+      if (window.SmartMoving && typeof window.SmartMoving.submit === "function") {
+        window.SmartMoving.submit();
+      } else {
+        // Fallback: dispatch native submit so SmartMoving's listener catches it
+        const form = document.getElementById("smartmoving-form");
+        if (form) {
+          const nativeSubmit = Object.getOwnPropertyDescriptor(HTMLFormElement.prototype, "submit");
+          if (nativeSubmit) nativeSubmit.value.call(form);
+        }
+      }
+    } catch (err) {
+      console.error("SmartMoving submission error:", err);
+    }
+
     setLoading(false);
     setSubmitted(true);
   };
