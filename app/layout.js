@@ -58,6 +58,10 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+        <Script
+          src="https://api.smartmoving.com/api/public/lead-provider-settings/8f882454-9968-445e-8f50-ac5d011a33fc/script"
+          strategy="afterInteractive"
+        />
       </head>
       <body>
         <script

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Script from "next/script";
 import { MOVE_SIZES, LEAD_SOURCES, COMPANY } from "@/content";
 import { Check, ArrowRight } from "@/components/Icons";
 
@@ -79,7 +80,7 @@ export default function EstimateForm({ dark = false }) {
 
   // ─── Form ───
   return (
-    <form onSubmit={handleSubmit} style={{
+    <form id="smartmoving-form" onSubmit={handleSubmit} style={{
       background: bg, borderRadius: 12, padding: "28px 24px",
       border: dark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #E5E7EB",
     }}>
@@ -94,39 +95,39 @@ export default function EstimateForm({ dark = false }) {
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <div>
-          <label htmlFor="est-name" style={labelStyle}>Name</label>
-          <input id="est-name" name="name" style={inputStyle} placeholder="Your full name" value={formData.name} onChange={update("name")} required aria-label="Name" />
+          <label htmlFor="customer-name" style={labelStyle}>Name</label>
+          <input id="customer-name" name="name" style={inputStyle} placeholder="Your full name" value={formData.name} onChange={update("name")} required aria-label="Name" />
         </div>
         <div>
-          <label htmlFor="est-phone" style={labelStyle}>Phone</label>
-          <input id="est-phone" name="phone" style={inputStyle} placeholder="(860) 555-0123" type="tel" value={formData.phone} onChange={update("phone")} required aria-label="Phone" />
+          <label htmlFor="phone-number" style={labelStyle}>Phone</label>
+          <input id="phone-number" name="phone" style={inputStyle} placeholder="(860) 555-0123" type="tel" value={formData.phone} onChange={update("phone")} required aria-label="Phone" />
         </div>
         <div>
-          <label htmlFor="est-email" style={labelStyle}>Email</label>
-          <input id="est-email" name="email" style={inputStyle} placeholder="you@email.com" type="email" value={formData.email} onChange={update("email")} required aria-label="Email" />
+          <label htmlFor="email" style={labelStyle}>Email</label>
+          <input id="email" name="email" style={inputStyle} placeholder="you@email.com" type="email" value={formData.email} onChange={update("email")} required aria-label="Email" />
         </div>
         <div>
-          <label htmlFor="est-date" style={labelStyle}>Move Date</label>
-          <input id="est-date" name="moveDate" style={inputStyle} type="date" value={formData.moveDate} onChange={update("moveDate")} aria-label="Move Date" />
+          <label htmlFor="date" style={labelStyle}>Move Date</label>
+          <input id="date" name="moveDate" style={inputStyle} type="date" value={formData.moveDate} onChange={update("moveDate")} aria-label="Move Date" />
         </div>
         <div>
-          <label htmlFor="est-from" style={labelStyle}>Moving From</label>
-          <input id="est-from" name="moveFrom" style={inputStyle} placeholder="City, State or ZIP" value={formData.moveFrom} onChange={update("moveFrom")} aria-label="Moving From" />
+          <label htmlFor="origin-full" style={labelStyle}>Moving From</label>
+          <input id="origin-full" name="moveFrom" style={inputStyle} placeholder="City, State or ZIP" value={formData.moveFrom} onChange={update("moveFrom")} aria-label="Moving From" />
         </div>
         <div>
-          <label htmlFor="est-to" style={labelStyle}>Moving To</label>
-          <input id="est-to" name="moveTo" style={inputStyle} placeholder="City, State or ZIP" value={formData.moveTo} onChange={update("moveTo")} aria-label="Moving To" />
+          <label htmlFor="destination-full" style={labelStyle}>Moving To</label>
+          <input id="destination-full" name="moveTo" style={inputStyle} placeholder="City, State or ZIP" value={formData.moveTo} onChange={update("moveTo")} aria-label="Moving To" />
         </div>
         <div>
-          <label htmlFor="est-size" style={labelStyle}>Move Size</label>
-          <select id="est-size" name="moveSize" style={{ ...inputStyle, appearance: "auto" }} value={formData.moveSize} onChange={update("moveSize")} aria-label="Move Size">
+          <label htmlFor="move-size" style={labelStyle}>Move Size</label>
+          <select id="move-size" name="moveSize" style={{ ...inputStyle, appearance: "auto" }} value={formData.moveSize} onChange={update("moveSize")} aria-label="Move Size">
             <option value="">Select size...</option>
             {MOVE_SIZES.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
         <div>
-          <label htmlFor="est-source" style={labelStyle}>How did you find us?</label>
-          <select id="est-source" name="source" style={{ ...inputStyle, appearance: "auto" }} value={formData.source} onChange={update("source")} aria-label="How did you find us?">
+          <label htmlFor="how-did-you-hear-about-us" style={labelStyle}>How did you find us?</label>
+          <select id="how-did-you-hear-about-us" name="source" style={{ ...inputStyle, appearance: "auto" }} value={formData.source} onChange={update("source")} aria-label="How did you find us?">
             <option value="">Select...</option>
             {LEAD_SOURCES.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
@@ -145,6 +146,29 @@ export default function EstimateForm({ dark = false }) {
       }}>
         By submitting, you agree to our Terms of Service and Privacy Policy.
       </p>
+
+      {/* SmartMoving hidden fields */}
+      <input type="hidden" id="branch-id" value="352498a1-e171-40cd-8b35-ac5d011720d0" />
+      <input type="hidden" id="user-opt-in" value="true" />
+
+      {/* SmartMoving field mapping */}
+      <Script id="smartmoving-mapping" strategy="afterInteractive">{`
+        window.SmartMoving = window.SmartMoving || {};
+        window.SmartMoving.config = window.SmartMoving.config || {};
+        window.SmartMoving.config.formSelector = '#smartmoving-form';
+        window.SmartMoving.mapping = {
+          'customer-name': { target: 'FullName', required: true },
+          'phone-number': { target: 'PhoneNumber', required: true },
+          'email': { target: 'Email', required: true },
+          'date': { target: 'MoveDate', required: true },
+          'move-size': { target: 'MoveSize', required: false },
+          'how-did-you-hear-about-us': { target: 'ReferralSource', required: false },
+          'branch-id': { target: 'BranchId', required: false },
+          'user-opt-in': { target: 'UserOptIn', required: true },
+          'origin-full': { target: 'OriginAddressFull', required: false },
+          'destination-full': { target: 'DestinationAddressFull', required: false },
+        };
+      `}</Script>
     </form>
   );
 }
