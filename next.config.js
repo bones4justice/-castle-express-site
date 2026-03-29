@@ -100,6 +100,22 @@ const nextConfig = {
       { source: '/service-areas/springfield-ma/', destination: '/movers-springfield-ma', permanent: true },
       { source: '/service-areas/agawam-ma', destination: '/movers-agawam-ma', permanent: true },
       { source: '/service-areas/agawam-ma/', destination: '/movers-agawam-ma', permanent: true },
+      // Blog post redirects from old WordPress URLs
+      { source: '/moving-companies-in-connecticut-how-to-choose-the-best-one-in-2024/', destination: '/blog/how-to-choose-a-moving-company-in-connecticut/', permanent: true },
+      { source: '/moving-companies-in-connecticut-how-to-choose-the-best-one-in-2024', destination: '/blog/how-to-choose-a-moving-company-in-connecticut/', permanent: true },
+      { source: '/moving-with-castle-express/', destination: '/blog/why-castle-express/', permanent: true },
+      { source: '/moving-with-castle-express', destination: '/blog/why-castle-express/', permanent: true },
+      { source: '/moving-in-and-living-to-ellington-a-practical-guide-in-2024/', destination: '/blog/moving-to-ellington-ct/', permanent: true },
+      { source: '/moving-in-and-living-to-ellington-a-practical-guide-in-2024', destination: '/blog/moving-to-ellington-ct/', permanent: true },
+      { source: '/moving-and-packing-fragile-items-heres-what-you-should-do-and-not-do/', destination: '/blog/how-to-pack-fragile-items-for-a-move/', permanent: true },
+      { source: '/moving-and-packing-fragile-items-heres-what-you-should-do-and-not-do', destination: '/blog/how-to-pack-fragile-items-for-a-move/', permanent: true },
+      { source: '/moving-company-ct-how-to-avoid-common-hiring-mistakes/', destination: '/blog/how-to-avoid-getting-burned-by-a-moving-company/', permanent: true },
+      { source: '/moving-company-ct-how-to-avoid-common-hiring-mistakes', destination: '/blog/how-to-avoid-getting-burned-by-a-moving-company/', permanent: true },
+      // Old blog index redirects
+      { source: '/blogs/', destination: '/blog/', permanent: true },
+      { source: '/blogs', destination: '/blog/', permanent: true },
+      { source: '/moving-tips/', destination: '/blog/', permanent: true },
+      { source: '/moving-tips', destination: '/blog/', permanent: true },
     ];
   },
 };

@@ -1,5 +1,6 @@
 import { CITY_DATA } from "@/lib/cityData";
 import { SERVICE_PAGES } from "@/content";
+import { getAllPosts } from "@/lib/blogData";
 
 const BASE = "https://www.castleexpressmoving.com";
 
@@ -34,5 +35,14 @@ export default function sitemap() {
               city.tier === "Tier 3 - Extended" ? 0.7 : 0.6,
   }));
 
-  return [...staticPages, ...servicePages, ...cityPages];
+  // Blog pages
+  const blogIndex = [{ url: `${BASE}/blog/`, lastModified: now, changeFrequency: "weekly", priority: 0.7 }];
+  const blogPosts = getAllPosts().map(post => ({
+    url: `${BASE}/blog/${post.slug}/`,
+    lastModified: now,
+    changeFrequency: "monthly",
+    priority: 0.6,
+  }));
+
+  return [...staticPages, ...servicePages, ...cityPages, ...blogIndex, ...blogPosts];
 }
