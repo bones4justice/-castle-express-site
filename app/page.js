@@ -95,7 +95,7 @@ export default function HomePage() {
             <SectionLabel>Why Castle Express</SectionLabel>
             <h2 className="heading-2">Built on Values, Not Just Trucks</h2>
             <p className="body-md text-gray" style={{ marginBottom: 16 }}>
-              Joe Caronna started Castle Express in {COMPANY.founded} with one truck and a commitment to treat every customer like family. Today we operate a fleet of {COMPANY.truckCount} trucks from our {COMPANY.facilitySize} sq ft facility in {COMPANY.city}, {COMPANY.state}—but the values haven't changed.
+              Joe Caronna started Castle Express in {COMPANY.founded} with one truck and a commitment to treat every customer like family. Today we operate a fleet of {COMPANY.truckCount} trucks from our {COMPANY.facilitySize} sq ft facility in {COMPANY.city}, {COMPANY.state} - but the values haven't changed.
             </p>
             <p className="body-md text-gray" style={{ marginBottom: 28 }}>
               Whether you're moving across town in Enfield or relocating from Hartford to Springfield, our moving company handles residential moves, commercial relocations, full-service packing, climate-controlled storage, and specialty items like pianos and gun safes. Every move includes a detailed walkthrough, furniture protection, and careful placement at your new home.
@@ -177,7 +177,7 @@ export default function HomePage() {
             <SectionLabel>Coverage Area</SectionLabel>
             <h2 className="heading-2">Proudly Serving CT & Western MA</h2>
             <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
-              Our moving company provides local and long-distance service throughout Hartford County, the Connecticut River Valley, and Western Massachusetts. From Suffield to Glastonbury, Manchester to West Hartford—we know every neighborhood.
+              Our moving company provides local and long-distance service throughout Hartford County, the Connecticut River Valley, and Western Massachusetts. From Suffield to Glastonbury, Manchester to West Hartford - we know every neighborhood.
             </p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
@@ -250,7 +250,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── FAQ — Schema + Crawlable HTML + Elfsight Visual ─── */}
+      {/* ─── FAQ  -  Schema + Crawlable HTML + Elfsight Visual ─── */}
       <section className="section" aria-label="Frequently asked questions">
         <div className="container-sm">
           {/* FAQ Schema for Google & AI */}
@@ -280,7 +280,7 @@ export default function HomePage() {
           {/* Elfsight visual widget */}
           <div className="elfsight-app-f4e21ae8-4f51-4e3e-ad56-8f2f0dba67e9" data-elfsight-app-lazy></div>
 
-          {/* Crawlable HTML fallback — visible to AI/LLMs even if Elfsight doesn't load */}
+          {/* Crawlable HTML fallback  -  visible to AI/LLMs even if Elfsight doesn't load */}
           <div style={{ marginTop: 32 }}>
             {FAQ.map((item, i) => (
               <div key={i} style={{ padding: "16px 0", borderBottom: "1px solid #E5E7EB" }}>

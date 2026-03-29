@@ -137,7 +137,7 @@ export default function CityPage({ params }) {
             {city.h1}
           </h1>
           <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: 12 }}>
-            Castle Express Moving &amp; Storage — family-owned, licensed &amp; insured, serving {city.town} and all of {city.stateFull} since {COMPANY.founded}. {city.slug === 'movers-enfield-ct' ? 'Based right here in Enfield.' : `Located in Enfield, CT, just ${city.drive} away.`}
+            Castle Express Moving &amp; Storage  -  family-owned, licensed &amp; insured, serving {city.town} and all of {city.stateFull} since {COMPANY.founded}. {city.slug === 'movers-enfield-ct' ? 'Based right here in Enfield.' : `Located in Enfield, CT, just ${city.drive} away.`}
           </p>
           {city.localBlurb && (
             <p className="body-md text-white-muted" style={{ maxWidth: 640, marginBottom: 24, opacity: 0.9 }}>
@@ -165,7 +165,7 @@ export default function CityPage({ params }) {
       {/* MAIN CONTENT */}
       <section className="section">
         <div className="container grid-2" style={{ alignItems: "start" }}>
-          {/* Left — Content */}
+          {/* Left  -  Content */}
           <div>
             {/* LOCAL MOVING */}
             <div className="section-label"><span>{city.h2_local}</span></div>
@@ -176,7 +176,7 @@ export default function CityPage({ params }) {
               Whether you&apos;re moving across town or to a neighboring community, our local moving team in {city.town} makes the process simple and stress-free. We show up on time, handle your belongings with care, and get you moved without the headaches. Our accurate, upfront estimates mean no surprises on move day.
             </p>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
-              As local movers serving {city.town}, {city.state}, we bring years of experience navigating {city.stateFull} roads, buildings, and neighborhoods — so your move goes smoothly from start to finish.
+              As local movers serving {city.town}, {city.state}, we bring years of experience navigating {city.stateFull} roads, buildings, and neighborhoods  -  so your move goes smoothly from start to finish.
             </p>
 
             {/* LONG DISTANCE */}
@@ -184,7 +184,7 @@ export default function CityPage({ params }) {
               {city.h2_ld}
             </h2>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
-              Planning a long-distance move from {city.town}? Castle Express is licensed for interstate moves and handles relocations throughout New England and beyond. We coordinate every detail — from packing and loading to transport and delivery — so you can focus on your fresh start.
+              Planning a long-distance move from {city.town}? Castle Express is licensed for interstate moves and handles relocations throughout New England and beyond. We coordinate every detail  -  from packing and loading to transport and delivery  -  so you can focus on your fresh start.
             </p>
 
             {/* SPECIALTY */}
@@ -200,7 +200,7 @@ export default function CityPage({ params }) {
               {city.h2_packing}
             </h2>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
-              Don&apos;t have time to pack? Our professional packing team comes to your {city.town} home, handles all materials, and packs everything securely. Choose full-service packing or partial — including our Princess Packing™ white-glove option for fragile or high-value items.
+              Don&apos;t have time to pack? Our professional packing team comes to your {city.town} home, handles all materials, and packs everything securely. Choose full-service packing or partial  -  including our Princess Packing™ white-glove option for fragile or high-value items.
             </p>
 
             {/* COMMERCIAL */}
@@ -208,7 +208,7 @@ export default function CityPage({ params }) {
               {city.h2_commercial}
             </h2>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
-              Castle Express handles commercial and office relocations in {city.town} with minimal downtime and maximum efficiency. We work around your schedule to keep your business moving — from small offices to multi-floor commercial builds.
+              Castle Express handles commercial and office relocations in {city.town} with minimal downtime and maximum efficiency. We work around your schedule to keep your business moving  -  from small offices to multi-floor commercial builds.
             </p>
 
             {/* WHY CHOOSE US */}
@@ -218,8 +218,8 @@ export default function CityPage({ params }) {
             <div style={{ marginBottom: 32 }}>
               {[
                 `Family-owned and operated since ${COMPANY.founded}`,
-                `Licensed & insured — USDOT# ${COMPANY.usdot}, CT Permit ${COMPANY.ctPermit}`,
-                "Accurate estimates — no hidden fees",
+                `Licensed & insured  -  USDOT# ${COMPANY.usdot}, CT Permit ${COMPANY.ctPermit}`,
+                "Accurate estimates  -  no hidden fees",
                 `${COMPANY.reviewCount} five-star Google reviews`,
                 city.slug === 'movers-enfield-ct' ? 'Based right here in Enfield, CT' : `Serving ${city.town} from our Enfield, CT facility - just ${city.drive} away`,
                 "Climate-controlled storage available",
@@ -255,12 +255,12 @@ export default function CityPage({ params }) {
 
             {/* FAQ */}
             <h2 className="heading-2" style={{ marginBottom: 16 }}>
-              Frequently Asked Questions — Movers in {city.town}, {city.state}
+              Frequently Asked Questions  -  Movers in {city.town}, {city.state}
             </h2>
             <div style={{ marginBottom: 32 }}>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>How much do movers cost in {city.town}, {city.state}?</summary>
-                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>The cost varies by home size and distance. Most local moves in {city.town} range from $400–$1,200. We offer free accurate estimates — call {COMPANY.phone} or fill out the form.</p>
+                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>The cost varies by home size and distance. Most local moves in {city.town} range from $400–$1,200. We offer free accurate estimates  -  call {COMPANY.phone} or fill out the form.</p>
               </details>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>Is Castle Express licensed and insured in {city.state}?</summary>
@@ -268,11 +268,11 @@ export default function CityPage({ params }) {
               </details>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>How far in advance should I book?</summary>
-                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>2–4 weeks is ideal, especially May–September. We do accommodate last-minute moves — call to check availability.</p>
+                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>2–4 weeks is ideal, especially May–September. We do accommodate last-minute moves  -  call to check availability.</p>
               </details>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>Do you offer packing services in {city.town}?</summary>
-                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>Yes — full packing, partial packing, and our Princess Packing™ white-glove option. We bring all materials. Ask when you call.</p>
+                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>Yes  -  full packing, partial packing, and our Princess Packing™ white-glove option. We bring all materials. Ask when you call.</p>
               </details>
             </div>
 
@@ -297,7 +297,7 @@ export default function CityPage({ params }) {
             </Link>
           </div>
 
-          {/* Right — Estimate Form */}
+          {/* Right  -  Estimate Form */}
           <div style={{ position: "sticky", top: 96 }}>
             <EstimateForm />
           </div>

@@ -4,7 +4,7 @@ import { COMPANY } from "@/content";
 import { MapPin } from "@/components/Icons";
 
 export const metadata = {
-  title: "Service Areas | Castle Express Moving & Storage — CT & MA",
+  title: "Service Areas | Castle Express Moving & Storage  -  CT & MA",
   description: "Castle Express Moving serves 82 towns across Hartford County CT, Western Massachusetts, and beyond. Find your town and get a free moving quote today.",
   alternates: { canonical: "/service-areas/" },
   openGraph: {
@@ -15,7 +15,7 @@ export const metadata = {
 };
 
 const tiers = [
-  { key: "Tier 1 - Priority", label: "Primary Service Area", desc: "Our home turf — fastest response, deepest local knowledge" },
+  { key: "Tier 1 - Priority", label: "Primary Service Area", desc: "Our home turf  -  fastest response, deepest local knowledge" },
   { key: "Tier 2 - Core", label: "Core Service Area", desc: "Regularly serviced areas across CT and Western MA" },
   { key: "Tier 3 - Extended", label: "Extended Service Area", desc: "Extended coverage across Connecticut and Massachusetts" },
   { key: "Tier 4 - Outer Reach", label: "Outer Service Area", desc: "We travel further for the right move" },

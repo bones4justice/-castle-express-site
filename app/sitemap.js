@@ -25,7 +25,7 @@ export default function sitemap() {
     priority: 0.8,
   }));
 
-  // City pages — 82 town landing pages
+  // City pages  -  82 town landing pages
   const cityPages = CITY_DATA.map(city => ({
     url: `${BASE}/${city.slug}/`,
     lastModified: now,

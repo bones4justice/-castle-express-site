@@ -64,7 +64,7 @@ export default function ReferralForm() {
     setSubmitting(true);
     setError(false);
 
-    // 1. Formspree — email notifications
+    // 1. Formspree  -  email notifications
     try {
       const response = await fetch("https://formspree.io/f/xnjojwly", {
         method: "POST",
@@ -82,7 +82,7 @@ export default function ReferralForm() {
       return;
     }
 
-    // 2. SmartMoving — create lead from referred person's info
+    // 2. SmartMoving  -  create lead from referred person's info
     try {
       const smPayload = {
         FullName: (formData.referredFirstName + " " + formData.referredLastName).trim(),

@@ -43,8 +43,8 @@ export const SERVICES = [
   {
     id: "residential",
     title: "Residential Moving",
-    shortDesc: "Local and long-distance home moves. Houses, apartments, condos, senior relocations, and downsizing—handled with care.",
-    fullDesc: "Whether you're moving across town or across the state, we make home moves smooth, efficient, and stress-free. Houses, apartments, condos, townhouses, senior relocations, and downsizing—we've done it all.",
+    shortDesc: "Local and long-distance home moves. Houses, apartments, condos, senior relocations, and downsizing - handled with care.",
+    fullDesc: "Whether you're moving across town or across the state, we make home moves smooth, efficient, and stress-free. Houses, apartments, condos, townhouses, senior relocations, and downsizing - we've done it all.",
     features: [
       "Local & long-distance moves",
       "Senior relocations & downsizing",
@@ -109,14 +109,14 @@ export const SERVICE_PAGES = {
     title: "Residential Moving",
     headline: "Your Home Move, Handled With Care",
     metaTitle: "Residential Moving Services in CT & MA",
-    metaDesc: "Professional residential movers serving Hartford County CT & Western MA. Accurate, detailed estimates — no surprises. Houses, apartments, condos & senior relocations. Call 1-888-553-4503.",
+    metaDesc: "Professional residential movers serving Hartford County CT & Western MA. Accurate, detailed estimates  -  no surprises. Houses, apartments, condos & senior relocations. Call 1-888-553-4503.",
     heroImage: "/images/truck-residential.jpg",
-    intro: "Moving is one of life's biggest transitions — and Castle Express has been helping Connecticut and Massachusetts families navigate it since 2013. Whether you're moving across town or across the state, our professional crews handle every detail so you can focus on settling into your new home.",
+    intro: "Moving is one of life's biggest transitions  -  and Castle Express has been helping Connecticut and Massachusetts families navigate it since 2013. Whether you're moving across town or across the state, our professional crews handle every detail so you can focus on settling into your new home.",
     sections: [
       {
         heading: "What's Included in Every Residential Move",
         items: [
-          "Pre-move walkthrough and detailed estimate — no surprises on move day",
+          "Pre-move walkthrough and detailed estimate  -  no surprises on move day",
           "Professional loading with furniture pads, shrink wrap, and floor protection",
           "Safe transport in our clean, well-maintained fleet",
           "Careful unloading and furniture placement in your new home",
@@ -126,18 +126,18 @@ export const SERVICE_PAGES = {
       {
         heading: "Types of Home Moves We Handle",
         items: [
-          "Single-family homes — from starter homes to large estates",
-          "Apartments and condos — including walk-ups and elevator buildings",
+          "Single-family homes  -  from starter homes to large estates",
+          "Apartments and condos  -  including walk-ups and elevator buildings",
           "Townhouses and multi-level homes",
-          "Senior relocations and downsizing — patient, respectful crews",
-          "Double closings — we can hold your belongings overnight if needed",
+          "Senior relocations and downsizing  -  patient, respectful crews",
+          "Double closings  -  we can hold your belongings overnight if needed",
           "Local moves within CT and MA, plus long-distance relocations",
         ],
       },
     ],
     callout: "Every residential move includes padded furniture protection, floor coverings, and a dedicated crew leader who manages your move from start to finish.",
     faq: [
-      { q: "How far in advance should I book?", a: "We recommend 2-3 weeks, especially during peak season (May-September). We accommodate last-minute moves when possible — just call." },
+      { q: "How far in advance should I book?", a: "We recommend 2-3 weeks, especially during peak season (May-September). We accommodate last-minute moves when possible  -  just call." },
       { q: "Do you charge by the hour?", a: "Yes, we charge hourly, but we do a detailed inventory and move analysis so our estimates are accurate within 10%. No surprises on move day." },
       { q: "Can you handle stairs and tight spaces?", a: "Absolutely. Our crews are experienced with walk-ups, narrow doorways, spiral staircases, and tight hallways." },
     ],
@@ -152,16 +152,16 @@ export const SERVICE_PAGES = {
     metaTitle: "Commercial & Office Movers in CT & MA",
     metaDesc: "Office and commercial movers serving Hartford County CT & Western MA. Minimal downtime, after-hours scheduling, IT coordination. Licensed & insured. Call 1-888-553-4503.",
     heroImage: "/images/truck-brick-building.jpg",
-    intro: "Your business doesn't stop for a move — and neither do we. Castle Express plans and executes commercial relocations around your schedule, minimizing disruption to your operations and getting your team back to work fast.",
+    intro: "Your business doesn't stop for a move  -  and neither do we. Castle Express plans and executes commercial relocations around your schedule, minimizing disruption to your operations and getting your team back to work fast.",
     sections: [
       {
         heading: "Commercial Moving Services",
         items: [
-          "Office relocations — desks, cubicles, conference rooms, and common areas",
+          "Office relocations  -  desks, cubicles, conference rooms, and common areas",
           "Retail and storefront moves",
           "Medical and dental office relocations",
           "Warehouse and industrial moves",
-          "IT equipment coordination — servers, workstations, and networking gear",
+          "IT equipment coordination  -  servers, workstations, and networking gear",
           "After-hours and weekend scheduling available",
         ],
       },
@@ -177,7 +177,7 @@ export const SERVICE_PAGES = {
         ],
       },
     ],
-    callout: "We've relocated offices, retail stores, and medical practices across Connecticut and Western Massachusetts — always on time, always on budget.",
+    callout: "We've relocated offices, retail stores, and medical practices across Connecticut and Western Massachusetts  -  always on time, always on budget.",
     faq: [
       { q: "Can you move us after business hours?", a: "Yes. We offer evening and weekend scheduling to minimize disruption to your business." },
       { q: "Do you handle IT equipment?", a: "We coordinate with your IT team to safely disconnect, transport, and reconnect workstations and servers." },
@@ -194,14 +194,14 @@ export const SERVICE_PAGES = {
     metaTitle: "Full-Service Packing for Your Move",
     metaDesc: "Full-service and partial packing for your move. All materials included. Princess Packing™ white-glove service available. Serving Hartford County CT & Western MA. Call 1-888-553-4503.",
     heroImage: "/images/truck-loading.jpg",
-    intro: "Packing is the most time-consuming part of any move — and the part where damage is most likely to happen. Castle Express offers both full-service and partial packing by experienced professionals who know how to protect your belongings.",
+    intro: "Packing is the most time-consuming part of any move  -  and the part where damage is most likely to happen. Castle Express offers both full-service and partial packing by experienced professionals who know how to protect your belongings.",
     sections: [
       {
         heading: "Packing Options",
         items: [
-          "Full-service packing — we pack your entire home, room by room",
-          "Partial packing — we handle the kitchen, fragile items, or specific rooms",
-          "Princess Packing™ — our boutique white-glove service, completed before move day",
+          "Full-service packing  -  we pack your entire home, room by room",
+          "Partial packing  -  we handle the kitchen, fragile items, or specific rooms",
+          "Princess Packing™  -  our boutique white-glove service, completed before move day",
           "Unpacking services available at your new home",
         ],
       },
@@ -217,13 +217,13 @@ export const SERVICE_PAGES = {
         ],
       },
     ],
-    callout: "Looking for a premium experience? Princess Packing™ is our boutique white-glove packing service — your home packed by an experienced team before move day even begins. Starting at $595.",
+    callout: "Looking for a premium experience? Princess Packing™ is our boutique white-glove packing service  -  your home packed by an experienced team before move day even begins. Starting at $595.",
     calloutLink: "/princess-packing.html",
     calloutLabel: "Learn About Princess Packing™",
     faq: [
-      { q: "Do I need to provide boxes and materials?", a: "No. We bring everything — boxes, tape, bubble wrap, newsprint, and wardrobe boxes. It's all included in your packing quote." },
+      { q: "Do I need to provide boxes and materials?", a: "No. We bring everything  -  boxes, tape, bubble wrap, newsprint, and wardrobe boxes. It's all included in your packing quote." },
       { q: "How long does packing take?", a: "A typical 3-bedroom home takes 4-6 hours for a full pack. Larger homes may require a full day." },
-      { q: "What's the difference between standard packing and Princess Packing?", a: "Standard packing happens on move day. Princess Packing™ is a separate service completed before your move — by a dedicated team, with boutique-level care and room-by-room labeling." },
+      { q: "What's the difference between standard packing and Princess Packing?", a: "Standard packing happens on move day. Princess Packing™ is a separate service completed before your move  -  by a dedicated team, with boutique-level care and room-by-room labeling." },
     ],
     relatedServices: ["residential-moving", "commercial-moving", "storage"],
     photo1: "/images/packed-truck.jpg",
@@ -236,13 +236,13 @@ export const SERVICE_PAGES = {
     metaTitle: "Climate-Controlled Storage in Enfield, CT",
     metaDesc: "Secure, climate-controlled storage in Enfield CT. Short and long-term options. Wooden vault storage. Perfect between closings or during renovations. Call 1-888-553-4503.",
     heroImage: "/images/storage-crates.jpg",
-    intro: "Need somewhere safe for your belongings? Our secure, climate-controlled facility in Enfield, CT keeps your items protected — whether you need storage for a week between closings or several months during a renovation.",
+    intro: "Need somewhere safe for your belongings? Our secure, climate-controlled facility in Enfield, CT keeps your items protected  -  whether you need storage for a week between closings or several months during a renovation.",
     sections: [
       {
         heading: "Storage Features",
         items: [
-          "Climate-controlled environment — no extreme heat, cold, or humidity",
-          "Secure wooden vault storage — your items in dedicated, numbered containers",
+          "Climate-controlled environment  -  no extreme heat, cold, or humidity",
+          "Secure wooden vault storage  -  your items in dedicated, numbered containers",
           "24/7 facility monitoring",
           "Clean, well-maintained warehouse space",
           "Convenient Enfield, CT location off I-91",
@@ -251,16 +251,16 @@ export const SERVICE_PAGES = {
       {
         heading: "When You Might Need Storage",
         items: [
-          "Between closings — your old home closes before your new one is ready",
+          "Between closings  -  your old home closes before your new one is ready",
           "Home renovations or remodeling projects",
-          "Downsizing — hold items while you decide what to keep",
+          "Downsizing  -  hold items while you decide what to keep",
           "Staging your home for sale",
           "Seasonal storage for businesses",
           "Long-term storage during extended travel or relocation",
         ],
       },
     ],
-    callout: "Our numbered wooden vault system means your belongings are organized and protected — not stacked on a warehouse floor. Each vault is assigned to your account and accessible when you need it.",
+    callout: "Our numbered wooden vault system means your belongings are organized and protected  -  not stacked on a warehouse floor. Each vault is assigned to your account and accessible when you need it.",
     faq: [
       { q: "Is your storage climate-controlled?", a: "Yes. Our Enfield facility maintains a stable environment year-round to protect your belongings from temperature and humidity damage." },
       { q: "How does pricing work?", a: "Storage is billed monthly based on the number of vaults you need. We'll estimate this during your move consultation." },
@@ -274,7 +274,7 @@ export const SERVICE_PAGES = {
     id: "specialty",
     title: "Specialty Moving",
     headline: "Special Items Need Special Handling",
-    metaTitle: "Specialty Movers — Pianos, Safes & Fine Art",
+    metaTitle: "Specialty Movers  -  Pianos, Safes & Fine Art",
     metaDesc: "Specialty movers for pianos, gun safes, fine art, and white-glove deliveries. Serving Hartford County CT & Western MA. Licensed & insured. Call 1-888-553-4503.",
     heroImage: "/images/truck-tobacco-barn.jpg",
     intro: "Some items can't go on a regular moving truck without special preparation. Castle Express has the equipment, training, and experience to safely move pianos, gun safes, fine art, antiques, and other high-value or oversized items.",
@@ -282,8 +282,8 @@ export const SERVICE_PAGES = {
       {
         heading: "Specialty Items We Move",
         items: [
-          "Pianos — uprights, baby grands, and concert grands",
-          "Gun safes and fire safes — including staircase and basement extraction",
+          "Pianos  -  uprights, baby grands, and concert grands",
+          "Gun safes and fire safes  -  including staircase and basement extraction",
           "Fine art, sculptures, and framed pieces",
           "Antique furniture requiring extra protection",
           "Pool tables and hot tubs",
@@ -293,11 +293,11 @@ export const SERVICE_PAGES = {
       {
         heading: "Our Specialty Moving Process",
         items: [
-          "Pre-move assessment — we evaluate the item, the path, and any obstacles",
-          "Custom protection — padding, wrapping, and crating as needed",
-          "Specialized equipment — piano boards, heavy-duty dollies, stair climbers",
-          "Trained crew — our specialty team handles these items regularly",
-          "Placement at destination — positioned exactly where you want it",
+          "Pre-move assessment  -  we evaluate the item, the path, and any obstacles",
+          "Custom protection  -  padding, wrapping, and crating as needed",
+          "Specialized equipment  -  piano boards, heavy-duty dollies, stair climbers",
+          "Trained crew  -  our specialty team handles these items regularly",
+          "Placement at destination  -  positioned exactly where you want it",
         ],
       },
     ],
@@ -354,7 +354,7 @@ export const REVIEWS = [
   },
   {
     name: "Tom W.",
-    text: "The movers were fantastic—very friendly, showed up 15 minutes early, and were very amenable to my specific needs. Would definitely recommend them.",
+    text: "The movers were fantastic - very friendly, showed up 15 minutes early, and were very amenable to my specific needs. Would definitely recommend them.",
   },
 ];
 
@@ -363,8 +363,8 @@ export const CITY_PAGES = {
     name: "Enfield", state: "CT", fullName: "Enfield, CT",
     hub: "Enfield, CT Hub",
     headline: "Enfield's Most Trusted Moving Company",
-    intro: "Castle Express is headquartered right here in Enfield at 4 Niblick Rd. As your neighbors, we take extra pride in every local move — whether you're relocating across town or heading out of state.",
-    features: ["Same-day availability for local Enfield moves", "Headquartered at 4 Niblick Rd — minutes from your door", "Deep knowledge of every Enfield neighborhood"],
+    intro: "Castle Express is headquartered right here in Enfield at 4 Niblick Rd. As your neighbors, we take extra pride in every local move  -  whether you're relocating across town or heading out of state.",
+    features: ["Same-day availability for local Enfield moves", "Headquartered at 4 Niblick Rd  -  minutes from your door", "Deep knowledge of every Enfield neighborhood"],
     nearby: ["Somers", "Suffield", "East Windsor", "Windsor Locks", "Ellington"],
   },
   "bloomfield-ct": {
@@ -379,7 +379,7 @@ export const CITY_PAGES = {
     name: "East Granby", state: "CT", fullName: "East Granby, CT",
     hub: "Enfield, CT Hub",
     headline: "Moving Services in East Granby, CT",
-    intro: "East Granby's rural charm comes with unique moving challenges — long driveways, country roads, and homes tucked into hillsides. Castle Express crews are experienced with the area and handle every detail.",
+    intro: "East Granby's rural charm comes with unique moving challenges  -  long driveways, country roads, and homes tucked into hillsides. Castle Express crews are experienced with the area and handle every detail.",
     features: ["Experience navigating East Granby's rural properties", "Just minutes away from our Enfield base", "Flexible scheduling for seasonal moves"],
     nearby: ["Granby", "Simsbury", "Suffield", "Windsor Locks", "Bloomfield"],
   },
@@ -420,14 +420,14 @@ export const CITY_PAGES = {
     hub: "Enfield, CT Hub",
     headline: "Professional Movers for Somers, CT",
     intro: "Just minutes from our Enfield home base, Somers is one of our most frequently served communities. Our crews know the back roads, the neighborhoods, and exactly how to get your move done efficiently.",
-    features: ["One of our closest service areas — fast response times", "Experienced with Somers' varied property types", "No fuel surcharges for local Somers moves"],
+    features: ["One of our closest service areas  -  fast response times", "Experienced with Somers' varied property types", "No fuel surcharges for local Somers moves"],
     nearby: ["Enfield", "Ellington", "East Windsor", "Stafford Springs", "Tolland"],
   },
   "suffield-ct": {
     name: "Suffield", state: "CT", fullName: "Suffield, CT",
     hub: "Enfield, CT Hub",
     headline: "Moving Services in Suffield, CT",
-    intro: "Suffield's tree-lined streets and historic district deserve movers who take care. Castle Express has been moving Suffield families for years — protecting antiques, navigating old staircases, and handling every detail.",
+    intro: "Suffield's tree-lined streets and historic district deserve movers who take care. Castle Express has been moving Suffield families for years  -  protecting antiques, navigating old staircases, and handling every detail.",
     features: ["Careful with Suffield's historic homes and antiques", "Just 10 minutes from our Enfield headquarters", "Commercial and residential moves available"],
     nearby: ["Enfield", "East Granby", "Granby", "Windsor Locks", "Agawam"],
   },
@@ -435,7 +435,7 @@ export const CITY_PAGES = {
     name: "Windsor", state: "CT", fullName: "Windsor, CT",
     hub: "Enfield, CT Hub",
     headline: "Trusted Moving Company in Windsor, CT",
-    intro: "As Connecticut's first town, Windsor has a rich history — and homes to match. Castle Express crews handle everything from downtown condos to sprawling properties along the Connecticut River with professionalism and care.",
+    intro: "As Connecticut's first town, Windsor has a rich history  -  and homes to match. Castle Express crews handle everything from downtown condos to sprawling properties along the Connecticut River with professionalism and care.",
     features: ["Familiar with Windsor's diverse housing stock", "Quick access via I-91 from our Enfield base", "Full-service moves including packing and storage"],
     nearby: ["Bloomfield", "East Granby", "Windsor Locks", "Suffield", "West Hartford"],
   },
@@ -444,23 +444,23 @@ export const CITY_PAGES = {
     hub: "Enfield, CT Hub",
     headline: "Windsor Locks Moving & Storage",
     intro: "Right next door to our Enfield headquarters, Windsor Locks is one of our fastest-response service areas. Whether you're near the canal or off Route 75, we'll get you moved quickly and professionally.",
-    features: ["Fastest response time — right next to our home base", "Experience with Windsor Locks condos and single-family homes", "Storage solutions available at our nearby facility"],
+    features: ["Fastest response time  -  right next to our home base", "Experience with Windsor Locks condos and single-family homes", "Storage solutions available at our nearby facility"],
     nearby: ["Enfield", "Suffield", "East Granby", "Windsor", "East Windsor"],
   },
   "glastonbury-ct": {
     name: "Glastonbury", state: "CT", fullName: "Glastonbury, CT",
     hub: "Glastonbury, CT Hub",
     headline: "Glastonbury's Premier Moving Service",
-    intro: "Glastonbury is one of our busiest markets — and for good reason. From the upscale homes in Minnechaug to the townhouses on Main Street, Castle Express delivers the careful, professional moves this community demands.",
-    features: ["High volume of Glastonbury moves — we know the area well", "Dispatch from our Glastonbury-area hub", "White-glove service for high-value homes"],
+    intro: "Glastonbury is one of our busiest markets  -  and for good reason. From the upscale homes in Minnechaug to the townhouses on Main Street, Castle Express delivers the careful, professional moves this community demands.",
+    features: ["High volume of Glastonbury moves  -  we know the area well", "Dispatch from our Glastonbury-area hub", "White-glove service for high-value homes"],
     nearby: ["Wethersfield", "Newington", "West Hartford", "Farmington", "Vernon"],
   },
   "avon-ct": {
     name: "Avon", state: "CT", fullName: "Avon, CT",
     hub: "Glastonbury, CT Hub",
     headline: "Professional Movers in Avon, CT",
-    intro: "Avon's beautiful properties deserve movers who match the standard. Castle Express provides meticulous moving services with accurate, upfront estimates — no hidden fees, no corner-cutting, just professional crews who protect your home and belongings.",
-    features: ["Experience with Avon's luxury properties", "Princess Packing™ available for pre-move day packing", "Accurate estimates — your quote is what you can expect to pay"],
+    intro: "Avon's beautiful properties deserve movers who match the standard. Castle Express provides meticulous moving services with accurate, upfront estimates  -  no hidden fees, no corner-cutting, just professional crews who protect your home and belongings.",
+    features: ["Experience with Avon's luxury properties", "Princess Packing™ available for pre-move day packing", "Accurate estimates  -  your quote is what you can expect to pay"],
     nearby: ["Simsbury", "Farmington", "Bloomfield", "Granby", "West Hartford"],
   },
   "farmington-ct": {
@@ -475,7 +475,7 @@ export const CITY_PAGES = {
     name: "Newington", state: "CT", fullName: "Newington, CT",
     hub: "Glastonbury, CT Hub",
     headline: "Newington's Trusted Moving Company",
-    intro: "Newington's mix of split-levels, raised ranches, and newer construction means every move is different. Castle Express crews adapt to the property and get the job done right — every time.",
+    intro: "Newington's mix of split-levels, raised ranches, and newer construction means every move is different. Castle Express crews adapt to the property and get the job done right  -  every time.",
     features: ["Experienced with Newington's diverse home styles", "Easy access via Route 175 and I-91", "Competitive, transparent pricing for local moves"],
     nearby: ["Wethersfield", "West Hartford", "Farmington", "Glastonbury", "Bloomfield"],
   },
@@ -492,22 +492,22 @@ export const CITY_PAGES = {
     hub: "Glastonbury, CT Hub",
     headline: "Professional Movers in Vernon, CT",
     intro: "Whether you're moving from the Rockville section or a home near Fox Hill, Castle Express provides the same reliable, professional service Vernon families have come to count on.",
-    features: ["Serving all Vernon neighborhoods including Rockville", "Quick access from both our Enfield and Glastonbury hubs", "No hidden fees — accurate, detailed estimates every time"],
+    features: ["Serving all Vernon neighborhoods including Rockville", "Quick access from both our Enfield and Glastonbury hubs", "No hidden fees  -  accurate, detailed estimates every time"],
     nearby: ["Tolland", "Ellington", "East Windsor", "Glastonbury", "Wethersfield"],
   },
   "west-hartford-ct": {
     name: "West Hartford", state: "CT", fullName: "West Hartford, CT",
     hub: "Glastonbury, CT Hub",
     headline: "West Hartford's Preferred Movers",
-    intro: "West Hartford is one of Connecticut's most sought-after communities — and Castle Express is one of its most trusted movers. From the Center to Bishops Corner, we handle every move with care and professionalism.",
-    features: ["High volume of West Hartford moves — deep local experience", "Skilled with the area's older homes, tight streets, and walk-ups", "Princess Packing™ and full packing services available"],
+    intro: "West Hartford is one of Connecticut's most sought-after communities  -  and Castle Express is one of its most trusted movers. From the Center to Bishops Corner, we handle every move with care and professionalism.",
+    features: ["High volume of West Hartford moves  -  deep local experience", "Skilled with the area's older homes, tight streets, and walk-ups", "Princess Packing™ and full packing services available"],
     nearby: ["Bloomfield", "Newington", "Farmington", "Avon", "Wethersfield"],
   },
   "wethersfield-ct": {
     name: "Wethersfield", state: "CT", fullName: "Wethersfield, CT",
     hub: "Glastonbury, CT Hub",
     headline: "Moving Services in Wethersfield, CT",
-    intro: "As one of Connecticut's oldest towns, Wethersfield has homes that require extra care — and Castle Express delivers. Our crews are experienced handling antiques, narrow doorways, and the unique character of historic properties.",
+    intro: "As one of Connecticut's oldest towns, Wethersfield has homes that require extra care  -  and Castle Express delivers. Our crews are experienced handling antiques, narrow doorways, and the unique character of historic properties.",
     features: ["Expertise with Wethersfield's historic Old Wethersfield homes", "Careful handling of antiques and delicate items", "Accurate estimates with no surprises"],
     nearby: ["Glastonbury", "Newington", "West Hartford", "Farmington", "Vernon"],
   },
@@ -524,7 +524,7 @@ export const CITY_PAGES = {
     hub: "Western Massachusetts",
     headline: "Agawam, MA Moving Services",
     intro: "Just across the Connecticut border, Agawam is a quick trip from our Enfield headquarters. Castle Express brings the same licensed, insured, professionally estimated moving service that Hartford County residents have trusted since 2013.",
-    features: ["Just over the CT border — fast response from Enfield", "Licensed for interstate moves between CT and MA", "Serving Agawam, Feeding Hills, and surrounding areas"],
+    features: ["Just over the CT border  -  fast response from Enfield", "Licensed for interstate moves between CT and MA", "Serving Agawam, Feeding Hills, and surrounding areas"],
     nearby: ["Springfield", "Suffield", "Enfield", "Granby", "East Granby"],
   },
 };
@@ -536,7 +536,7 @@ export const FAQ = [
   },
   {
     q: "How far in advance should I book?",
-    a: "We recommend 2–3 weeks in advance, especially during busy seasons (May–September). Last-minute moves? Call us—we'll do our best to accommodate.",
+    a: "We recommend 2–3 weeks in advance, especially during busy seasons (May–September). Last-minute moves? Call us - we'll do our best to accommodate.",
   },
   {
     q: "Are you licensed and insured?",
@@ -556,7 +556,7 @@ export const FAQ = [
   },
   {
     q: "How much does it cost to hire movers in Connecticut?",
-    a: "Castle Express charges hourly but provides detailed, accurate estimates based on a thorough inventory and move analysis — we aim to be within 10% of every estimate. No hidden fees, no fuel surcharges, no surprise charges. Contact us for a free estimate.",
+    a: "Castle Express charges hourly but provides detailed, accurate estimates based on a thorough inventory and move analysis  -  we aim to be within 10% of every estimate. No hidden fees, no fuel surcharges, no surprise charges. Contact us for a free estimate.",
   },
   {
     q: "What is Princess Packing?",
@@ -568,7 +568,7 @@ export const FAQ = [
   },
   {
     q: "Does Castle Express offer storage?",
-    a: "Yes. Castle Express operates a secure, climate-controlled storage facility in Enfield, CT with numbered wooden vault storage. Short-term and long-term options are available — ideal between closings or during renovations.",
+    a: "Yes. Castle Express operates a secure, climate-controlled storage facility in Enfield, CT with numbered wooden vault storage. Short-term and long-term options are available  -  ideal between closings or during renovations.",
   },
   {
     q: "What makes Castle Express different from other movers?",
@@ -607,11 +607,11 @@ export const LEAD_SOURCES = [
 export const ABOUT_TEXT = {
   intro: `In the heart of Windsor Locks, Connecticut, Joseph "Joe" Caronna grew up in a family that valued hard work and service. From paper routes to lawn care to working in his family's grocery store, Joe learned early that treating people right was the foundation of any good business.`,
   
-  middle: `After earning his bachelor's degree in business from Western New England University, Joe honed his skills at a high-end furniture store, where he discovered a passion for delivering not just products—but exceptional experiences. That passion became Castle Express Moving & Storage.`,
+  middle: `After earning his bachelor's degree in business from Western New England University, Joe honed his skills at a high-end furniture store, where he discovered a passion for delivering not just products - but exceptional experiences. That passion became Castle Express Moving & Storage.`,
   
-  growth: `Starting with labor-only jobs loading PODS, the company quickly evolved into a fully licensed, full-service moving operation. By 2023, Castle Express was operating a fleet of five trucks out of a 5,000 square-foot facility in Enfield, CT—a far cry from the storage yard where it all began.`,
+  growth: `Starting with labor-only jobs loading PODS, the company quickly evolved into a fully licensed, full-service moving operation. By 2023, Castle Express was operating a fleet of five trucks out of a 5,000 square-foot facility in Enfield, CT - a far cry from the storage yard where it all began.`,
   
-  values: `As a dedicated father of three, Joe built Castle Express on strong family values and a commitment to community. His dedication to personal growth—through business coaching, coursework, and continuous self-development—shaped a company culture centered on improvement, teamwork, and genuine care. Today, Castle Express is more than a moving company. It's a trusted partner for local and long-distance moves, secure storage solutions, and white-glove delivery services.`,
+  values: `As a dedicated father of three, Joe built Castle Express on strong family values and a commitment to community. His dedication to personal growth - through business coaching, coursework, and continuous self-development - shaped a company culture centered on improvement, teamwork, and genuine care. Today, Castle Express is more than a moving company. It's a trusted partner for local and long-distance moves, secure storage solutions, and white-glove delivery services.`,
   
-  mission: `"To deliver professional, efficient, and stress-free moving and storage solutions—combining competitive pricing with a 5-star customer experience, one family at a time."`,
+  mission: `"To deliver professional, efficient, and stress-free moving and storage solutions - combining competitive pricing with a 5-star customer experience, one family at a time."`,
 };

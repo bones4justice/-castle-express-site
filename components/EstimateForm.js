@@ -19,7 +19,7 @@ export default function EstimateForm({ dark = false }) {
     setLoading(true);
 
     // ──────────────────────────────────────────────────
-    // 1. Formspree — sends leads to your email
+    // 1. Formspree  -  sends leads to your email
     // ──────────────────────────────────────────────────
     try {
       await fetch("https://formspree.io/f/xpqjkjga", {
@@ -32,7 +32,7 @@ export default function EstimateForm({ dark = false }) {
     }
 
     // ──────────────────────────────────────────────────
-    // 2. SmartMoving — POST to leads API
+    // 2. SmartMoving  -  POST to leads API
     // ──────────────────────────────────────────────────
     try {
       const smPayload = {
