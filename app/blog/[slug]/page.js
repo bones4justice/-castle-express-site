@@ -97,18 +97,18 @@ export default function BlogPost({ params }) {
           <span style={{
             fontSize: 12,
             fontWeight: 700,
-            color: "#D4A017",
+            color: "#FBCB0B",
             letterSpacing: "0.08em",
             textTransform: "uppercase",
             display: "block",
             marginBottom: 16,
           }}>{post.category}</span>
-          <h1 className="heading-1" style={{ fontSize: "clamp(24px, 3.5vw, 32px)", lineHeight: 1.3 }}>{post.title}</h1>
+          <h1 className="heading-1" style={{ fontSize: "clamp(24px, 3.5vw, 32px)", lineHeight: 1.3, color: "#FFFFFF" }}>{post.title}</h1>
           <div style={{
             display: "flex",
             gap: 16,
             marginTop: 20,
-            color: "rgba(255,255,255,0.6)",
+            color: "rgba(255,255,255,0.8)",
             fontSize: 14,
             flexWrap: "wrap",
           }}>
