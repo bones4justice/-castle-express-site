@@ -50,10 +50,10 @@ export default function Header() {
             const color = item.pink ? "#F72585" : item.gold ? "#D4A017" : isActive ? "#D4A017" : "#1A1A2E";
             const fontWeight = (item.pink || item.gold) ? 700 : 600;
             return (
-              <a key={item.href} href={item.href} style={{
+              <Link key={item.href} href={item.href} style={{
                 fontFamily: "var(--font-heading)", fontWeight, fontSize: 14,
                 color, padding: "8px 14px", borderRadius: 6, textDecoration: "none", transition: "color 0.2s",
-              }}>{item.label}</a>
+              }}>{item.label}</Link>
             );
           })}
           <a href={COMPANY.phoneLink} style={{
