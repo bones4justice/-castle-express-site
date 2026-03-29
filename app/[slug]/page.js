@@ -113,10 +113,10 @@ export default function CityPage({ params }) {
     ],
   };
 
-  // Find nearby cities from same tier or adjacent tiers
-  const nearbyCities = CITY_DATA
-    .filter(c => c.slug !== city.slug && c.state === city.state)
-    .slice(0, 6);
+  // Find nearby cities - use curated nearby array if available, fall back to state filter
+  const nearbyCities = city.nearby
+    ? city.nearby.map(slug => CITY_DATA.find(c => c.slug === slug)).filter(Boolean)
+    : CITY_DATA.filter(c => c.slug !== city.slug && c.state === city.state).slice(0, 6);
 
   return (
     <>
