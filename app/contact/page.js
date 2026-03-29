@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { COMPANY } from "@/content";
 import { Phone, MapPin, Clock, Shield } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
@@ -15,8 +16,8 @@ export default function ContactPage() {
       <section className="section-dark" style={{ padding: "60px 24px", textAlign: "center" }}>
         <div className="section-label" style={{ justifyContent: "center" }}><span>Get In Touch</span></div>
         <h1 className="heading-2 text-white">Request Your Free Estimate</h1>
-        <p className="body-md text-white-muted" style={{ maxWidth: 480, margin: "8px auto 0" }}>
-          Fill out the form below or call us directly. We typically respond within 20 minutes.
+        <p className="body-md text-white-muted" style={{ maxWidth: 520, margin: "8px auto 0" }}>
+          Fill out the form below or call us directly. We typically respond within 20 minutes. Based in <Link href="/movers-enfield-ct" style={{ color: "#D4A017", fontWeight: 600 }}>Enfield, CT</Link>, we serve <Link href="/movers-hartford-ct" style={{ color: "#D4A017", fontWeight: 600 }}>Hartford</Link>, <Link href="/movers-springfield-ma" style={{ color: "#D4A017", fontWeight: 600 }}>Springfield</Link>, and <Link href="/service-areas" style={{ color: "#D4A017", fontWeight: 600 }}>82 towns across CT &amp; MA</Link>.
         </p>
       </section>
 
@@ -52,7 +53,8 @@ export default function ContactPage() {
               </div>
               <div style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#6B7280", lineHeight: 1.8 }}>
                 {COMPANY.mc} · USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit}<br />
-                A+ BBB Rating · {COMPANY.reviewCount} Google Reviews ({COMPANY.reviewAvg} avg)
+                A+ BBB Rating · {COMPANY.reviewCount} Google Reviews ({COMPANY.reviewAvg} avg)<br />
+                <Link href="/services" style={{ color: "#D4A017", fontWeight: 600, fontSize: 13 }}>View our services</Link>
               </div>
             </div>
           </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { COMPANY } from "@/content";
 import { Phone, Check, ArrowRight } from "@/components/Icons";
 import ReferralForm from "./ReferralForm";
@@ -24,7 +25,7 @@ const AUDIENCES = [
 
 const STEPS = [
   { num: "1", title: "Submit the form below", desc: "Tell us who you are and who you're referring. Takes 2 minutes." },
-  { num: "2", title: "We take care of them", desc: "Our team reaches out, handles the move, and delivers 5-star service." },
+  { num: "2", title: "We take care of them", desc: "Our team reaches out, handles the move across CT and MA, and delivers 5-star service." },
   { num: "3", title: "You get paid", desc: "10% of the completed invoice, sent by check to your address within 30 days of the completed move." },
 ];
 
@@ -45,7 +46,7 @@ export default function ReferralPage() {
             Get Paid to Refer. It&apos;s That Simple.
           </h1>
           <p className="body-lg text-white-muted" style={{ maxWidth: 560, margin: "0 auto 24px" }}>
-            Send us a move. We take great care of them. You earn 10% of the completed invoice - paid by check within 30 days.
+            Send us a move. We take great care of them with our <Link href="/services" style={{ color: "#D4A017", fontWeight: 600 }}>full range of moving services</Link> from our <Link href="/movers-enfield-ct" style={{ color: "#D4A017", fontWeight: 600 }}>Enfield, CT</Link> base. You earn 10% of the completed invoice - paid by check within 30 days.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 18px", background: "rgba(212,160,23,0.15)", border: "1px solid rgba(212,160,23,0.3)", borderRadius: 20, fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017" }}>
