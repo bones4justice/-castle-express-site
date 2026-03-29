@@ -16,8 +16,8 @@ export default function BlogPage() {
       {/* Hero */}
       <section className="section-dark" style={{ padding: "72px 0 48px" }}>
         <div className="container" style={{ maxWidth: 800, margin: "0 auto", textAlign: "center" }}>
-          <div className="section-label" style={{ justifyContent: "center" }}><span>Moving Tips & Guides</span></div>
-          <h1 className="heading-1" style={{ marginTop: 16 }}>
+          <div className="section-label" style={{ justifyContent: "center" }}><span style={{ color: "#FBCB0B" }}>Moving Tips & Guides</span></div>
+          <h1 className="heading-1" style={{ marginTop: 16, color: "#FFFFFF" }}>
             Straight Talk on Moving
           </h1>
           <p className="body-lg text-white-muted" style={{ marginTop: 16 }}>
