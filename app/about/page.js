@@ -21,7 +21,7 @@ export default function AboutPage() {
         <div className="container-sm">
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 40, borderRadius: 12, overflow: "hidden" }}>
             <img src="/images/truck-residential.jpg" alt="Castle Express truck at customer home" style={{ width: "100%", height: 260, objectFit: "cover" }} />
-            <img src="/images/joe-with-customers.jpg" alt="Joe with happy customers" style={{ width: "100%", height: 260, objectFit: "cover", objectPosition: "center bottom" }} />
+            <img src="/images/joe-with-customers.jpg" alt="Joe with happy customers" style={{ width: "100%", height: 380, objectFit: "cover", objectPosition: "center bottom" }} />
           </div>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "#1A1A2E", lineHeight: 1.8, marginBottom: 24 }}>{ABOUT_TEXT.intro}</p>
           <p className="body-md text-gray" style={{ lineHeight: 1.8, marginBottom: 24 }}>{ABOUT_TEXT.middle}</p>
