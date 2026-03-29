@@ -35,8 +35,8 @@ export const COMPANY = {
   // Stats
   reviewCount: "200+",
   reviewAvg: "4.9",
-  truckCount: "7",
-  facilitySize: "10,000",
+  truckCount: "5",
+  facilitySize: "5,000",
 };
 
 export const SERVICES = [
@@ -609,7 +609,7 @@ export const ABOUT_TEXT = {
   
   middle: `After earning his bachelor's degree in business from Western New England University, Joe honed his skills at a high-end furniture store, where he discovered a passion for delivering not just products—but exceptional experiences. That passion became Castle Express Moving & Storage.`,
   
-  growth: `Starting with labor-only jobs loading PODS, the company quickly evolved into a fully licensed, full-service moving operation. By 2023, Castle Express was operating a fleet of seven trucks out of a 10,000 square-foot facility in Enfield, CT—a far cry from the storage yard where it all began.`,
+  growth: `Starting with labor-only jobs loading PODS, the company quickly evolved into a fully licensed, full-service moving operation. By 2023, Castle Express was operating a fleet of five trucks out of a 5,000 square-foot facility in Enfield, CT—a far cry from the storage yard where it all began.`,
   
   values: `As a dedicated father of three, Joe built Castle Express on strong family values and a commitment to community. His dedication to personal growth—through business coaching, coursework, and continuous self-development—shaped a company culture centered on improvement, teamwork, and genuine care. Today, Castle Express is more than a moving company. It's a trusted partner for local and long-distance moves, secure storage solutions, and white-glove delivery services.`,
   
