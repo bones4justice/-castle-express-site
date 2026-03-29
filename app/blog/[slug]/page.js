@@ -22,6 +22,21 @@ export default function BlogPost({ params }) {
   const post = getPostBySlug(params.slug);
   if (!post) notFound();
 
+  // Parse inline markdown: [text](/url) links and **bold** text
+  const parseInline = (text) => {
+    const parts = text.split(/(\[.*?\]\(.*?\)|\*\*.*?\*\*)/g);
+    return parts.map((part, j) => {
+      const linkMatch = part.match(/^\[(.*?)\]\((.*?)\)$/);
+      if (linkMatch) {
+        return <Link key={j} href={linkMatch[2]} style={{ color: "#D4A017", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 2 }}>{linkMatch[1]}</Link>;
+      }
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return <strong key={j}>{part.replace(/\*\*/g, "")}</strong>;
+      }
+      return part;
+    });
+  };
+
   const renderBody = (body) => {
     return body
       .trim()
@@ -43,23 +58,11 @@ export default function BlogPost({ params }) {
             {block.replace(/\*\*/g, "")}
           </p>;
         }
-        // Handle bold text within paragraphs
-        if (block.includes("**")) {
-          const parts = block.split(/(\*\*.*?\*\*)/g);
-          return <p key={i} className="body-md" style={{ color: "#374151", lineHeight: 1.8, marginBottom: 16 }}>
-            {parts.map((part, j) => {
-              if (part.startsWith("**") && part.endsWith("**")) {
-                return <strong key={j}>{part.replace(/\*\*/g, "")}</strong>;
-              }
-              return part;
-            })}
-          </p>;
-        }
         return <p key={i} className="body-md" style={{
           color: "#374151",
           lineHeight: 1.8,
           marginBottom: 16,
-        }}>{block}</p>;
+        }}>{parseInline(block)}</p>;
       });
   };
 
