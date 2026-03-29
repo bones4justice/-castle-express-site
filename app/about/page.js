@@ -24,7 +24,7 @@ export default function AboutPage() {
               <img src="/images/truck-residential.jpg" alt="Castle Express truck at customer home" style={{ width: "100%", height: 300, objectFit: "cover", objectPosition: "center center" }} />
             </div>
             <div style={{ overflow: "hidden", height: 300, borderRadius: 8 }}>
-              <img src="/images/joe-with-customers.jpg" alt="Joe with happy customers" style={{ width: "100%", height: 300, objectFit: "cover", objectPosition: "20% 30%" }} />
+              <img src="/images/joe-with-customers.jpg" alt="Joe with happy customers" style={{ width: "100%", height: 300, objectFit: "cover", objectPosition: "15% 25%" }} />
             </div>
           </div>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "#1A1A2E", lineHeight: 1.8, marginBottom: 24 }}>{ABOUT_TEXT.intro}</p>
