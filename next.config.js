@@ -116,6 +116,10 @@ const nextConfig = {
       { source: '/blogs', destination: '/blog/', permanent: true },
       { source: '/moving-tips/', destination: '/blog/', permanent: true },
       { source: '/moving-tips', destination: '/blog/', permanent: true },
+      // Old WordPress URLs with backlinks
+      { source: '/about-us', destination: '/about', permanent: true },
+      { source: '/about-us/', destination: '/about', permanent: true },
+      { source: '/wp-content/:path*', destination: '/', permanent: true },
     ];
   },
 };
