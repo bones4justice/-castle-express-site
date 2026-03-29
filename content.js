@@ -69,7 +69,7 @@ export const SERVICES = [
     id: "packing",
     title: "Full-Service Packing",
     shortDesc: "Full-service or partial packing. We bring the materials, the manpower, and the expertise to protect every item.",
-    fullDesc: "Short on time or energy? Our trained packers use the best materials and techniques to safeguard your items. Choose full or partial packing based on your needs.",
+    fullDesc: "Short on time or energy? Our experienced packers use the best materials and techniques to safeguard your items. Choose full or partial packing based on your needs.",
     features: [
       "Professional packing materials",
       "Full or partial packing",
@@ -194,7 +194,7 @@ export const SERVICE_PAGES = {
     metaTitle: "Full-Service Packing for Your Move",
     metaDesc: "Full-service and partial packing for your move. All materials included. Princess Packing™ white-glove service available. Serving Hartford County CT & Western MA. Call 1-888-553-4503.",
     heroImage: "/images/truck-loading.jpg",
-    intro: "Packing is the most time-consuming part of any move — and the part where damage is most likely to happen. Castle Express offers both full-service and partial packing by trained professionals who know how to protect your belongings.",
+    intro: "Packing is the most time-consuming part of any move — and the part where damage is most likely to happen. Castle Express offers both full-service and partial packing by experienced professionals who know how to protect your belongings.",
     sections: [
       {
         heading: "Packing Options",
@@ -217,7 +217,7 @@ export const SERVICE_PAGES = {
         ],
       },
     ],
-    callout: "Looking for a premium experience? Princess Packing™ is our boutique white-glove packing service — your home packed by a trained team before move day even begins. Starting at $595.",
+    callout: "Looking for a premium experience? Princess Packing™ is our boutique white-glove packing service — your home packed by an experienced team before move day even begins. Starting at $595.",
     calloutLink: "/princess-packing.html",
     calloutLabel: "Learn About Princess Packing™",
     faq: [
@@ -396,7 +396,7 @@ export const CITY_PAGES = {
     hub: "Enfield, CT Hub",
     headline: "Ellington's Go-To Moving Company",
     intro: "Ellington families choose Castle Express for our careful handling, honest pricing, and crews who respect your home. From Crystal Lake neighborhoods to Pinney Street, we've moved them all.",
-    features: ["Experienced with Ellington's residential neighborhoods", "Climate-controlled storage at our nearby facility", "Crews trained for both rural and suburban properties"],
+    features: ["Experienced with Ellington's residential neighborhoods", "Climate-controlled storage at our nearby facility", "Crews experienced in both rural and suburban properties"],
     nearby: ["Somers", "Vernon", "Tolland", "East Windsor", "Enfield"],
   },
   "granby-ct": {
@@ -507,7 +507,7 @@ export const CITY_PAGES = {
     name: "Wethersfield", state: "CT", fullName: "Wethersfield, CT",
     hub: "Glastonbury, CT Hub",
     headline: "Moving Services in Wethersfield, CT",
-    intro: "As one of Connecticut's oldest towns, Wethersfield has homes that require extra care — and Castle Express delivers. Our crews are trained to handle antiques, narrow doorways, and the unique character of historic properties.",
+    intro: "As one of Connecticut's oldest towns, Wethersfield has homes that require extra care — and Castle Express delivers. Our crews are experienced handling antiques, narrow doorways, and the unique character of historic properties.",
     features: ["Expertise with Wethersfield's historic Old Wethersfield homes", "Careful handling of antiques and delicate items", "Accurate estimates with no surprises"],
     nearby: ["Glastonbury", "Newington", "West Hartford", "Farmington", "Vernon"],
   },
@@ -560,7 +560,7 @@ export const FAQ = [
   },
   {
     q: "What is Princess Packing?",
-    a: "Princess Packing™ is Castle Express's boutique white-glove packing service. A trained professional team packs your entire home before move day. All materials are included. Packages start at $595 for 25 boxes.",
+    a: "Princess Packing™ is Castle Express's boutique white-glove packing service. An experienced professional team packs your entire home before move day. All materials are included. Packages start at $595 for 25 boxes.",
   },
   {
     q: "Can Castle Express move a piano or gun safe?",

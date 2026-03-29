@@ -218,7 +218,7 @@ export default function HomePage() {
               Princess Packing<span style={{ color: "#F72585" }}>™</span>
             </h2>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 24 }}>
-              A boutique, white-glove packing service. Your home packed before move day by a trained professional team. All materials included. Limited to one major pack per day.
+              A boutique, white-glove packing service. Your home packed before move day by an experienced professional team. All materials included. Limited to one major pack per day.
             </p>
             <div style={{ display: "flex", gap: 24, marginBottom: 24 }}>
               {[{ num: "$595", label: "Pro (25 boxes)" }, { num: "$995", label: "Plus (50 boxes)" }, { num: "$1,895", label: "Premium (100 boxes)" }].map((p, i) => (
