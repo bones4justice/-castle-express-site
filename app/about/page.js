@@ -19,7 +19,7 @@ export default function AboutPage() {
 
       <section className="section">
         <div className="container-sm">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 40, borderRadius: 12, overflow: "hidden", alignItems: "stretch" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 40, borderRadius: 12, overflow: "hidden", alignItems: "stretch" }}>
             <div style={{ overflow: "hidden", height: 300, borderRadius: 8 }}>
               <img src="/images/truck-residential.jpg" alt="Castle Express truck at customer home" style={{ width: "100%", height: 300, objectFit: "cover", objectPosition: "center center" }} />
             </div>
