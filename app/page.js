@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { COMPANY, SERVICES, REVIEWS, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
+import { CITY_DATA } from "@/lib/cityData";
 import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, MapPin, Phone } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
 
@@ -181,9 +182,9 @@ export default function HomePage() {
             </p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
-            {Object.entries(CITY_PAGES).map(([slug, city]) => (
-              <Link key={slug} href={`/service-areas/${slug}`} className="location-chip">
-                <MapPin size={16} /> {city.name}, {city.state}
+            {CITY_DATA.filter(c => c.tier === "Tier 1 - Priority").map(city => (
+              <Link key={city.slug} href={`/${city.slug}`} className="location-chip">
+                <MapPin size={16} /> {city.town}, {city.state}
               </Link>
             ))}
           </div>
