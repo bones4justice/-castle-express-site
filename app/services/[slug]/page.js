@@ -37,8 +37,8 @@ export default function ServiceDetailPage({ params }) {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://castleexpressmoving.com/" },
-      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://castleexpressmoving.com/services/" },
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.castleexpressmoving.com/" },
+      { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://www.castleexpressmoving.com/services/" },
       { "@type": "ListItem", "position": 3, "name": svc.title },
     ]
   };

@@ -20,7 +20,7 @@ const merriweather = Merriweather({
   style: ["normal", "italic"],
 });
 
-const SITE_URL = "https://castleexpressmoving.com";
+const SITE_URL = "https://www.castleexpressmoving.com";
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -28,7 +28,7 @@ export const metadata = {
     default: "Castle Express Moving & Storage | CT & MA Movers Since 2013",
     template: "%s | Castle Express Moving & Storage",
   },
-  description: "Family-owned moving company serving Hartford County CT & Western MA since 2013. Residential, commercial, packing & storage. Accurate estimates, transparent pricing.",
+  description: "Family-owned movers in Enfield, CT serving Hartford County & Western MA since 2013. Residential, commercial, packing & storage. Free estimates.",
   keywords: ["movers", "moving company", "Enfield CT", "Hartford CT", "Springfield MA", "storage", "packing", "local movers", "long distance movers"],
   alternates: { canonical: "/" },
   openGraph: {
@@ -89,8 +89,8 @@ export default function RootLayout({ children }) {
               "@context": "https://schema.org",
               "@type": "MovingCompany",
               "name": "Castle Express Moving & Storage",
-              "image": "https://castleexpressmoving.com/images/logo.jpg",
-              "url": "https://castleexpressmoving.com",
+              "image": "https://www.castleexpressmoving.com/images/logo.jpg",
+              "url": "https://www.castleexpressmoving.com",
               "telephone": "1-888-553-4503",
               "priceRange": "$$",
               "address": {
