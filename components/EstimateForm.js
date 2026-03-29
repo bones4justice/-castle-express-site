@@ -27,6 +27,7 @@ export default function EstimateForm({ dark = false }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+      if (typeof fbq === "function") fbq("track", "Lead");
     } catch (err) {
       console.error("Formspree submission error:", err);
     }

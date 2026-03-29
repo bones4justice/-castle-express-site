@@ -76,6 +76,7 @@ export default function ReferralForm() {
         setSubmitting(false);
         return;
       }
+      if (typeof fbq === "function") fbq("track", "Lead");
     } catch {
       setError(true);
       setSubmitting(false);
