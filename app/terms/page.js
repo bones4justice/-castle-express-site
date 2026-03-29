@@ -33,7 +33,7 @@ export default function TermsPage() {
 
           <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 16 }}>Liability & Insurance</h2>
           <p style={{ marginBottom: 24 }}>
-            Castle Express is fully licensed (MC-1377498, USDOT 4192498, CT Permit MH-2658) and insured. Basic
+            Castle Express is fully licensed (MC-990616, USDOT 2307446, CT Permit C-1768) and insured. Basic
             valuation coverage is included with every move. Additional full-value protection is available upon request.
             Claims must be filed within 9 months of delivery per federal regulations.
           </p>
