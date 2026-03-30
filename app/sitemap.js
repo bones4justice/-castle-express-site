@@ -1,6 +1,7 @@
 import { CITY_DATA } from "@/lib/cityData";
 import { SERVICE_PAGES } from "@/content";
 import { getAllPosts } from "@/lib/blogData";
+import { SUBPAGE_TOWNS, SUBPAGE_SERVICES } from "@/lib/serviceSubpages";
 
 const BASE = "https://www.castleexpressmoving.com";
 
@@ -44,5 +45,18 @@ export default function sitemap() {
     priority: 0.6,
   }));
 
-  return [...staticPages, ...servicePages, ...cityPages, ...blogIndex, ...blogPosts];
+  // Service subpages (5 towns x 3 services = 15 pages)
+  const serviceSubpages = [];
+  for (const townSlug of SUBPAGE_TOWNS) {
+    for (const svcSlug of SUBPAGE_SERVICES) {
+      serviceSubpages.push({
+        url: `${BASE}/${townSlug}/${svcSlug}/`,
+        lastModified: now,
+        changeFrequency: "monthly",
+        priority: 0.7,
+      });
+    }
+  }
+
+  return [...staticPages, ...servicePages, ...cityPages, ...serviceSubpages, ...blogIndex, ...blogPosts];
 }
