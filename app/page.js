@@ -13,7 +13,12 @@ function SectionLabel({ children }) {
 }
 
 export default function HomePage() {
-  const serviceIcons = [<Home key="h" />, <Building key="b" />, <Box key="bx" />, <Shield key="s" />];
+  const serviceIcons = [
+    <img key="h" src="/images/icons/icon-residential.png" alt="" width={40} height={40} />,
+    <img key="b" src="/images/icons/icon-commercial.png" alt="" width={40} height={40} />,
+    <img key="bx" src="/images/icons/icon-packing.png" alt="" width={40} height={40} />,
+    <img key="s" src="/images/icons/icon-storage.png" alt="" width={40} height={40} />,
+  ];
 
   return (
     <>
@@ -52,12 +57,12 @@ export default function HomePage() {
       {/* ─── TRUST BAR ─── */}
       <section className="trust-bar" aria-label="Trust indicators">
         {[
-          { icon: <Shield size={18} />, label: "A+ BBB Rating" },
-          { icon: <Star />, label: `${COMPANY.reviewAvg}★ Google (${COMPANY.reviewCount} Reviews)` },
-          { icon: <Award size={18} />, label: "Licensed & Insured" },
-          { icon: <Clock size={18} />, label: `Serving CT & MA Since ${COMPANY.founded}` },
+          { icon: "/images/icons/icon-bbb.png", label: "A+ BBB Rating" },
+          { icon: "/images/icons/icon-google.png", label: `${COMPANY.reviewAvg}★ Google (${COMPANY.reviewCount} Reviews)` },
+          { icon: "/images/icons/icon-licensed.png", label: "Licensed & Insured" },
+          { icon: "/images/icons/icon-location.png", label: `Serving CT & MA Since ${COMPANY.founded}` },
         ].map((item, i) => (
-          <div key={i} className="trust-item"><span style={{ color: "#D4A017" }}>{item.icon}</span> {item.label}</div>
+          <div key={i} className="trust-item"><img src={item.icon} alt="" width={24} height={24} style={{ verticalAlign: "middle" }} /> {item.label}</div>
         ))}
       </section>
 

@@ -9,7 +9,13 @@ export const metadata = {
   openGraph: { title: "Moving Services | Castle Express Moving & Storage", description: "Residential, commercial, packing, storage, and specialty moving in CT & MA.", url: "/services/" },
 };
 
-const ICONS = { residential: <Home />, commercial: <Building />, packing: <Box />, storage: <Shield />, specialty: <Truck /> };
+const ICONS = {
+  residential: <img src="/images/icons/icon-residential.png" alt="" width={40} height={40} />,
+  commercial: <img src="/images/icons/icon-commercial.png" alt="" width={40} height={40} />,
+  packing: <img src="/images/icons/icon-packing.png" alt="" width={40} height={40} />,
+  storage: <img src="/images/icons/icon-storage.png" alt="" width={40} height={40} />,
+  specialty: <img src="/images/icons/icon-piano.png" alt="" width={40} height={40} />,
+};
 
 const SERVICE_SLUGS = {
   residential: "residential-moving",
