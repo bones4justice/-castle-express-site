@@ -158,6 +158,13 @@ const nextConfig = {
       { source: '/labor-only-moving-for-small-businesses/', destination: '/services', permanent: true },
       { source: '/mastering-piano', destination: '/services/specialty-moving', permanent: true },
       { source: '/mastering-piano/', destination: '/services/specialty-moving', permanent: true },
+      // Old WordPress blog posts from GA4
+      { source: '/top-10-tips-for-choosing-the-right-moving-company-in-enfield-ct', destination: '/blog', permanent: true },
+      { source: '/top-10-tips-for-choosing-the-right-moving-company-in-enfield-ct/', destination: '/blog', permanent: true },
+      { source: '/affordable-towns-in-ct-guide-by-a-moving-company-in-ct', destination: '/blog', permanent: true },
+      { source: '/affordable-towns-in-ct-guide-by-a-moving-company-in-ct/', destination: '/blog', permanent: true },
+      { source: '/packing-services-do-they-really-save-you-time-and-effort-during-a-move', destination: '/blog', permanent: true },
+      { source: '/packing-services-do-they-really-save-you-time-and-effort-during-a-move/', destination: '/blog', permanent: true },
     ];
   },
 };
