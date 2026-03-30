@@ -190,7 +190,7 @@ export default function HomePage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
             {CITY_DATA.filter(c => c.tier === "Tier 1 - Priority").map(city => (
               <Link key={city.slug} href={`/${city.slug}`} className="location-chip">
-                <MapPin size={16} /> {city.town}, {city.state}
+                <IconLocation size={20} /> {city.town}, {city.state}
               </Link>
             ))}
           </div>
