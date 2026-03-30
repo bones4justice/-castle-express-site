@@ -10,11 +10,11 @@ export const metadata = {
 };
 
 const ICONS = {
-  residential: <img src="/images/icons/icon-residential.png" alt="" width={40} height={40} />,
-  commercial: <img src="/images/icons/icon-commercial.png" alt="" width={40} height={40} />,
-  packing: <img src="/images/icons/icon-packing.png" alt="" width={40} height={40} />,
-  storage: <img src="/images/icons/icon-storage.png" alt="" width={40} height={40} />,
-  specialty: <img src="/images/icons/icon-piano.png" alt="" width={40} height={40} />,
+  residential: <img src="/images/icons/icon-residential.png" alt="" width={64} height={64} />,
+  commercial: <img src="/images/icons/icon-commercial.png" alt="" width={64} height={64} />,
+  packing: <img src="/images/icons/icon-packing.png" alt="" width={64} height={64} />,
+  storage: <img src="/images/icons/icon-storage.png" alt="" width={64} height={64} />,
+  specialty: <img src="/images/icons/icon-piano.png" alt="" width={64} height={64} />,
 };
 
 const SERVICE_SLUGS = {

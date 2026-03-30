@@ -14,10 +14,10 @@ function SectionLabel({ children }) {
 
 export default function HomePage() {
   const serviceIcons = [
-    <img key="h" src="/images/icons/icon-residential.png" alt="" width={40} height={40} />,
-    <img key="b" src="/images/icons/icon-commercial.png" alt="" width={40} height={40} />,
-    <img key="bx" src="/images/icons/icon-packing.png" alt="" width={40} height={40} />,
-    <img key="s" src="/images/icons/icon-storage.png" alt="" width={40} height={40} />,
+    <img key="h" src="/images/icons/icon-residential.png" alt="" width={64} height={64} />,
+    <img key="b" src="/images/icons/icon-commercial.png" alt="" width={64} height={64} />,
+    <img key="bx" src="/images/icons/icon-packing.png" alt="" width={64} height={64} />,
+    <img key="s" src="/images/icons/icon-storage.png" alt="" width={64} height={64} />,
   ];
 
   return (
@@ -62,7 +62,7 @@ export default function HomePage() {
           { icon: "/images/icons/icon-licensed.png", label: "Licensed & Insured" },
           { icon: "/images/icons/icon-location.png", label: `Serving CT & MA Since ${COMPANY.founded}` },
         ].map((item, i) => (
-          <div key={i} className="trust-item"><img src={item.icon} alt="" width={24} height={24} style={{ verticalAlign: "middle" }} /> {item.label}</div>
+          <div key={i} className="trust-item"><img src={item.icon} alt="" width={32} height={32} style={{ verticalAlign: "middle" }} /> {item.label}</div>
         ))}
       </section>
 
