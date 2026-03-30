@@ -258,13 +258,12 @@ export const IconLongDistance = ({ size = 96, ...p }) => (
 
 export const IconTikTok = ({ size = 96, ...p }) => (
   <Wrap size={size} {...p}>
-    <g stroke="#000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none">
-      {/* Musical note body */}
-      <path d="M38,78 L38,36 C38,36 48,32 58,26 L58,38" />
-      {/* Note head circle */}
-      <circle cx="32" cy="74" r="10" />
-      {/* Curved flourish at top */}
-      <path d="M58,26 C58,26 62,24 64,28 C66,32 62,36 58,38" strokeWidth="3" />
+    {/* Solid filled TikTok note shape */}
+    <g fill="#000" stroke="none">
+      {/* Stem + rectangular flag at top */}
+      <path d="M40,72 L40,22 L68,22 L68,38 L52,38 L52,72 Z" />
+      {/* Note head */}
+      <circle cx="32" cy="72" r="13" />
     </g>
   </Wrap>
 );
@@ -272,11 +271,12 @@ export const IconTikTok = ({ size = 96, ...p }) => (
 export const IconLinkedIn = ({ size = 96, ...p }) => (
   <Wrap size={size} {...p}>
     <g fill="#000" stroke="none">
-      {/* Letter i */}
-      <rect x="22" y="46" width="10" height="30" rx="1" />
-      <circle cx="27" cy="36" r="6" />
+      {/* Letter i dot */}
+      <circle cx="28" cy="32" r="5" />
+      {/* Letter i stem */}
+      <rect x="24" y="42" width="8" height="30" rx="1" />
       {/* Letter n */}
-      <path d="M40,76 L40,56 C40,48 44,44 52,44 C60,44 62,48 62,56 L62,76 L52,76 L52,58 C52,54 50,52 48,52 C46,52 44,54 44,58 L44,76 Z" />
+      <path d="M40,72 L40,42 L48,42 L48,46 C50,42 54,40 60,40 C68,40 72,46 72,54 L72,72 L64,72 L64,56 C64,50 62,48 58,48 C54,48 50,50 48,54 L48,72 Z" />
     </g>
   </Wrap>
 );
