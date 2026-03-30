@@ -255,28 +255,3 @@ export const IconLongDistance = ({ size = 96, ...p }) => (
     </g>
   </Wrap>
 );
-
-export const IconTikTok = ({ size = 96, ...p }) => (
-  <Wrap size={size} {...p}>
-    {/* Solid filled TikTok note shape */}
-    <g fill="#000" stroke="none">
-      {/* Stem + rectangular flag at top */}
-      <path d="M40,72 L40,22 L68,22 L68,38 L52,38 L52,72 Z" />
-      {/* Note head */}
-      <circle cx="32" cy="72" r="13" />
-    </g>
-  </Wrap>
-);
-
-export const IconLinkedIn = ({ size = 96, ...p }) => (
-  <Wrap size={size} {...p}>
-    <g fill="#000" stroke="none">
-      {/* Letter i dot */}
-      <circle cx="28" cy="32" r="5" />
-      {/* Letter i stem */}
-      <rect x="24" y="42" width="8" height="30" rx="1" />
-      {/* Letter n */}
-      <path d="M40,72 L40,42 L48,42 L48,46 C50,42 54,40 60,40 C68,40 72,46 72,54 L72,72 L64,72 L64,56 C64,50 62,48 58,48 C54,48 50,50 48,54 L48,72 Z" />
-    </g>
-  </Wrap>
-);
