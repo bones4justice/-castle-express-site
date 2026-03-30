@@ -53,13 +53,20 @@ export const IconCommercial = ({ size = 96, ...p }) => (
 export const IconPacking = ({ size = 96, ...p }) => (
   <Wrap size={size} {...p}>
     <g stroke="#000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none">
-      {/* Box body */}
-      <rect x="22" y="48" width="48" height="34" />
-      {/* Box flaps open */}
-      <polyline points="22,48 30,36 46,36" />
-      <polyline points="70,48 62,36 46,36" />
-      {/* Crown above */}
-      <polyline points="30,30 36,18 42,26 48,14 54,26 60,18 66,30" strokeWidth="3" />
+      {/* Box front face */}
+      <rect x="20" y="50" width="50" height="32" />
+      {/* Box side face (slight angle) */}
+      <polyline points="70,50 78,44 78,76 70,82" />
+      {/* Box top edge */}
+      <line x1="20" y1="50" x2="28" y2="44" />
+      <line x1="28" y1="44" x2="78" y2="44" />
+      {/* Open flaps */}
+      <line x1="20" y1="50" x2="14" y2="40" />
+      <line x1="44" y1="50" x2="38" y2="40" />
+      <line x1="46" y1="50" x2="58" y2="40" />
+      <line x1="70" y1="50" x2="82" y2="42" />
+      {/* Crown above - smaller, centered */}
+      <polyline points="30,28 35,18 40,24 45,12 50,24 55,18 60,28" strokeWidth="3" />
     </g>
   </Wrap>
 );
