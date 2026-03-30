@@ -148,6 +148,16 @@ const nextConfig = {
       { source: '/storage-with-climate-control/', destination: '/services', permanent: true },
       { source: '/specialty-moving-service', destination: '/services', permanent: true },
       { source: '/specialty-moving-service/', destination: '/services', permanent: true },
+      // Old sitemap URLs
+      { source: '/post-sitemap.xml', destination: '/sitemap.xml', permanent: true },
+      { source: '/sitemaps.xml', destination: '/sitemap.xml', permanent: true },
+      // Old WordPress blog/service URLs from GA4
+      { source: '/mastering-piano-moving-in-ct-expert-tips-for-safe-relocation', destination: '/services/specialty-moving', permanent: true },
+      { source: '/mastering-piano-moving-in-ct-expert-tips-for-safe-relocation/', destination: '/services/specialty-moving', permanent: true },
+      { source: '/labor-only-moving-for-small-businesses', destination: '/services', permanent: true },
+      { source: '/labor-only-moving-for-small-businesses/', destination: '/services', permanent: true },
+      { source: '/mastering-piano', destination: '/services/specialty-moving', permanent: true },
+      { source: '/mastering-piano/', destination: '/services/specialty-moving', permanent: true },
     ];
   },
 };
