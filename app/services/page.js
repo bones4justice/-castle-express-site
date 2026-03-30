@@ -10,11 +10,11 @@ export const metadata = {
 };
 
 const ICONS = {
-  residential: <div style={{ width: 96, height: 96, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-residential.png" alt="" width={80} height={80} /></div>,
-  commercial: <div style={{ width: 96, height: 96, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-commercial.png" alt="" width={80} height={80} /></div>,
-  packing: <div style={{ width: 96, height: 96, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-packing.png" alt="" width={80} height={80} /></div>,
-  storage: <div style={{ width: 96, height: 96, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-storage.png" alt="" width={80} height={80} /></div>,
-  specialty: <div style={{ width: 96, height: 96, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-piano.png" alt="" width={80} height={80} /></div>,
+  residential: <div style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-residential.png" alt="Residential Moving Icon" width={96} height={96} /></div>,
+  commercial: <div style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-commercial.png" alt="Commercial Moving Icon" width={96} height={96} /></div>,
+  packing: <div style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-packing.png" alt="Packing Services Icon" width={96} height={96} /></div>,
+  storage: <div style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-storage.png" alt="Storage Icon" width={96} height={96} /></div>,
+  specialty: <div style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-piano.png" alt="Specialty Moving Icon" width={96} height={96} /></div>,
 };
 
 const SERVICE_SLUGS = {
