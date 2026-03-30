@@ -143,28 +143,6 @@ export const IconPhone = ({ size = 96, ...p }) => (
   </Wrap>
 );
 
-export const IconFacebook = ({ size = 96, ...p }) => (
-  <Wrap size={size} {...p}>
-    <g stroke="#000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none">
-      {/* Bold f */}
-      <path d="M54,84 L54,54 L64,54 L66,44 L54,44 L54,38 C54,34 56,32 60,32 L66,32 L66,22 L58,22 C48,22 44,28 44,38 L44,44 L36,44 L36,54 L44,54 L44,84 Z" />
-    </g>
-  </Wrap>
-);
-
-export const IconInstagram = ({ size = 96, ...p }) => (
-  <Wrap size={size} {...p}>
-    <g stroke="#000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" fill="none">
-      {/* Rounded square */}
-      <rect x="20" y="20" width="52" height="52" rx="14" />
-      {/* Circle inside */}
-      <circle cx="46" cy="46" r="14" />
-      {/* Dot upper right */}
-      <circle cx="62" cy="30" r="3" fill="#000" stroke="none" />
-    </g>
-  </Wrap>
-);
-
 export const IconTruck = ({ size = 96, ...p }) => (
   <Wrap size={size} {...p}>
     <g stroke="#000" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" fill="none">
