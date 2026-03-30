@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SERVICES, SERVICE_PAGES, FAQ } from "@/content";
-import { Home, Building, Box, Shield, Truck, Check, ArrowRight } from "@/components/Icons";
+import { Check, ArrowRight } from "@/components/Icons";
+import { IconResidential, IconCommercial, IconPacking, IconStorage, IconPiano } from "@/components/BrandIcons";
 
 export const metadata = {
   title: "Our Moving Services",
@@ -10,11 +11,11 @@ export const metadata = {
 };
 
 const ICONS = {
-  residential: <div style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-residential.png" alt="Residential Moving Icon" width={96} height={96} /></div>,
-  commercial: <div style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-commercial.png" alt="Commercial Moving Icon" width={96} height={96} /></div>,
-  packing: <div style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-packing.png" alt="Packing Services Icon" width={96} height={96} /></div>,
-  storage: <div style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-storage.png" alt="Storage Icon" width={96} height={96} /></div>,
-  specialty: <div style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-piano.png" alt="Specialty Moving Icon" width={96} height={96} /></div>,
+  residential: <IconResidential size={96} />,
+  commercial: <IconCommercial size={96} />,
+  packing: <IconPacking size={96} />,
+  storage: <IconStorage size={96} />,
+  specialty: <IconPiano size={96} />,
 };
 
 const SERVICE_SLUGS = {

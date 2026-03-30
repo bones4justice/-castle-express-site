@@ -2,6 +2,7 @@ import Link from "next/link";
 import { COMPANY, SERVICES, REVIEWS, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
 import { CITY_DATA } from "@/lib/cityData";
 import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, MapPin, Phone } from "@/components/Icons";
+import { IconResidential, IconCommercial, IconPacking, IconStorage, IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
 import EstimateForm from "@/components/EstimateForm";
 
 function SectionLabel({ children }) {
@@ -14,10 +15,10 @@ function SectionLabel({ children }) {
 
 export default function HomePage() {
   const serviceIcons = [
-    <div key="h" style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-residential.png" alt="Residential Moving Icon" width={96} height={96} /></div>,
-    <div key="b" style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-commercial.png" alt="Commercial Moving Icon" width={96} height={96} /></div>,
-    <div key="bx" style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-packing.png" alt="Packing Services Icon" width={96} height={96} /></div>,
-    <div key="s" style={{ width: 112, height: 112, borderRadius: "50%", background: "rgba(251,203,11,0.15)", display: "flex", alignItems: "center", justifyContent: "center" }}><img src="/images/icons/icon-storage.png" alt="Storage Icon" width={96} height={96} /></div>,
+    <IconResidential key="h" size={96} />,
+    <IconCommercial key="b" size={96} />,
+    <IconPacking key="bx" size={96} />,
+    <IconStorage key="s" size={96} />,
   ];
 
   return (
@@ -57,12 +58,12 @@ export default function HomePage() {
       {/* ─── TRUST BAR ─── */}
       <section className="trust-bar" aria-label="Trust indicators">
         {[
-          { icon: "/images/icons/icon-bbb.png", label: "A+ BBB Rating", alt: "BBB Rating Icon" },
-          { icon: "/images/icons/icon-google.png", label: `${COMPANY.reviewAvg}★ Google (${COMPANY.reviewCount} Reviews)`, alt: "Google Reviews Icon" },
-          { icon: "/images/icons/icon-licensed.png", label: "Licensed & Insured", alt: "Licensed Icon" },
-          { icon: "/images/icons/icon-location.png", label: `Serving CT & MA Since ${COMPANY.founded}`, alt: "Location Icon" },
+          { icon: <IconBBB size={28} />, label: "A+ BBB Rating" },
+          { icon: <IconGoogle size={28} />, label: `${COMPANY.reviewAvg}★ Google (${COMPANY.reviewCount} Reviews)` },
+          { icon: <IconLicensed size={28} />, label: "Licensed & Insured" },
+          { icon: <IconLocation size={28} />, label: `Serving CT & MA Since ${COMPANY.founded}` },
         ].map((item, i) => (
-          <div key={i} className="trust-item"><img src={item.icon} alt={item.alt} width={28} height={28} style={{ verticalAlign: "middle" }} /> {item.label}</div>
+          <div key={i} className="trust-item"><span style={{ display: "inline-flex", verticalAlign: "middle" }}>{item.icon}</span> {item.label}</div>
         ))}
       </section>
 
