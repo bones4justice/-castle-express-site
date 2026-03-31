@@ -10,7 +10,7 @@ const NAV_ITEMS = [
   { label: "Services", href: "/services" },
   { label: "Service Areas", href: "/service-areas" },
   { label: "Blog", href: "/blog" },
-  { label: "Princess Packing™", href: "/princess-packing.html", gold: true },
+  { label: "Princess Packing™", href: "/princess-packing.html", gold: true, static: true },
   { label: "Referral Program", href: "/referral", gold: true },
   { label: "Contact", href: "/contact" },
 ];
@@ -49,11 +49,12 @@ export default function Header() {
             const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
             const color = item.gold ? "#D4A017" : isActive ? "#D4A017" : "#1A1A2E";
             const fontWeight = item.gold ? 700 : 600;
+            const Tag = item.static ? "a" : Link;
             return (
-              <Link key={item.href} href={item.href} style={{
+              <Tag key={item.href} href={item.href} style={{
                 fontFamily: "var(--font-heading)", fontWeight, fontSize: 14,
                 color, padding: "8px 14px", borderRadius: 6, textDecoration: "none", transition: "color 0.2s",
-              }}>{item.label}</Link>
+              }}>{item.label}</Tag>
             );
           })}
           <a href={COMPANY.phoneLink} style={{
@@ -77,13 +78,16 @@ export default function Header() {
       {/* Mobile Nav */}
       {mobileOpen && (
         <div className="mobile-nav" style={{ padding: "8px 24px 20px", borderTop: "1px solid #E5E7EB" }}>
-          {NAV_ITEMS.map(item => (
-            <Link key={item.href} href={item.href} style={{
-              display: "block", fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 16,
-              color: pathname === item.href ? "#D4A017" : "#1A1A2E",
-              padding: "12px 0", borderBottom: "1px solid #E5E7EB", textDecoration: "none",
-            }}>{item.label}</Link>
-          ))}
+          {NAV_ITEMS.map(item => {
+            const MobileTag = item.static ? "a" : Link;
+            return (
+              <MobileTag key={item.href} href={item.href} style={{
+                display: "block", fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 16,
+                color: pathname === item.href ? "#D4A017" : "#1A1A2E",
+                padding: "12px 0", borderBottom: "1px solid #E5E7EB", textDecoration: "none",
+              }}>{item.label}</MobileTag>
+            );
+          })}
           <a href={COMPANY.phoneLink} style={{
             display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginTop: 12,
             fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#fff",
