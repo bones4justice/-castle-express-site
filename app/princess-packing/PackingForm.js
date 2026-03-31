@@ -68,7 +68,7 @@ export default function PackingForm() {
   if (submitted) {
     return (
       <div style={{ background: "#fff", borderRadius: 12, padding: 40, textAlign: "center", border: "1px solid #E5E7EB" }}>
-        <div style={{ width: 60, height: 60, borderRadius: "50%", background: "#F72585", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+        <div style={{ width: 60, height: 60, borderRadius: "50%", background: "#FBCB0B", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
           <Check />
         </div>
         <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, color: "#1A1A2E", marginBottom: 8 }}>
@@ -121,7 +121,7 @@ export default function PackingForm() {
         </div>
       </div>
       <div style={{ marginTop: 16 }}>
-        <button type="submit" disabled={loading} className="btn btn-primary btn-full" style={{ opacity: loading ? 0.7 : 1, background: "#F72585", borderColor: "#F72585" }}>
+        <button type="submit" disabled={loading} className="btn btn-primary btn-full" style={{ opacity: loading ? 0.7 : 1, background: "#FBCB0B", borderColor: "#FBCB0B", color: "#000000" }}>
           {loading ? "Submitting..." : <>Submit Packing Quote Request <ArrowRight /></>}
         </button>
       </div>

@@ -52,7 +52,7 @@ export default function PrincessPackingPage() {
       <section className="section-dark" style={{ padding: "80px 24px 60px", textAlign: "center", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "relative", maxWidth: 700, margin: "0 auto" }}>
           <h1 className="heading-1" style={{ color: "#fff", fontSize: "clamp(32px, 5vw, 52px)", marginBottom: 12 }}>
-            <span style={{ color: "#F72585" }}>Princess Packing</span>™
+            <span style={{ color: "#FBCB0B" }}>Princess Packing</span>™
           </h1>
           <p className="body-lg text-white-muted" style={{ fontSize: 20, marginBottom: 28 }}>
             A White-Glove Packing Service by Castle Express
@@ -91,8 +91,8 @@ export default function PrincessPackingPage() {
             ].map((f, i) => (
               <div key={i} className="card" style={{ padding: 20 }}>
                 <div style={{ display: "flex", gap: 12, alignItems: "start" }}>
-                  <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#FFF0F5", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <Check size={14} style={{ color: "#F72585" }} />
+                  <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <Check size={14} style={{ color: "#FBCB0B" }} />
                   </div>
                   <div>
                     <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, color: "#1A1A2E", marginBottom: 4 }}>{f.title}</h3>
@@ -111,7 +111,7 @@ export default function PrincessPackingPage() {
               { num: "4.9", label: "Google Star Average" },
             ].map((s, i) => (
               <div key={i} style={{ textAlign: "center", padding: 20 }}>
-                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: 28, color: "#F72585" }}>{s.num}</div>
+                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: 28, color: "#000000" }}>{s.num}</div>
                 <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "#6B7280" }}>{s.label}</div>
               </div>
             ))}
@@ -129,7 +129,7 @@ export default function PrincessPackingPage() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 24 }}>
             {STEPS.map(s => (
               <div key={s.num} style={{ textAlign: "center" }}>
-                <div style={{ width: 48, height: 48, borderRadius: "50%", background: "#F72585", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: 16, color: "#fff" }}>{s.num}</div>
+                <div style={{ width: 48, height: 48, borderRadius: "50%", background: "#FBCB0B", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: 16, color: "#000000" }}>{s.num}</div>
                 <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 17, color: "#1A1A2E", marginBottom: 8 }}>{s.title}</h3>
                 <p className="body-sm text-gray" style={{ lineHeight: 1.6 }}>{s.desc}</p>
               </div>
@@ -147,20 +147,20 @@ export default function PrincessPackingPage() {
           </h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
             {PACKAGES.map(pkg => (
-              <div key={pkg.name} className="card" style={{ padding: 28, position: "relative", border: pkg.popular ? "2px solid #F72585" : "1px solid #E5E7EB" }}>
+              <div key={pkg.name} className="card" style={{ padding: 28, position: "relative", border: pkg.popular ? "2px solid #FBCB0B" : "1px solid #E5E7EB" }}>
                 {pkg.popular && (
-                  <div style={{ position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", background: "#F72585", color: "#fff", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 11, padding: "4px 14px", borderRadius: 20 }}>Most Popular</div>
+                  <div style={{ position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)", background: "#FBCB0B", color: "#000000", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 11, padding: "4px 14px", borderRadius: 20 }}>Most Popular</div>
                 )}
                 <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontStyle: "italic", fontSize: 22, color: "#1A1A2E", marginBottom: 4 }}>{pkg.name}</h3>
                 <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "#6B7280", marginBottom: 12 }}>{pkg.boxes}</p>
-                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: 36, color: "#F72585", marginBottom: 20 }}>{pkg.price}</div>
+                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: 36, color: "#000000", marginBottom: 20 }}>{pkg.price}</div>
                 {pkg.includes.map((item, i) => (
                   <div key={i} style={{ display: "flex", gap: 8, marginBottom: 8, alignItems: "start" }}>
-                    <Check size={14} style={{ color: "#F72585", marginTop: 3, flexShrink: 0 }} />
+                    <Check size={14} style={{ color: "#FBCB0B", marginTop: 3, flexShrink: 0 }} />
                     <span style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#374151" }}>{item}</span>
                   </div>
                 ))}
-                <a href="#request" className="btn btn-primary btn-full" style={{ marginTop: 20, background: pkg.popular ? "#F72585" : "#1A1A2E", borderColor: pkg.popular ? "#F72585" : "#1A1A2E" }}>
+                <a href="#request" className="btn btn-primary btn-full" style={{ marginTop: 20, background: pkg.popular ? "#FBCB0B" : "#1A1A2E", borderColor: pkg.popular ? "#FBCB0B" : "#1A1A2E", color: pkg.popular ? "#000000" : "#fff" }}>
                   Select {pkg.name}
                 </a>
               </div>
@@ -212,7 +212,7 @@ export default function PrincessPackingPage() {
           <p className="body-md text-white-muted" style={{ marginBottom: 24 }}>
             Call us directly or fill out the form above. We will walk you through everything.
           </p>
-          <a href={COMPANY.phoneLink} className="btn btn-primary" style={{ background: "#F72585", borderColor: "#F72585" }}><Phone size={18} /> {COMPANY.phone}</a>
+          <a href={COMPANY.phoneLink} className="btn btn-primary" style={{ background: "#FBCB0B", borderColor: "#FBCB0B", color: "#000000" }}><Phone size={18} /> {COMPANY.phone}</a>
         </div>
       </section>
     </>
