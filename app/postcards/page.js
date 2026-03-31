@@ -63,7 +63,7 @@ export default function PostcardsPage() {
           <div className="postcard-hero-photo" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
             <div className="postcard-circle" style={{ position: "relative", width: 380, height: 380, borderRadius: "50%", overflow: "hidden", border: "4px solid #FBCB0B", flexShrink: 0 }}>
               <img src="/images/truck-sale-pending.jpg" alt="Castle Express truck at customer home" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
-              <img src="/images/joe-caronna.png" alt="Joe Caronna, Owner of Castle Express Moving" style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "65%", objectFit: "contain", objectPosition: "bottom" }} />
+              <img src="/images/joe-caronna.png" alt="Joe Caronna, Owner of Castle Express Moving" style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "85%", objectFit: "contain", objectPosition: "bottom center" }} />
             </div>
           </div>
         </div>
