@@ -8,7 +8,7 @@ const OFFERS = [
   "Free Night of Truck Storage (Double Closings)",
   "Free First Month of Storage",
   "20 Free Boxes + Roll of Tape with Walk-Through Estimate",
-  "All of the Above",
+  "All Three Offers",
 ];
 
 const inputStyle = {
@@ -42,20 +42,9 @@ export default function PostcardForm() {
     firstName: "", lastName: "", phone: "", email: "",
     moveFrom: "", moveTo: "", moveDate: "", homeSize: "", notes: "",
   });
-  const [selectedOffers, setSelectedOffers] = useState([]);
+  const [selectedOffer, setSelectedOffer] = useState("");
 
   const update = (field) => (e) => setFormData(prev => ({ ...prev, [field]: e.target.value }));
-
-  const toggleOffer = (offer) => {
-    if (offer === "All of the Above") {
-      setSelectedOffers(prev => prev.includes(offer) ? [] : [offer]);
-    } else {
-      setSelectedOffers(prev => {
-        const filtered = prev.filter(o => o !== "All of the Above");
-        return filtered.includes(offer) ? filtered.filter(o => o !== offer) : [...filtered, offer];
-      });
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,7 +55,7 @@ export default function PostcardForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
-          offersSelected: selectedOffers.join(", "),
+          offerSelected: selectedOffer,
           formType: "Postcard Landing Page",
         }),
       });
@@ -135,13 +124,13 @@ export default function PostcardForm() {
         </div>
       </div>
 
-      {/* Offer checkboxes */}
+      {/* Offer radio buttons */}
       <div style={{ marginTop: 16 }}>
-        <label style={labelStyle}>Which postcard offers interest you?</label>
+        <label style={labelStyle}>Which postcard offer interests you?</label>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 8 }}>
           {OFFERS.map(offer => (
-            <label key={offer} style={{ display: "flex", alignItems: "start", gap: 8, cursor: "pointer", padding: "10px 12px", borderRadius: 8, border: selectedOffers.includes(offer) ? "2px solid #FBCB0B" : "1px solid #E5E7EB", background: selectedOffers.includes(offer) ? "#FFFBEB" : "#fff", transition: "all 0.15s" }}>
-              <input type="checkbox" checked={selectedOffers.includes(offer)} onChange={() => toggleOffer(offer)} style={{ marginTop: 2, accentColor: "#FBCB0B" }} />
+            <label key={offer} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", padding: "12px 14px", borderRadius: 8, border: selectedOffer === offer ? "2px solid #FBCB0B" : "1px solid #E5E7EB", background: selectedOffer === offer ? "#FFFBEB" : "#fff", transition: "all 0.15s" }}>
+              <input type="radio" name="offerSelection" checked={selectedOffer === offer} onChange={() => setSelectedOffer(offer)} style={{ width: 18, height: 18, accentColor: "#FBCB0B", flexShrink: 0 }} />
               <span style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#1A1A2E" }}>{offer}</span>
             </label>
           ))}
