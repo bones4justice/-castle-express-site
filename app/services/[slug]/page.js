@@ -97,7 +97,7 @@ export default function ServiceDetailPage({ params }) {
             {/* Content Sections */}
             {svc.sections.map((section, i) => (
               <div key={i} style={{ marginBottom: 36 }}>
-                <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontStyle: "italic", fontSize: 22, color: "#1A1A2E", marginBottom: 16 }}>
+                <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 16 }}>
                   {section.heading}
                 </h2>
                 {section.items.map((item, j) => (
@@ -132,7 +132,7 @@ export default function ServiceDetailPage({ params }) {
             {/* FAQ */}
             {svc.faq && svc.faq.length > 0 && (
               <div style={{ marginBottom: 36 }}>
-                <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontStyle: "italic", fontSize: 22, color: "#1A1A2E", marginBottom: 16 }}>
+                <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 16 }}>
                   Frequently Asked Questions
                 </h2>
                 {svc.faq.map((item, i) => (

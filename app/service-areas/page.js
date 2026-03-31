@@ -42,7 +42,7 @@ export default function ServiceAreasPage() {
             if (cities.length === 0) return null;
             return (
               <div key={tier.key} style={{ marginBottom: 40 }}>
-                <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontStyle: "italic", fontSize: 22, color: "#1A1A2E", marginBottom: 8 }}>
+                <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 8 }}>
                   <span className="text-gold">●</span> {tier.label}
                 </h2>
                 <p className="body-sm text-gray" style={{ marginBottom: 16 }}>{tier.desc}</p>

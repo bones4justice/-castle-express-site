@@ -45,7 +45,6 @@ export default function BlogPost({ params }) {
         if (block.startsWith("## ")) {
           return <h2 key={i} style={{
             fontFamily: "var(--font-heading)",
-            fontStyle: "italic",
             fontWeight: 800,
             fontSize: 22,
             color: "#1A1A2E",
@@ -143,7 +142,6 @@ export default function BlogPost({ params }) {
           }}>
             <h3 style={{
               fontFamily: "var(--font-heading)",
-              fontStyle: "italic",
               fontWeight: 800,
               fontSize: 22,
               color: "#fff",

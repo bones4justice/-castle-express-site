@@ -80,7 +80,7 @@ export default function PostcardsPage() {
       {/* OFFERS */}
       <section id="offers" style={{ background: "#fafafa", padding: "64px 24px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(24px, 3.5vw, 36px)", color: "#1A1A2E", textAlign: "center", marginBottom: 8 }}>
+          <h2 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontSize: "clamp(24px, 3.5vw, 36px)", color: "#1A1A2E", textAlign: "center", marginBottom: 8 }}>
             Your Exclusive Postcard Offers
           </h2>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#777", textAlign: "center", marginBottom: 36 }}>
@@ -121,7 +121,7 @@ export default function PostcardsPage() {
       {/* SOCIAL PROOF */}
       <section style={{ background: "#fff", padding: "16px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "italic", fontSize: 24, color: "#1A1A2E", textAlign: "center", marginBottom: 28 }}>
+          <h2 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontSize: 24, color: "#1A1A2E", textAlign: "center", marginBottom: 28 }}>
             Trusted by Families Across CT &amp; MA Since {COMPANY.founded}
           </h2>
 
@@ -153,7 +153,7 @@ export default function PostcardsPage() {
       {/* ESTIMATE FORM */}
       <section id="estimate" style={{ background: "#fafafa", padding: "64px 24px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(24px, 3.5vw, 36px)", color: "#1A1A2E", textAlign: "center", marginBottom: 8 }}>
+          <h2 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontSize: "clamp(24px, 3.5vw, 36px)", color: "#1A1A2E", textAlign: "center", marginBottom: 8 }}>
             Get Your Free Estimate
           </h2>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#777", textAlign: "center", marginBottom: 32 }}>

@@ -117,7 +117,7 @@ export default function EstimateForm({ dark = false }) {
       border: dark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #E5E7EB",
     }}>
       <h3 style={{
-        fontFamily: "var(--font-heading)", fontWeight: 800, fontStyle: "italic",
+        fontFamily: "var(--font-heading)", fontWeight: 800,
         fontSize: 22, color: dark ? "#fff" : "#1A1A2E", margin: "0 0 4px 0",
       }}>Get Your Free Estimate</h3>
       <p style={{
