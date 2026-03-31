@@ -59,10 +59,11 @@ export default function PostcardsPage() {
             </div>
           </div>
 
-          {/* Right column - large circular composition */}
-          <div className="postcard-hero-photo" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <div className="postcard-circle" style={{ position: "relative", width: 380, height: 380, borderRadius: "50%", overflow: "hidden", border: "4px solid #FBCB0B", flexShrink: 0 }}>
-              <img src="/images/truck-sale-pending.jpg" alt="Castle Express truck at customer home" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+          {/* Right column - rectangular card with Joe circle overlay */}
+          <div className="postcard-hero-photo" style={{ position: "relative", alignSelf: "center" }}>
+            <img src="/images/truck-loading.jpg" alt="Castle Express crew loading truck" style={{ width: "100%", height: 420, objectFit: "cover", objectPosition: "center", borderRadius: 16, display: "block" }} />
+            <div style={{ position: "absolute", bottom: -20, right: 20, width: 220, height: 220, borderRadius: "50%", overflow: "hidden", border: "4px solid #FBCB0B" }}>
+              <img src="/images/truck-sale-pending.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               <img src="/images/joe-caronna.png" alt="Joe Caronna, Owner of Castle Express Moving" style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "85%", objectFit: "contain", objectPosition: "bottom center" }} />
             </div>
           </div>
@@ -72,9 +73,6 @@ export default function PostcardsPage() {
           @media (max-width: 768px) {
             .postcard-hero-grid { grid-template-columns: 1fr !important; }
             .postcard-hero-photo { display: none !important; }
-          }
-          @media (min-width: 769px) and (max-width: 1024px) {
-            .postcard-circle { width: 260px !important; height: 260px !important; }
           }
         `}</style>
       </section>
