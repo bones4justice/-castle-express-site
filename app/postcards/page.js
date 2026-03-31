@@ -28,8 +28,12 @@ export default function PostcardsPage() {
     <>
       {/* HERO */}
       <section style={{ background: "#1a1d2e", minHeight: 560, padding: "72px 24px 0", position: "relative", overflow: "hidden" }}>
+        {/* Background photo */}
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-residential.jpg)", backgroundSize: "cover", backgroundPosition: "center", pointerEvents: "none" }} />
+        {/* Dark gradient overlay: solid left, transparent right */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(26,29,46,0.95) 50%, rgba(26,29,46,0.4) 100%)", pointerEvents: "none" }} />
         {/* Yellow triangle accent bottom left */}
-        <svg style={{ position: "absolute", bottom: 0, left: 0, width: 200, height: 200, pointerEvents: "none" }} viewBox="0 0 200 200"><polygon points="0,200 200,200 0,0" fill="#FBCB0B" opacity="0.08" /></svg>
+        <svg style={{ position: "absolute", bottom: 0, left: 0, width: 200, height: 200, pointerEvents: "none", zIndex: 1 }} viewBox="0 0 200 200"><polygon points="0,200 200,200 0,0" fill="#FBCB0B" opacity="0.08" /></svg>
 
         <div style={{ position: "relative", maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "55% 45%", alignItems: "end" }} className="postcard-hero-grid">
           {/* Left column */}
@@ -58,7 +62,7 @@ export default function PostcardsPage() {
           {/* Right column - postcard style: truck photo + Joe headshot overlay */}
           <div className="postcard-hero-photo" style={{ position: "relative", alignSelf: "center" }}>
             <img src="/images/truck-residential.jpg" alt="Castle Express moving truck at customer home" style={{ width: "100%", height: 420, objectFit: "cover", objectPosition: "center", borderRadius: 16, display: "block" }} />
-            <img src="/images/joe-caronna.png" alt="Joe Caronna, Owner of Castle Express Moving" style={{ position: "absolute", bottom: -20, right: 20, width: 160, height: 160, borderRadius: "50%", objectFit: "cover", objectPosition: "top", border: "4px solid #fff", boxShadow: "0 0 0 4px #FBCB0B", background: "#fff" }} />
+            <img src="/images/joe-caronna.png" alt="Joe Caronna, Owner of Castle Express Moving" style={{ position: "absolute", bottom: -20, right: 20, width: 220, height: 220, borderRadius: "50%", objectFit: "cover", objectPosition: "top", border: "4px solid #fff", boxShadow: "0 0 0 4px #FBCB0B", background: "#fff" }} />
           </div>
         </div>
 
