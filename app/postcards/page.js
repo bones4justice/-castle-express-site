@@ -35,11 +35,11 @@ export default function PostcardsPage() {
         {/* Yellow triangle accent bottom left */}
         <svg style={{ position: "absolute", bottom: 0, left: 0, width: 200, height: 200, pointerEvents: "none", zIndex: 1 }} viewBox="0 0 200 200"><polygon points="0,200 200,200 0,0" fill="#FBCB0B" opacity="0.08" /></svg>
 
-        <div style={{ position: "relative", maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "55% 45%", alignItems: "end" }} className="postcard-hero-grid">
+        <div style={{ position: "relative", maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "45% 55%", alignItems: "end" }} className="postcard-hero-grid">
           {/* Left column */}
           <div style={{ paddingBottom: 56 }}>
             <div className="section-label" style={{ marginBottom: 16 }}><span style={{ color: "#FBCB0B" }}>Thanks for Scanning!</span></div>
-            <h1 style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(32px, 4.5vw, 46px)", color: "#fff", marginBottom: 16, lineHeight: 1.1 }}>
+            <h1 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(32px, 4.5vw, 46px)", color: "#fff", marginBottom: 16, lineHeight: 1.1 }}>
               Looking for the <span style={{ color: "#FBCB0B" }}>Perfect Mover</span>?
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "rgba(255,255,255,0.8)", lineHeight: 1.7, marginBottom: 24, maxWidth: 500 }}>
@@ -49,20 +49,20 @@ export default function PostcardsPage() {
               {["Licensed & Insured", "Accurate Flat-Rate Estimates", `${COMPANY.reviewCount} 5-Star Reviews`].map(item => (
                 <div key={item} style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FBCB0B" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                  <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "rgba(255,255,255,0.9)" }}>{item}</span>
+                  <span style={{ fontFamily: "Merriweather, serif", fontWeight: 600, fontSize: 14, color: "rgba(255,255,255,0.9)" }}>{item}</span>
                 </div>
               ))}
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <a href="#offers" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "#FBCB0B", color: "#000", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none" }}>Claim Your Offer Below</a>
-              <a href={COMPANY.phoneLink} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "transparent", color: "#fff", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)" }}><Phone size={18} /> {COMPANY.phone}</a>
+              <a href="#offers" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "#FBCB0B", color: "#000", fontFamily: "Merriweather, serif", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none" }}>Claim Your Offer Below</a>
+              <a href={COMPANY.phoneLink} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "transparent", color: "#fff", fontFamily: "Merriweather, serif", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)" }}><Phone size={18} /> {COMPANY.phone}</a>
             </div>
           </div>
 
           {/* Right column - rectangular card with Joe circle overlay */}
           <div className="postcard-hero-photo" style={{ position: "relative", alignSelf: "center" }}>
-            <img src="/images/truck-loading.jpg" alt="Castle Express crew loading truck" style={{ width: "100%", height: 420, objectFit: "cover", objectPosition: "center", borderRadius: 16, display: "block" }} />
-            <div style={{ position: "absolute", bottom: -20, right: 20, width: 220, height: 220, borderRadius: "50%", overflow: "hidden", border: "4px solid #FBCB0B" }}>
+            <img src="/images/truck-loading.jpg" alt="Castle Express crew loading truck" style={{ width: "100%", height: 420, objectFit: "cover", objectPosition: "center", borderRadius: 20, display: "block" }} />
+            <div style={{ position: "absolute", bottom: -20, right: 20, width: 220, height: 220, borderRadius: "50%", overflow: "hidden", border: "4px solid #000000" }}>
               <img src="/images/truck-sale-pending.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               <img src="/images/joe-caronna.png" alt="Joe Caronna, Owner of Castle Express Moving" style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "85%", objectFit: "contain", objectPosition: "bottom center" }} />
             </div>
@@ -80,7 +80,7 @@ export default function PostcardsPage() {
       {/* OFFERS */}
       <section id="offers" style={{ background: "#fafafa", padding: "64px 24px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(24px, 3.5vw, 36px)", color: "#1A1A2E", textAlign: "center", marginBottom: 8 }}>
+          <h2 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(24px, 3.5vw, 36px)", color: "#1A1A2E", textAlign: "center", marginBottom: 8 }}>
             Your Exclusive Postcard Offers
           </h2>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#777", textAlign: "center", marginBottom: 36 }}>
@@ -95,14 +95,14 @@ export default function PostcardsPage() {
             ].map((offer, i) => (
               <div key={i} style={{ background: "#fff", borderRadius: 12, padding: 28, border: "1px solid #eee", textAlign: "center" }}>
                 <div style={{ marginBottom: 16, display: "flex", justifyContent: "center" }}>{offer.icon}</div>
-                <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginBottom: 10 }}>{offer.title}</h3>
+                <h3 style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginBottom: 10 }}>{offer.title}</h3>
                 <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "#666", lineHeight: 1.6 }}>{offer.desc}</p>
               </div>
             ))}
           </div>
 
           <div style={{ background: "#FBCB0B", borderRadius: 8, padding: "14px 20px", textAlign: "center" }}>
-            <p style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#000", margin: 0 }}>
+            <p style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontSize: 14, color: "#000", margin: 0 }}>
               These offers are for postcard recipients only. Mention your postcard when booking.
             </p>
           </div>
@@ -121,7 +121,7 @@ export default function PostcardsPage() {
       {/* SOCIAL PROOF */}
       <section style={{ background: "#fff", padding: "16px 24px 56px" }}>
         <div style={{ maxWidth: 800, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontStyle: "italic", fontSize: 24, color: "#1A1A2E", textAlign: "center", marginBottom: 28 }}>
+          <h2 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "italic", fontSize: 24, color: "#1A1A2E", textAlign: "center", marginBottom: 28 }}>
             Trusted by Families Across CT &amp; MA Since {COMPANY.founded}
           </h2>
 
@@ -133,7 +133,7 @@ export default function PostcardsPage() {
               { num: "A+", label: "BBB Rating" },
             ].map((s, i) => (
               <div key={i} style={{ textAlign: "center", padding: 16, background: "#fafafa", borderRadius: 10 }}>
-                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: 28, color: "#1A1A2E" }}>{s.num}</div>
+                <div style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontSize: 28, color: "#1A1A2E" }}>{s.num}</div>
                 <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "#999" }}>{s.label}</div>
               </div>
             ))}
@@ -143,7 +143,7 @@ export default function PostcardsPage() {
             <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#333", fontStyle: "italic", lineHeight: 1.7, marginBottom: 12 }}>
               "Castle Express did a fantastic job. They were on time, hard working, courteous and most helpful. I would highly recommend using this company."
             </p>
-            <p style={{ fontFamily: "var(--font-heading)", fontSize: 13, color: "#999", fontWeight: 600 }}>
+            <p style={{ fontFamily: "Merriweather, serif", fontSize: 13, color: "#999", fontWeight: 600 }}>
               - Verified Google Review
             </p>
           </div>
@@ -153,7 +153,7 @@ export default function PostcardsPage() {
       {/* ESTIMATE FORM */}
       <section id="estimate" style={{ background: "#fafafa", padding: "64px 24px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(24px, 3.5vw, 36px)", color: "#1A1A2E", textAlign: "center", marginBottom: 8 }}>
+          <h2 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(24px, 3.5vw, 36px)", color: "#1A1A2E", textAlign: "center", marginBottom: 8 }}>
             Get Your Free Estimate
           </h2>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#777", textAlign: "center", marginBottom: 32 }}>
@@ -168,7 +168,7 @@ export default function PostcardsPage() {
         <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "rgba(255,255,255,0.7)", marginBottom: 16 }}>
           Prefer to call? We'd love to hear from you.
         </p>
-        <a href={COMPANY.phoneLink} style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: "clamp(28px, 4vw, 40px)", color: "#FBCB0B", textDecoration: "none", display: "block", marginBottom: 8 }}>
+        <a href={COMPANY.phoneLink} style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontSize: "clamp(28px, 4vw, 40px)", color: "#FBCB0B", textDecoration: "none", display: "block", marginBottom: 8 }}>
           {COMPANY.phone}
         </a>
         <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.4)" }}>
