@@ -77,6 +77,7 @@ export default function ReferralForm() {
         return;
       }
       if (typeof fbq === "function") fbq("track", "Lead");
+      if (typeof window.gtag !== "undefined") window.gtag("event", "generate_lead", { event_category: "form", event_label: "referral_form" });
     } catch {
       setError(true);
       setSubmitting(false);

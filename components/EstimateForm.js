@@ -28,6 +28,7 @@ export default function EstimateForm({ dark = false }) {
         body: JSON.stringify(formData),
       });
       if (typeof fbq === "function") fbq("track", "Lead");
+      if (typeof window.gtag !== "undefined") window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form" });
     } catch (err) {
       console.error("Formspree submission error:", err);
     }
