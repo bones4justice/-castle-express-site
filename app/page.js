@@ -30,7 +30,7 @@ export default function HomePage() {
         <div className="container grid-2" style={{ alignItems: "center" }}>
           <div>
             <SectionLabel>Connecticut & Massachusetts</SectionLabel>
-            <h1 className="heading-1" style={{ color: "#fff", marginBottom: 20 }}>
+            <h1 className="heading-1" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal", color: "#fff", marginBottom: 20 }}>
               Professional Movers in <span className="text-gold">CT & MA</span>
             </h1>
             <p className="body-lg text-white-muted" style={{ marginBottom: 28, maxWidth: 520 }}>
@@ -72,7 +72,7 @@ export default function HomePage() {
         <div className="container">
           <div className="text-center" style={{ marginBottom: 48 }}>
             <SectionLabel>What We Do</SectionLabel>
-            <h2 className="heading-2">Full-Service Moving Solutions</h2>
+            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Full-Service Moving Solutions</h2>
             <p className="body-md text-gray" style={{ maxWidth: 560, margin: "0 auto" }}>
               From packing your first box to placing the last piece of furniture, we handle every detail of your move.
             </p>
@@ -100,7 +100,7 @@ export default function HomePage() {
         <div className="container grid-2">
           <div>
             <SectionLabel>Why Castle Express</SectionLabel>
-            <h2 className="heading-2">Built on Values, Not Just Trucks</h2>
+            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Built on Values, Not Just Trucks</h2>
             <p className="body-md text-gray" style={{ marginBottom: 16 }}>
               Joe Caronna started Castle Express in {COMPANY.founded} with one truck and a commitment to treat every customer like family. Today we operate a fleet of {COMPANY.truckCount} trucks from our {COMPANY.facilitySize} sq ft facility in {COMPANY.city}, {COMPANY.state} - but the values haven't changed.
             </p>
@@ -151,7 +151,7 @@ export default function HomePage() {
         <div className="container">
           <div className="text-center" style={{ marginBottom: 48 }}>
             <SectionLabel>Customer Reviews</SectionLabel>
-            <h2 className="heading-2">Don't Take Our Word For It</h2>
+            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Don't Take Our Word For It</h2>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8 }}>
               {[1,2,3,4,5].map(i => <Star key={i} />)}
               <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginLeft: 4 }}>{COMPANY.reviewAvg}</span>
@@ -182,7 +182,7 @@ export default function HomePage() {
         <div className="container">
           <div className="text-center" style={{ marginBottom: 40 }}>
             <SectionLabel>Coverage Area</SectionLabel>
-            <h2 className="heading-2">Proudly Serving CT & Western MA</h2>
+            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Proudly Serving CT & Western MA</h2>
             <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
               Our moving company provides local and long-distance service throughout Hartford County, the Connecticut River Valley, and Western Massachusetts. From Suffield to Glastonbury, Manchester to West Hartford - we know every neighborhood.
             </p>
@@ -225,7 +225,7 @@ export default function HomePage() {
               Princess Packing<span style={{ color: "#F72585" }}>™</span>
             </h2>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 24 }}>
-              A boutique, white-glove packing service. Your home packed before move day by an experienced professional team. All materials included. Limited to one major pack per day.
+              A boutique, white-glove packing service. Your home packed before move day by an experienced professional team. All labor, materials, and supplies included. Limited to one major pack per day.
             </p>
             <div style={{ display: "flex", gap: 24, marginBottom: 24 }}>
               {[{ num: "$595", label: "Pro (25 boxes)" }, { num: "$995", label: "Plus (50 boxes)" }, { num: "$1,895", label: "Premium (100 boxes)" }].map((p, i) => (
@@ -251,7 +251,7 @@ export default function HomePage() {
         <div className="container">
           <div className="text-center" style={{ marginBottom: 32 }}>
             <div className="section-label" style={{ justifyContent: "center" }}><span>Follow Us</span></div>
-            <h2 className="heading-2">@castleexpressmovingandstorage</h2>
+            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>@castleexpressmovingandstorage</h2>
           </div>
           <div className="elfsight-app-e6b831df-56db-467d-bc64-e8cbdf442d90" data-elfsight-app-lazy></div>
         </div>
@@ -281,7 +281,7 @@ export default function HomePage() {
 
           <div className="text-center" style={{ marginBottom: 40 }}>
             <div className="section-label" style={{ justifyContent: "center" }}><span>Common Questions</span></div>
-            <h2 className="heading-2">Frequently Asked Questions</h2>
+            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Frequently Asked Questions</h2>
           </div>
 
           {/* Elfsight visual widget */}
@@ -303,7 +303,7 @@ export default function HomePage() {
       <section className="section section-dark text-center" aria-label="Get a free estimate">
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
           <SectionLabel>Ready to Move?</SectionLabel>
-          <h2 className="heading-2 text-white">Let's Get You Where You're Going</h2>
+          <h2 className="heading-2 text-white" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Let's Get You Where You're Going</h2>
           <p className="body-md text-white-muted" style={{ marginBottom: 32 }}>
             Call today for a free, no-obligation estimate. We'll walk you through every step of your move.
           </p>
