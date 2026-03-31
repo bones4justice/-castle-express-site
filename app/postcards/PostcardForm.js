@@ -8,7 +8,6 @@ const OFFERS = [
   "Free Night of Truck Storage (Double Closings)",
   "Free First Month of Storage",
   "20 Free Boxes + Roll of Tape with Walk-Through Estimate",
-  "All Three Offers",
 ];
 
 const inputStyle = {
@@ -126,7 +125,7 @@ export default function PostcardForm() {
 
       {/* Offer radio buttons */}
       <div style={{ marginTop: 16 }}>
-        <label style={labelStyle}>Which postcard offer interests you?</label>
+        <label style={labelStyle}>Choose One Offer:</label>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 8 }}>
           {OFFERS.map(offer => (
             <label key={offer} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", padding: "12px 14px", borderRadius: 8, border: selectedOffer === offer ? "2px solid #FBCB0B" : "1px solid #E5E7EB", background: selectedOffer === offer ? "#FFFBEB" : "#fff", transition: "all 0.15s" }}>

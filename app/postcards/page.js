@@ -27,21 +27,49 @@ export default function PostcardsPage() {
   return (
     <>
       {/* HERO */}
-      <section style={{ background: navy, padding: "72px 24px 56px", textAlign: "center" }}>
-        <div style={{ maxWidth: 680, margin: "0 auto" }}>
-          <span style={{ display: "inline-block", background: "#FBCB0B", borderRadius: 20, padding: "6px 16px", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, color: "#000", marginBottom: 20 }}>
-            Thanks for scanning!
-          </span>
-          <h1 style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(32px, 5vw, 48px)", color: "#fff", marginBottom: 16, lineHeight: 1.1 }}>
-            Looking for the Perfect Mover?
-          </h1>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 32 }}>
-            We appreciate you checking us out. As a thank-you for scanning our postcard, here are three exclusive offers reserved for you.
-          </p>
-          <a href="#offers" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "#FBCB0B", color: "#000", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none" }}>
-            Claim Your Offer Below
-          </a>
+      <section style={{ background: navy, minHeight: 520, padding: "72px 24px 56px", position: "relative", overflow: "hidden" }}>
+        {/* Diagonal yellow accent */}
+        <svg style={{ position: "absolute", bottom: 0, left: 0, width: 280, height: 280, opacity: 0.08 }} viewBox="0 0 280 280"><polygon points="0,280 280,280 0,0" fill="#FBCB0B" /></svg>
+
+        <div style={{ position: "relative", maxWidth: 1000, margin: "0 auto", display: "grid", gridTemplateColumns: "1.5fr 1fr", gap: 48, alignItems: "center" }} className="postcard-hero-grid">
+          {/* Left column */}
+          <div>
+            <span style={{ display: "inline-block", background: "#FBCB0B", borderRadius: 20, padding: "6px 16px", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, color: "#000", marginBottom: 20 }}>
+              Thanks for scanning!
+            </span>
+            <h1 style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(32px, 5vw, 48px)", color: "#fff", marginBottom: 16, lineHeight: 1.1 }}>
+              Looking for the Perfect Mover?
+            </h1>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 32 }}>
+              We appreciate you checking us out. As a thank-you for scanning our postcard, here are three exclusive offers reserved for you.
+            </p>
+            <a href="#offers" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "#FBCB0B", color: "#000", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none" }}>
+              Claim Your Offer Below
+            </a>
+          </div>
+
+          {/* Right column - offer preview badges (hidden on mobile via CSS) */}
+          <div className="postcard-hero-badges" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {[
+              { icon: <TruckIcon />, label: "Free Night of Truck Storage" },
+              { icon: <BoxIcon />, label: "Free First Month of Storage" },
+              { icon: <GiftIcon />, label: "20 Free Boxes + Tape" },
+            ].map((item, i) => (
+              <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "16px 20px", background: "rgba(255,255,255,0.07)", borderRadius: 12, border: "1px solid rgba(255,255,255,0.1)" }}>
+                <div style={{ flexShrink: 0 }}>{item.icon}</div>
+                <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, color: "#fff" }}>{item.label}</span>
+              </div>
+            ))}
+          </div>
         </div>
+
+        {/* Responsive CSS */}
+        <style>{`
+          @media (max-width: 768px) {
+            .postcard-hero-grid { grid-template-columns: 1fr !important; }
+            .postcard-hero-badges { display: none !important; }
+          }
+        `}</style>
       </section>
 
       {/* OFFERS */}
