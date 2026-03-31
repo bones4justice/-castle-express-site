@@ -235,7 +235,7 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <a href="/princess-packing" style={{ display: "inline-block", background: "#F72585", color: "#fff", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: "0.08em", textTransform: "uppercase", padding: "14px 28px", textDecoration: "none", transition: "all 0.2s" }}>
+            <a href="/princess-packing.html" style={{ display: "inline-block", background: "#F72585", color: "#fff", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: "0.08em", textTransform: "uppercase", padding: "14px 28px", textDecoration: "none", transition: "all 0.2s" }}>
               View Packages & Book →
             </a>
           </div>

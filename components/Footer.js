@@ -52,7 +52,7 @@ export default function Footer() {
             ].map(s => (
               <Link key={s.href} href={s.href} style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.75)", marginBottom: 8, textDecoration: "none" }}>{s.label}</Link>
             ))}
-            <Link href="/princess-packing" style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "#F72585", fontWeight: 600, marginBottom: 8, textDecoration: "none", marginTop: 4 }}>Princess Packing™</Link>
+            <a href="/princess-packing.html" style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "#F72585", fontWeight: 600, marginBottom: 8, textDecoration: "none", marginTop: 4 }}>Princess Packing™</a>
             <Link href="/referral" style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "#D4A017", fontWeight: 600, marginBottom: 8, textDecoration: "none" }}>Referral Program</Link>
           </div>
 

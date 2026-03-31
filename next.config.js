@@ -165,8 +165,6 @@ const nextConfig = {
       { source: '/affordable-towns-in-ct-guide-by-a-moving-company-in-ct/', destination: '/blog', permanent: true },
       { source: '/packing-services-do-they-really-save-you-time-and-effort-during-a-move', destination: '/blog', permanent: true },
       { source: '/packing-services-do-they-really-save-you-time-and-effort-during-a-move/', destination: '/blog', permanent: true },
-      // Old static Princess Packing page
-      { source: '/princess-packing.html', destination: '/princess-packing', permanent: true },
     ];
   },
 };
