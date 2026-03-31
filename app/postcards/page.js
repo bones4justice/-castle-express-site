@@ -39,7 +39,7 @@ export default function PostcardsPage() {
           {/* Left column */}
           <div style={{ paddingBottom: 56 }}>
             <div className="section-label" style={{ marginBottom: 16 }}><span style={{ color: "#FBCB0B" }}>Thanks for Scanning!</span></div>
-            <h1 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(32px, 4.5vw, 46px)", color: "#fff", marginBottom: 16, lineHeight: 1.1 }}>
+            <h1 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "normal", fontSize: "clamp(32px, 4.5vw, 46px)", color: "#fff", marginBottom: 16, lineHeight: 1.1 }}>
               Looking for the <span style={{ color: "#FBCB0B" }}>Perfect Mover</span>?
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "rgba(255,255,255,0.8)", lineHeight: 1.7, marginBottom: 24, maxWidth: 500 }}>
