@@ -27,30 +27,46 @@ export default function PostcardsPage() {
   return (
     <>
       {/* HERO */}
-      <section className="section-dark" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-residential.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.12, pointerEvents: "none" }} />
-        <div style={{ position: "absolute", top: 0, right: 0, width: "40%", height: "100%", background: "linear-gradient(135deg, transparent 40%, rgba(212,160,23,0.07) 100%)", pointerEvents: "none" }} />
-        <div style={{ position: "relative", maxWidth: 720, margin: "0 auto" }}>
-          <div className="section-label" style={{ marginBottom: 16 }}><span>Thanks for Scanning!</span></div>
-          <h1 className="heading-1" style={{ color: "#fff", marginBottom: 20 }}>
-            Looking for the <span className="text-gold">Perfect Mover</span>?
-          </h1>
-          <p className="body-lg text-white-muted" style={{ marginBottom: 28, maxWidth: 580 }}>
-            We appreciate you checking us out. As a thank-you for scanning our postcard, here are three exclusive offers reserved for you.
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
-            {["Licensed & Insured", "Accurate Estimates", `${COMPANY.reviewCount} 5-Star Reviews`].map(item => (
-              <div key={item} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <Check />
-                <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "rgba(255,255,255,0.85)" }}>{item}</span>
-              </div>
-            ))}
+      <section style={{ background: "#1a1d2e", minHeight: 560, padding: "72px 24px 0", position: "relative", overflow: "hidden" }}>
+        {/* Yellow triangle accent bottom left */}
+        <svg style={{ position: "absolute", bottom: 0, left: 0, width: 200, height: 200, pointerEvents: "none" }} viewBox="0 0 200 200"><polygon points="0,200 200,200 0,0" fill="#FBCB0B" opacity="0.08" /></svg>
+
+        <div style={{ position: "relative", maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "55% 45%", alignItems: "end" }} className="postcard-hero-grid">
+          {/* Left column */}
+          <div style={{ paddingBottom: 56 }}>
+            <div className="section-label" style={{ marginBottom: 16 }}><span style={{ color: "#FBCB0B" }}>Thanks for Scanning!</span></div>
+            <h1 style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontStyle: "italic", fontSize: "clamp(32px, 4.5vw, 46px)", color: "#fff", marginBottom: 16, lineHeight: 1.1 }}>
+              Looking for the <span style={{ color: "#FBCB0B" }}>Perfect Mover</span>?
+            </h1>
+            <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "rgba(255,255,255,0.8)", lineHeight: 1.7, marginBottom: 24, maxWidth: 500 }}>
+              Hi, I'm Joe, owner of Castle Express since 2013. You picked up our postcard and we appreciate that. As a thank-you, here are three exclusive offers just for you.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
+              {["Licensed & Insured", "Accurate Flat-Rate Estimates", `${COMPANY.reviewCount} 5-Star Reviews`].map(item => (
+                <div key={item} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FBCB0B" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "rgba(255,255,255,0.9)" }}>{item}</span>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <a href="#offers" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "#FBCB0B", color: "#000", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none" }}>Claim Your Offer Below</a>
+              <a href={COMPANY.phoneLink} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "transparent", color: "#fff", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)" }}><Phone size={18} /> {COMPANY.phone}</a>
+            </div>
           </div>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <a href="#offers" className="btn btn-primary">Claim Your Offer Below</a>
-            <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> {COMPANY.phone}</a>
+
+          {/* Right column - Joe cutout photo */}
+          <div className="postcard-hero-photo" style={{ display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+            <img src="/images/joe-caronna.png" alt="Joe Caronna, owner of Castle Express Moving" style={{ maxHeight: 480, width: "auto", maxWidth: "100%", objectFit: "contain", objectPosition: "bottom" }} />
           </div>
         </div>
+
+        <style>{`
+          @media (max-width: 768px) {
+            .postcard-hero-grid { grid-template-columns: 1fr !important; }
+            .postcard-hero-photo { display: none !important; }
+          }
+        `}</style>
       </section>
 
       {/* OFFERS */}
