@@ -260,24 +260,9 @@ export default function HomePage() {
       {/* ─── FAQ  -  Schema + Crawlable HTML + Elfsight Visual ─── */}
       <section className="section" aria-label="Frequently asked questions">
         <div className="container-sm">
-          {/* FAQ Schema for Google & AI */}
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify({
-                "@context": "https://schema.org",
-                "@type": "FAQPage",
-                "mainEntity": FAQ.map(item => ({
-                  "@type": "Question",
-                  "name": item.q,
-                  "acceptedAnswer": {
-                    "@type": "Answer",
-                    "text": item.a,
-                  },
-                })),
-              }),
-            }}
-          />
+          {/* FAQ Schema removed - Elfsight FAQ widget injects its own FAQPage schema.
+               Keeping both caused Google "Duplicate field FAQPage" error.
+               Crawlable HTML fallback below ensures AI/LLMs can still read FAQ content. */}
 
           <div className="text-center" style={{ marginBottom: 40 }}>
             <div className="section-label" style={{ justifyContent: "center" }}><span>Common Questions</span></div>
