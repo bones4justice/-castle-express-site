@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SERVICES, SERVICE_PAGES, FAQ } from "@/content";
 import { Check, ArrowRight } from "@/components/Icons";
-import { IconResidential, IconCommercial, IconPacking, IconStorage, IconPiano } from "@/components/BrandIcons";
+import { IconResidential, IconCommercial, IconPacking, IconStorage, IconPiano, IconLongDistance } from "@/components/BrandIcons";
 
 export const metadata = {
   title: "Our Moving Services",
@@ -16,6 +16,7 @@ const ICONS = {
   packing: <IconPacking size={96} />,
   storage: <IconStorage size={96} />,
   specialty: <IconPiano size={96} />,
+  longdistance: <IconLongDistance size={96} />,
 };
 
 const SERVICE_SLUGS = {
@@ -24,6 +25,7 @@ const SERVICE_SLUGS = {
   packing: "packing-services",
   storage: "storage",
   specialty: "specialty-moving",
+  longdistance: "long-distance-moving",
 };
 
 export default function ServicesPage() {

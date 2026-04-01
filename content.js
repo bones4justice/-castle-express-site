@@ -93,12 +93,24 @@ export const SERVICES = [
     id: "specialty",
     title: "Specialty Moving",
     shortDesc: "Piano, gun safe, fine art, and white-glove deliveries. Special items need special handling.",
-    fullDesc: "Heavy safes, pianos, fine art, and delicate deliveries require special handling. Our specialty team has the equipment, training, and care to move it safely.",
+    fullDesc: "Heavy safes, pianos, fine art, and delicate deliveries require special handling. Our specialty team has the equipment and experience to move it safely.",
     features: [
       "Piano moving",
       "Gun safe & fire safe",
       "Final-mile white glove delivery",
       "Heavy & oversized items",
+    ],
+  },
+  {
+    id: "longdistance",
+    title: "Long Distance Moving",
+    shortDesc: "Licensed interstate movers serving CT, MA, and the East Coast. Flat-rate pricing, no surprises.",
+    fullDesc: "Castle Express is licensed for interstate moves (USDOT 2307446, MC-990616). We handle long distance relocations with flat-rate pricing, experienced crews, and full packing available.",
+    features: [
+      "Licensed interstate moves",
+      "Flat-rate pricing",
+      "East Coast coverage",
+      "Full packing available",
     ],
   },
 ];
