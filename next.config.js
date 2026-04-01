@@ -266,6 +266,9 @@ const nextConfig = {
       { source: '/referral-program/', destination: '/referral', permanent: true },
       { source: '/get-paid', destination: '/referral', permanent: true },
       { source: '/get-paid/', destination: '/referral', permanent: true },
+      // Old mattress blog post
+      { source: '/dont-make-these-mistakes-when-moving-a-mattress-the-pros-way', destination: '/blog/how-to-transport-a-mattress-safely', permanent: true },
+      { source: '/dont-make-these-mistakes-when-moving-a-mattress-the-pros-way/', destination: '/blog/how-to-transport-a-mattress-safely', permanent: true },
     ];
   },
 };
