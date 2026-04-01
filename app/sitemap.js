@@ -17,6 +17,7 @@ export default function sitemap() {
     { url: `${BASE}/contact/`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/referral/`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/postcards/`, changeFrequency: "monthly", priority: 0.5 },
+    { url: `${BASE}/princess-packing.html`, changeFrequency: "monthly", priority: 0.8 },
   ].map(p => ({ ...p, lastModified: now }));
 
   // Service pages

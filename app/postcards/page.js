@@ -6,7 +6,6 @@ export const metadata = {
   title: "Welcome! Claim Your Moving Offers | Castle Express Moving CT",
   description: "You found us! Claim your exclusive moving offers from Castle Express Moving & Storage. Free boxes, free storage, and more. Serving Hartford County CT & Western MA.",
   alternates: { canonical: "/postcards/" },
-  robots: { index: false, follow: true },
 };
 
 const navy = "#1a1d2e";
