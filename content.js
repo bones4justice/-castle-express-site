@@ -277,7 +277,7 @@ export const SERVICE_PAGES = {
     metaTitle: "Specialty Movers  -  Pianos, Safes & Fine Art",
     metaDesc: "Specialty movers for pianos, gun safes, fine art, and white-glove deliveries. Serving Hartford County CT & Western MA. Licensed & insured. Call 1-888-553-4503.",
     heroImage: "/images/truck-tobacco-barn.jpg",
-    intro: "Some items can't go on a regular moving truck without special preparation. Castle Express has the equipment, training, and experience to safely move pianos, gun safes, fine art, antiques, and other high-value or oversized items.",
+    intro: "Some items can't go on a regular moving truck without special preparation. Castle Express has the equipment and experience to safely move pianos, gun safes, fine art, antiques, and other high-value or oversized items.",
     sections: [
       {
         heading: "Specialty Items We Move",
@@ -296,7 +296,7 @@ export const SERVICE_PAGES = {
           "Pre-move assessment  -  we evaluate the item, the path, and any obstacles",
           "Custom protection  -  padding, wrapping, and crating as needed",
           "Specialized equipment  -  piano boards, heavy-duty dollies, stair climbers",
-          "Trained crew  -  our specialty team handles these items regularly",
+          "Experienced crew  -  our specialty team handles these items regularly",
           "Placement at destination  -  positioned exactly where you want it",
         ],
       },
@@ -310,6 +310,47 @@ export const SERVICE_PAGES = {
     relatedServices: ["residential-moving", "commercial-moving", "storage"],
     photo1: "/images/truck-tobacco-barn.jpg",
     photo2: "/images/truck-aframe.jpg",
+  },
+  "long-distance-moving": {
+    id: "longdistance",
+    title: "Long Distance Moving",
+    headline: "Long Distance Moving Done Right",
+    metaTitle: "Long Distance Moving CT | Interstate Movers | Castle Express",
+    metaDesc: "Licensed long distance and interstate movers serving Connecticut and Massachusetts. Accurate estimates, experienced crews, no hidden fees. Call Castle Express today.",
+    heroImage: "/images/truck-tobacco-barn.jpg",
+    intro: "Planning a long distance move from Connecticut or Massachusetts? Castle Express is licensed for interstate moves and handles relocations throughout New England and up and down the East Coast. We coordinate every detail so you can focus on your fresh start.",
+    sections: [
+      {
+        heading: "What's Included in Every Long Distance Move",
+        items: [
+          "Pre-move walkthrough and detailed flat-rate estimate",
+          "Professional loading with furniture pads, shrink wrap, and floor protection",
+          "Licensed interstate transport (USDOT 2307446, MC-990616)",
+          "Careful unloading and furniture placement at your new home",
+          "Full packing and unpacking services available",
+          "Climate-controlled storage available between moves",
+        ],
+      },
+      {
+        heading: "Where We Move",
+        items: [
+          "Throughout New England  -  CT, MA, NY, RI, VT, NH, ME",
+          "Up and down the East Coast  -  NJ, PA, MD, VA, NC, SC, FL",
+          "Midwest destinations on a case-by-case basis",
+          "Military and corporate relocations",
+          "College moves to and from universities across the Northeast",
+        ],
+      },
+    ],
+    callout: "Long distance moves are priced by weight and distance, not by the hour. We provide a flat-rate estimate so you know exactly what you are paying before move day. No hidden fees, no surprises.",
+    faq: [
+      { q: "How far do you move?", a: "We handle moves throughout New England and up and down the East Coast. For moves beyond that range, we can discuss logistics and connect you with trusted partners." },
+      { q: "How is long distance pricing different from local?", a: "Long distance moves are typically priced by weight and distance rather than hourly. We provide a flat-rate estimate so you know exactly what you are paying before move day." },
+      { q: "Do you offer packing for long distance moves?", a: "Yes. Full-service packing is available for all long distance moves and is especially recommended to ensure your belongings are protected for a longer transit." },
+    ],
+    relatedServices: ["residential-moving", "packing-services", "storage"],
+    photo1: "/images/truck-residential.jpg",
+    photo2: "/images/truck-tobacco-barn.jpg",
   },
 };
 
