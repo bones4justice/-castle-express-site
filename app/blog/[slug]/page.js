@@ -67,17 +67,29 @@ export default function BlogPost({ params }) {
 
   const articleSchema = {
     "@context": "https://schema.org",
-    "@type": "BlogPosting",
+    "@type": "Article",
     headline: post.title,
-    description: post.metaDescription,
-    author: { "@type": "Person", name: "Joe Caronna" },
+    description: post.excerpt,
+    author: {
+      "@type": "Person",
+      name: "Joe Caronna",
+      url: "https://www.castleexpressmoving.com/about",
+    },
     publisher: {
       "@type": "Organization",
       name: "Castle Express Moving & Storage",
-      url: "https://www.castleexpressmoving.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://www.castleexpressmoving.com/images/logo.png",
+      },
     },
     datePublished: post.date,
-    url: `https://www.castleexpressmoving.com${post.canonical}`,
+    dateModified: post.date,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://www.castleexpressmoving.com/blog/${post.slug}/`,
+    },
+    image: "https://www.castleexpressmoving.com/images/truck-residential.jpg",
   };
 
   return (
