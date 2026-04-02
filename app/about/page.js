@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { COMPANY, ABOUT_TEXT } from "@/content";
 import { ArrowRight } from "@/components/Icons";
 
@@ -20,11 +21,11 @@ export default function AboutPage() {
       <section className="section">
         <div className="container-sm">
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 40, borderRadius: 12, overflow: "hidden", alignItems: "stretch" }}>
-            <div style={{ overflow: "hidden", height: 300, borderRadius: 8 }}>
-              <img src="/images/truck-residential.jpg" alt="Castle Express truck at customer home" style={{ width: "100%", height: 300, objectFit: "cover", objectPosition: "center center" }} />
+            <div style={{ position: "relative", overflow: "hidden", height: 300, borderRadius: 8 }}>
+              <Image src="/images/truck-residential.jpg" alt="Castle Express truck at customer home" fill style={{ objectFit: "cover", objectPosition: "center center" }} priority />
             </div>
-            <div style={{ overflow: "hidden", height: 300, borderRadius: 8 }}>
-              <img src="/images/joe-with-customers.jpg" alt="Joe with happy customers" style={{ width: "100%", height: 300, objectFit: "cover", objectPosition: "15% 25%" }} />
+            <div style={{ position: "relative", overflow: "hidden", height: 300, borderRadius: 8 }}>
+              <Image src="/images/joe-with-customers.jpg" alt="Joe with happy customers" fill style={{ objectFit: "cover", objectPosition: "15% 25%" }} />
             </div>
           </div>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "#1A1A2E", lineHeight: 1.8, marginBottom: 24 }}>{ABOUT_TEXT.intro}</p>
@@ -46,9 +47,9 @@ export default function AboutPage() {
             ))}
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginTop: 40, borderRadius: 12, overflow: "hidden" }}>
-            <img src="/images/truck-aframe.jpg" alt="Moving truck at home" style={{ width: "100%", height: 160, objectFit: "cover" }} />
-            <img src="/images/truck-brick-building.jpg" alt="Castle Express at commercial building" style={{ width: "100%", height: 160, objectFit: "cover" }} />
-            <img src="/images/truck-tobacco-barn.jpg" alt="Castle Express in Connecticut" style={{ width: "100%", height: 160, objectFit: "cover" }} />
+            <div style={{ position: "relative", height: 160 }}><Image src="/images/truck-aframe.jpg" alt="Moving truck at home" fill style={{ objectFit: "cover" }} /></div>
+            <div style={{ position: "relative", height: 160 }}><Image src="/images/truck-brick-building.jpg" alt="Castle Express at commercial building" fill style={{ objectFit: "cover" }} /></div>
+            <div style={{ position: "relative", height: 160 }}><Image src="/images/truck-tobacco-barn.jpg" alt="Castle Express in Connecticut" fill style={{ objectFit: "cover" }} /></div>
           </div>
         </div>
       </section>

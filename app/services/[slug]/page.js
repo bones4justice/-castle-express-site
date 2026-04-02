@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { COMPANY, SERVICE_PAGES } from "@/content";
 import { getAllPosts } from "@/lib/blogData";
@@ -126,8 +127,8 @@ export default function ServiceDetailPage({ params }) {
 
             {/* Photos */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 36 }}>
-              <img src={svc.photo1} alt={svc.title} style={{ width: "100%", height: 200, objectFit: "cover", objectPosition: "center", borderRadius: 10 }} />
-              <img src={svc.photo2} alt={`${svc.title} team`} style={{ width: "100%", height: 200, objectFit: "cover", objectPosition: svc.photo2.includes("joe-with") ? "center 40%" : svc.photo2.includes("crew-commercial") ? "top" : "center", borderRadius: 10 }} />
+              <div style={{ position: "relative", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src={svc.photo1} alt={svc.title} fill style={{ objectFit: "cover", objectPosition: "center" }} /></div>
+              <div style={{ position: "relative", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src={svc.photo2} alt={`${svc.title} team`} fill style={{ objectFit: "cover", objectPosition: svc.photo2.includes("joe-with") ? "center 40%" : svc.photo2.includes("crew-commercial") ? "top" : "center" }} /></div>
             </div>
 
             {/* FAQ */}

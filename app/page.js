@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { COMPANY, SERVICES, REVIEWS, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
 import { CITY_DATA } from "@/lib/cityData";
 import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, MapPin, Phone } from "@/components/Icons";
@@ -126,8 +127,8 @@ export default function HomePage() {
           </div>
           <div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12 }}>
-              <img src="/images/truck-aframe.jpg" alt="Castle Express truck at A-frame home" style={{ width: "100%", height: 200, objectFit: "cover", objectPosition: "center", borderRadius: 10 }} />
-              <img src="/images/joe-with-customers.jpg" alt="Joe with happy customers" style={{ width: "100%", height: 200, objectFit: "cover", objectPosition: "center 20%", borderRadius: 10 }} />
+              <div style={{ position: "relative", width: "100%", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-aframe.jpg" alt="Castle Express truck at A-frame home" fill style={{ objectFit: "cover", objectPosition: "center" }} /></div>
+              <div style={{ position: "relative", width: "100%", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src="/images/joe-with-customers.jpg" alt="Joe with happy customers" fill style={{ objectFit: "cover", objectPosition: "center 20%" }} /></div>
             </div>
             <div className="hero-stats" style={{ background: "#FFF9EC", borderRadius: 12, padding: 24, display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12 }}>
             {[
@@ -211,7 +212,7 @@ export default function HomePage() {
             { src: "/images/crew-commercial.jpg", pos: "top", alt: "Castle Express crew performing commercial move" },
             { src: "/images/truck-aframe.jpg", pos: "center", alt: "Castle Express moving truck at A-frame house" },
           ].map((img, i) => (
-            <img key={i} src={img.src} alt={img.alt} style={{ width: "100%", height: 160, objectFit: "cover", objectPosition: img.pos }} />
+            <div key={i} style={{ position: "relative", width: "100%", height: 160 }}><Image src={img.src} alt={img.alt} fill style={{ objectFit: "cover", objectPosition: img.pos }} /></div>
           ))}
         </div>
       </section>
@@ -240,7 +241,7 @@ export default function HomePage() {
             </a>
           </div>
           <div style={{ background: "linear-gradient(160deg, #fce4ef 0%, rgba(247,37,133,0.15) 100%)", padding: 40, textAlign: "center", border: "1px solid rgba(247,37,133,0.2)" }}>
-            <img src="/images/princess-packing-crew.jpg" alt="Princess Packing crew in pink polos" style={{ width: "100%", height: 280, objectFit: "cover", objectPosition: "top" }} />
+            <div style={{ position: "relative", width: "100%", height: 280 }}><Image src="/images/princess-packing-crew.jpg" alt="Princess Packing crew in pink polos" fill style={{ objectFit: "cover", objectPosition: "top" }} /></div>
             <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 18, color: "#0d0d0d", marginTop: 16 }}>Professional Packing. Done Right.</div>
           </div>
         </div>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { CITY_DATA, getCityBySlug, getAllSlugs } from "@/lib/cityData";
 import { COMPANY, SERVICES } from "@/content";
@@ -249,8 +250,8 @@ export default function CityPage({ params }) {
 
             {/* Photo grid */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 32 }}>
-              <img src="/images/truck-aframe.jpg" alt={`Castle Express moving truck in ${city.town}`} style={{ width: "100%", height: 180, objectFit: "cover", borderRadius: 10 }} />
-              <img src="/images/truck-brick-building.jpg" alt={`Professional movers near ${city.town}`} style={{ width: "100%", height: 180, objectFit: "cover", borderRadius: 10 }} />
+              <div style={{ position: "relative", height: 180, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-aframe.jpg" alt={`Castle Express moving truck in ${city.town}`} fill style={{ objectFit: "cover" }} /></div>
+              <div style={{ position: "relative", height: 180, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-brick-building.jpg" alt={`Professional movers near ${city.town}`} fill style={{ objectFit: "cover" }} /></div>
             </div>
 
             {/* FAQ */}

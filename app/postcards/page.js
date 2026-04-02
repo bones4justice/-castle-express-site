@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { COMPANY } from "@/content";
 import { Phone, Check } from "@/components/Icons";
 import PostcardForm from "./PostcardForm";
@@ -60,10 +61,10 @@ export default function PostcardsPage() {
 
           {/* Right column - rectangular card with Joe circle overlay */}
           <div className="postcard-hero-photo" style={{ position: "relative", alignSelf: "center" }}>
-            <img src="/images/truck-loading.jpg" alt="Castle Express crew loading truck" style={{ width: "100%", height: 420, objectFit: "cover", objectPosition: "center", borderRadius: 20, display: "block" }} />
+            <div style={{ position: "relative", width: "100%", height: 420, borderRadius: 20, overflow: "hidden" }}><Image src="/images/truck-loading.jpg" alt="Castle Express crew loading truck" fill priority style={{ objectFit: "cover", objectPosition: "center" }} /></div>
             <div style={{ position: "absolute", bottom: -20, right: 20, width: 220, height: 220, borderRadius: "50%", overflow: "hidden", border: "4px solid #000000" }}>
-              <img src="/images/truck-sale-pending.jpg" alt="Castle Express moving truck at Connecticut home" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
-              <img src="/images/joe-caronna.png" alt="Joe Caronna, Owner of Castle Express Moving" style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "85%", objectFit: "contain", objectPosition: "bottom center" }} />
+              <Image src="/images/truck-sale-pending.jpg" alt="Castle Express moving truck at Connecticut home" fill style={{ objectFit: "cover", objectPosition: "center" }} />
+              <Image src="/images/joe-caronna.png" alt="Joe Caronna, Owner of Castle Express Moving" fill style={{ objectFit: "contain", objectPosition: "bottom center" }} />
             </div>
           </div>
         </div>
@@ -111,9 +112,9 @@ export default function PostcardsPage() {
       {/* PHOTO STRIP */}
       <section style={{ background: "#fff", padding: "48px 24px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
-          <img src="/images/crew-furniture.jpg" alt="Castle Express crew moving furniture" style={{ width: "100%", height: 260, objectFit: "cover", borderRadius: 12 }} />
-          <img src="/images/truck-residential.jpg" alt="Castle Express truck at customer home" style={{ width: "100%", height: 260, objectFit: "cover", borderRadius: 12 }} />
-          <img src="/images/joe-with-customers.jpg" alt="Joe with happy customers" style={{ width: "100%", height: 260, objectFit: "cover", borderRadius: 12, objectPosition: "15% 25%" }} />
+          <div style={{ position: "relative", height: 260, borderRadius: 12, overflow: "hidden" }}><Image src="/images/crew-furniture.jpg" alt="Castle Express crew moving furniture" fill style={{ objectFit: "cover" }} /></div>
+          <div style={{ position: "relative", height: 260, borderRadius: 12, overflow: "hidden" }}><Image src="/images/truck-residential.jpg" alt="Castle Express truck at customer home" fill style={{ objectFit: "cover" }} /></div>
+          <div style={{ position: "relative", height: 260, borderRadius: 12, overflow: "hidden" }}><Image src="/images/joe-with-customers.jpg" alt="Joe with happy customers" fill style={{ objectFit: "cover", objectPosition: "15% 25%" }} /></div>
         </div>
       </section>
 
