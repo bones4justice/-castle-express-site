@@ -109,7 +109,7 @@ export default function CityPage({ params }) {
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: "https://www.castleexpressmoving.com/" },
       { "@type": "ListItem", position: 2, name: "Service Areas", item: "https://www.castleexpressmoving.com/service-areas/" },
-      { "@type": "ListItem", position: 3, name: `${city.town}, ${city.state}` },
+      { "@type": "ListItem", position: 3, name: `Movers in ${city.town}`, item: `https://www.castleexpressmoving.com/${city.slug}/` },
     ],
   };
 
