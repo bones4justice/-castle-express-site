@@ -159,6 +159,32 @@ export default function BlogPost({ params }) {
           </div>
         </div>
       </section>
+
+      {/* YOU MIGHT ALSO LIKE */}
+      {(() => {
+        const allPosts = getAllPosts();
+        const related = allPosts.filter(p => p.slug !== post.slug && p.category === post.category).slice(0, 3);
+        if (related.length === 0) return null;
+        return (
+          <section className="section section-light">
+            <div className="container" style={{ maxWidth: 900, margin: "0 auto" }}>
+              <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 24, textAlign: "center" }}>You Might Also Like</h2>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
+                {related.map(r => (
+                  <Link key={r.slug} href={`/blog/${r.slug}/`} style={{ textDecoration: "none" }}>
+                    <div className="card" style={{ padding: 24, height: "100%", display: "flex", flexDirection: "column" }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: "#D4A017", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10, display: "block" }}>{r.category}</span>
+                      <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 10, lineHeight: 1.4 }}>{r.title}</h3>
+                      <p className="body-sm text-gray" style={{ lineHeight: 1.5, flex: 1 }}>{r.excerpt}</p>
+                      <span style={{ fontSize: 13, color: "#9CA3AF", marginTop: 12 }}>{r.readTime}</span>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
     </>
   );
 }

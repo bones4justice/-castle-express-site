@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { COMPANY, SERVICE_PAGES } from "@/content";
+import { getAllPosts } from "@/lib/blogData";
 import { Check, Phone, Star, Shield, ArrowRight, ChevronRight, MapPin } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
 
@@ -166,7 +167,34 @@ export default function ServiceDetailPage({ params }) {
         </div>
       </section>
 
-      {/* ─── CTA ─── */}
+      {/* ─── RELATED READING ─── */}
+      {svc.relatedPosts && svc.relatedPosts.length > 0 && (() => {
+        const allPosts = getAllPosts();
+        const related = svc.relatedPosts.map(url => {
+          const slug = url.replace('/blog/', '').replace(/\/$/, '');
+          return allPosts.find(p => p.slug === slug);
+        }).filter(Boolean);
+        return related.length > 0 ? (
+          <section className="section section-light">
+            <div className="container-sm">
+              <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 20, textAlign: "center" }}>Related Reading</h2>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+                {related.map(post => (
+                  <Link key={post.slug} href={`/blog/${post.slug}/`} style={{ textDecoration: "none" }}>
+                    <div className="card" style={{ padding: 20, height: "100%" }}>
+                      <span style={{ fontSize: 12, fontWeight: 700, color: "#D4A017", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8, display: "block" }}>{post.category}</span>
+                      <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 8, lineHeight: 1.4 }}>{post.title}</h3>
+                      <p className="body-sm text-gray" style={{ lineHeight: 1.5 }}>{post.excerpt}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null;
+      })()}
+
+      {/* ���── CTA ─── */}
       <section className="section section-dark text-center">
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
           <h2 className="heading-2 text-white">Ready to Get Started?</h2>
