@@ -62,7 +62,7 @@ export default function PostcardsPage() {
           <div className="postcard-hero-photo" style={{ position: "relative", alignSelf: "center" }}>
             <img src="/images/truck-loading.jpg" alt="Castle Express crew loading truck" style={{ width: "100%", height: 420, objectFit: "cover", objectPosition: "center", borderRadius: 20, display: "block" }} />
             <div style={{ position: "absolute", bottom: -20, right: 20, width: 220, height: 220, borderRadius: "50%", overflow: "hidden", border: "4px solid #000000" }}>
-              <img src="/images/truck-sale-pending.jpg" alt="" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
+              <img src="/images/truck-sale-pending.jpg" alt="Castle Express moving truck at Connecticut home" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }} />
               <img src="/images/joe-caronna.png" alt="Joe Caronna, Owner of Castle Express Moving" style={{ position: "absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", width: "85%", objectFit: "contain", objectPosition: "bottom center" }} />
             </div>
           </div>
