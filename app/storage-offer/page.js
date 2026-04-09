@@ -385,15 +385,6 @@ export default function StorageOfferPage() {
         </div>
       </section>
 
-      {/* ─── VAULT DETAIL IMAGE ─── */}
-      <section style={{ padding: "0 24px 40px" }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", borderRadius: "12px", overflow: "hidden" }}>
-          <div style={{ position: "relative", height: "500px" }}>
-            <Image src="/images/IMG_6410.JPG" alt="Inside a Castle Express storage vault with items carefully wrapped in moving blankets" fill style={{ objectFit: "cover", objectPosition: "top center" }} />
-          </div>
-        </div>
-      </section>
-
       {/* ─── FORM ─── */}
       <section id="claim-form" style={{ ...s.sectionAlt, scrollMarginTop: "80px" }}>
         <div style={{ ...s.container, maxWidth: "560px" }}>
