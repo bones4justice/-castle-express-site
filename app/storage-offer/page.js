@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import Image from "next/image";
 import { Check, Phone, Shield, Star, Clock, Box, Home, DollarSign } from "@/components/Icons";
 
 /* ─── VALUE STACK DATA ─── */
@@ -66,17 +66,15 @@ const s = {
   gold: { color: "#FBCB0B" },
   gray: { color: "#969a9d" },
   h1: {
-    fontFamily: "var(--font-nunito), 'Nunito', sans-serif",
-    fontWeight: 700,
-    fontStyle: "italic",
-    fontSize: "clamp(36px, 6vw, 52px)",
+    fontFamily: "var(--font-heading), 'Merriweather', serif",
+    fontWeight: 900,
+    fontSize: "clamp(36px, 5vw, 52px)",
     lineHeight: 1.1,
     marginBottom: "24px",
   },
   h2: {
-    fontFamily: "var(--font-nunito), 'Nunito', sans-serif",
-    fontWeight: 700,
-    fontStyle: "italic",
+    fontFamily: "var(--font-heading), 'Merriweather', serif",
+    fontWeight: 800,
     fontSize: "clamp(28px, 4vw, 40px)",
     lineHeight: 1.15,
     marginBottom: "24px",
@@ -99,7 +97,7 @@ const s = {
     display: "inline-block",
     background: "#FBCB0B",
     color: "#000000",
-    fontFamily: "var(--font-nunito), 'Nunito', sans-serif",
+    fontFamily: "var(--font-heading), 'Merriweather', serif",
     fontWeight: 700,
     fontSize: "17px",
     padding: "16px 36px",
@@ -114,7 +112,7 @@ const s = {
     width: "100%",
     background: "#FBCB0B",
     color: "#000000",
-    fontFamily: "var(--font-nunito), 'Nunito', sans-serif",
+    fontFamily: "var(--font-heading), 'Merriweather', serif",
     fontWeight: 700,
     fontSize: "17px",
     padding: "16px 36px",
@@ -194,8 +192,12 @@ export default function StorageOfferPage() {
     <div style={s.page}>
 
       {/* ─── HERO ─── */}
-      <section style={{ ...s.section, paddingTop: "100px", paddingBottom: "60px" }}>
-        <div style={s.container}>
+      <section style={{ ...s.section, paddingTop: "100px", paddingBottom: "60px", position: "relative", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0 }}>
+          <Image src="/images/storage-crates.jpg" alt="Castle Express storage facility" fill style={{ objectFit: "cover", objectPosition: "center" }} priority />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.82), rgba(0,0,0,0.92))" }} />
+        </div>
+        <div style={{ ...s.container, position: "relative" }}>
           <div style={{ textAlign: "center", marginBottom: "12px" }}>
             <span style={{ ...s.gray, fontFamily: "var(--font-body), 'Merriweather', serif", fontSize: "13px", letterSpacing: "0.08em", textTransform: "uppercase" }}>Limited Time Offer</span>
           </div>
@@ -234,6 +236,18 @@ export default function StorageOfferPage() {
         </div>
       </section>
 
+      {/* ─── IMAGE BREAK ─── */}
+      <section style={{ padding: "0 24px" }}>
+        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", borderRadius: "12px", overflow: "hidden" }}>
+          <div style={{ position: "relative", height: "240px" }}>
+            <Image src="/images/truck-loading.jpg" alt="Castle Express truck being loaded" fill style={{ objectFit: "cover" }} />
+          </div>
+          <div style={{ position: "relative", height: "240px" }}>
+            <Image src="/images/crew-furniture.jpg" alt="Castle Express crew moving furniture" fill style={{ objectFit: "cover" }} />
+          </div>
+        </div>
+      </section>
+
       {/* ─── VALUE STACK ─── */}
       <section style={s.section}>
         <div style={{ maxWidth: "560px", margin: "0 auto" }}>
@@ -264,8 +278,8 @@ export default function StorageOfferPage() {
 
             {/* Your price */}
             <div style={{ padding: "28px 24px", background: "rgba(251, 203, 11, 0.08)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontFamily: "var(--font-nunito), 'Nunito', sans-serif", fontSize: "18px", fontWeight: 700, color: "#FFFFFF" }}>Your Price Today</span>
-              <span style={{ fontFamily: "var(--font-nunito), 'Nunito', sans-serif", fontSize: "clamp(28px, 5vw, 36px)", fontWeight: 900, fontStyle: "italic", color: "#FBCB0B" }}>$0</span>
+              <span style={{ fontFamily: "var(--font-heading), 'Merriweather', serif", fontSize: "18px", fontWeight: 700, color: "#FFFFFF" }}>Your Price Today</span>
+              <span style={{ fontFamily: "var(--font-heading), 'Merriweather', serif", fontSize: "clamp(28px, 5vw, 36px)", fontWeight: 900, color: "#FBCB0B" }}>$0</span>
             </div>
           </div>
           <p style={{ textAlign: "center", color: "#969a9d", fontSize: "13px", marginTop: "12px" }}>for your first month of storage</p>
@@ -283,10 +297,10 @@ export default function StorageOfferPage() {
               { step: "3", title: "First Month Free", desc: "Your first month of storage is completely free. After that, simple monthly billing with no surprises." },
             ].map((item) => (
               <div key={item.step} style={{ textAlign: "center" }}>
-                <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "#FBCB0B", color: "#000", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-nunito), 'Nunito', sans-serif", fontWeight: 900, fontSize: "22px", margin: "0 auto 16px" }}>
+                <div style={{ width: "52px", height: "52px", borderRadius: "50%", background: "#FBCB0B", color: "#000", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-heading), 'Merriweather', serif", fontWeight: 900, fontSize: "22px", margin: "0 auto 16px" }}>
                   {item.step}
                 </div>
-                <h3 style={{ fontFamily: "var(--font-nunito), 'Nunito', sans-serif", fontWeight: 700, fontSize: "18px", color: "#FFFFFF", marginBottom: "8px" }}>
+                <h3 style={{ fontFamily: "var(--font-heading), 'Merriweather', serif", fontWeight: 700, fontSize: "18px", color: "#FFFFFF", marginBottom: "8px" }}>
                   {item.title}
                 </h3>
                 <p style={{ ...s.body, fontSize: "14px" }}>{item.desc}</p>
@@ -299,6 +313,10 @@ export default function StorageOfferPage() {
       {/* ─── SOCIAL PROOF ─── */}
       <section style={s.section}>
         <div style={s.containerWide}>
+          <div style={{ position: "relative", height: "280px", borderRadius: "12px", overflow: "hidden", marginBottom: "48px" }}>
+            <Image src="/images/joe-with-customers.jpg" alt="Joe with happy customers" fill style={{ objectFit: "cover", objectPosition: "15% 25%" }} />
+            <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }} />
+          </div>
           <h2 style={s.h2}>What Our Customers Say</h2>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "24px" }}>
             {TESTIMONIALS.map((t, i) => (
@@ -373,6 +391,9 @@ export default function StorageOfferPage() {
       {/* ─── FORM ─── */}
       <section id="claim-form" style={{ ...s.sectionAlt, scrollMarginTop: "80px" }}>
         <div style={{ ...s.container, maxWidth: "560px" }}>
+          <div style={{ position: "relative", width: "80px", height: "80px", borderRadius: "50%", overflow: "hidden", margin: "0 auto 24px", border: "3px solid #FBCB0B" }}>
+            <Image src="/images/joe-caronna.png" alt="Joe Caronna, Castle Express founder" fill style={{ objectFit: "cover" }} />
+          </div>
           <h2 style={s.h2}>Claim Your Free Month</h2>
 
           {submitted ? (
@@ -380,7 +401,7 @@ export default function StorageOfferPage() {
               <div style={{ width: "56px", height: "56px", borderRadius: "50%", background: "rgba(22, 163, 74, 0.15)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
                 <Check />
               </div>
-              <p style={{ fontFamily: "var(--font-nunito), 'Nunito', sans-serif", fontWeight: 700, fontSize: "20px", color: "#FFFFFF", marginBottom: "12px" }}>
+              <p style={{ fontFamily: "var(--font-heading), 'Merriweather', serif", fontWeight: 700, fontSize: "20px", color: "#FFFFFF", marginBottom: "12px" }}>
                 Thank you!
               </p>
               <p style={s.body}>
