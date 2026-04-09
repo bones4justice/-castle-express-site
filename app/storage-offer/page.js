@@ -219,15 +219,6 @@ export default function StorageOfferPage() {
         </div>
       </section>
 
-      {/* ─── FACILITY IMAGE ─── */}
-      <section style={{ padding: "40px 24px 0" }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", borderRadius: "12px", overflow: "hidden" }}>
-          <div style={{ position: "relative", height: "500px", maxHeight: "50vw" }}>
-            <Image src="/images/IMG_4734.jpg" alt="Castle Express climate-controlled storage facility in Enfield CT with numbered storage vaults" fill style={{ objectFit: "cover", objectPosition: "center" }} />
-          </div>
-        </div>
-      </section>
-
       {/* ─── BENEFITS ─── */}
       <section style={s.sectionAlt}>
         <div style={s.container}>
@@ -249,7 +240,7 @@ export default function StorageOfferPage() {
       <section style={{ padding: "40px 24px" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", borderRadius: "12px", overflow: "hidden" }}>
           <div style={{ position: "relative", height: "400px" }}>
-            <Image src="/images/IMG_6322.jpg" alt="Forklift moving wrapped items into numbered storage vaults at Castle Express facility" fill style={{ objectFit: "cover", objectPosition: "center" }} />
+            <Image src="/images/IMG_4734.jpg" alt="Castle Express climate-controlled storage facility in Enfield CT with numbered storage vaults" fill style={{ objectFit: "cover", objectPosition: "center" }} />
           </div>
         </div>
       </section>
