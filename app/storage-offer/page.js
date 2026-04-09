@@ -6,7 +6,7 @@ import { Check, Phone, Shield, Star, Clock, Box, Home, DollarSign } from "@/comp
 /* ─── VALUE STACK DATA ─── */
 const VALUE_ITEMS = [
   { label: "Climate-controlled storage, 1 month", value: "$175" },
-  { label: "Professional pickup and delivery to facility", value: "$150" },
+  { label: "Warehouse handling and inventory", value: "$150" },
   { label: "Full inventory and item tracking", value: "$50" },
   { label: "Flexible month-to-month terms", value: "Priceless" },
   { label: "Price lock guarantee: your rate never goes up. Ever.", value: "Included" },
