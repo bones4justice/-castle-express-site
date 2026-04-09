@@ -194,7 +194,7 @@ export default function StorageOfferPage() {
       {/* ─── HERO ─── */}
       <section style={{ ...s.section, paddingTop: "100px", paddingBottom: "60px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0 }}>
-          <Image src="/images/storage-crates.jpg" alt="Castle Express storage facility" fill style={{ objectFit: "cover", objectPosition: "center" }} priority />
+          <Image src="/images/IMG_4734.jpg" alt="Castle Express climate-controlled storage facility in Enfield CT with numbered storage vaults" fill style={{ objectFit: "cover", objectPosition: "center" }} priority />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.82), rgba(0,0,0,0.92))" }} />
         </div>
         <div style={{ ...s.container, position: "relative" }}>
@@ -238,12 +238,9 @@ export default function StorageOfferPage() {
 
       {/* ─── IMAGE BREAK ─── */}
       <section style={{ padding: "0 24px" }}>
-        <div style={{ maxWidth: "1000px", margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", borderRadius: "12px", overflow: "hidden" }}>
-          <div style={{ position: "relative", height: "240px" }}>
-            <Image src="/images/truck-loading.jpg" alt="Castle Express truck being loaded" fill style={{ objectFit: "cover" }} />
-          </div>
-          <div style={{ position: "relative", height: "240px" }}>
-            <Image src="/images/crew-furniture.jpg" alt="Castle Express crew moving furniture" fill style={{ objectFit: "cover" }} />
+        <div style={{ maxWidth: "1000px", margin: "0 auto", borderRadius: "12px", overflow: "hidden" }}>
+          <div style={{ position: "relative", height: "320px" }}>
+            <Image src="/images/IMG_6322.jpg" alt="Forklift moving wrapped items into numbered storage vaults at Castle Express facility" fill style={{ objectFit: "cover" }} />
           </div>
         </div>
       </section>
@@ -314,7 +311,7 @@ export default function StorageOfferPage() {
       <section style={s.section}>
         <div style={s.containerWide}>
           <div style={{ position: "relative", height: "280px", borderRadius: "12px", overflow: "hidden", marginBottom: "48px" }}>
-            <Image src="/images/joe-with-customers.jpg" alt="Joe with happy customers" fill style={{ objectFit: "cover", objectPosition: "15% 25%" }} />
+            <Image src="/images/IMG_5585.jpg" alt="Castle Express crew member loading items from truck into storage facility" fill style={{ objectFit: "cover" }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }} />
           </div>
           <h2 style={s.h2}>What Our Customers Say</h2>
@@ -391,9 +388,6 @@ export default function StorageOfferPage() {
       {/* ─── FORM ─── */}
       <section id="claim-form" style={{ ...s.sectionAlt, scrollMarginTop: "80px" }}>
         <div style={{ ...s.container, maxWidth: "560px" }}>
-          <div style={{ position: "relative", width: "80px", height: "80px", borderRadius: "50%", overflow: "hidden", margin: "0 auto 24px", border: "3px solid #FBCB0B" }}>
-            <Image src="/images/joe-caronna.png" alt="Joe Caronna, Castle Express founder" fill style={{ objectFit: "cover" }} />
-          </div>
           <h2 style={s.h2}>Claim Your Free Month</h2>
 
           {submitted ? (
