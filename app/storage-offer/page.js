@@ -240,7 +240,7 @@ export default function StorageOfferPage() {
       <section style={{ padding: "40px 24px" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", borderRadius: "12px", overflow: "hidden" }}>
           <div style={{ position: "relative", height: "400px" }}>
-            <Image src="/images/IMG_4734.jpg" alt="Castle Express climate-controlled storage facility in Enfield CT with numbered storage vaults" fill style={{ objectFit: "cover", objectPosition: "center" }} />
+            <Image src="/images/IMG_6410.JPG" alt="Inside a Castle Express storage vault with items carefully wrapped in moving blankets at our climate-controlled Enfield CT facility" fill style={{ objectFit: "cover", objectPosition: "center" }} />
           </div>
         </div>
       </section>
