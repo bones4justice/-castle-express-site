@@ -17,11 +17,9 @@ export default function StoragePopup() {
   const [animate, setAnimate] = useState(false);
 
   useEffect(() => {
-    // Don't show on storage-offer or services/storage pages
     const path = window.location.pathname;
     if (path.startsWith("/storage-offer") || path === "/services/storage/" || path === "/services/storage") return;
 
-    // Don't show if already dismissed
     if (getCookie("ce_storage_popup") === "dismissed") return;
 
     let shown = false;
@@ -32,10 +30,8 @@ export default function StoragePopup() {
       setTimeout(() => setAnimate(true), 10);
     };
 
-    // Show after 5 seconds
     const timer = setTimeout(show, 5000);
 
-    // Show on exit intent
     const handleMouseLeave = (e) => {
       if (e.clientY <= 0) show();
     };
@@ -49,7 +45,7 @@ export default function StoragePopup() {
 
   const dismiss = () => {
     setAnimate(false);
-    setTimeout(() => setVisible(false), 300);
+    setTimeout(() => setVisible(false), 350);
     setCookie("ce_storage_popup", "dismissed", 30);
   };
 
@@ -57,156 +53,148 @@ export default function StoragePopup() {
 
   return (
     <div
-      onClick={dismiss}
+      role="complementary"
+      aria-label="Storage offer notification"
       style={{
         position: "fixed",
-        inset: 0,
+        bottom: 0,
+        right: 0,
         zIndex: 9999,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        background: animate ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0)",
-        transition: "background 0.3s ease",
-        padding: "20px",
+        maxWidth: "400px",
+        width: "calc(100% - 24px)",
+        margin: "0 12px 0 12px",
+        background: "#000000",
+        color: "#FFFFFF",
+        borderTopLeftRadius: "12px",
+        borderTopRightRadius: "12px",
+        border: "1px solid rgba(251, 203, 11, 0.3)",
+        borderBottom: "none",
+        boxShadow: "0 -8px 32px rgba(0, 0, 0, 0.4)",
+        padding: "24px 24px 20px",
+        transform: animate ? "translateY(0)" : "translateY(110%)",
+        transition: "transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
     >
-      <div
-        onClick={(e) => e.stopPropagation()}
+      {/* Close button */}
+      <button
+        onClick={dismiss}
+        aria-label="Close"
         style={{
-          position: "relative",
-          background: "#000000",
-          borderRadius: "12px",
-          maxWidth: "480px",
-          width: "100%",
-          padding: "40px 32px 32px",
-          opacity: animate ? 1 : 0,
-          transform: animate ? "translateY(0) scale(1)" : "translateY(20px) scale(0.97)",
-          transition: "all 0.3s ease",
-          border: "1px solid rgba(251, 203, 11, 0.3)",
+          position: "absolute",
+          top: "10px",
+          right: "10px",
+          background: "none",
+          border: "none",
+          color: "#969a9d",
+          fontSize: "20px",
+          lineHeight: 1,
+          padding: "6px 10px",
+          cursor: "pointer",
+          minHeight: "auto",
+          minWidth: "auto",
         }}
       >
-        {/* Close button */}
-        <button
-          onClick={dismiss}
-          aria-label="Close"
-          style={{
-            position: "absolute",
-            top: "12px",
-            right: "12px",
-            background: "none",
-            border: "none",
-            color: "#969a9d",
-            fontSize: "24px",
-            lineHeight: 1,
-            padding: "4px 8px",
-            cursor: "pointer",
-            minHeight: "auto",
-            minWidth: "auto",
-          }}
-        >
-          &#x2715;
-        </button>
+        &#x2715;
+      </button>
 
-        {/* Headline */}
-        <h2
-          style={{
-            fontFamily: "var(--font-nunito), 'Nunito', sans-serif",
-            fontWeight: 700,
-            fontStyle: "italic",
-            fontSize: "clamp(22px, 5vw, 28px)",
-            color: "#FFFFFF",
-            lineHeight: 1.2,
-            marginBottom: "16px",
-          }}
-        >
-          Your First Month of Storage is On Us
-        </h2>
+      {/* Headline */}
+      <h2
+        style={{
+          fontFamily: "var(--font-heading), 'Merriweather', serif",
+          fontWeight: 800,
+          fontSize: "17px",
+          color: "#FFFFFF",
+          lineHeight: 1.3,
+          marginBottom: "10px",
+          paddingRight: "24px",
+        }}
+      >
+        Your First Month of Storage is On Us
+      </h2>
 
-        {/* Subheadline */}
-        <p
-          style={{
-            fontFamily: "var(--font-body), 'Merriweather', serif",
-            fontSize: "15px",
-            color: "#FFFFFF",
-            lineHeight: 1.65,
-            marginBottom: "14px",
-          }}
-        >
-          Book a move with Castle Express and get your first month of
-          climate-controlled storage FREE at our Enfield facility.
-        </p>
+      {/* Subheadline */}
+      <p
+        style={{
+          fontFamily: "var(--font-body), 'Merriweather', serif",
+          fontSize: "13px",
+          color: "#ebeced",
+          lineHeight: 1.55,
+          marginBottom: "8px",
+        }}
+      >
+        Book a move and get FREE climate-controlled storage.
+      </p>
 
-        {/* Bold third line */}
-        <p
-          style={{
-            fontFamily: "var(--font-body), 'Merriweather', serif",
-            fontSize: "15px",
-            fontWeight: 700,
-            color: "#FBCB0B",
-            lineHeight: 1.65,
-            marginBottom: "24px",
-          }}
-        >
-          We never raise your storage price. Ever.
-        </p>
+      {/* Bold gold line */}
+      <p
+        style={{
+          fontFamily: "var(--font-body), 'Merriweather', serif",
+          fontSize: "13px",
+          fontWeight: 700,
+          color: "#FBCB0B",
+          lineHeight: 1.55,
+          marginBottom: "16px",
+        }}
+      >
+        We never raise your price. Ever.
+      </p>
 
-        {/* CTA button */}
-        <a
-          href="/storage-offer?utm_source=website&utm_medium=popup&utm_campaign=free-storage"
-          onClick={() => setCookie("ce_storage_popup", "dismissed", 30)}
-          style={{
-            display: "block",
-            width: "100%",
-            textAlign: "center",
-            background: "#FBCB0B",
-            color: "#000000",
-            fontFamily: "var(--font-nunito), 'Nunito', sans-serif",
-            fontWeight: 700,
-            fontSize: "16px",
-            padding: "14px 24px",
-            borderRadius: "6px",
-            border: "none",
-            textDecoration: "none",
-            marginBottom: "12px",
-          }}
-        >
-          Tell Me More
-        </a>
+      {/* CTA */}
+      <a
+        href="/storage-offer?utm_source=website&utm_medium=popup&utm_campaign=free-storage"
+        onClick={() => setCookie("ce_storage_popup", "dismissed", 30)}
+        style={{
+          display: "block",
+          width: "100%",
+          textAlign: "center",
+          background: "#FBCB0B",
+          color: "#000000",
+          fontFamily: "var(--font-heading), 'Merriweather', serif",
+          fontWeight: 700,
+          fontSize: "14px",
+          padding: "12px 20px",
+          borderRadius: "6px",
+          border: "none",
+          textDecoration: "none",
+          marginBottom: "10px",
+        }}
+      >
+        Learn More
+      </a>
 
-        {/* No thanks */}
-        <button
-          onClick={dismiss}
-          style={{
-            display: "block",
-            width: "100%",
-            textAlign: "center",
-            background: "none",
-            border: "none",
-            color: "#969a9d",
-            fontFamily: "var(--font-body), 'Merriweather', serif",
-            fontSize: "13px",
-            padding: "8px",
-            cursor: "pointer",
-            textDecoration: "underline",
-            minHeight: "auto",
-          }}
-        >
-          No thanks
-        </button>
+      {/* No thanks */}
+      <button
+        onClick={dismiss}
+        style={{
+          display: "block",
+          width: "100%",
+          textAlign: "center",
+          background: "none",
+          border: "none",
+          color: "#969a9d",
+          fontFamily: "var(--font-body), 'Merriweather', serif",
+          fontSize: "12px",
+          padding: "4px",
+          cursor: "pointer",
+          textDecoration: "underline",
+          minHeight: "auto",
+          marginBottom: "8px",
+        }}
+      >
+        No thanks
+      </button>
 
-        {/* Fine print */}
-        <p
-          style={{
-            fontSize: "11px",
-            color: "#969a9d",
-            textAlign: "center",
-            marginTop: "12px",
-            lineHeight: 1.4,
-          }}
-        >
-          With any booked move. New storage customers only.
-        </p>
-      </div>
+      {/* Fine print */}
+      <p
+        style={{
+          fontSize: "10px",
+          color: "#969a9d",
+          textAlign: "center",
+          lineHeight: 1.4,
+        }}
+      >
+        With any booked move. New storage customers only.
+      </p>
     </div>
   );
 }
