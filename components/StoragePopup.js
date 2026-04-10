@@ -30,15 +30,12 @@ export default function StoragePopup() {
       setTimeout(() => setAnimate(true), 10);
     };
 
-    const timer = setTimeout(show, 5000);
-
     const handleMouseLeave = (e) => {
       if (e.clientY <= 0) show();
     };
     document.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      clearTimeout(timer);
       document.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
