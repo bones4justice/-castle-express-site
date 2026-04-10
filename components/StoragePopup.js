@@ -101,15 +101,16 @@ export default function StoragePopup() {
       <h2
         style={{
           fontFamily: "var(--font-heading), 'Merriweather', serif",
-          fontWeight: 800,
-          fontSize: "17px",
-          color: "#FFFFFF",
-          lineHeight: 1.3,
-          marginBottom: "10px",
+          fontWeight: 900,
+          fontSize: "28px",
+          color: "#FBCB0B",
+          lineHeight: 1.1,
+          letterSpacing: "0.01em",
+          marginBottom: "12px",
           paddingRight: "24px",
         }}
       >
-        Your First Month of Storage is On Us
+        NEED STORAGE?
       </h2>
 
       {/* Subheadline */}
@@ -118,11 +119,11 @@ export default function StoragePopup() {
           fontFamily: "var(--font-body), 'Merriweather', serif",
           fontSize: "13px",
           color: "#ebeced",
-          lineHeight: 1.55,
-          marginBottom: "8px",
+          lineHeight: 1.6,
+          marginBottom: "10px",
         }}
       >
-        Book a move and get FREE climate-controlled storage.
+        Book a move with Castle Express and get your first month of climate-controlled storage FREE.
       </p>
 
       {/* Bold gold line */}
