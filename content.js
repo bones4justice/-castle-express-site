@@ -161,9 +161,9 @@ export const SERVICE_PAGES = {
   "commercial-moving": {
     id: "commercial",
     title: "Commercial & Office Moving",
-    headline: "Business Moves That Minimize Downtime",
-    metaTitle: "Commercial & Office Movers in CT & MA",
-    metaDesc: "Office and commercial movers serving Hartford County CT & Western MA. Minimal downtime, after-hours scheduling, IT coordination. Licensed & insured. Call 1-888-553-4503.",
+    headline: "Commercial and Office Moving in Connecticut",
+    metaTitle: "Commercial & Office Moving in Connecticut | Castle Express Moving & Storage",
+    metaDesc: "Office movers serving Hartford County CT and Western Massachusetts. Castle Express handles office relocation with minimal downtime, after-hours scheduling, furniture disassembly, and IT equipment coordination. Licensed and insured. Call 1-888-553-4503.",
     heroImage: "/images/truck-brick-building.jpg",
     intro: "Your business doesn't stop for a move  -  and neither do we. Castle Express plans and executes commercial relocations around your schedule, minimizing disruption to your operations and getting your team back to work fast.",
     sections: [
@@ -189,12 +189,25 @@ export const SERVICE_PAGES = {
           "Post-move walkthrough to confirm everything is in place",
         ],
       },
+      {
+        heading: "Office Moving Services",
+        items: [
+          "Office furniture disassembly and reassembly  -  desks, workstations, modular systems, and executive furniture",
+          "IT equipment handling  -  safe disconnection, transport, and setup of workstations, servers, and networking gear",
+          "Cubicle and conference room teardown  -  full breakdown and reinstallation at your new location",
+          "Minimizing business downtime  -  detailed scheduling built around your operations so your team can get back to work fast",
+          "Weekend and after-hours office moves  -  Friday evening and weekend scheduling available so move day does not interrupt your business",
+          "Labeling and floor plan coordination  -  every piece of furniture and equipment ends up exactly where it belongs",
+        ],
+      },
     ],
     callout: "We've relocated offices, retail stores, and medical practices across Connecticut and Western Massachusetts  -  always on time, always on budget.",
     faq: [
       { q: "Can you move us after business hours?", a: "Yes. We offer evening and weekend scheduling to minimize disruption to your business." },
       { q: "Do you handle IT equipment?", a: "We coordinate with your IT team to safely disconnect, transport, and reconnect workstations and servers." },
       { q: "How do you handle a multi-floor office?", a: "We create a detailed floor plan with labeling systems so every item ends up in the right spot at your new location." },
+      { q: "How much does it cost to move an office in Connecticut?", a: "Office moving costs depend on the size of the office, amount of furniture and equipment, number of floors, and whether you need after-hours or weekend service. We provide free on-site estimates for all commercial moves. Contact us and we will walk through your space and give you a straightforward number." },
+      { q: "Can you move our office over a weekend to avoid business disruption?", a: "Yes. Most of our office moves happen on Friday evenings and weekends specifically to minimize downtime. We work with your schedule to make sure your team can walk in Monday morning and get back to work." },
     ],
     relatedServices: ["residential-moving", "storage", "specialty-moving"],
     relatedPosts: ["/blog/how-to-move-step-by-step-guide/", "/blog/ultimate-moving-checklist-connecticut/"],
