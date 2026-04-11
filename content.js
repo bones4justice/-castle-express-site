@@ -247,9 +247,9 @@ export const SERVICE_PAGES = {
   "storage": {
     id: "storage",
     title: "Climate-Controlled Storage",
-    headline: "Secure Storage in Our Enfield Facility",
-    metaTitle: "Climate-Controlled Storage in Enfield, CT",
-    metaDesc: "Secure, climate-controlled storage in Enfield CT. Short and long-term options. Wooden vault storage. Perfect between closings or during renovations. Call 1-888-553-4503.",
+    headline: "Moving and Storage Services in Connecticut",
+    metaTitle: "Moving and Storage in Connecticut | Castle Express Moving & Storage",
+    metaDesc: "Need moving and storage in Connecticut? Castle Express offers secure storage solutions in Enfield, CT alongside full-service local and long distance moving. Call (888) 553-4503.",
     heroImage: "/images/storage-crates.jpg",
     intro: "Need somewhere safe for your belongings? Our secure, climate-controlled facility in Enfield, CT keeps your items protected  -  whether you need storage for a week between closings or several months during a renovation.",
     sections: [
