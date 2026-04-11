@@ -51,6 +51,7 @@ export default function Footer() {
               { label: "Climate-Controlled Storage", href: "/services/storage" },
               { label: "Specialty Moving", href: "/services/specialty-moving" },
               { label: "Piano Moving", href: "/piano-moving" },
+              { label: "Senior Moving", href: "/senior-moving" },
             ].map(s => (
               <Link key={s.href} href={s.href} style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.75)", marginBottom: 8, textDecoration: "none" }}>{s.label}</Link>
             ))}
