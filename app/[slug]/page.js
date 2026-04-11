@@ -168,6 +168,14 @@ export default function CityPage({ params }) {
         <div className="container grid-2" style={{ alignItems: "start" }}>
           {/* Left  -  Content */}
           <div>
+            {/* LOCAL MOVERS */}
+            <h2 className="heading-2" style={{ marginBottom: 16 }}>
+              Local Movers in {city.town}, {city.state}
+            </h2>
+            <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
+              Castle Express Moving &amp; Storage is a family-owned local moving company serving {city.town}, {city.state} and the surrounding area. Since {COMPANY.founded}, our experienced crews have helped thousands of families and businesses across {city.stateFull} with residential moves, commercial relocations, packing, specialty items, and climate-controlled storage. If you&apos;re looking for reliable local movers in {city.town}, you&apos;re in the right place.
+            </p>
+
             {/* LOCAL MOVING */}
             <div className="section-label"><span>{city.h2_local}</span></div>
             <h2 className="heading-2" style={{ marginBottom: 24 }}>
