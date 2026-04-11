@@ -146,12 +146,26 @@ export const SERVICE_PAGES = {
           "Local moves within CT and MA, plus long-distance relocations",
         ],
       },
+      {
+        heading: "Senior Moving Services",
+        items: [
+          "Moving a parent or loved one out of a longtime family home requires patience, care, and clear communication. Whether it is a downsizing move, a transition to assisted living, or a relocation closer to family, our experienced crews handle senior moves with the attention they deserve. Learn more about our dedicated [senior moving services](/senior-moving/).",
+        ],
+      },
+      {
+        heading: "Apartment Moving",
+        items: [
+          "Studio apartments, walk-ups, high-rise buildings with elevator reservations, tight hallways, and limited parking  -  our crews handle apartment moves of every size across Hartford County and Western Massachusetts. We bring floor runners to protect common areas and coordinate with building management on timing and access.",
+        ],
+      },
     ],
     callout: "Every residential move includes padded furniture protection, floor coverings, and a dedicated crew leader who manages your move from start to finish.",
     faq: [
       { q: "How far in advance should I book?", a: "We recommend 2-3 weeks, especially during peak season (May-September). We accommodate last-minute moves when possible  -  just call." },
       { q: "Do you charge by the hour?", a: "Yes, we charge hourly, but we do a detailed inventory and move analysis so our estimates are accurate within 10%. No surprises on move day." },
       { q: "Can you handle stairs and tight spaces?", a: "Absolutely. Our crews are experienced with walk-ups, narrow doorways, spiral staircases, and tight hallways." },
+      { q: "Do you move apartments?", a: "Yes. We move apartments of all sizes, from studios to multi-bedroom units. We handle elevator reservations, building access coordination, and floor protection for common areas." },
+      { q: "Do you offer senior moving services?", a: "Yes. We provide dedicated senior moving services for downsizing, assisted living transitions, and estate moves. Visit our senior moving page for details." },
     ],
     relatedServices: ["packing-services", "storage", "specialty-moving"],
     relatedPosts: ["/blog/how-to-move-step-by-step-guide/", "/blog/packing-tips-from-professional-movers/"],
