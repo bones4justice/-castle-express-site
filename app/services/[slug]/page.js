@@ -6,6 +6,36 @@ import { getAllPosts } from "@/lib/blogData";
 import { Check, Phone, Star, Shield, ArrowRight, ChevronRight, MapPin } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
 
+// Parse [text](url) markdown links inside a plain string and return React nodes.
+// Internal links (starting with /) render as Next <Link>; external as <a>.
+function renderWithLinks(text) {
+  const regex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
+  let key = 0;
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) parts.push(text.slice(lastIndex, match.index));
+    const [, label, href] = match;
+    if (href.startsWith("/")) {
+      parts.push(
+        <Link key={`l${key++}`} href={href} style={{ color: "#D4A017", fontWeight: 600 }}>
+          {label}
+        </Link>
+      );
+    } else {
+      parts.push(
+        <a key={`a${key++}`} href={href} style={{ color: "#D4A017", fontWeight: 600 }}>
+          {label}
+        </a>
+      );
+    }
+    lastIndex = regex.lastIndex;
+  }
+  if (lastIndex < text.length) parts.push(text.slice(lastIndex));
+  return parts.length === 1 && typeof parts[0] === "string" ? text : parts;
+}
+
 export function generateStaticParams() {
   return Object.keys(SERVICE_PAGES).map(slug => ({ slug }));
 }
@@ -107,7 +137,7 @@ export default function ServiceDetailPage({ params }) {
                     <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
                       <Check />
                     </div>
-                    <span className="body-md" style={{ color: "#374151" }}>{item}</span>
+                    <span className="body-md" style={{ color: "#374151" }}>{renderWithLinks(item)}</span>
                   </div>
                 ))}
               </div>
