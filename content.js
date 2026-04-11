@@ -158,6 +158,12 @@ export const SERVICE_PAGES = {
           "Studio apartments, walk-ups, high-rise buildings with elevator reservations, tight hallways, and limited parking  -  our crews handle apartment moves of every size across Hartford County and Western Massachusetts. We bring floor runners to protect common areas and coordinate with building management on timing and access.",
         ],
       },
+      {
+        heading: "Single-Item and Furniture Delivery",
+        items: [
+          "Need one piece of furniture moved across town or delivered from a store? We handle single-item furniture deliveries alongside our full-service moves. Couches, dressers, dining tables, bedroom sets, and any large item that will not fit in your vehicle  -  we can pick it up and deliver it for you.",
+        ],
+      },
     ],
     callout: "Every residential move includes padded furniture protection, floor coverings, and a dedicated crew leader who manages your move from start to finish.",
     faq: [
@@ -358,9 +364,9 @@ export const SERVICE_PAGES = {
   "long-distance-moving": {
     id: "longdistance",
     title: "Long Distance Moving",
-    headline: "Long Distance Moving Done Right",
-    metaTitle: "Long Distance Moving CT | Interstate Movers | Castle Express",
-    metaDesc: "Licensed long distance and interstate movers serving Connecticut and Massachusetts. Accurate estimates, experienced crews, no hidden fees. Call Castle Express today.",
+    headline: "Long Distance Movers in Connecticut and Massachusetts",
+    metaTitle: "Long Distance Movers in Connecticut | Castle Express Moving & Storage",
+    metaDesc: "Looking for long distance movers in Connecticut? Castle Express is a licensed long distance moving company serving CT and Western Massachusetts. Flat-rate estimates, experienced crews, no hidden fees. Call 1-888-553-4503.",
     heroImage: "/images/truck-tobacco-barn.jpg",
     intro: "Planning a long distance move from Connecticut or Massachusetts? Castle Express is licensed for interstate moves and handles relocations throughout New England and up and down the East Coast. We coordinate every detail so you can focus on your fresh start.",
     sections: [
