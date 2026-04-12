@@ -82,7 +82,7 @@ export default function CityPage({ params }) {
         name: `Is Castle Express Moving licensed and insured in ${city.state}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Yes. Castle Express Moving & Storage is fully licensed and insured for moves in ${city.stateFull} and Connecticut. USDOT# ${COMPANY.usdot}, CT Permit ${COMPANY.ctPermit}. We carry full liability coverage on every move.`,
+          text: `Yes. Castle Express Moving & Storage is fully licensed and insured for moves in ${city.stateFull}${city.state === "MA" ? " and Connecticut" : ""}. USDOT# ${COMPANY.usdot}, CT Permit ${COMPANY.ctPermit}. We carry full liability coverage on every move.`,
         },
       },
       {
@@ -279,7 +279,7 @@ export default function CityPage({ params }) {
               </details>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>Is Castle Express licensed and insured in {city.state}?</summary>
-                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>Yes. We are fully licensed for moves in {city.stateFull} and Connecticut. USDOT# {COMPANY.usdot}, CT Permit {COMPANY.ctPermit}. Full liability coverage on every move.</p>
+                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>Yes. We are fully licensed for moves in {city.stateFull}{city.state === "MA" ? " and Connecticut" : ""}. USDOT# {COMPANY.usdot}, CT Permit {COMPANY.ctPermit}. Full liability coverage on every move.</p>
               </details>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>How far in advance should I book?</summary>

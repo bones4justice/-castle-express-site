@@ -1,7 +1,7 @@
 import { COMPANY } from "@/content";
 
 export const metadata = {
-  title: "Privacy Policy",
+  title: "Privacy Policy | Castle Express Moving & Storage",
   description: "Castle Express Moving & Storage privacy policy. How we collect, use, and protect your personal information.",
   alternates: { canonical: "/privacy/" },
   robots: { index: false, follow: true },

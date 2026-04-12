@@ -27,7 +27,6 @@ export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
     default: "Castle Express Moving & Storage | CT & MA Movers Since 2013",
-    template: "%s | Castle Express Moving & Storage",
   },
   description: "Family-owned movers in Enfield, CT serving Hartford County & Western MA since 2013. Residential, commercial, packing & storage. Free estimates.",
   keywords: ["movers", "moving company", "Enfield CT", "Hartford CT", "Springfield MA", "storage", "packing", "local movers", "long distance movers"],

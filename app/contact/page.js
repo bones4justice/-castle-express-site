@@ -4,7 +4,7 @@ import { Phone, MapPin, Clock, Shield } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
 
 export const metadata = {
-  title: "Contact Us",
+  title: "Contact Us | Castle Express Moving & Storage",
   description: "Get a free moving estimate from Castle Express. Call 1-888-553-4503 or fill out our form. Serving Hartford County CT and Western MA with transparent, accurate pricing.",
   alternates: { canonical: "/contact/" },
   openGraph: { title: "Contact Us | Castle Express Moving & Storage", description: "Get a free moving estimate. Call 1-888-553-4503 or fill out our form.", url: "/contact/" },

@@ -4,7 +4,7 @@ import { Check, ArrowRight } from "@/components/Icons";
 import { IconResidential, IconCommercial, IconPacking, IconStorage, IconPiano, IconLongDistance } from "@/components/BrandIcons";
 
 export const metadata = {
-  title: "Our Moving Services",
+  title: "Our Moving Services | Castle Express Moving & Storage",
   description: "Residential moving, commercial relocations, full-service packing, climate-controlled storage, and specialty moving. Accurate estimates, no hidden fees. Serving CT and Western MA.",
   alternates: { canonical: "/services/" },
   openGraph: { title: "Moving Services | Castle Express Moving & Storage", description: "Residential, commercial, packing, storage, and specialty moving in CT & MA.", url: "/services/" },

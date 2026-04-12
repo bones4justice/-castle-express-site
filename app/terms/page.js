@@ -1,7 +1,7 @@
 import { COMPANY } from "@/content";
 
 export const metadata = {
-  title: "Terms of Service",
+  title: "Terms of Service | Castle Express Moving & Storage",
   description: "Castle Express Moving & Storage terms of service. Terms and conditions for our moving, packing, and storage services.",
   alternates: { canonical: "/terms/" },
   robots: { index: false, follow: true },
