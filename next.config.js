@@ -107,6 +107,9 @@ const nextConfig = {
       { source: '/service-areas/springfield-ma/', destination: '/movers-springfield-ma', permanent: true },
       { source: '/service-areas/agawam-ma', destination: '/movers-agawam-ma', permanent: true },
       { source: '/service-areas/agawam-ma/', destination: '/movers-agawam-ma', permanent: true },
+      // Catch-all: /service-areas/town-state/ → /movers-town-state/
+      { source: '/service-areas/:slug', destination: '/movers-:slug/', permanent: true },
+      { source: '/service-areas/:slug/', destination: '/movers-:slug/', permanent: true },
       // Blog post redirects from old WordPress URLs
       { source: '/moving-companies-in-connecticut-how-to-choose-the-best-one-in-2024/', destination: '/blog/how-to-choose-a-moving-company-in-connecticut/', permanent: true },
       { source: '/moving-companies-in-connecticut-how-to-choose-the-best-one-in-2024', destination: '/blog/how-to-choose-a-moving-company-in-connecticut/', permanent: true },
