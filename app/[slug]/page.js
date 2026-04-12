@@ -254,8 +254,15 @@ export default function CityPage({ params }) {
               Services Available in {city.town}
             </h3>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 32 }}>
-              {SERVICES.map(svc => (
-                <Link key={svc.id} href="/services" style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 14px", background: "#F9FAFB", borderRadius: 8, textDecoration: "none", border: "1px solid #E5E7EB", transition: "border-color 0.2s" }}>
+              {[
+                { title: "Residential Moving", href: "/services/residential-moving" },
+                { title: "Commercial & Office Moving", href: "/services/commercial-moving" },
+                { title: "Full-Service Packing", href: "/services/packing-services" },
+                { title: "Climate-Controlled Storage", href: "/services/storage" },
+                { title: "Specialty Moving", href: "/services/specialty-moving" },
+                { title: "Long Distance Moving", href: "/services/long-distance-moving" },
+              ].map(svc => (
+                <Link key={svc.href} href={svc.href} style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 14px", background: "#F9FAFB", borderRadius: 8, textDecoration: "none", border: "1px solid #E5E7EB", transition: "border-color 0.2s" }}>
                   <span style={{ color: "#D4A017", fontSize: 14 }}>→</span>
                   <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 13, color: "#1A1A2E" }}>{svc.title}</span>
                 </Link>
