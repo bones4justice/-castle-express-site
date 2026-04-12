@@ -26,7 +26,9 @@ export default function HomePage() {
     <>
       {/* ─── HERO ─── */}
       <section className="section-dark" aria-label="Hero" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-residential.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.12, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", inset: 0, opacity: 0.12, pointerEvents: "none" }}>
+          <Image src="/images/truck-residential.jpg" alt="" fill priority style={{ objectFit: "cover", objectPosition: "center" }} />
+        </div>
         <div style={{ position: "absolute", top: 0, right: 0, width: "40%", height: "100%", background: "linear-gradient(135deg, transparent 40%, rgba(212,160,23,0.07) 100%)", pointerEvents: "none" }} />
         <div className="container grid-2" style={{ alignItems: "center" }}>
           <div>
