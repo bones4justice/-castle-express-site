@@ -149,8 +149,8 @@ const nextConfig = {
       { source: '/reviews-accreditation/', destination: '/about', permanent: true },
       { source: '/commercial-mover', destination: '/services', permanent: true },
       { source: '/commercial-mover/', destination: '/services', permanent: true },
-      { source: '/residential-mover', destination: '/services', permanent: true },
-      { source: '/residential-mover/', destination: '/services', permanent: true },
+      { source: '/residential-mover', destination: '/services/residential-moving', permanent: true },
+      { source: '/residential-mover/', destination: '/services/residential-moving', permanent: true },
       { source: '/storage-with-climate-control', destination: '/services', permanent: true },
       { source: '/storage-with-climate-control/', destination: '/services', permanent: true },
       { source: '/specialty-moving-service', destination: '/services', permanent: true },
@@ -282,7 +282,12 @@ const nextConfig = {
       { source: '/dont-make-these-mistakes-when-moving-a-mattress-the-pros-way/', destination: '/blog/how-to-transport-a-mattress-safely', permanent: true },
       // GSC 404 cleanup — new redirects
       { source: '/movers/vernon-ct/', destination: '/movers-vernon-ct/', permanent: true },
+      // Catch-all: /movers/town-state/ → /movers-town-state/ (must be before the wildcard)
+      { source: '/movers/:slug/', destination: '/movers-:slug/', permanent: true },
       { source: '/movers/:slug*', destination: '/', permanent: true },
+      // Old WordPress blog URLs
+      { source: '/stress-of-moving-homes', destination: '/blog/', permanent: true },
+      { source: '/stress-of-moving-homes/', destination: '/blog/', permanent: true },
       { source: '/storage-solutions-in-enfield-how-moving-companies-can-help/', destination: '/services/storage/', permanent: true },
       { source: '/storage-solutions-in-enfield-how-moving-companies-can-help', destination: '/services/storage/', permanent: true },
       { source: '/what-happens-when-you-forget-the-essentials-on-day-one-of-your-move/', destination: '/blog/ultimate-moving-checklist-connecticut/', permanent: true },
