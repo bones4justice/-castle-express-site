@@ -287,6 +287,9 @@ const nextConfig = {
       { source: '/storage-solutions-in-enfield-how-moving-companies-can-help', destination: '/services/storage/', permanent: true },
       { source: '/what-happens-when-you-forget-the-essentials-on-day-one-of-your-move/', destination: '/blog/ultimate-moving-checklist-connecticut/', permanent: true },
       { source: '/what-happens-when-you-forget-the-essentials-on-day-one-of-your-move', destination: '/blog/ultimate-moving-checklist-connecticut/', permanent: true },
+      // Princess Packing route fix
+      { source: '/princess-packing', destination: '/princess-packing.html', permanent: false },
+      { source: '/princess-packing/', destination: '/princess-packing.html', permanent: false },
       // GSC crawled-not-indexed cleanup
       { source: '/2025/:path*', destination: '/blog/', permanent: true },
       { source: '/sustainable-moving-solutions-how-to-make-your-move-eco-friendly', destination: '/blog/', permanent: true },
