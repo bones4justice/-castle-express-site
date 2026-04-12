@@ -1,3 +1,5 @@
+"use client";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { COMPANY, SERVICES, REVIEWS, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
@@ -5,6 +7,7 @@ import { CITY_DATA } from "@/lib/cityData";
 import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, MapPin, Phone } from "@/components/Icons";
 import { IconResidential, IconCommercial, IconPacking, IconStorage, IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
 import EstimateForm from "@/components/EstimateForm";
+import { getHeroVariant, trackHeroVariant } from "@/lib/abtest";
 
 function SectionLabel({ children }) {
   return (
@@ -15,6 +18,14 @@ function SectionLabel({ children }) {
 }
 
 export default function HomePage() {
+  const [heroVariant, setHeroVariant] = useState("A");
+
+  useEffect(() => {
+    const variant = getHeroVariant();
+    setHeroVariant(variant);
+    trackHeroVariant(variant);
+  }, []);
+
   const serviceIcons = [
     <IconResidential key="h" size={96} />,
     <IconCommercial key="b" size={96} />,
@@ -27,17 +38,29 @@ export default function HomePage() {
       {/* ─── HERO ─── */}
       <section className="section-dark" aria-label="Hero" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, opacity: 0.12, pointerEvents: "none" }}>
-          <Image src="/images/truck-residential.jpg" alt="" fill priority style={{ objectFit: "cover", objectPosition: "center" }} />
+          <Image src={heroVariant === "B" ? "/images/hero-white-truck.jpg" : "/images/truck-residential.jpg"} alt="" fill priority style={{ objectFit: "cover", objectPosition: "center" }} />
         </div>
         <div style={{ position: "absolute", top: 0, right: 0, width: "40%", height: "100%", background: "linear-gradient(135deg, transparent 40%, rgba(212,160,23,0.07) 100%)", pointerEvents: "none" }} />
         <div className="container grid-2" style={{ alignItems: "center" }}>
           <div>
-            <SectionLabel>Connecticut & Massachusetts</SectionLabel>
+            {heroVariant === "A" ? (
+              <SectionLabel>Connecticut &amp; Massachusetts</SectionLabel>
+            ) : (
+              <div style={{ marginBottom: 12 }}>
+                <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#D4A017" }}>Connecticut &amp; Massachusetts</span>
+              </div>
+            )}
             <h1 className="heading-1" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal", color: "#fff", marginBottom: 20 }}>
-              Professional Movers in <span className="text-gold">CT & MA</span>
+              {heroVariant === "B" ? (
+                <>Looking for the<br /><span className="text-gold">Perfect Mover?</span></>
+              ) : (
+                <>Professional Movers in <span className="text-gold">CT &amp; MA</span></>
+              )}
             </h1>
             <p className="body-lg text-white-muted" style={{ marginBottom: 28, maxWidth: 520 }}>
-              Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2013. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own.
+              {heroVariant === "B"
+                ? "Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2013. Accurate estimates, no hidden fees, and experienced crews who treat your belongings like their own."
+                : "Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2013. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own."}
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
               {["Licensed & Insured", "Accurate Estimates", `${COMPANY.reviewCount} 5-Star Reviews`].map(item => (
@@ -47,10 +70,12 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
-              <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> Call Now</a>
-            </div>
+            {heroVariant === "A" && (
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+                <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> Call Now</a>
+              </div>
+            )}
           </div>
           <div>
             <EstimateForm dark />
