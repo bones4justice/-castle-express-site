@@ -54,6 +54,23 @@ export default function AboutPage() {
         </div>
       </section>
 
+      <section className="section" style={{ textAlign: "center" }}>
+        <div className="container-sm">
+          <h2 className="heading-2">Giving Back</h2>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#1A1A2E", lineHeight: 1.8, marginBottom: 32, textAlign: "left" }}>
+            Castle Express Moving &amp; Storage is proud to support organizations that make a difference. We donate to St. Jude Children's Research Hospital every year and we partner with the Enfield Food Shelf by helping with their moving projects when they need us. Giving back to our community is not something we do for attention. It is part of how we operate.
+          </p>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 48, flexWrap: "wrap" }}>
+            <a href="https://www.stjude.org/" target="_blank" rel="noopener noreferrer">
+              <Image src="/images/st-jude-logo.jpg" alt="St. Jude Children's Research Hospital" width={160} height={160} style={{ borderRadius: 12, objectFit: "contain" }} />
+            </a>
+            <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer">
+              <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={160} height={160} style={{ objectFit: "contain" }} />
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section className="section section-light" style={{ textAlign: "center" }}>
         <div className="container-sm">
           <h2 className="heading-2">Our Mission</h2>

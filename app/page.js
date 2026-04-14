@@ -312,6 +312,23 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── GIVING BACK ─── */}
+      <section style={{ padding: "40px 24px 32px", textAlign: "center" }} aria-label="Giving back">
+        <div style={{ maxWidth: 600, margin: "0 auto" }}>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 32, flexWrap: "wrap", marginBottom: 16 }}>
+            <a href="https://www.stjude.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", filter: "grayscale(100%)", transition: "filter 0.3s ease" }} onMouseEnter={e => e.currentTarget.style.filter = "grayscale(0%)"} onMouseLeave={e => e.currentTarget.style.filter = "grayscale(100%)"}>
+              <Image src="/images/st-jude-logo.jpg" alt="St. Jude Children's Research Hospital" width={90} height={90} style={{ borderRadius: 8, objectFit: "contain" }} />
+            </a>
+            <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", filter: "grayscale(100%)", transition: "filter 0.3s ease" }} onMouseEnter={e => e.currentTarget.style.filter = "grayscale(0%)"} onMouseLeave={e => e.currentTarget.style.filter = "grayscale(100%)"}>
+              <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={90} height={90} style={{ objectFit: "contain" }} />
+            </a>
+          </div>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "#969a9d", lineHeight: 1.6 }}>
+            Proud to support St. Jude Children's Research Hospital and the Enfield Food Shelf.
+          </p>
+        </div>
+      </section>
+
       {/* ─── FINAL CTA ─── */}
       <section className="section section-dark text-center" aria-label="Get a free estimate">
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
