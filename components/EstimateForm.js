@@ -28,7 +28,7 @@ export default function EstimateForm({ dark = false }) {
         body: JSON.stringify(formData),
       });
       if (typeof fbq === "function") fbq("track", "Lead");
-      if (typeof window.gtag !== "undefined") window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form" });
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv }); }
     } catch (err) {
       console.error("Formspree submission error:", err);
     }

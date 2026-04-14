@@ -59,7 +59,7 @@ export default function PostcardForm() {
         }),
       });
       if (typeof window.fbq !== "undefined") window.fbq("track", "Lead");
-      if (typeof window.gtag !== "undefined") window.gtag("event", "generate_lead", { event_category: "form", event_label: "postcard_form" });
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "postcard_form", hero_variant: hv }); }
       setSubmitted(true);
     } catch {
       setSubmitted(true);
