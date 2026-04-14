@@ -312,6 +312,22 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ─── EVERY MOVE FEEDS 50 MEALS ─── */}
+      <section style={{ padding: "60px 24px 48px", textAlign: "center", background: "#f9f9f9" }} aria-label="Every move feeds 50 meals">
+        <div style={{ maxWidth: 600, margin: "0 auto" }}>
+          <div style={{ width: 48, height: 3, background: "#FBCB0B", margin: "0 auto 20px", borderRadius: 2 }} />
+          <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "clamp(22px, 3.5vw, 28px)", color: "#1A1A2E", lineHeight: 1.2, marginBottom: 24 }}>
+            Every Move Feeds 50 Meals
+          </h2>
+          <a href="https://www.feedingamerica.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginBottom: 24 }}>
+            <Image src="/images/feeding-america-logo.png" alt="Feeding America" width={200} height={80} style={{ objectFit: "contain" }} />
+          </a>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#374151", lineHeight: 1.8 }}>
+            For every move we complete, Castle Express Moving &amp; Storage donates 50 meals to families in need through Feeding America. Moving is about new beginnings. We believe those beginnings should reach beyond just our customers.
+          </p>
+        </div>
+      </section>
+
       {/* ─── GIVING BACK ─── */}
       <section style={{ padding: "40px 24px 32px", textAlign: "center" }} aria-label="Giving back">
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
