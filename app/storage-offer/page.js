@@ -470,7 +470,7 @@ export default function StorageOfferPage() {
           <p style={{ ...s.bodyCenter, fontSize: "18px", fontWeight: 700, color: "#FFFFFF", marginBottom: "28px" }}>
             This offer will not last forever. Book your move today and get your first month of storage free.
           </p>
-          <a href="tel:8885534503" style={{ ...s.btn, fontSize: "18px", padding: "18px 40px", marginBottom: "16px" }}>
+          <a href="tel:18885534503" style={{ ...s.btn, fontSize: "18px", padding: "18px 40px", marginBottom: "16px" }}>
             Call (888) 553-4503
           </a>
           <div style={{ marginTop: "16px" }}>

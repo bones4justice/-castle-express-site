@@ -76,7 +76,8 @@ export default function RootLayout({ children }) {
             if (link) {
               var section = 'page';
               var el = link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
-              gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone' });
+              var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'not_set';
+              gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv });
             }
           });
         `}</Script>
