@@ -28,7 +28,7 @@ export const metadata = {
   title: {
     default: "Castle Express Moving & Storage | CT & MA Movers Since 2013",
   },
-  description: "Family-owned movers in Enfield, CT serving Hartford County & Western MA since 2013. Residential, commercial, packing & storage. Free estimates.",
+  description: "Family-owned moving company serving Hartford County, CT and Western Massachusetts since 2013. 200+ five-star reviews. Accurate estimates, no hidden fees. Call (888) 553-4503.",
   keywords: ["movers", "moving company", "Enfield CT", "Hartford CT", "Springfield MA", "storage", "packing", "local movers", "long distance movers"],
   alternates: { canonical: "/" },
   openGraph: {
