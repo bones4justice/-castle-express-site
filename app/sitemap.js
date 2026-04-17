@@ -6,7 +6,7 @@ import { SUBPAGE_TOWNS, SUBPAGE_SERVICES } from "@/lib/serviceSubpages";
 const BASE = "https://www.castleexpressmoving.com";
 
 export default function sitemap() {
-  const now = new Date().toISOString();
+  const CONTENT_UPDATED = "2026-04-17";
 
   // Static pages
   const staticPages = [
@@ -21,20 +21,20 @@ export default function sitemap() {
     { url: `${BASE}/storage-offer/`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/piano-moving/`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/senior-moving/`, changeFrequency: "monthly", priority: 0.8 },
-  ].map(p => ({ ...p, lastModified: now }));
+  ].map(p => ({ ...p, lastModified: CONTENT_UPDATED }));
 
   // Service pages
   const servicePages = Object.keys(SERVICE_PAGES).map(slug => ({
     url: `${BASE}/services/${slug}/`,
-    lastModified: now,
+    lastModified: CONTENT_UPDATED,
     changeFrequency: "monthly",
     priority: 0.8,
   }));
 
-  // City pages  -  82 town landing pages
+  // City pages  -  96 town landing pages
   const cityPages = CITY_DATA.map(city => ({
     url: `${BASE}/${city.slug}/`,
-    lastModified: now,
+    lastModified: CONTENT_UPDATED,
     changeFrequency: "monthly",
     priority: city.tier === "Tier 1 - Priority" ? 0.9 :
               city.tier === "Tier 2 - Core" ? 0.8 :
@@ -42,21 +42,21 @@ export default function sitemap() {
   }));
 
   // Blog pages
-  const blogIndex = [{ url: `${BASE}/blog/`, lastModified: now, changeFrequency: "weekly", priority: 0.7 }];
+  const blogIndex = [{ url: `${BASE}/blog/`, lastModified: CONTENT_UPDATED, changeFrequency: "weekly", priority: 0.7 }];
   const blogPosts = getAllPosts().map(post => ({
     url: `${BASE}/blog/${post.slug}/`,
-    lastModified: now,
+    lastModified: post.updated || post.date || CONTENT_UPDATED,
     changeFrequency: "monthly",
     priority: 0.6,
   }));
 
-  // Service subpages (5 towns x 3 services = 15 pages)
+  // Service subpages (18 towns x 3 services = 54 pages)
   const serviceSubpages = [];
   for (const townSlug of SUBPAGE_TOWNS) {
     for (const svcSlug of SUBPAGE_SERVICES) {
       serviceSubpages.push({
         url: `${BASE}/${townSlug}/${svcSlug}/`,
-        lastModified: now,
+        lastModified: CONTENT_UPDATED,
         changeFrequency: "monthly",
         priority: 0.7,
       });

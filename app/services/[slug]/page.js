@@ -71,7 +71,31 @@ export default function ServiceDetailPage({ params }) {
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.castleexpressmoving.com/" },
       { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://www.castleexpressmoving.com/services/" },
-      { "@type": "ListItem", "position": 3, "name": svc.title },
+      { "@type": "ListItem", "position": 3, "name": svc.title, "item": `https://www.castleexpressmoving.com/services/${params.slug}/` },
+    ]
+  };
+
+  const serviceSchema = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": svc.title,
+    "description": svc.metaDesc,
+    "provider": {
+      "@type": "MovingCompany",
+      "name": "Castle Express Moving & Storage",
+      "url": "https://www.castleexpressmoving.com",
+      "telephone": "+18885534503",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "4 Niblick Rd Unit A",
+        "addressLocality": "Enfield",
+        "addressRegion": "CT",
+        "postalCode": "06082"
+      }
+    },
+    "areaServed": [
+      { "@type": "State", "name": "Connecticut" },
+      { "@type": "State", "name": "Massachusetts" }
     ]
   };
 
@@ -89,6 +113,7 @@ export default function ServiceDetailPage({ params }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       {/* ─── HERO ─── */}
       <section className="section-dark" style={{ padding: "70px 24px 50px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `url(${svc.heroImage})`, backgroundSize: "cover", backgroundPosition: "center", opacity: 0.12, pointerEvents: "none" }} />

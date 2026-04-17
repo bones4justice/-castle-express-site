@@ -84,12 +84,12 @@ export default function BlogPost({ params }) {
       },
     },
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updated || post.date,
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `https://www.castleexpressmoving.com/blog/${post.slug}/`,
     },
-    image: "https://www.castleexpressmoving.com/images/truck-residential.jpg",
+    image: post.image ? `https://www.castleexpressmoving.com${post.image}` : "https://www.castleexpressmoving.com/images/truck-residential.jpg",
   };
 
   return (
