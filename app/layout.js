@@ -2,7 +2,7 @@ import { Nunito, Merriweather } from "next/font/google";
 import Script from "next/script";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import StoragePopup from "@/components/StoragePopup";
+import StorageStickyBar from "@/components/StorageStickyBar";
 import "./globals.css";
 
 const nunito = Nunito({
@@ -178,7 +178,7 @@ export default function RootLayout({ children }) {
         <Header />
         <main>{children}</main>
         <Footer />
-        <StoragePopup />
+        <StorageStickyBar />
         <Script src="https://static.elfsight.com/platform/platform.js" strategy="lazyOnload" />
       </body>
     </html>
