@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { COMPANY, SERVICES, REVIEWS, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
+import { COMPANY, SERVICES, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
 import { CITY_DATA } from "@/lib/cityData";
 import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, MapPin, Phone } from "@/components/Icons";
 import { IconResidential, IconCommercial, IconPacking, IconStorage, IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
@@ -174,33 +174,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── REVIEWS ─── */}
+      {/* ─── REVIEWS (Elfsight live widget) ─── */}
       <section className="section section-light" aria-label="Customer reviews">
         <div className="container">
           <div className="text-center" style={{ marginBottom: 48 }}>
             <SectionLabel>Customer Reviews</SectionLabel>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Don't Take Our Word For It</h2>
+            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>What Our Customers Say</h2>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8 }}>
               {[1,2,3,4,5].map(i => <Star key={i} />)}
               <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginLeft: 4 }}>{COMPANY.reviewAvg}</span>
-              <span className="body-sm text-gray">({COMPANY.reviewCount} reviews on Google)</span>
+              <span className="body-sm text-gray">(187+ reviews on Google)</span>
             </div>
+            <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
+              Read real, verified reviews from Castle Express Moving &amp; Storage customers.
+            </p>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 }}>
-            {REVIEWS.slice(0, 3).map((r, i) => (
-              <div key={i} className="card">
-                <div style={{ display: "flex", gap: 4, marginBottom: 12 }}>{[1,2,3,4,5].map(j => <Star key={j} />)}</div>
-                <p className="body-sm" style={{ color: "#1A1A2E", lineHeight: 1.7, marginBottom: 16 }}>"{r.text}"</p>
-                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017" }}>{r.name}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── LIVE GOOGLE REVIEWS ─── */}
-      <section className="section" style={{ paddingTop: 0 }} aria-label="Google reviews">
-        <div className="container">
           <div className="elfsight-app-b017ae90-a962-4044-8d86-0fef65fff1db" data-elfsight-app-lazy></div>
         </div>
       </section>
