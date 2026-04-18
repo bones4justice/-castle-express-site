@@ -324,6 +324,9 @@ const nextConfig = {
       { source: '/storage-issues-during-a-move-what-to-consider', destination: '/services/storage/', permanent: true },
       { source: '/storage-issues-during-a-move-what-to-consider/', destination: '/services/storage/', permanent: true },
       { source: '/tag/:path*', destination: '/blog/', permanent: true },
+      // Clarity-detected 404
+      { source: '/local-business-relocation', destination: '/services/commercial-moving/', permanent: true },
+      { source: '/local-business-relocation/', destination: '/services/commercial-moving/', permanent: true },
     ];
   },
 };
