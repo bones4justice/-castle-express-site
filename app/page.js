@@ -63,7 +63,7 @@ export default function HomePage() {
                 : "Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2013. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own."}
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
-              {["Licensed & Insured", "Accurate Estimates", `${COMPANY.reviewCount} 5-Star Reviews`].map(item => (
+              {["Licensed & Insured", "Accurate Estimates", "5-Star Reviews"].map(item => (
                 <div key={item} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <Check />
                   <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "rgba(255,255,255,0.85)" }}>{item}</span>
@@ -87,7 +87,7 @@ export default function HomePage() {
       <section className="trust-bar" aria-label="Trust indicators">
         {[
           { icon: <IconBBB size={28} />, label: "A+ BBB Rating" },
-          { icon: <IconGoogle size={28} />, label: `${COMPANY.reviewAvg}★ Google (${COMPANY.reviewCount} Reviews)` },
+          { icon: <IconGoogle size={28} />, label: `${COMPANY.reviewAvg}★ on Google` },
           { icon: <IconLicensed size={28} />, label: "Licensed & Insured" },
           { icon: <IconLocation size={28} />, label: `Serving CT & MA Since ${COMPANY.founded}` },
         ].map((item, i) => (
@@ -160,7 +160,7 @@ export default function HomePage() {
             <div className="hero-stats" style={{ background: "#FFF9EC", borderRadius: 12, padding: 24, display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12 }}>
             {[
               { num: "17+", label: "Years in Business" },
-              { num: `${COMPANY.reviewCount}`, label: "5-Star Reviews" },
+              { num: "4.9★", label: "Google Reviews" },
               { num: COMPANY.truckCount, label: "Trucks in Fleet" },
               { num: `${COMPANY.facilitySize}`, label: "Sq Ft Facility" },
             ].map((s, i) => (
@@ -183,7 +183,7 @@ export default function HomePage() {
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8 }}>
               {[1,2,3,4,5].map(i => <Star key={i} />)}
               <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginLeft: 4 }}>{COMPANY.reviewAvg}</span>
-              <span className="body-sm text-gray">(187+ reviews on Google)</span>
+              <span className="body-sm text-gray">(verified reviews on Google)</span>
             </div>
             <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
               Read real, verified reviews from Castle Express Moving &amp; Storage customers.
