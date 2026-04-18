@@ -93,6 +93,16 @@ export default function RootLayout({ children }) {
             y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
           })(window, document, "clarity", "script", "wcqd0mksz9");
         `}</Script>
+        <Script id="clarity-hero-tag" strategy="afterInteractive">{`
+          (function(){
+            var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'unknown';
+            function tag(){ window.clarity('set', 'hero_variant', hv); }
+            if (window.clarity) { tag(); } else {
+              var i = setInterval(function(){ if (window.clarity) { clearInterval(i); tag(); } }, 200);
+              setTimeout(function(){ clearInterval(i); }, 5000);
+            }
+          })();
+        `}</Script>
       </head>
       <body>
         <noscript>
