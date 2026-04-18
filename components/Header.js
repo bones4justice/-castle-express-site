@@ -11,7 +11,7 @@ const NAV_ITEMS = [
   { label: "Services", href: "/services" },
   { label: "Service Areas", href: "/service-areas" },
   { label: "Blog", href: "/blog" },
-  { label: "Princess Packing™", href: "/princess-packing/", gold: true },
+  { label: "Princess Packing™", href: "/princess-packing/", gold: true, static: true },
   { label: "Referral Program", href: "/referral", gold: true },
   { label: "Contact", href: "/contact" },
 ];
