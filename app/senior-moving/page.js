@@ -119,7 +119,7 @@ export default function SeniorMovingPage() {
               {[
                 "Downsizing moves from larger homes to smaller spaces",
                 "Assisted living and retirement community transitions",
-                "Estate moves and cleanouts",
+                "Estate moves and downsizing",
                 "Coordination with family members who live out of state",
                 "Careful handling of antiques, heirlooms, and sentimental items",
                 "Furniture placement in the new home exactly where the client wants it",
