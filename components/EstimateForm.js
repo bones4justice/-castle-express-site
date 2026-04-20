@@ -107,6 +107,8 @@ export default function EstimateForm({ dark = false }) {
     const mutedColor = dark ? "rgba(255,255,255,0.6)" : "#6B7280";
     const cardBg = dark ? "rgba(255,255,255,0.06)" : "#fff";
     const cardBorder = dark ? "rgba(255,255,255,0.1)" : "#E5E7EB";
+    const confirmBg = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.02)";
+    const confirmBorder = dark ? "rgba(255,255,255,0.15)" : "#E5E7EB";
 
     const blogCards = [
       { icon: "\uD83D\uDCCB", title: "What Happens Next", desc: "A step-by-step walk-through of our estimate process from your request to move day", href: "/blog/what-happens-after-you-request-an-estimate/" },
@@ -119,36 +121,65 @@ export default function EstimateForm({ dark = false }) {
         background: bg, borderRadius: 12, padding: "32px 24px",
         border: dark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #E5E7EB",
       }}>
-        {/* Confirmation */}
-        <div style={{ textAlign: "center", marginBottom: 24 }}>
-          <div style={{
+        <style>{`
+          @keyframes checkEntrance {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); }
+          }
+          .checkmark-entrance {
+            animation: checkEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+          }
+          @media (prefers-reduced-motion: reduce) {
+            .checkmark-entrance { animation: none; transform: scale(1); opacity: 1; }
+          }
+          .blog-card-link { transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease; }
+          .blog-card-link:hover, .blog-card-link:active { transform: translateY(-2px); }
+          .blog-card-link .card-arrow { transition: transform 150ms ease; }
+          .blog-card-link:hover .card-arrow { transform: translateX(3px); }
+        `}</style>
+
+        {/* Confirmation Card */}
+        <div style={{
+          textAlign: "center", marginBottom: 28, padding: "32px 24px",
+          background: confirmBg, border: `1px solid ${confirmBorder}`, borderRadius: 16,
+        }}>
+          <div className="checkmark-entrance" style={{
             width: 72, height: 72, borderRadius: "50%", background: "#16A34A",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            margin: "0 auto 16px",
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+            marginBottom: 16, filter: "drop-shadow(0 4px 12px rgba(22, 163, 74, 0.4))",
           }}>
             <Check size={36} stroke="#fff" />
           </div>
-          <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 20, color: textColor, marginBottom: 6 }}>
+          <h3 style={{
+            fontFamily: "var(--font-heading)", fontWeight: 800,
+            fontSize: "clamp(26px, 4vw, 34px)", color: textColor, marginBottom: 8,
+          }}>
             Estimate Request Received!
           </h3>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: textColor, marginBottom: 16 }}>
-            Joe Caronna will text you within 20 minutes.
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.5,
+            color: textColor, marginBottom: 20,
+          }}>
+            We will reach out to you usually within 20 minutes.
           </p>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: mutedColor, marginBottom: 12 }}>
+          <p style={{
+            fontFamily: "var(--font-body)", fontSize: 13, color: mutedColor, marginBottom: 14,
+          }}>
             Need help right now?
           </p>
           <a href={COMPANY.phoneLink} style={{
-            display: "inline-flex", alignItems: "center", gap: 8,
+            display: "inline-flex", alignItems: "center", gap: 10,
             background: "#FBCB0B", color: "#000", fontFamily: "var(--font-heading)",
-            fontWeight: 700, fontSize: 14, padding: "12px 24px", borderRadius: 8,
+            fontWeight: 700, fontSize: 15, padding: "14px 32px", borderRadius: 8,
             textDecoration: "none", minHeight: 44,
           }}>
-            <Phone size={18} /> {COMPANY.phone}
+            <Phone size={18} /> (888) 553-4503
           </a>
         </div>
 
         {/* Divider */}
-        <div style={{ textAlign: "center", margin: "24px 0 20px", position: "relative" }}>
+        <div style={{ textAlign: "center", margin: "0 0 20px", position: "relative" }}>
           <div style={{ position: "absolute", top: "50%", left: 0, right: 0, height: 1, background: cardBorder }} />
           <span style={{
             position: "relative", background: bg, padding: "0 12px",
@@ -158,23 +189,22 @@ export default function EstimateForm({ dark = false }) {
         </div>
 
         {/* Blog Cards */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           {blogCards.map((card, i) => (
-            <Link key={i} href={card.href} style={{
-              display: "flex", alignItems: "center", gap: 14,
+            <Link key={i} href={card.href} className="blog-card-link" style={{
+              display: "flex", alignItems: "center", gap: 16,
               background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 10,
-              padding: "14px 16px", textDecoration: "none",
-              transition: "border-color 0.2s, box-shadow 0.2s",
+              padding: "18px 16px", textDecoration: "none",
             }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "#D4A017"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.08)"; }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#D4A017"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)"; }}
             onMouseLeave={e => { e.currentTarget.style.borderColor = cardBorder; e.currentTarget.style.boxShadow = "none"; }}
             >
               <span style={{ fontSize: 28, lineHeight: 1, flexShrink: 0 }}>{card.icon}</span>
               <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: textColor, marginBottom: 2 }}>{card.title}</div>
-                <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: mutedColor, lineHeight: 1.4 }}>{card.desc}</div>
+                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: textColor, marginBottom: 3 }}>{card.title}</div>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: mutedColor, lineHeight: 1.5 }}>{card.desc}</div>
               </div>
-              <span style={{ color: "#D4A017", fontSize: 18, flexShrink: 0 }}>&rsaquo;</span>
+              <span className="card-arrow" style={{ color: "#D4A017", fontSize: 20, flexShrink: 0, fontWeight: 700 }}>&rsaquo;</span>
             </Link>
           ))}
         </div>
