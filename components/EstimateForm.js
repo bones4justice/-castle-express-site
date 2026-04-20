@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import Script from "next/script";
 import { MOVE_SIZES, LEAD_SOURCES, COMPANY } from "@/content";
-import { Check, ArrowRight } from "@/components/Icons";
+import { Check, ArrowRight, Phone } from "@/components/Icons";
 
 export default function EstimateForm({ dark = false }) {
   const [submitted, setSubmitted] = useState(false);
@@ -87,25 +88,96 @@ export default function EstimateForm({ dark = false }) {
   };
 
   // ─── Success State ───
+  const successTracked = useRef(false);
+  useEffect(() => {
+    if (!submitted || successTracked.current) return;
+    successTracked.current = true;
+    const hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || "(not set)";
+    const loc = window.location.pathname === "/" ? "homepage" : "contact";
+    if (window.gtag) {
+      window.gtag("event", "form_submission_success", { hero_variant: hv, form_location: loc });
+    }
+    if (window.clarity) {
+      window.clarity("set", "form_completed", "true");
+    }
+  }, [submitted]);
+
   if (submitted) {
+    const textColor = dark ? "#fff" : "#1A1A2E";
+    const mutedColor = dark ? "rgba(255,255,255,0.6)" : "#6B7280";
+    const cardBg = dark ? "rgba(255,255,255,0.06)" : "#fff";
+    const cardBorder = dark ? "rgba(255,255,255,0.1)" : "#E5E7EB";
+
+    const blogCards = [
+      { icon: "\uD83D\uDCCB", title: "What Happens Next", desc: "A step-by-step walk-through of our estimate process from your request to move day", href: "/blog/what-happens-after-you-request-an-estimate/" },
+      { icon: "\uD83D\uDCE6", title: "Moving Supplies Checklist", desc: "The 12 supplies worth buying before move day, and what you can skip", href: "/blog/moving-supplies-checklist/" },
+      { icon: "\uD83C\uDFE1", title: "New to Connecticut?", desc: "Everything you need to know about relocating to CT from someone who moves families here", href: "/blog/relocating-to-connecticut-guide/" },
+    ];
+
     return (
       <div style={{
-        background: bg, borderRadius: 12, padding: 40, textAlign: "center",
+        background: bg, borderRadius: 12, padding: "32px 24px",
         border: dark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #E5E7EB",
       }}>
-        <div style={{
-          width: 60, height: 60, borderRadius: "50%", background: "#D4A017",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          margin: "0 auto 16px",
-        }}>
-          <Check />
+        {/* Confirmation */}
+        <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <div style={{
+            width: 72, height: 72, borderRadius: "50%", background: "#16A34A",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            margin: "0 auto 16px",
+          }}>
+            <Check size={36} stroke="#fff" />
+          </div>
+          <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 20, color: textColor, marginBottom: 6 }}>
+            Estimate Request Received!
+          </h3>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: textColor, marginBottom: 16 }}>
+            Joe Caronna will text you within 20 minutes.
+          </p>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 13, color: mutedColor, marginBottom: 12 }}>
+            Need help right now?
+          </p>
+          <a href={COMPANY.phoneLink} style={{
+            display: "inline-flex", alignItems: "center", gap: 8,
+            background: "#FBCB0B", color: "#000", fontFamily: "var(--font-heading)",
+            fontWeight: 700, fontSize: 14, padding: "12px 24px", borderRadius: 8,
+            textDecoration: "none", minHeight: 44,
+          }}>
+            <Phone size={18} /> {COMPANY.phone}
+          </a>
         </div>
-        <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, color: dark ? "#fff" : "#1A1A2E", marginBottom: 8 }}>
-          Estimate Request Received!
-        </h3>
-        <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: dark ? "rgba(255,255,255,0.7)" : "#6B7280" }}>
-          We typically respond within 20 minutes. Check your phone for a text from our team.
-        </p>
+
+        {/* Divider */}
+        <div style={{ textAlign: "center", margin: "24px 0 20px", position: "relative" }}>
+          <div style={{ position: "absolute", top: "50%", left: 0, right: 0, height: 1, background: cardBorder }} />
+          <span style={{
+            position: "relative", background: bg, padding: "0 12px",
+            fontFamily: "var(--font-body)", fontSize: 12, color: mutedColor,
+            textTransform: "uppercase", letterSpacing: "0.05em",
+          }}>While you wait</span>
+        </div>
+
+        {/* Blog Cards */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {blogCards.map((card, i) => (
+            <Link key={i} href={card.href} style={{
+              display: "flex", alignItems: "center", gap: 14,
+              background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 10,
+              padding: "14px 16px", textDecoration: "none",
+              transition: "border-color 0.2s, box-shadow 0.2s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = "#D4A017"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.08)"; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = cardBorder; e.currentTarget.style.boxShadow = "none"; }}
+            >
+              <span style={{ fontSize: 28, lineHeight: 1, flexShrink: 0 }}>{card.icon}</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: textColor, marginBottom: 2 }}>{card.title}</div>
+                <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: mutedColor, lineHeight: 1.4 }}>{card.desc}</div>
+              </div>
+              <span style={{ color: "#D4A017", fontSize: 18, flexShrink: 0 }}>&rsaquo;</span>
+            </Link>
+          ))}
+        </div>
       </div>
     );
   }
