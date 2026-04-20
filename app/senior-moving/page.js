@@ -160,7 +160,7 @@ export default function SeniorMovingPage() {
             {/* Callout */}
             <div style={{ background: "#FFF9EC", border: "1px solid rgba(212,160,23,0.2)", borderRadius: 12, padding: "24px 28px", marginBottom: 36 }}>
               <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#1A1A2E", lineHeight: 1.7 }}>
-                Senior moves are some of the most important moves we do. When a family trusts us with their parent or grandparent's move, we take that seriously. Learn more about our <Link href="/princess-packing/" style={{ color: "#D4A017", fontWeight: 700 }}>Princess Packing</Link> service and our full <Link href="/services/residential-moving" style={{ color: "#D4A017", fontWeight: 700 }}>residential moving</Link> options.
+                Senior moves are some of the most important moves we do. When a family trusts us with their parent or grandparent's move, we take that seriously. Learn more about our <a href="/princess-packing/" style={{ color: "#D4A017", fontWeight: 700 }}>Princess Packing</a> service and our full <Link href="/services/residential-moving" style={{ color: "#D4A017", fontWeight: 700 }}>residential moving</Link> options.
               </p>
             </div>
 
