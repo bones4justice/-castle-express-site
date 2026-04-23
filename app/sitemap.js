@@ -21,6 +21,7 @@ export default function sitemap() {
     { url: `${BASE}/storage-offer/`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/piano-moving/`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/senior-moving/`, changeFrequency: "monthly", priority: 0.8 },
+    { url: `${BASE}/services/long-distance-moving/`, changeFrequency: "monthly", priority: 0.9 },
   ].map(p => ({ ...p, lastModified: CONTENT_UPDATED }));
 
   // Service pages

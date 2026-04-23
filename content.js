@@ -361,48 +361,6 @@ export const SERVICE_PAGES = {
     photo1: "/images/truck-tobacco-barn.jpg",
     photo2: "/images/truck-aframe.jpg",
   },
-  "long-distance-moving": {
-    id: "longdistance",
-    title: "Long Distance Moving",
-    headline: "Long Distance Movers in Connecticut and Massachusetts",
-    metaTitle: "Long Distance Movers in Connecticut | Castle Express Moving & Storage",
-    metaDesc: "Licensed long-distance movers serving CT and Western MA since 2013. Flat-rate estimates, experienced crews, no hidden fees. 200+ five-star reviews. (888) 553-4503",
-    heroImage: "/images/truck-tobacco-barn.jpg",
-    intro: "Planning a long distance move from Connecticut or Massachusetts? Castle Express is licensed for interstate moves and handles relocations throughout New England and up and down the East Coast. We coordinate every detail so you can focus on your fresh start.",
-    sections: [
-      {
-        heading: "What's Included in Every Long Distance Move",
-        items: [
-          "Pre-move walkthrough and detailed flat-rate estimate",
-          "Professional loading with furniture pads, shrink wrap, and floor protection",
-          "Licensed interstate transport (USDOT 2307446, MC-990616)",
-          "Careful unloading and furniture placement at your new home",
-          "Full packing and unpacking services available",
-          "Climate-controlled storage available between moves",
-        ],
-      },
-      {
-        heading: "Where We Move",
-        items: [
-          "Throughout New England  -  CT, MA, NY, RI, VT, NH, ME",
-          "Up and down the East Coast  -  NJ, PA, MD, VA, NC, SC, FL",
-          "Midwest destinations on a case-by-case basis",
-          "Military and corporate relocations",
-          "College moves to and from universities across the Northeast",
-        ],
-      },
-    ],
-    callout: "Long distance moves are priced by weight and distance, not by the hour. We provide a flat-rate estimate so you know exactly what you are paying before move day. No hidden fees, no surprises.",
-    faq: [
-      { q: "How far do you move?", a: "We handle moves throughout New England and up and down the East Coast. For moves beyond that range, we can discuss logistics and connect you with trusted partners." },
-      { q: "How is long distance pricing different from local?", a: "Long distance moves are typically priced by weight and distance rather than hourly. We provide a flat-rate estimate so you know exactly what you are paying before move day." },
-      { q: "Do you offer packing for long distance moves?", a: "Yes. Full-service packing is available for all long distance moves and is especially recommended to ensure your belongings are protected for a longer transit." },
-    ],
-    relatedServices: ["residential-moving", "packing-services", "storage"],
-    relatedPosts: ["/blog/how-to-move-step-by-step-guide/", "/blog/ultimate-moving-checklist-connecticut/"],
-    photo1: "/images/truck-residential.jpg",
-    photo2: "/images/truck-tobacco-barn.jpg",
-  },
 };
 
 export const SERVICE_AREAS = {
