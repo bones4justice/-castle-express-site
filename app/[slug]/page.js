@@ -5,6 +5,7 @@ import { CITY_DATA, getCityBySlug, getAllSlugs } from "@/lib/cityData";
 import { COMPANY, SERVICES } from "@/content";
 import { MapPin, Phone, Check, Star, Shield, ArrowRight, ChevronRight } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
+import { parseInline } from "@/lib/parseInline";
 
 export async function generateStaticParams() {
   return getAllSlugs().map(slug => ({ slug }));
@@ -142,7 +143,7 @@ export default function CityPage({ params }) {
           </p>
           {city.localBlurb && (
             <p className="body-md text-white-muted" style={{ maxWidth: 640, marginBottom: 24, opacity: 0.9 }}>
-              {city.localBlurb}
+              {parseInline(city.localBlurb)}
             </p>
           )}
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
@@ -177,7 +178,7 @@ export default function CityPage({ params }) {
             </p>
             {city.localStory && city.localStory.map((para, i) => (
               <p key={i} className="body-md" style={{ color: "#1A1A2E", marginBottom: 20 }}>
-                {para}
+                {parseInline(para)}
               </p>
             ))}
             <div style={{ marginBottom: 12 }} />

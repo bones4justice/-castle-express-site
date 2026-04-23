@@ -3,6 +3,7 @@ import { getPostBySlug, getAllPosts } from "@/lib/blogData";
 import { notFound } from "next/navigation";
 import { COMPANY } from "@/content";
 import { Phone } from "@/components/Icons";
+import { parseInline } from "@/lib/parseInline";
 
 export async function generateStaticParams() {
   return getAllPosts().map(p => ({ slug: p.slug }));
@@ -22,25 +23,7 @@ export default function BlogPost({ params }) {
   const post = getPostBySlug(params.slug);
   if (!post) notFound();
 
-  // Parse inline markdown: [text](/url) links and **bold** text
-  const parseInline = (text) => {
-    const parts = text.split(/(\[.*?\]\(.*?\)|\*\*.*?\*\*)/g);
-    return parts.map((part, j) => {
-      const linkMatch = part.match(/^\[(.*?)\]\((.*?)\)$/);
-      if (linkMatch) {
-        const href = linkMatch[2];
-        const isExternal = href.startsWith("http://") || href.startsWith("https://");
-        if (isExternal) {
-          return <a key={j} href={href} target="_blank" rel="noopener noreferrer" style={{ color: "#D4A017", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 2 }}>{linkMatch[1]}</a>;
-        }
-        return <Link key={j} href={href} style={{ color: "#D4A017", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 2 }}>{linkMatch[1]}</Link>;
-      }
-      if (part.startsWith("**") && part.endsWith("**")) {
-        return <strong key={j}>{part.replace(/\*\*/g, "")}</strong>;
-      }
-      return part;
-    });
-  };
+  // parseInline imported from @/lib/parseInline
 
   const renderBody = (body) => {
     return body
