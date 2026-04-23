@@ -23,7 +23,7 @@ const FAQS = [
   },
   {
     q: "How long does delivery usually take?",
-    a: "Delivery timing depends on distance. New England destinations like New Hampshire, Vermont, and Maine are typically next day. The Carolinas a couple days. Florida a few days. We give you a firm delivery date before we load the truck. No 7 to 14 day window like the national van lines.",
+    a: "Delivery timing depends on distance. New England destinations like New Hampshire, Vermont, and Maine are typically next day. The Carolinas a couple days. Florida a few days. Most long-distance movers give you a 7 to 14 day delivery window. We don't. You tell us when you're closing or when you need to be in. We load when you're ready and arrive in days, not weeks.",
   },
   {
     q: "Do you handle packing or do I need to pack myself?",
