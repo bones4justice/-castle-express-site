@@ -120,6 +120,8 @@ export default function CityPage({ params }) {
     ? city.nearby.map(slug => CITY_DATA.find(c => c.slug === slug)).filter(Boolean)
     : CITY_DATA.filter(c => c.slug !== city.slug && c.state === city.state).slice(0, 6);
 
+  const linkStyle = { color: "#D4A017", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 2 };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -189,7 +191,7 @@ export default function CityPage({ params }) {
               Local Moving in <span className="text-gold">{city.town}</span>
             </h2>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 24 }}>
-              Whether you&apos;re moving across town or to a neighboring community, our local moving team in {city.town} makes the process simple and stress-free. We show up on time, handle your belongings with care, and get you moved without the headaches. Our accurate, upfront estimates mean no surprises on move day.
+              Whether you&apos;re moving across town or to a neighboring community, our <Link href="/services/residential-moving/" style={linkStyle}>local moving team</Link> in {city.town} makes the process simple and stress-free. We show up on time, handle your belongings with care, and get you moved without the headaches. Our accurate, upfront estimates mean no surprises on move day.
             </p>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
               As local movers serving {city.town}, {city.state}, we bring years of experience navigating {city.stateFull} roads, buildings, and neighborhoods  -  so your move goes smoothly from start to finish.
@@ -200,7 +202,7 @@ export default function CityPage({ params }) {
               {city.h2_ld}
             </h2>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
-              Planning a long-distance move from {city.town}? Castle Express is licensed for interstate moves and handles relocations throughout New England and beyond. We coordinate every detail  -  from packing and loading to transport and delivery  -  so you can focus on your fresh start.
+              Planning a long-distance move from {city.town}? Castle Express is licensed for <Link href="/services/long-distance-moving/" style={linkStyle}>interstate and long-distance moves</Link> and handles relocations throughout New England and beyond. We coordinate every detail  -  from packing and loading to transport and delivery  -  so you can focus on your fresh start.
             </p>
 
             {/* SPECIALTY */}
@@ -208,7 +210,7 @@ export default function CityPage({ params }) {
               {city.h2_specialty}
             </h2>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
-              We move pianos, gun safes, antiques, and other specialty items in {city.town} and throughout {city.stateFull}. Our team uses proper equipment and techniques to protect your most valuable possessions. No job is too delicate.
+              We move <Link href="/piano-moving/" style={linkStyle}>pianos</Link>, gun safes, antiques, and other <Link href="/services/specialty-moving/" style={linkStyle}>specialty items</Link> in {city.town} and throughout {city.stateFull}. Our team uses proper equipment and techniques to protect your most valuable possessions. No job is too delicate.
             </p>
 
             {/* PACKING */}
@@ -216,7 +218,7 @@ export default function CityPage({ params }) {
               {city.h2_packing}
             </h2>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
-              Don&apos;t have time to pack? Our professional packing team comes to your {city.town} home, handles all materials, and packs everything securely. Choose full-service packing or partial  -  including our Princess Packing™ white-glove option for fragile or high-value items.
+              Don&apos;t have time to pack? Our professional <Link href="/services/packing-services/" style={linkStyle}>packing team</Link> comes to your {city.town} home, handles all materials, and packs everything securely. Choose full-service packing or partial  -  including our <a href="/princess-packing/" style={linkStyle}>Princess Packing™</a> white-glove option for fragile or high-value items.
             </p>
 
             {/* COMMERCIAL */}
@@ -224,7 +226,7 @@ export default function CityPage({ params }) {
               {city.h2_commercial}
             </h2>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
-              Castle Express handles commercial and office relocations in {city.town} with minimal downtime and maximum efficiency. We work around your schedule to keep your business moving  -  from small offices to multi-floor commercial builds.
+              Castle Express handles <Link href="/services/commercial-moving/" style={linkStyle}>commercial and office relocations</Link> in {city.town} with minimal downtime and maximum efficiency. We work around your schedule to keep your business moving  -  from small offices to multi-floor commercial builds.
             </p>
 
             {/* WHY CHOOSE US */}
