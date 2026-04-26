@@ -191,10 +191,10 @@ export default function SeniorMovingPage() {
             {/* Photos */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 36 }}>
               <div style={{ position: "relative", height: 200, borderRadius: 10, overflow: "hidden" }}>
-                <Image src="/images/crew-furniture.jpg" alt="Castle Express crew moving furniture" fill style={{ objectFit: "cover" }} />
+                <Image src="/images/crew-furniture.jpg" alt="Castle Express crew moving furniture" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} />
               </div>
               <div style={{ position: "relative", height: 200, borderRadius: 10, overflow: "hidden" }}>
-                <Image src="/images/joe-with-customers.jpg" alt="Joe Caronna with Castle Express customers" fill style={{ objectFit: "cover", objectPosition: "15% 25%" }} />
+                <Image src="/images/joe-with-customers.jpg" alt="Joe Caronna with Castle Express customers" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "15% 25%" }} />
               </div>
             </div>
 

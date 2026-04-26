@@ -182,8 +182,8 @@ export default function ServiceDetailPage({ params }) {
 
             {/* Photos */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 36 }}>
-              <div style={{ position: "relative", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src={svc.photo1} alt={svc.title} fill style={{ objectFit: "cover", objectPosition: "center" }} /></div>
-              <div style={{ position: "relative", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src={svc.photo2} alt={`${svc.title} team`} fill style={{ objectFit: "cover", objectPosition: svc.photo2.includes("joe-with") ? "center 40%" : svc.photo2.includes("crew-commercial") ? "top" : "center" }} /></div>
+              <div style={{ position: "relative", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src={svc.photo1} alt={svc.title} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "center" }} /></div>
+              <div style={{ position: "relative", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src={svc.photo2} alt={`${svc.title} team`} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: svc.photo2.includes("joe-with") ? "center 40%" : svc.photo2.includes("crew-commercial") ? "top" : "center" }} /></div>
             </div>
 
             {/* FAQ */}

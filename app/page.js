@@ -38,7 +38,7 @@ export default function HomePage() {
       {/* ─── HERO ─── */}
       <section className="section-dark" aria-label="Hero" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, opacity: 0.12, pointerEvents: "none" }}>
-          <Image src={heroVariant === "B" ? "/images/hero-white-truck.jpg" : "/images/truck-residential.jpg"} alt="" fill priority style={{ objectFit: "cover", objectPosition: "center" }} />
+          <Image src={heroVariant === "B" ? "/images/hero-white-truck.webp" : "/images/truck-residential.webp"} alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center" }} />
         </div>
         <div style={{ position: "absolute", top: 0, right: 0, width: "40%", height: "100%", background: "linear-gradient(135deg, transparent 40%, rgba(212,160,23,0.07) 100%)", pointerEvents: "none" }} />
         <div className="container grid-2" style={{ alignItems: "center" }}>
@@ -154,8 +154,8 @@ export default function HomePage() {
           </div>
           <div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12 }}>
-              <div style={{ position: "relative", width: "100%", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-aframe.jpg" alt="Castle Express truck at A-frame home" fill style={{ objectFit: "cover", objectPosition: "center" }} /></div>
-              <div style={{ position: "relative", width: "100%", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src="/images/joe-with-customers.jpg" alt="Joe with happy customers" fill style={{ objectFit: "cover", objectPosition: "center 20%" }} /></div>
+              <div style={{ position: "relative", width: "100%", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-aframe.jpg" alt="Castle Express truck at A-frame home" fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover", objectPosition: "center" }} /></div>
+              <div style={{ position: "relative", width: "100%", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src="/images/joe-with-customers.jpg" alt="Joe with happy customers" fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover", objectPosition: "center 20%" }} /></div>
             </div>
             <div className="hero-stats" style={{ background: "#FFF9EC", borderRadius: 12, padding: 24, display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12 }}>
             {[
@@ -227,7 +227,7 @@ export default function HomePage() {
             { src: "/images/crew-commercial.jpg", pos: "top", alt: "Castle Express crew performing commercial move" },
             { src: "/images/truck-aframe.jpg", pos: "center", alt: "Castle Express moving truck at A-frame house" },
           ].map((img, i) => (
-            <div key={i} style={{ position: "relative", width: "100%", height: 160 }}><Image src={img.src} alt={img.alt} fill style={{ objectFit: "cover", objectPosition: img.pos }} /></div>
+            <div key={i} style={{ position: "relative", width: "100%", height: 160 }}><Image src={img.src} alt={img.alt} fill sizes="(max-width: 768px) 50vw, 16vw" style={{ objectFit: "cover", objectPosition: img.pos }} /></div>
           ))}
         </div>
       </section>
@@ -256,7 +256,7 @@ export default function HomePage() {
             </a>
           </div>
           <div style={{ background: "linear-gradient(160deg, #fce4ef 0%, rgba(247,37,133,0.15) 100%)", padding: 40, textAlign: "center", border: "1px solid rgba(247,37,133,0.2)" }}>
-            <div style={{ position: "relative", width: "100%", height: 280 }}><Image src="/images/princess-packing-crew.jpg" alt="Princess Packing crew in pink polos" fill style={{ objectFit: "cover", objectPosition: "top" }} /></div>
+            <div style={{ position: "relative", width: "100%", height: 280 }}><Image src="/images/princess-packing-crew.jpg" alt="Princess Packing crew in pink polos" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "top" }} /></div>
             <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 18, color: "#0d0d0d", marginTop: 16 }}>Professional Packing. Done Right.</div>
           </div>
         </div>

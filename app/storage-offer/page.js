@@ -194,7 +194,7 @@ export default function StorageOfferPage() {
       {/* ─── HERO ─── */}
       <section style={{ ...s.section, paddingTop: "100px", paddingBottom: "60px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0 }}>
-          <Image src="/images/IMG_4734.jpg" alt="Castle Express climate-controlled storage facility in Enfield CT with numbered storage vaults" fill style={{ objectFit: "cover", objectPosition: "center" }} priority />
+          <Image src="/images/IMG_4734.jpg" alt="Castle Express climate-controlled storage facility in Enfield CT with numbered storage vaults" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center" }} priority />
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.82), rgba(0,0,0,0.92))" }} />
         </div>
         <div style={{ ...s.container, position: "relative" }}>
@@ -240,7 +240,7 @@ export default function StorageOfferPage() {
       <section style={{ padding: "40px 24px" }}>
         <div style={{ maxWidth: "1000px", margin: "0 auto", borderRadius: "12px", overflow: "hidden" }}>
           <div style={{ position: "relative", height: "400px" }}>
-            <Image src="/images/IMG_4734.jpg" alt="Castle Express climate-controlled storage facility in Enfield CT with numbered storage vaults" fill style={{ objectFit: "cover", objectPosition: "center" }} />
+            <Image src="/images/IMG_4734.jpg" alt="Castle Express climate-controlled storage facility in Enfield CT with numbered storage vaults" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "center" }} />
           </div>
         </div>
       </section>
@@ -311,7 +311,7 @@ export default function StorageOfferPage() {
       <section style={s.section}>
         <div style={s.containerWide}>
           <div style={{ position: "relative", height: "400px", borderRadius: "12px", overflow: "hidden", marginBottom: "48px" }}>
-            <Image src="/images/IMG_5585.jpg" alt="Castle Express crew member loading items from truck into storage facility" fill style={{ objectFit: "cover", objectPosition: "top center" }} />
+            <Image src="/images/IMG_5585.jpg" alt="Castle Express crew member loading items from truck into storage facility" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "top center" }} />
             <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.6), transparent)" }} />
           </div>
           <h2 style={s.h2}>What Our Customers Say</h2>

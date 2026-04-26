@@ -121,7 +121,7 @@ export default function LongDistanceMovingPage() {
       {/* ─── HERO ─── */}
       <section className="section-dark" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, opacity: 0.12, pointerEvents: "none" }}>
-          <Image src="/images/hero-white-truck.jpg" alt="" fill priority style={{ objectFit: "cover", objectPosition: "center" }} />
+          <Image src="/images/hero-white-truck.webp" alt="" fill sizes="100vw" style={{ objectFit: "cover", objectPosition: "center" }} />
         </div>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }} className="grid-2">
           <div>
@@ -422,7 +422,7 @@ export default function LongDistanceMovingPage() {
               </div>
             </div>
             <div style={{ position: "relative", width: "100%", height: 420, borderRadius: 12, overflow: "hidden" }}>
-              <Image src="/images/packed-truck.jpg" alt="Castle Express truck loaded for a long-distance move" fill style={{ objectFit: "cover", objectPosition: "center" }} />
+              <Image src="/images/packed-truck.jpg" alt="Castle Express truck loaded for a long-distance move" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "center" }} />
             </div>
           </div>
         </div>
