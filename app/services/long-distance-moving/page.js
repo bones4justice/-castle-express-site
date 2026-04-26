@@ -422,7 +422,7 @@ export default function LongDistanceMovingPage() {
               </div>
             </div>
             <div style={{ position: "relative", width: "100%", height: 420, borderRadius: 12, overflow: "hidden" }}>
-              <Image src="/images/packed-truck.jpg" alt="Castle Express truck loaded for a long-distance move" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "center" }} />
+              <Image src="/images/packed-truck.webp" alt="Castle Express truck loaded for a long-distance move" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "center" }} />
             </div>
           </div>
         </div>

@@ -154,7 +154,7 @@ export default function HomePage() {
           </div>
           <div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12 }}>
-              <div style={{ position: "relative", width: "100%", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-aframe.jpg" alt="Castle Express truck at A-frame home" fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover", objectPosition: "center" }} /></div>
+              <div style={{ position: "relative", width: "100%", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-aframe.webp" alt="Castle Express truck at A-frame home" fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover", objectPosition: "center" }} /></div>
               <div style={{ position: "relative", width: "100%", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src="/images/joe-with-customers.jpg" alt="Joe with happy customers" fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover", objectPosition: "center 20%" }} /></div>
             </div>
             <div className="hero-stats" style={{ background: "#FFF9EC", borderRadius: 12, padding: 24, display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12 }}>
@@ -220,12 +220,12 @@ export default function HomePage() {
       <section style={{ padding: "0", overflow: "hidden" }} aria-label="Photo gallery">
         <div style={{ display: "grid", gridTemplateColumns: "repeat(6, 1fr)", gap: 0 }}>
           {[
-            { src: "/images/truck-residential.jpg", pos: "center", alt: "Castle Express truck at residential home" },
+            { src: "/images/truck-residential.webp", pos: "center", alt: "Castle Express truck at residential home" },
             { src: "/images/truck-tobacco-barn.jpg", pos: "center", alt: "Castle Express truck at Connecticut tobacco barn" },
-            { src: "/images/truck-loading.jpg", pos: "center", alt: "Castle Express truck being loaded with furniture" },
-            { src: "/images/truck-brick-building.jpg", pos: "center", alt: "Castle Express at commercial building move" },
-            { src: "/images/crew-commercial.jpg", pos: "top", alt: "Castle Express crew performing commercial move" },
-            { src: "/images/truck-aframe.jpg", pos: "center", alt: "Castle Express moving truck at A-frame house" },
+            { src: "/images/truck-loading.webp", pos: "center", alt: "Castle Express truck being loaded with furniture" },
+            { src: "/images/truck-brick-building.webp", pos: "center", alt: "Castle Express at commercial building move" },
+            { src: "/images/crew-commercial.webp", pos: "top", alt: "Castle Express crew performing commercial move" },
+            { src: "/images/truck-aframe.webp", pos: "center", alt: "Castle Express moving truck at A-frame house" },
           ].map((img, i) => (
             <div key={i} style={{ position: "relative", width: "100%", height: 160 }}><Image src={img.src} alt={img.alt} fill sizes="(max-width: 768px) 50vw, 16vw" style={{ objectFit: "cover", objectPosition: img.pos }} /></div>
           ))}
@@ -236,28 +236,28 @@ export default function HomePage() {
       <section style={{ padding: "60px 24px", background: "#0d0d0d" }} aria-label="Princess Packing service">
         <div className="container grid-2" style={{ alignItems: "center" }}>
           <div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#F72585", marginBottom: 12 }}>NEW SERVICE</div>
-            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(28px, 4vw, 40px)", color: "#fff", lineHeight: 1.1, marginBottom: 16 }}>
+            <div style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 700, fontSize: 13, letterSpacing: "0.2em", textTransform: "uppercase", color: "#F72585", marginBottom: 12 }}>NEW SERVICE</div>
+            <h2 style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 700, fontSize: "clamp(28px, 4vw, 40px)", color: "#fff", lineHeight: 1.1, marginBottom: 16 }}>
               Princess Packing<span style={{ color: "#F72585" }}>™</span>
             </h2>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 15, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 24 }}>
+            <p style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontSize: 15, color: "rgba(255,255,255,0.75)", lineHeight: 1.7, marginBottom: 24 }}>
               A boutique, white-glove packing service. Your home packed before move day by an experienced professional team. All labor, materials, and supplies included. Limited to one major pack per day.
             </p>
             <div style={{ display: "flex", gap: 24, marginBottom: 24 }}>
               {[{ num: "$595", label: "Pro (25 boxes)" }, { num: "$995", label: "Plus (50 boxes)" }, { num: "$1,895", label: "Premium (100 boxes)" }].map((p, i) => (
                 <div key={i}>
-                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 22, color: "#F72585" }}>{p.num}</div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: 11, color: "rgba(255,255,255,0.75)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{p.label}</div>
+                  <div style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 700, fontSize: 22, color: "#F72585" }}>{p.num}</div>
+                  <div style={{ fontFamily: "var(--font-dm-sans), sans-serif", fontSize: 11, color: "rgba(255,255,255,0.75)", textTransform: "uppercase", letterSpacing: "0.05em" }}>{p.label}</div>
                 </div>
               ))}
             </div>
-            <a href="/princess-packing.html" style={{ display: "inline-block", background: "#F72585", color: "#fff", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: "0.08em", textTransform: "uppercase", padding: "14px 28px", textDecoration: "none", transition: "all 0.2s" }}>
+            <a href="/princess-packing.html" style={{ display: "inline-block", background: "#F72585", color: "#fff", fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: "0.08em", textTransform: "uppercase", padding: "14px 28px", textDecoration: "none", transition: "all 0.2s" }}>
               View Packages & Book →
             </a>
           </div>
           <div style={{ background: "linear-gradient(160deg, #fce4ef 0%, rgba(247,37,133,0.15) 100%)", padding: 40, textAlign: "center", border: "1px solid rgba(247,37,133,0.2)" }}>
             <div style={{ position: "relative", width: "100%", height: 280 }}><Image src="/images/princess-packing-crew.jpg" alt="Princess Packing crew in pink polos" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "top" }} /></div>
-            <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: 18, color: "#0d0d0d", marginTop: 16 }}>Professional Packing. Done Right.</div>
+            <div style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 700, fontSize: 18, color: "#0d0d0d", marginTop: 16 }}>Professional Packing. Done Right.</div>
           </div>
         </div>
       </section>

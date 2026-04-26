@@ -184,8 +184,8 @@ export default function ServiceSubpage({ params }) {
 
             {/* Photos */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 32 }}>
-              <div style={{ position: "relative", height: 180, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-aframe.jpg" alt={`Castle Express ${svc.serviceTitle.toLowerCase()} in ${city.town}`} fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover" }} /></div>
-              <div style={{ position: "relative", height: 180, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-brick-building.jpg" alt={`Professional ${svc.serviceTitle.toLowerCase()} near ${city.town}`} fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover" }} /></div>
+              <div style={{ position: "relative", height: 180, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-aframe.webp" alt={`Castle Express ${svc.serviceTitle.toLowerCase()} in ${city.town}`} fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover" }} /></div>
+              <div style={{ position: "relative", height: 180, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-brick-building.webp" alt={`Professional ${svc.serviceTitle.toLowerCase()} near ${city.town}`} fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover" }} /></div>
             </div>
 
             {/* Back to parent + nearby */}

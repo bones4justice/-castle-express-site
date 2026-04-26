@@ -175,7 +175,7 @@ export const SERVICE_PAGES = {
     ],
     relatedServices: ["packing-services", "storage", "specialty-moving"],
     relatedPosts: ["/blog/how-to-move-step-by-step-guide/", "/blog/packing-tips-from-professional-movers/"],
-    photo1: "/images/truck-aframe.jpg",
+    photo1: "/images/truck-aframe.webp",
     photo2: "/images/joe-with-customers.jpg",
   },
   "commercial-moving": {
@@ -184,7 +184,7 @@ export const SERVICE_PAGES = {
     headline: "Commercial and Office Moving in Connecticut",
     metaTitle: "Commercial & Office Moving in Connecticut | Castle Express Moving & Storage",
     metaDesc: "Commercial and office movers serving CT and Western MA. Minimal downtime, experienced crews, and planning around your business schedule. 200+ reviews. (888) 553-4503",
-    heroImage: "/images/truck-brick-building.jpg",
+    heroImage: "/images/truck-brick-building.webp",
     intro: "Your business doesn't stop for a move  -  and neither do we. Castle Express plans and executes commercial relocations around your schedule, minimizing disruption to your operations and getting your team back to work fast.",
     sections: [
       {
@@ -231,8 +231,8 @@ export const SERVICE_PAGES = {
     ],
     relatedServices: ["residential-moving", "storage", "specialty-moving"],
     relatedPosts: ["/blog/how-to-move-step-by-step-guide/", "/blog/ultimate-moving-checklist-connecticut/"],
-    photo1: "/images/truck-brick-building.jpg",
-    photo2: "/images/crew-commercial.jpg",
+    photo1: "/images/truck-brick-building.webp",
+    photo2: "/images/crew-commercial.webp",
   },
   "packing-services": {
     id: "packing",
@@ -240,7 +240,7 @@ export const SERVICE_PAGES = {
     headline: "Professional Packing. Every Item Protected.",
     metaTitle: "Full-Service Packing for Your Move | Castle Express Moving & Storage CT",
     metaDesc: "Full-service and partial packing for your move. All materials included. Princess Packing™ white-glove service available. Serving Hartford County CT & Western MA. Call 1-888-553-4503.",
-    heroImage: "/images/truck-loading.jpg",
+    heroImage: "/images/truck-loading.webp",
     intro: "Packing is the most time-consuming part of any move  -  and the part where damage is most likely to happen. Castle Express offers both full-service and partial packing by experienced professionals who know how to protect your belongings.",
     sections: [
       {
@@ -274,7 +274,7 @@ export const SERVICE_PAGES = {
     ],
     relatedServices: ["residential-moving", "commercial-moving", "storage"],
     relatedPosts: ["/blog/packing-tips-from-professional-movers/", "/blog/ultimate-moving-checklist-connecticut/"],
-    photo1: "/images/packed-truck.jpg",
+    photo1: "/images/packed-truck.webp",
     photo2: "/images/princess-packing-crew.jpg",
   },
   "storage": {
@@ -283,7 +283,7 @@ export const SERVICE_PAGES = {
     headline: "Moving and Storage Services in Connecticut",
     metaTitle: "Climate-Controlled Storage in Enfield, CT | Castle Express Moving & Storage",
     metaDesc: "Secure, climate-controlled storage at our 5,000 sq ft Enfield facility. We never raise your price. Free first month with your move. Call (888) 553-4503",
-    heroImage: "/images/storage-crates.jpg",
+    heroImage: "/images/storage-crates.webp",
     intro: "Need somewhere safe for your belongings? Our secure, climate-controlled facility in Enfield, CT keeps your items protected  -  whether you need storage for a week between closings or several months during a renovation.",
     sections: [
       {
@@ -316,8 +316,8 @@ export const SERVICE_PAGES = {
     ],
     relatedServices: ["residential-moving", "commercial-moving", "packing-services"],
     relatedPosts: ["/blog/benefits-of-climate-controlled-storage/", "/blog/what-to-do-with-furniture-when-liquidating-an-estate-in-connecticut/"],
-    photo1: "/images/storage-crates.jpg",
-    photo2: "/images/truck-loading.jpg",
+    photo1: "/images/storage-crates.webp",
+    photo2: "/images/truck-loading.webp",
   },
   "specialty-moving": {
     id: "specialty",
@@ -359,7 +359,7 @@ export const SERVICE_PAGES = {
     relatedServices: ["residential-moving", "commercial-moving", "storage"],
     relatedPosts: ["/blog/how-to-move-a-sleep-number-bed/", "/blog/how-to-move-a-hyperbaric-oxygen-chamber/"],
     photo1: "/images/truck-tobacco-barn.jpg",
-    photo2: "/images/truck-aframe.jpg",
+    photo2: "/images/truck-aframe.webp",
   },
 };
 

@@ -32,7 +32,7 @@ export default function ServicesPage() {
   return (
     <>
       <section className="section-dark" style={{ padding: "60px 24px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-loading.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.1, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-loading.webp)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.1, pointerEvents: "none" }} />
         <div className="section-label" style={{ justifyContent: "center" }}><span>Our Services</span></div>
         <h1 className="heading-2 text-white">Everything You Need for a Stress-Free Move</h1>
         <p className="body-md text-white-muted" style={{ maxWidth: 520, margin: "8px auto 0" }}>Accurate estimates. No hidden fees. Professional crews. Every time.</p>

@@ -274,8 +274,8 @@ export default function CityPage({ params }) {
 
             {/* Photo grid */}
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 32 }}>
-              <div style={{ position: "relative", height: 180, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-aframe.jpg" alt={`Castle Express moving truck in ${city.town}`} fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover" }} /></div>
-              <div style={{ position: "relative", height: 180, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-brick-building.jpg" alt={`Professional movers near ${city.town}`} fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover" }} /></div>
+              <div style={{ position: "relative", height: 180, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-aframe.webp" alt={`Castle Express moving truck in ${city.town}`} fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover" }} /></div>
+              <div style={{ position: "relative", height: 180, borderRadius: 10, overflow: "hidden" }}><Image src="/images/truck-brick-building.webp" alt={`Professional movers near ${city.town}`} fill sizes="(max-width: 768px) 50vw, 200px" style={{ objectFit: "cover" }} /></div>
             </div>
 
             {/* FAQ */}

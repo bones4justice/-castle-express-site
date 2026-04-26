@@ -193,7 +193,7 @@ export default function PianoMovingPage() {
                 <Image src="/images/truck-tobacco-barn.jpg" alt="Castle Express Moving truck" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} />
               </div>
               <div style={{ position: "relative", height: 200, borderRadius: 10, overflow: "hidden" }}>
-                <Image src="/images/truck-aframe.jpg" alt="Castle Express Moving at a residential home" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+                <Image src="/images/truck-aframe.webp" alt="Castle Express Moving at a residential home" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover" }} />
               </div>
             </div>
 

@@ -22,7 +22,7 @@ export default function AboutPage() {
         <div className="container-sm">
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 24, marginBottom: 40, borderRadius: 12, overflow: "hidden", alignItems: "stretch" }}>
             <div style={{ position: "relative", overflow: "hidden", height: 300, borderRadius: 8 }}>
-              <Image src="/images/truck-residential.jpg" alt="Castle Express truck at customer home" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "center center" }} priority />
+              <Image src="/images/truck-residential.webp" alt="Castle Express truck at customer home" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "center center" }} priority />
             </div>
             <div style={{ position: "relative", overflow: "hidden", height: 300, borderRadius: 8 }}>
               <Image src="/images/joe-with-customers.jpg" alt="Joe with happy customers" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "15% 25%" }} />
@@ -47,8 +47,8 @@ export default function AboutPage() {
             ))}
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginTop: 40, borderRadius: 12, overflow: "hidden" }}>
-            <div style={{ position: "relative", height: 160 }}><Image src="/images/truck-aframe.jpg" alt="Moving truck at home" fill sizes="(max-width: 768px) 33vw, 250px" style={{ objectFit: "cover" }} /></div>
-            <div style={{ position: "relative", height: 160 }}><Image src="/images/truck-brick-building.jpg" alt="Castle Express at commercial building" fill sizes="(max-width: 768px) 33vw, 250px" style={{ objectFit: "cover" }} /></div>
+            <div style={{ position: "relative", height: 160 }}><Image src="/images/truck-aframe.webp" alt="Moving truck at home" fill sizes="(max-width: 768px) 33vw, 250px" style={{ objectFit: "cover" }} /></div>
+            <div style={{ position: "relative", height: 160 }}><Image src="/images/truck-brick-building.webp" alt="Castle Express at commercial building" fill sizes="(max-width: 768px) 33vw, 250px" style={{ objectFit: "cover" }} /></div>
             <div style={{ position: "relative", height: 160 }}><Image src="/images/truck-tobacco-barn.jpg" alt="Castle Express in Connecticut" fill sizes="(max-width: 768px) 33vw, 250px" style={{ objectFit: "cover" }} /></div>
           </div>
         </div>
