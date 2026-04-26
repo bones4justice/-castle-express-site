@@ -41,6 +41,20 @@ export default function Footer() {
             </div>
           </div>
 
+          {/* Company */}
+          <div>
+            <h4 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em" }}>Company</h4>
+            {[
+              { label: "About", href: "/about" },
+              { label: "Reviews", href: "/reviews" },
+              { label: "Service Areas", href: "/service-areas" },
+              { label: "Blog", href: "/blog" },
+              { label: "Contact", href: "/contact" },
+            ].map(s => (
+              <Link key={s.href} href={s.href} style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.75)", marginBottom: 8, textDecoration: "none" }}>{s.label}</Link>
+            ))}
+          </div>
+
           {/* Services */}
           <div>
             <h4 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em" }}>Services</h4>

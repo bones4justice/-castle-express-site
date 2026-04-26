@@ -174,22 +174,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── REVIEWS (Elfsight live widget) ─── */}
-      <section className="section section-light" aria-label="Customer reviews">
-        <div className="container">
-          <div className="text-center" style={{ marginBottom: 48 }}>
-            <SectionLabel>Customer Reviews</SectionLabel>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>What Our Customers Say</h2>
-            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8 }}>
+      {/* ─── REVIEWS TRUST STRIP ─── */}
+      <section className="section section-light" aria-label="Customer reviews summary">
+        <div className="container text-center">
+          <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
               {[1,2,3,4,5].map(i => <Star key={i} />)}
-              <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginLeft: 4 }}>{COMPANY.reviewAvg}</span>
-              <span className="body-sm text-gray">(verified reviews on Google)</span>
             </div>
-            <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
-              Read real, verified reviews from Castle Express Moving &amp; Storage customers.
-            </p>
+            <div style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 20, color: "#1A1A2E" }}>
+              {COMPANY.reviewAvg} from {COMPANY.reviewCount} Google Reviews
+            </div>
+            <Link href="/reviews" className="btn btn-outline">Read All Reviews <ChevronRight /></Link>
           </div>
-          <div className="elfsight-app-b017ae90-a962-4044-8d86-0fef65fff1db" data-elfsight-app-lazy></div>
         </div>
       </section>
 
@@ -262,34 +258,52 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ─── INSTAGRAM FEED ─── */}
-      <section className="section section-light" aria-label="Instagram feed">
+      {/* ─── INSTAGRAM (static 3-photo grid linking to IG profile) ─── */}
+      <section className="section section-light" aria-label="Instagram">
         <div className="container">
           <div className="text-center" style={{ marginBottom: 32 }}>
             <div className="section-label" style={{ justifyContent: "center" }}><span>Follow Us</span></div>
             <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>@castleexpressmovingandstorage</h2>
           </div>
-          <div className="elfsight-app-e6b831df-56db-467d-bc64-e8cbdf442d90" data-elfsight-app-lazy></div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
+            {[
+              { src: "/images/princess-packing-crew.jpg", alt: "Princess Packing crew in pink polos", pos: "top" },
+              { src: "/images/joe-with-customers.jpg", alt: "Joe Caronna with happy Castle Express customers", pos: "center 20%" },
+              { src: "/images/crew-commercial.webp", alt: "Castle Express crew performing a commercial move", pos: "top" },
+            ].map((img, i) => (
+              <a key={i} href={COMPANY.instagram} target="_blank" rel="noopener noreferrer" aria-label="View on Instagram" style={{ position: "relative", width: "100%", height: 320, borderRadius: 10, overflow: "hidden", display: "block" }}>
+                <Image src={img.src} alt={img.alt} fill sizes="(max-width: 768px) 100vw, 33vw" style={{ objectFit: "cover", objectPosition: img.pos }} />
+              </a>
+            ))}
+          </div>
+          <div className="text-center" style={{ marginTop: 24 }}>
+            <a href={COMPANY.instagram} target="_blank" rel="noopener noreferrer" className="btn btn-outline">View on Instagram <ArrowRight /></a>
+          </div>
         </div>
       </section>
 
-      {/* ─── FAQ  -  Schema + Crawlable HTML + Elfsight Visual ─── */}
+      {/* ─── FAQ (native HTML + FAQPage schema) ─── */}
       <section className="section" aria-label="Frequently asked questions">
         <div className="container-sm">
-          {/* FAQ Schema removed - Elfsight FAQ widget injects its own FAQPage schema.
-               Keeping both caused Google "Duplicate field FAQPage" error.
-               Crawlable HTML fallback below ensures AI/LLMs can still read FAQ content. */}
-
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify({
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": FAQ.map(item => ({
+                  "@type": "Question",
+                  "name": item.q,
+                  "acceptedAnswer": { "@type": "Answer", "text": item.a },
+                })),
+              }),
+            }}
+          />
           <div className="text-center" style={{ marginBottom: 40 }}>
             <div className="section-label" style={{ justifyContent: "center" }}><span>Common Questions</span></div>
             <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Frequently Asked Questions</h2>
           </div>
-
-          {/* Elfsight visual widget */}
-          <div className="elfsight-app-f4e21ae8-4f51-4e3e-ad56-8f2f0dba67e9" data-elfsight-app-lazy></div>
-
-          {/* Crawlable HTML fallback  -  visible to AI/LLMs even if Elfsight doesn't load */}
-          <div style={{ marginTop: 32 }}>
+          <div>
             {FAQ.map((item, i) => (
               <div key={i} style={{ padding: "16px 0", borderBottom: "1px solid #E5E7EB" }}>
                 <p style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 8 }}>{item.q}</p>

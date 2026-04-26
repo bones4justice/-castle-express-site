@@ -14,6 +14,7 @@ export default function sitemap() {
     { url: `${BASE}/service-areas/`, changeFrequency: "weekly", priority: 0.9 },
     { url: `${BASE}/about/`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/services/`, changeFrequency: "monthly", priority: 0.9 },
+    { url: `${BASE}/reviews/`, changeFrequency: "weekly", priority: 0.7 },
     { url: `${BASE}/contact/`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/referral/`, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE}/postcards/`, changeFrequency: "monthly", priority: 0.5 },
