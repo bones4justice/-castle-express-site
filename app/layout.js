@@ -1,17 +1,9 @@
-import { Nunito, Merriweather, Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Merriweather, Cormorant_Garamond, DM_Sans } from "next/font/google";
 import Script from "next/script";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StorageStickyBar from "@/components/StorageStickyBar";
 import "./globals.css";
-
-const nunito = Nunito({
-  subsets: ["latin"],
-  variable: "--font-nunito",
-  display: "swap",
-  weight: ["600", "700", "800", "900"],
-  style: ["normal", "italic"],
-});
 
 const merriweather = Merriweather({
   subsets: ["latin"],
@@ -65,13 +57,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${nunito.variable} ${merriweather.variable} ${cormorant.variable} ${dmSans.variable}`}>
+    <html lang="en" className={`${merriweather.variable} ${cormorant.variable} ${dmSans.variable}`}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
         <Script
           src="https://api.smartmoving.com/api/public/lead-provider-settings/8f882454-9968-445e-8f50-ac5d011a33fc/script"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-97Z4EHJM63"
@@ -119,7 +111,7 @@ export default function RootLayout({ children }) {
               "name": "Castle Express Moving & Storage",
               "image": "https://www.castleexpressmoving.com/images/logo.jpg",
               "url": "https://www.castleexpressmoving.com",
-              "telephone": "1-888-553-4503",
+              "telephone": "+18885534503",
               "priceRange": "$$",
               "address": {
                 "@type": "PostalAddress",
@@ -150,7 +142,7 @@ export default function RootLayout({ children }) {
               "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": "4.9",
-                "reviewCount": "200",
+                "reviewCount": 200,
                 "bestRating": "5"
               },
               "areaServed": [

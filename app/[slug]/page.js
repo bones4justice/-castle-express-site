@@ -39,8 +39,8 @@ export default function CityPage({ params }) {
     "@type": "MovingCompany",
     name: "Castle Express Moving & Storage",
     url: "https://www.castleexpressmoving.com",
-    logo: "https://www.castleexpressmoving.com/logo.png",
-    image: "https://www.castleexpressmoving.com/og-image.jpg",
+    logo: "https://www.castleexpressmoving.com/images/logo.png",
+    image: "https://www.castleexpressmoving.com/images/truck-residential.webp",
     telephone: "+18885534503",
     address: {
       "@type": "PostalAddress",

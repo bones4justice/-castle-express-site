@@ -236,6 +236,7 @@ a { touch-action: manipulation; }
   .section { padding: 48px 20px; }
   .desktop-nav { display: none !important; }
   .mobile-toggle { display: flex !important; }
+  .mobile-phone-cta { display: flex !important; }
   .trust-bar { gap: 20px; }
   .hero-stats { grid-template-columns: 1fr 1fr !important; }
 }

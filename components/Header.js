@@ -42,8 +42,17 @@ export default function Header() {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}>
         {/* Logo */}
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <Image src="/images/logo.jpg" alt="Castle Express Moving & Storage" width={120} height={48} priority style={{ height: 48, width: "auto" }} />
+          <Image src="/images/logo.jpg" alt="Castle Express Moving & Storage" width={120} height={48} style={{ height: 48, width: "auto" }} />
         </Link>
+
+        {/* Mobile phone CTA - visible only on mobile, between logo and hamburger */}
+        <a href={COMPANY.phoneLink} className="mobile-phone-cta" aria-label={`Call Castle Express at ${COMPANY.phone}`} style={{
+          display: "none", alignItems: "center", gap: 6,
+          fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017",
+          textDecoration: "none", padding: "8px 14px", background: "#FFF9EC", borderRadius: 8, marginLeft: "auto", marginRight: 8,
+        }}>
+          <Phone size={18} /> Call
+        </a>
 
         {/* Desktop Nav */}
         <nav style={{ display: "flex", alignItems: "center", gap: 4 }} className="desktop-nav">
