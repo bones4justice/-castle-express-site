@@ -200,8 +200,8 @@ const nextConfig = {
       { source: '/services/construction/', destination: '/services/', permanent: true },
       { source: '/services/you-pack-we-move', destination: '/services/', permanent: true },
       { source: '/services/you-pack-we-move/', destination: '/services/', permanent: true },
-      { source: '/services/packing', destination: '/services/packing-services/', permanent: true },
-      { source: '/services/packing/', destination: '/services/packing-services/', permanent: true },
+      { source: '/services/packing', destination: '/princess-packing.html', permanent: true },
+      { source: '/services/packing/', destination: '/princess-packing.html', permanent: true },
       // Old blog numeric URLs
       { source: '/blogs/:id/', destination: '/blog/', permanent: true },
       { source: '/blogs/:id', destination: '/blog/', permanent: true },
@@ -234,6 +234,9 @@ const nextConfig = {
       { source: '/quick-moving-tips/', destination: '/blog/', permanent: true },
       { source: '/services/assisted-living', destination: '/senior-moving/', permanent: true },
       { source: '/services/assisted-living/', destination: '/senior-moving/', permanent: true },
+      // Princess Packing is the canonical packing service page (replaces outdated /services/packing-services/)
+      { source: '/services/packing-services', destination: '/princess-packing.html', permanent: true },
+      { source: '/services/packing-services/', destination: '/princess-packing.html', permanent: true },
       { source: '/movers/west-hartford-ct', destination: '/movers-west-hartford-ct/', permanent: true },
       { source: '/movers/west-hartford-ct/', destination: '/movers-west-hartford-ct/', permanent: true },
       { source: '/client-referral-program', destination: '/referral/', permanent: true },
@@ -242,8 +245,8 @@ const nextConfig = {
       { source: '/testimonials/', destination: '/', permanent: true },
       { source: '/movers/castle-express-moving-and-storage-moving-company-springfield-ma', destination: '/movers-springfield-ma/', permanent: true },
       { source: '/movers/castle-express-moving-and-storage-moving-company-springfield-ma/', destination: '/movers-springfield-ma/', permanent: true },
-      { source: '/services/packers-and-movers', destination: '/services/packing-services/', permanent: true },
-      { source: '/services/packers-and-movers/', destination: '/services/packing-services/', permanent: true },
+      { source: '/services/packers-and-movers', destination: '/princess-packing.html', permanent: true },
+      { source: '/services/packers-and-movers/', destination: '/princess-packing.html', permanent: true },
       { source: '/packing-tips', destination: '/blog/', permanent: true },
       { source: '/packing-tips/', destination: '/blog/', permanent: true },
       // Additional redirects batch
@@ -330,8 +333,8 @@ const nextConfig = {
       { source: '/downsizing-before-a-senior-move-practical-steps-tips/', destination: '/senior-moving/', permanent: true },
       { source: '/how-to-plan-an-office-move-without-disrupting-business-operations', destination: '/services/commercial-moving/', permanent: true },
       { source: '/how-to-plan-an-office-move-without-disrupting-business-operations/', destination: '/services/commercial-moving/', permanent: true },
-      { source: '/packing-tips-fragile-specialty-items', destination: '/services/packing-services/', permanent: true },
-      { source: '/packing-tips-fragile-specialty-items/', destination: '/services/packing-services/', permanent: true },
+      { source: '/packing-tips-fragile-specialty-items', destination: '/princess-packing.html', permanent: true },
+      { source: '/packing-tips-fragile-specialty-items/', destination: '/princess-packing.html', permanent: true },
       // Semrush-detected 404s (April 2026)
       { source: '/feed/', destination: '/', permanent: true },
       { source: '/comments/feed/', destination: '/', permanent: true },
