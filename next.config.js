@@ -364,6 +364,9 @@ const nextConfig = {
       { source: '/privacy-policy/', destination: '/privacy/', permanent: true },
       { source: '/sitemap/', destination: '/sitemap.xml', permanent: true },
       { source: '/accessibility/', destination: '/', permanent: true },
+      // Stale Google-indexed paths from a prior parseInline tel: bug — recover traffic to /contact/
+      { source: '/:path*/tel\\:18885534503/:trailing*', destination: '/contact/', permanent: true },
+      { source: '/:path*/tel\\:18885534503', destination: '/contact/', permanent: true },
     ];
   },
 };
