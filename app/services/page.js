@@ -19,15 +19,6 @@ const ICONS = {
   longdistance: <IconLongDistance size={96} />,
 };
 
-const SERVICE_SLUGS = {
-  residential: "residential-moving",
-  commercial: "commercial-moving",
-  packing: "packing-services",
-  storage: "storage",
-  specialty: "specialty-moving",
-  longdistance: "long-distance-moving",
-};
-
 export default function ServicesPage() {
   return (
     <>
@@ -41,15 +32,14 @@ export default function ServicesPage() {
       <section className="section section-light">
         <div className="container-md" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           {SERVICES.map((svc) => {
-            const slug = SERVICE_SLUGS[svc.id];
             return (
               <div key={svc.id} className="card grid-2" style={{ alignItems: "start", gap: 32 }}>
                 <div>
                   <div className="icon-badge" style={{ marginBottom: 16 }}>{ICONS[svc.id]}</div>
                   <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 10 }}>{svc.title}</h2>
                   <p className="body-sm text-gray" style={{ lineHeight: 1.7, marginBottom: 16 }}>{svc.fullDesc}</p>
-                  {slug && (
-                    <Link href={`/services/${slug}`} style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                  {svc.slug && (
+                    <Link href={`/services/${svc.slug}/`} style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
                       Learn More <ArrowRight />
                     </Link>
                   )}
