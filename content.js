@@ -42,6 +42,7 @@ export const COMPANY = {
 export const SERVICES = [
   {
     id: "residential",
+    slug: "residential-moving",
     title: "Residential Moving",
     shortDesc: "Local and long-distance home moves. Houses, apartments, condos, senior relocations, and downsizing - handled with care.",
     fullDesc: "Whether you're moving across town or across the state, we make home moves smooth, efficient, and stress-free. Houses, apartments, condos, townhouses, senior relocations, and downsizing - we've done it all.",
@@ -55,6 +56,7 @@ export const SERVICES = [
   },
   {
     id: "commercial",
+    slug: "commercial-moving",
     title: "Commercial & Office Moving",
     shortDesc: "Office and business relocations with minimal downtime. We plan around your schedule so your business keeps running.",
     fullDesc: "Your business can't afford downtime. Castle Express plans your office relocation around your schedule with clear timelines, professional crews, and organized execution.",
@@ -67,6 +69,7 @@ export const SERVICES = [
   },
   {
     id: "packing",
+    slug: "packing-services",
     title: "Full-Service Packing",
     shortDesc: "Full-service or partial packing. We bring the materials, the manpower, and the expertise to protect every item.",
     fullDesc: "Short on time or energy? Our experienced packers use the best materials and techniques to safeguard your items. Choose full or partial packing based on your needs.",
@@ -79,6 +82,7 @@ export const SERVICES = [
   },
   {
     id: "storage",
+    slug: "storage",
     title: "Climate-Controlled Storage",
     shortDesc: "Short and long-term storage in our secure Enfield, CT facility. Clean, climate-controlled, and accessible.",
     fullDesc: "Our secure facility in Enfield, CT offers clean, climate-controlled storage for short or long-term needs. Ideal between closings, during renovations, or for downsizing.",
@@ -91,6 +95,7 @@ export const SERVICES = [
   },
   {
     id: "specialty",
+    slug: "specialty-moving",
     title: "Specialty Moving",
     shortDesc: "Piano, gun safe, fine art, and white-glove deliveries. Special items need special handling.",
     fullDesc: "Heavy safes, pianos, fine art, and delicate deliveries require special handling. Our specialty team has the equipment and experience to move it safely.",
@@ -103,6 +108,7 @@ export const SERVICES = [
   },
   {
     id: "longdistance",
+    slug: "long-distance-moving",
     title: "Long Distance Moving",
     shortDesc: "Licensed interstate movers serving CT, MA, and the East Coast. Flat-rate pricing, no surprises.",
     fullDesc: "Castle Express is licensed for interstate moves (USDOT 2307446, MC-990616). We handle long distance relocations with flat-rate pricing, experienced crews, and full packing available.",

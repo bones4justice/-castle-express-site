@@ -107,7 +107,7 @@ export default function HomePage() {
           </div>
           <div className="grid-auto">
             {SERVICES.slice(0, 4).map((svc, i) => (
-              <Link key={svc.id} href="/services" className="card" style={{ textDecoration: "none", position: "relative", cursor: "pointer" }}>
+              <Link key={svc.id} href={`/services/${svc.slug}/`} className="card" style={{ textDecoration: "none", position: "relative", cursor: "pointer" }}>
                 {svc.popular && (
                   <div style={{ position: "absolute", top: 16, right: 16, background: "#FFF9EC", color: "#D4A017", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 11, padding: "4px 10px", borderRadius: 20 }}>Most Popular</div>
                 )}
