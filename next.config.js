@@ -352,6 +352,7 @@ const nextConfig = {
       { source: '/unpacking-tips-101-how-to-navigate-from-chaos-to-comfort-in-your-transition/', destination: '/blog/', permanent: true },
       { source: '/top-things-to-consider-while-choosing-the-best-moving-company/', destination: '/blog/how-to-choose-a-moving-company-in-connecticut/', permanent: true },
       { source: '/is-there-sales-tax-on-moving-services-in-connecticut/', destination: '/blog/how-much-do-movers-cost-in-connecticut/', permanent: true },
+      { source: '/connecticut-moving-tariff-laws/', destination: '/blog/how-much-do-movers-cost-in-connecticut/', permanent: true },
       { source: '/when-movers-dont-show-up-or-arrive-late-what-you-can-do/', destination: '/blog/how-to-avoid-getting-burned-by-a-moving-company/', permanent: true },
       { source: '/how-to-keep-kids-and-pets-safe-and-calm-on-moving-day/', destination: '/blog/', permanent: true },
       { source: '/moving-with-kids-a-stress-free-guide-for-parents/', destination: '/blog/', permanent: true },
