@@ -368,6 +368,20 @@ const nextConfig = {
       // Stale Google-indexed paths from a prior parseInline tel: bug — recover traffic to /contact/
       { source: '/:path*/tel\\:18885534503/:trailing*', destination: '/contact/', permanent: true },
       { source: '/:path*/tel\\:18885534503', destination: '/contact/', permanent: true },
+      // GSC 404 cleanup — May 2026 (bare-slug normalization + 2 new sources)
+      { source: '/the-smart-benefits-of-choosing-a-moving-company-that-offers-storage', destination: '/services/storage/', permanent: true },
+      { source: '/final-mile-white-glove-service', destination: '/services/', permanent: true },
+      { source: '/piano-moving-why-handling-your-own-piano-move-isnt-advisable', destination: '/blog/piano-moving-guide-connecticut/', permanent: true },
+      { source: '/why-rockville-local-movers-are-the-smart-choice-for-your-next-move', destination: '/movers-vernon-ct/', permanent: true },
+      { source: '/the-ultimate-moving-checklist-from-hartford-to-boston', destination: '/blog/connecticut-moving-checklist/', permanent: true },
+      { source: '/top-things-to-consider-while-choosing-the-best-moving-company', destination: '/blog/how-to-choose-a-moving-company-in-connecticut/', permanent: true },
+      { source: '/is-there-sales-tax-on-moving-services-in-connecticut', destination: '/blog/how-much-do-movers-cost-in-connecticut/', permanent: true },
+      { source: '/when-movers-dont-show-up-or-arrive-late-what-you-can-do', destination: '/blog/how-to-avoid-getting-burned-by-a-moving-company/', permanent: true },
+      { source: '/how-to-keep-kids-and-pets-safe-and-calm-on-moving-day', destination: '/blog/', permanent: true },
+      { source: '/moving-with-kids-a-stress-free-guide-for-parents', destination: '/blog/', permanent: true },
+      { source: '/insurance-blindspots-what-moving-insurance-doesnt-always-cover-and-what-you-need-to-know', destination: '/blog/how-to-avoid-getting-burned-by-a-moving-company/', permanent: true },
+      { source: '/dispatch-locations', destination: '/service-areas/', permanent: true },
+      { source: '/west-hartford', destination: '/movers-west-hartford-ct/', permanent: true },
     ];
   },
 };
