@@ -18,9 +18,9 @@ export default function PostcardsPage() {
       {/* HERO */}
       <section style={{ background: "#1a1d2e", minHeight: 560, padding: "72px 24px 0", position: "relative", overflow: "hidden" }}>
         {/* Background photo */}
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-residential.jpg)", backgroundSize: "cover", backgroundPosition: "center", pointerEvents: "none" }} />
-        {/* Dark gradient overlay: solid left, transparent right */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, rgba(26,29,46,0.95) 50%, rgba(26,29,46,0.4) 100%)", pointerEvents: "none" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-aframe.webp)", backgroundSize: "cover", backgroundPosition: "center", pointerEvents: "none" }} />
+        {/* Lighter, warmer gradient overlay — keeps text readable without feeling stormy */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(26, 29, 46, 0.55) 0%, rgba(26, 29, 46, 0.35) 100%)", pointerEvents: "none" }} />
         {/* Yellow triangle accent bottom left */}
         <svg style={{ position: "absolute", bottom: 0, left: 0, width: 200, height: 200, pointerEvents: "none", zIndex: 1 }} viewBox="0 0 200 200"><polygon points="0,200 200,200 0,0" fill="#FBCB0B" opacity="0.08" /></svg>
 
@@ -94,9 +94,9 @@ export default function PostcardsPage() {
       <section style={{ background: "#fff", padding: "48px 24px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
           {[
-            { src: "/images/crew-furniture.jpg", alt: "Castle Express crew moving furniture", caption: "Specialty piece moves — handled like our own.", objectPosition: "center" },
-            { src: "/images/truck-residential.jpg", alt: "Castle Express truck at customer home", caption: "Local moves across Hartford County.", objectPosition: "center" },
-            { src: "/images/joe-with-customers.jpg", alt: "Joe with happy customers", caption: "Senior moves with patience and care.", objectPosition: "15% 25%" },
+            { src: "/images/crew-furniture.jpg", alt: "Castle Express crew moving furniture", caption: "Specialty piece moves — handled like our own.", objectPosition: "center top" },
+            { src: "/images/truck-residential.jpg", alt: "Castle Express truck at customer home", caption: "Local moves across Hartford County.", objectPosition: "center top" },
+            { src: "/images/joe-with-customers.jpg", alt: "Joe with happy customers", caption: "Senior moves with patience and care.", objectPosition: "center top" },
           ].map((p) => (
             <div key={p.src}>
               <div style={{ position: "relative", height: 260, borderRadius: 12, overflow: "hidden" }}>
@@ -141,7 +141,7 @@ export default function PostcardsPage() {
       </section>
 
       {/* ESTIMATE FORM */}
-      <section id="estimate" style={{ background: "#fafafa", padding: "64px 24px" }}>
+      <section id="estimate" style={{ background: "#f5f5f7", padding: "64px 24px" }}>
         <div style={{ maxWidth: 640, margin: "0 auto" }}>
           <h2 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontSize: "clamp(24px, 3.5vw, 36px)", color: "#1A1A2E", textAlign: "center", marginBottom: 8 }}>
             Get Your Free Estimate

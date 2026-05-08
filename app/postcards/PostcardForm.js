@@ -9,11 +9,11 @@ const inputStyle = {
   width: "100%",
   padding: "12px 14px",
   borderRadius: 6,
-  border: "1px solid #E5E7EB",
+  border: "1.5px solid #c5c8cc",
   background: "#fff",
   color: "#1A1A2E",
   fontFamily: "var(--font-body)",
-  fontSize: 14,
+  fontSize: 16,
   outline: "none",
   boxSizing: "border-box",
 };
@@ -23,10 +23,10 @@ const labelStyle = {
   fontFamily: "var(--font-heading)",
   fontSize: 12,
   fontWeight: 600,
-  color: "#6B7280",
-  marginBottom: 4,
+  color: "#1A1A2E",
+  marginBottom: 6,
   textTransform: "uppercase",
-  letterSpacing: "0.04em",
+  letterSpacing: "0.5px",
 };
 
 export default function PostcardForm() {
@@ -108,7 +108,17 @@ export default function PostcardForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ background: "#fff", borderRadius: 12, padding: "28px 24px", border: "1px solid #E5E7EB" }}>
+    <>
+      <style>{`
+        .postcard-form input:focus,
+        .postcard-form select:focus,
+        .postcard-form textarea:focus {
+          outline: none;
+          border-color: #FBCB0B;
+          box-shadow: 0 0 0 3px rgba(251, 203, 11, 0.2);
+        }
+      `}</style>
+    <form onSubmit={handleSubmit} className="postcard-form" style={{ background: "#fff", borderRadius: 12, padding: "32px 28px", border: "1px solid #e5e7eb", boxShadow: "0 4px 16px rgba(26, 29, 46, 0.06)" }}>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <div>
           <label style={labelStyle}>First Name *</label>
@@ -171,5 +181,6 @@ export default function PostcardForm() {
         </button>
       </div>
     </form>
+    </>
   );
 }
