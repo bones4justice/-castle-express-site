@@ -17,16 +17,14 @@ export default function PostcardsPage() {
     <>
       {/* HERO */}
       <section style={{ background: "#1a1d2e", minHeight: 560, padding: "72px 24px 0", position: "relative", overflow: "hidden" }}>
-        {/* Background photo */}
+        {/* Background photo (no full-image overlay — text gets its own localized scrim below) */}
         <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-aframe.webp)", backgroundSize: "cover", backgroundPosition: "center", pointerEvents: "none" }} />
-        {/* Lighter, warmer gradient overlay — keeps text readable without feeling stormy */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(26, 29, 46, 0.55) 0%, rgba(26, 29, 46, 0.35) 100%)", pointerEvents: "none" }} />
         {/* Yellow triangle accent bottom left */}
         <svg style={{ position: "absolute", bottom: 0, left: 0, width: 200, height: 200, pointerEvents: "none", zIndex: 1 }} viewBox="0 0 200 200"><polygon points="0,200 200,200 0,0" fill="#FBCB0B" opacity="0.08" /></svg>
 
         <div style={{ position: "relative", maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "45% 55%", alignItems: "end" }} className="postcard-hero-grid">
           {/* Left column */}
-          <div style={{ paddingBottom: 56 }}>
+          <div className="postcard-hero-text">
             <div className="section-label" style={{ marginBottom: 16 }}><span style={{ color: "#FBCB0B" }}>Thanks for Scanning!</span></div>
             <h1 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "normal", fontSize: "clamp(32px, 4.5vw, 46px)", color: "#fff", marginBottom: 16, lineHeight: 1.1 }}>
               You Found the <span style={{ color: "#FBCB0B" }}>Perfect Mover</span>.
@@ -59,9 +57,18 @@ export default function PostcardsPage() {
         </div>
 
         <style>{`
+          .postcard-hero-text {
+            background: linear-gradient(90deg, rgba(26, 29, 46, 0.85) 0%, rgba(26, 29, 46, 0.65) 70%, rgba(26, 29, 46, 0) 100%);
+            padding: 60px 24px 60px 24px;
+            border-radius: 0;
+          }
           @media (max-width: 768px) {
             .postcard-hero-grid { grid-template-columns: 1fr !important; }
             .postcard-hero-photo { display: none !important; }
+            .postcard-hero-text {
+              background: linear-gradient(180deg, rgba(26, 29, 46, 0.78) 0%, rgba(26, 29, 46, 0.78) 100%);
+              padding: 40px 24px;
+            }
           }
         `}</style>
       </section>
@@ -95,8 +102,8 @@ export default function PostcardsPage() {
         <div style={{ maxWidth: 960, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
           {[
             { src: "/images/crew-furniture.jpg", alt: "Castle Express crew moving furniture", caption: "Specialty piece moves — handled like our own.", objectPosition: "center top" },
-            { src: "/images/truck-residential.jpg", alt: "Castle Express truck at customer home", caption: "Local moves across Hartford County.", objectPosition: "center top" },
-            { src: "/images/joe-with-customers.jpg", alt: "Joe with happy customers", caption: "Senior moves with patience and care.", objectPosition: "center top" },
+            { src: "/images/truck-residential.jpg", alt: "Castle Express truck at customer home", caption: "Local moves across Hartford County.", objectPosition: "center center" },
+            { src: "/images/joe-with-customers.jpg", alt: "Joe with happy customers", caption: "Senior moves with patience and care.", objectPosition: "center 30%" },
           ].map((p) => (
             <div key={p.src}>
               <div style={{ position: "relative", height: 260, borderRadius: 12, overflow: "hidden" }}>

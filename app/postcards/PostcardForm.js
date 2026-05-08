@@ -117,9 +117,37 @@ export default function PostcardForm() {
           border-color: #FBCB0B;
           box-shadow: 0 0 0 3px rgba(251, 203, 11, 0.2);
         }
+        .postcard-form .form-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+        }
+        .postcard-form input[type="date"] {
+          height: 48px;
+          padding: 12px 14px;
+          font-size: 16px;
+          font-family: inherit;
+        }
+        .postcard-form .offer-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 8px;
+          margin-top: 8px;
+        }
+        .postcard-form .offer-label-text {
+          flex: 1;
+          font-family: var(--font-body);
+          font-size: 14px;
+          line-height: 1.4;
+          color: #1A1A2E;
+        }
+        @media (max-width: 600px) {
+          .postcard-form .form-row { grid-template-columns: 1fr; }
+          .postcard-form .offer-row { grid-template-columns: 1fr; }
+        }
       `}</style>
     <form onSubmit={handleSubmit} className="postcard-form" style={{ background: "#fff", borderRadius: 12, padding: "32px 28px", border: "1px solid #e5e7eb", boxShadow: "0 4px 16px rgba(26, 29, 46, 0.06)" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+      <div className="form-row">
         <div>
           <label style={labelStyle}>First Name *</label>
           <input ref={firstInputRef} style={inputStyle} value={formData.firstName} onChange={update("firstName")} required />
@@ -138,11 +166,11 @@ export default function PostcardForm() {
         </div>
         <div>
           <label style={labelStyle}>Moving From *</label>
-          <input style={inputStyle} placeholder="Address, City, State" value={formData.moveFrom} onChange={update("moveFrom")} required />
+          <input style={inputStyle} placeholder="City, State" value={formData.moveFrom} onChange={update("moveFrom")} required />
         </div>
         <div>
           <label style={labelStyle}>Moving To *</label>
-          <input style={inputStyle} placeholder="Address, City, State" value={formData.moveTo} onChange={update("moveTo")} required />
+          <input style={inputStyle} placeholder="City, State" value={formData.moveTo} onChange={update("moveTo")} required />
         </div>
         <div>
           <label style={labelStyle}>Estimated Move Date *</label>
@@ -160,11 +188,11 @@ export default function PostcardForm() {
       {/* Offer radio buttons */}
       <div style={{ marginTop: 16 }}>
         <label style={labelStyle}>Choose One Offer:</label>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 8 }}>
+        <div className="offer-row">
           {OFFERS.map(({ slug, label }) => (
-            <label key={slug} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", padding: "12px 14px", borderRadius: 8, border: selectedOffer === label ? "2px solid #FBCB0B" : "1px solid #E5E7EB", background: selectedOffer === label ? "#FFFBEB" : "#fff", transition: "all 0.15s" }}>
-              <input type="radio" name="offerSelection" checked={selectedOffer === label} onChange={() => setSelectedOffer(label)} style={{ width: 18, height: 18, accentColor: "#FBCB0B", flexShrink: 0 }} />
-              <span style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#1A1A2E" }}>{label}</span>
+            <label key={slug} style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer", padding: "12px 14px", borderRadius: 8, border: selectedOffer === label ? "2px solid #FBCB0B" : "1px solid #E5E7EB", background: selectedOffer === label ? "#FFFBEB" : "#fff", transition: "all 0.15s" }}>
+              <input type="radio" name="offerSelection" checked={selectedOffer === label} onChange={() => setSelectedOffer(label)} style={{ width: 24, height: 24, accentColor: "#FBCB0B", flexShrink: 0 }} />
+              <span className="offer-label-text">{label}</span>
             </label>
           ))}
         </div>
