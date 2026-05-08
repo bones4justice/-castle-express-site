@@ -1,14 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Check, ArrowRight } from "@/components/Icons";
+import { OFFERS } from "./offers";
 
 const HOME_SIZES = ["Studio", "1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4+ Bedrooms"];
-
-const OFFERS = [
-  "Free Night of Truck Storage (Double Closings)",
-  "Free First Month of Storage",
-  "20 Free Boxes + Roll of Tape with Walk-Through Estimate",
-];
 
 const inputStyle = {
   width: "100%",
@@ -42,6 +37,20 @@ export default function PostcardForm() {
     moveFrom: "", moveTo: "", moveDate: "", homeSize: "", notes: "",
   });
   const [selectedOffer, setSelectedOffer] = useState("");
+  const firstInputRef = useRef(null);
+
+  useEffect(() => {
+    const handler = (e) => {
+      const offer = e?.detail?.offer;
+      if (typeof offer === "string" && OFFERS.includes(offer)) {
+        setSelectedOffer(offer);
+        // Briefly focus the first field so screen readers + keyboard users land in the form
+        setTimeout(() => firstInputRef.current?.focus({ preventScroll: true }), 600);
+      }
+    };
+    window.addEventListener("postcard:select-offer", handler);
+    return () => window.removeEventListener("postcard:select-offer", handler);
+  }, []);
 
   const update = (field) => (e) => setFormData(prev => ({ ...prev, [field]: e.target.value }));
 
@@ -88,7 +97,7 @@ export default function PostcardForm() {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <div>
           <label style={labelStyle}>First Name *</label>
-          <input style={inputStyle} value={formData.firstName} onChange={update("firstName")} required />
+          <input ref={firstInputRef} style={inputStyle} value={formData.firstName} onChange={update("firstName")} required />
         </div>
         <div>
           <label style={labelStyle}>Last Name *</label>
