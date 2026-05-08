@@ -14,17 +14,17 @@ const GiftIcon = () => (
 );
 
 const CARDS = [
-  { icon: <TruckIcon />, title: "Free Night of Truck Storage", desc: "Moving with a double closing? We'll store your belongings in our truck overnight at no charge so your move stays on schedule.", offer: OFFERS[0] },
-  { icon: <BoxIcon />, title: "Free First Month of Storage", desc: "Need a little extra time before moving in? Get your first month of climate-controlled storage completely free when you book your move with us.", offer: OFFERS[1] },
-  { icon: <GiftIcon />, title: "20 Free Boxes + Roll of Tape", desc: "Schedule a free walk-through estimate and we'll bring you 20 boxes and a roll of tape, on us. No obligation, no pressure.", offer: OFFERS[2] },
+  { icon: <TruckIcon />, title: "Free Night of Truck Storage", desc: "Moving with a double closing? We'll store your belongings in our truck overnight at no charge so your move stays on schedule.", slug: OFFERS[0].slug, label: OFFERS[0].label },
+  { icon: <BoxIcon />, title: "Free First Month of Storage", desc: "Need a little extra time before moving in? Get your first month of climate-controlled storage completely free when you book your move with us.", slug: OFFERS[1].slug, label: OFFERS[1].label },
+  { icon: <GiftIcon />, title: "20 Free Boxes + Roll of Tape", desc: "Schedule a free walk-through estimate and we'll bring you 20 boxes and a roll of tape, on us. No obligation, no pressure.", slug: OFFERS[2].slug, label: OFFERS[2].label },
 ];
 
 export default function OfferCards() {
-  const handleClick = (offer) => {
-    window.dispatchEvent(new CustomEvent("postcard:select-offer", { detail: { offer } }));
+  const handleClick = (slug, label) => {
+    window.dispatchEvent(new CustomEvent("postcard:select-offer", { detail: { slug, label } }));
     document.getElementById("estimate")?.scrollIntoView({ behavior: "smooth", block: "start" });
     if (typeof window.gtag !== "undefined") {
-      window.gtag("event", "select_offer", { event_category: "postcard", event_label: offer });
+      window.gtag("event", "select_offer", { event_category: "postcard", event_label: label, offer_slug: slug });
     }
   };
 
@@ -32,9 +32,9 @@ export default function OfferCards() {
     <div className="postcard-offer-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20, marginBottom: 32 }}>
       {CARDS.map((c) => (
         <button
-          key={c.offer}
+          key={c.slug}
           type="button"
-          onClick={() => handleClick(c.offer)}
+          onClick={() => handleClick(c.slug, c.label)}
           className="postcard-offer-card"
           style={{
             background: "#fff",

@@ -29,7 +29,7 @@ export default function PostcardsPage() {
           <div style={{ paddingBottom: 56 }}>
             <div className="section-label" style={{ marginBottom: 16 }}><span style={{ color: "#FBCB0B" }}>Thanks for Scanning!</span></div>
             <h1 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "normal", fontSize: "clamp(32px, 4.5vw, 46px)", color: "#fff", marginBottom: 16, lineHeight: 1.1 }}>
-              Looking for the <span style={{ color: "#FBCB0B" }}>Perfect Mover</span>?
+              You Found the <span style={{ color: "#FBCB0B" }}>Perfect Mover</span>.
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "rgba(255,255,255,0.8)", lineHeight: 1.7, marginBottom: 24, maxWidth: 500 }}>
               Hi, I'm Joe, owner of Castle Express since 2013. You picked up our postcard and we appreciate that. As a thank-you, here are three exclusive offers just for you.
@@ -43,8 +43,8 @@ export default function PostcardsPage() {
               ))}
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <a href="#offers" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "#FBCB0B", color: "#000", fontFamily: "Merriweather, serif", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none" }}>Claim Your Offer Below</a>
-              <a href={COMPANY.phoneLink} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "transparent", color: "#fff", fontFamily: "Merriweather, serif", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none", border: "1px solid rgba(255,255,255,0.3)" }}><Phone size={18} /> {COMPANY.phone}</a>
+              <a href={COMPANY.phoneLink} style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "14px 28px", background: "#FBCB0B", color: "#000", fontFamily: "Merriweather, serif", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none" }}><Phone size={18} /> {COMPANY.phone}</a>
+              <a href="#offers" style={{ display: "inline-flex", alignItems: "center", gap: 8, padding: "12px 26px", background: "transparent", color: "#FBCB0B", fontFamily: "Merriweather, serif", fontWeight: 700, fontSize: 15, borderRadius: 8, textDecoration: "none", border: "2px solid #FBCB0B" }}>Claim Your Offer Below ↓</a>
             </div>
           </div>
 
@@ -78,9 +78,13 @@ export default function PostcardsPage() {
 
           <OfferCards />
 
+          <p style={{ fontFamily: "Merriweather, serif", fontSize: 14, color: "#666", textAlign: "center", marginBottom: 20 }}>
+            Offers valid for 30 days from postcard delivery. Lock in yours today.
+          </p>
+
           <div style={{ background: "#FBCB0B", borderRadius: 8, padding: "14px 20px", textAlign: "center" }}>
             <p style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontSize: 14, color: "#000", margin: 0 }}>
-              These offers are for postcard recipients only. Mention your postcard when booking.
+              You're in. Just mention your postcard when you call or submit the form.
             </p>
           </div>
         </div>
@@ -89,9 +93,18 @@ export default function PostcardsPage() {
       {/* PHOTO STRIP */}
       <section style={{ background: "#fff", padding: "48px 24px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
-          <div style={{ position: "relative", height: 260, borderRadius: 12, overflow: "hidden" }}><Image src="/images/crew-furniture.jpg" alt="Castle Express crew moving furniture" fill style={{ objectFit: "cover" }} /></div>
-          <div style={{ position: "relative", height: 260, borderRadius: 12, overflow: "hidden" }}><Image src="/images/truck-residential.jpg" alt="Castle Express truck at customer home" fill style={{ objectFit: "cover" }} /></div>
-          <div style={{ position: "relative", height: 260, borderRadius: 12, overflow: "hidden" }}><Image src="/images/joe-with-customers.jpg" alt="Joe with happy customers" fill style={{ objectFit: "cover", objectPosition: "15% 25%" }} /></div>
+          {[
+            { src: "/images/crew-furniture.jpg", alt: "Castle Express crew moving furniture", caption: "Specialty piece moves — handled like our own.", objectPosition: "center" },
+            { src: "/images/truck-residential.jpg", alt: "Castle Express truck at customer home", caption: "Local moves across Hartford County.", objectPosition: "center" },
+            { src: "/images/joe-with-customers.jpg", alt: "Joe with happy customers", caption: "Senior moves with patience and care.", objectPosition: "15% 25%" },
+          ].map((p) => (
+            <div key={p.src}>
+              <div style={{ position: "relative", height: 260, borderRadius: 12, overflow: "hidden" }}>
+                <Image src={p.src} alt={p.alt} fill style={{ objectFit: "cover", objectPosition: p.objectPosition }} />
+              </div>
+              <p style={{ fontFamily: "Merriweather, serif", fontStyle: "italic", fontSize: 13, color: "#666", textAlign: "center", marginTop: 10 }}>{p.caption}</p>
+            </div>
+          ))}
         </div>
       </section>
 

@@ -39,11 +39,19 @@ export default function PostcardForm() {
   const [selectedOffer, setSelectedOffer] = useState("");
   const firstInputRef = useRef(null);
 
+  // Pre-select from ?offer=<slug>; default to "storage" to match homepage sticky bar
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("offer") || "storage";
+    const match = OFFERS.find(o => o.slug === slug);
+    if (match) setSelectedOffer(match.label);
+  }, []);
+
   useEffect(() => {
     const handler = (e) => {
-      const offer = e?.detail?.offer;
-      if (typeof offer === "string" && OFFERS.includes(offer)) {
-        setSelectedOffer(offer);
+      const label = e?.detail?.label;
+      if (typeof label === "string" && OFFERS.some(o => o.label === label)) {
+        setSelectedOffer(label);
         // Briefly focus the first field so screen readers + keyboard users land in the form
         setTimeout(() => firstInputRef.current?.focus({ preventScroll: true }), 600);
       }
@@ -69,6 +77,13 @@ export default function PostcardForm() {
       });
       if (typeof window.fbq !== "undefined") window.fbq("track", "Lead");
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "postcard_form", hero_variant: hv }); }
+      if (typeof window.gtag !== "undefined") {
+        window.gtag("event", "postcard_submit", {
+          event_category: "postcard",
+          event_label: selectedOffer || "no_offer_selected",
+          home_size: formData.homeSize,
+        });
+      }
       setSubmitted(true);
     } catch {
       setSubmitted(true);
@@ -136,10 +151,10 @@ export default function PostcardForm() {
       <div style={{ marginTop: 16 }}>
         <label style={labelStyle}>Choose One Offer:</label>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 8 }}>
-          {OFFERS.map(offer => (
-            <label key={offer} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", padding: "12px 14px", borderRadius: 8, border: selectedOffer === offer ? "2px solid #FBCB0B" : "1px solid #E5E7EB", background: selectedOffer === offer ? "#FFFBEB" : "#fff", transition: "all 0.15s" }}>
-              <input type="radio" name="offerSelection" checked={selectedOffer === offer} onChange={() => setSelectedOffer(offer)} style={{ width: 18, height: 18, accentColor: "#FBCB0B", flexShrink: 0 }} />
-              <span style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#1A1A2E" }}>{offer}</span>
+          {OFFERS.map(({ slug, label }) => (
+            <label key={slug} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", padding: "12px 14px", borderRadius: 8, border: selectedOffer === label ? "2px solid #FBCB0B" : "1px solid #E5E7EB", background: selectedOffer === label ? "#FFFBEB" : "#fff", transition: "all 0.15s" }}>
+              <input type="radio" name="offerSelection" checked={selectedOffer === label} onChange={() => setSelectedOffer(label)} style={{ width: 18, height: 18, accentColor: "#FBCB0B", flexShrink: 0 }} />
+              <span style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#1A1A2E" }}>{label}</span>
             </label>
           ))}
         </div>
