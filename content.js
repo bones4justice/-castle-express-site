@@ -653,6 +653,7 @@ export const LEAD_SOURCES = [
   "Google — saw us on the map with reviews",
   "Google — clicked an ad (said \"Sponsored\")",
   "Google — regular search result",
+  "Asked an AI (ChatGPT, etc.)",
   "Facebook",
   "Instagram",
   "Postcard",
