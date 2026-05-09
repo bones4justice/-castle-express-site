@@ -648,16 +648,15 @@ export const MOVE_SIZES = [
 ];
 
 export const LEAD_SOURCES = [
-  "Google Search",
-  "Google Ad",
+  "Referral (friend, family, realtor, etc.)",
+  "Used us before",
+  "Google — saw us on the map with reviews",
+  "Google — clicked an ad (said \"Sponsored\")",
+  "Google — regular search result",
   "Facebook",
   "Instagram",
-  "YouTube",
-  "Thumbtack",
-  "TikTok",
-  "BBB",
-  "Referral",
-  "Repeat Customer",
+  "Postcard",
+  "Other",
 ];
 
 export const ABOUT_TEXT = {
