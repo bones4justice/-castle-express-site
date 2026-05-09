@@ -1,0 +1,158 @@
+.form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 32px 28px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 16px rgba(26, 29, 46, 0.06);
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 640px) {
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.input,
+.select,
+.textarea {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-family: inherit;
+  border: 1.5px solid #c5c8cc;
+  border-radius: 8px;
+  background: #fff;
+  color: #1a1a2e;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: #fbcb0b;
+  box-shadow: 0 0 0 3px rgba(251, 203, 11, 0.2);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 88px;
+}
+
+.input[type="date"] {
+  height: 48px;
+  padding: 12px 14px;
+  font-size: 16px;
+  font-family: inherit;
+}
+
+.label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a1a2e;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.offerSection {
+  margin-top: 8px;
+}
+
+.offerGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+@media (min-width: 641px) {
+  .offerGrid {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.offerCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.offerCard:hover {
+  border-color: #fbcb0b;
+}
+
+.offerCardSelected {
+  border-color: #fbcb0b;
+  background: #fff9e5;
+}
+
+.offerRadioInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.offerRadio {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #c5c8cc;
+  flex-shrink: 0;
+  position: relative;
+  background: #fff;
+}
+
+.offerRadioSelected {
+  border-color: #fbcb0b;
+  background: radial-gradient(circle, #fbcb0b 50%, #fff 55%);
+}
+
+.offerLabel {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #1a1a2e;
+}
+
+.submit {
+  margin-top: 20px;
+  width: 100%;
+  padding: 14px 20px;
+  background: #fbcb0b;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}

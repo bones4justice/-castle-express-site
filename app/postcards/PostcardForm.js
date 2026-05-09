@@ -2,32 +2,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, ArrowRight } from "@/components/Icons";
 import { OFFERS } from "./offers";
+import styles from "./postcard-form.module.css";
 
 const HOME_SIZES = ["Studio", "1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4+ Bedrooms"];
-
-const inputStyle = {
-  width: "100%",
-  padding: "12px 14px",
-  borderRadius: 6,
-  border: "1.5px solid #c5c8cc",
-  background: "#fff",
-  color: "#1A1A2E",
-  fontFamily: "var(--font-body)",
-  fontSize: 16,
-  outline: "none",
-  boxSizing: "border-box",
-};
-
-const labelStyle = {
-  display: "block",
-  fontFamily: "var(--font-heading)",
-  fontSize: 12,
-  fontWeight: 600,
-  color: "#1A1A2E",
-  marginBottom: 6,
-  textTransform: "uppercase",
-  letterSpacing: "0.5px",
-};
 
 export default function PostcardForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -39,7 +16,6 @@ export default function PostcardForm() {
   const [selectedOffer, setSelectedOffer] = useState("");
   const firstInputRef = useRef(null);
 
-  // Pre-select from ?offer=<slug>; default to "storage" to match homepage sticky bar
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const slug = params.get("offer") || "storage";
@@ -52,7 +28,6 @@ export default function PostcardForm() {
       const label = e?.detail?.label;
       if (typeof label === "string" && OFFERS.some(o => o.label === label)) {
         setSelectedOffer(label);
-        // Briefly focus the first field so screen readers + keyboard users land in the form
         setTimeout(() => firstInputRef.current?.focus({ preventScroll: true }), 600);
       }
     };
@@ -108,107 +83,84 @@ export default function PostcardForm() {
   }
 
   return (
-    <>
-      <style>{`
-        .postcard-form input:focus,
-        .postcard-form select:focus,
-        .postcard-form textarea:focus {
-          outline: none;
-          border-color: #FBCB0B;
-          box-shadow: 0 0 0 3px rgba(251, 203, 11, 0.2);
-        }
-        .postcard-form .form-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 16px;
-        }
-        .postcard-form input[type="date"] {
-          height: 48px;
-          padding: 12px 14px;
-          font-size: 16px;
-          font-family: inherit;
-        }
-        .postcard-form .offer-row {
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 8px;
-          margin-top: 8px;
-        }
-        .postcard-form .offer-label-text {
-          flex: 1;
-          font-family: var(--font-body);
-          font-size: 14px;
-          line-height: 1.4;
-          color: #1A1A2E;
-        }
-        @media (max-width: 600px) {
-          .postcard-form .form-row { grid-template-columns: 1fr; }
-          .postcard-form .offer-row { grid-template-columns: 1fr; }
-        }
-      `}</style>
-    <form onSubmit={handleSubmit} className="postcard-form" style={{ background: "#fff", borderRadius: 12, padding: "32px 28px", border: "1px solid #e5e7eb", boxShadow: "0 4px 16px rgba(26, 29, 46, 0.06)" }}>
-      <div className="form-row">
-        <div>
-          <label style={labelStyle}>First Name *</label>
-          <input ref={firstInputRef} style={inputStyle} value={formData.firstName} onChange={update("firstName")} required />
+    <form onSubmit={handleSubmit} className={styles.form}>
+      <div className={styles.formRow}>
+        <div className={styles.field}>
+          <label className={styles.label}>First Name *</label>
+          <input ref={firstInputRef} className={styles.input} value={formData.firstName} onChange={update("firstName")} required />
         </div>
-        <div>
-          <label style={labelStyle}>Last Name *</label>
-          <input style={inputStyle} value={formData.lastName} onChange={update("lastName")} required />
+        <div className={styles.field}>
+          <label className={styles.label}>Last Name *</label>
+          <input className={styles.input} value={formData.lastName} onChange={update("lastName")} required />
         </div>
-        <div>
-          <label style={labelStyle}>Phone Number *</label>
-          <input type="tel" style={inputStyle} placeholder="(860) 555-0123" value={formData.phone} onChange={update("phone")} required />
+      </div>
+
+      <div className={styles.formRow}>
+        <div className={styles.field}>
+          <label className={styles.label}>Phone Number *</label>
+          <input type="tel" className={styles.input} placeholder="(860) 555-0123" value={formData.phone} onChange={update("phone")} required />
         </div>
-        <div>
-          <label style={labelStyle}>Email Address *</label>
-          <input type="email" style={inputStyle} placeholder="you@email.com" value={formData.email} onChange={update("email")} required />
+        <div className={styles.field}>
+          <label className={styles.label}>Email Address *</label>
+          <input type="email" className={styles.input} placeholder="you@email.com" value={formData.email} onChange={update("email")} required />
         </div>
-        <div>
-          <label style={labelStyle}>Moving From *</label>
-          <input style={inputStyle} placeholder="City, State" value={formData.moveFrom} onChange={update("moveFrom")} required />
+      </div>
+
+      <div className={styles.formRow}>
+        <div className={styles.field}>
+          <label className={styles.label}>Moving From *</label>
+          <input className={styles.input} placeholder="City, State" value={formData.moveFrom} onChange={update("moveFrom")} required />
         </div>
-        <div>
-          <label style={labelStyle}>Moving To *</label>
-          <input style={inputStyle} placeholder="City, State" value={formData.moveTo} onChange={update("moveTo")} required />
+        <div className={styles.field}>
+          <label className={styles.label}>Moving To *</label>
+          <input className={styles.input} placeholder="City, State" value={formData.moveTo} onChange={update("moveTo")} required />
         </div>
-        <div>
-          <label style={labelStyle}>Estimated Move Date *</label>
-          <input type="date" style={inputStyle} value={formData.moveDate} onChange={update("moveDate")} required />
+      </div>
+
+      <div className={styles.formRow}>
+        <div className={styles.field}>
+          <label className={styles.label}>Estimated Move Date *</label>
+          <input type="date" className={styles.input} value={formData.moveDate} onChange={update("moveDate")} required />
         </div>
-        <div>
-          <label style={labelStyle}>Home Size *</label>
-          <select style={{ ...inputStyle, appearance: "auto" }} value={formData.homeSize} onChange={update("homeSize")} required>
+        <div className={styles.field}>
+          <label className={styles.label}>Home Size *</label>
+          <select className={styles.select} value={formData.homeSize} onChange={update("homeSize")} required>
             <option value="">Select size...</option>
             {HOME_SIZES.map(s => <option key={s} value={s}>{s}</option>)}
           </select>
         </div>
       </div>
 
-      {/* Offer radio buttons */}
-      <div style={{ marginTop: 16 }}>
-        <label style={labelStyle}>Choose One Offer:</label>
-        <div className="offer-row">
-          {OFFERS.map(({ slug, label }) => (
-            <label key={slug} style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer", padding: "12px 14px", borderRadius: 8, border: selectedOffer === label ? "2px solid #FBCB0B" : "1px solid #E5E7EB", background: selectedOffer === label ? "#FFFBEB" : "#fff", transition: "all 0.15s" }}>
-              <input type="radio" name="offerSelection" checked={selectedOffer === label} onChange={() => setSelectedOffer(label)} style={{ width: 24, height: 24, accentColor: "#FBCB0B", flexShrink: 0 }} />
-              <span className="offer-label-text">{label}</span>
-            </label>
-          ))}
+      <div className={styles.offerSection}>
+        <label className={styles.label}>Choose One Offer:</label>
+        <div className={styles.offerGrid}>
+          {OFFERS.map(({ slug, label }) => {
+            const isSelected = selectedOffer === label;
+            return (
+              <label key={slug} className={`${styles.offerCard}${isSelected ? " " + styles.offerCardSelected : ""}`}>
+                <input
+                  type="radio"
+                  name="offerSelection"
+                  className={styles.offerRadioInput}
+                  checked={isSelected}
+                  onChange={() => setSelectedOffer(label)}
+                />
+                <span className={`${styles.offerRadio}${isSelected ? " " + styles.offerRadioSelected : ""}`} aria-hidden="true" />
+                <span className={styles.offerLabel}>{label}</span>
+              </label>
+            );
+          })}
         </div>
       </div>
 
-      <div style={{ marginTop: 12 }}>
-        <label style={labelStyle}>Anything Else We Should Know</label>
-        <textarea style={{ ...inputStyle, resize: "vertical" }} rows={3} placeholder="Special items, timing preferences, questions..." value={formData.notes} onChange={update("notes")} />
+      <div className={styles.field} style={{ marginTop: 16 }}>
+        <label className={styles.label}>Anything Else We Should Know</label>
+        <textarea className={styles.textarea} rows={3} placeholder="Special items, timing preferences, questions..." value={formData.notes} onChange={update("notes")} />
       </div>
 
-      <div style={{ marginTop: 16 }}>
-        <button type="submit" disabled={loading} style={{ width: "100%", padding: "14px 20px", background: "#FBCB0B", color: "#000", border: "none", borderRadius: 8, fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, cursor: loading ? "wait" : "pointer", opacity: loading ? 0.7 : 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-          {loading ? "Submitting..." : <>Send My Free Estimate Request <ArrowRight /></>}
-        </button>
-      </div>
+      <button type="submit" disabled={loading} className={styles.submit}>
+        {loading ? "Submitting..." : <>Send My Free Estimate Request <ArrowRight /></>}
+      </button>
     </form>
-    </>
   );
 }

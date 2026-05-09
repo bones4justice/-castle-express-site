@@ -17,14 +17,21 @@ export default function PostcardsPage() {
     <>
       {/* HERO */}
       <section style={{ background: "#1a1d2e", minHeight: 560, padding: "72px 24px 0", position: "relative", overflow: "hidden" }}>
-        {/* Background photo (no full-image overlay — text gets its own localized scrim below) */}
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-aframe.webp)", backgroundSize: "cover", backgroundPosition: "center", pointerEvents: "none" }} />
+        {/* Background photo — sits at zIndex 1, behind the text card */}
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-aframe.webp)", backgroundSize: "cover", backgroundPosition: "center", pointerEvents: "none", zIndex: 1 }} />
         {/* Yellow triangle accent bottom left */}
         <svg style={{ position: "absolute", bottom: 0, left: 0, width: 200, height: 200, pointerEvents: "none", zIndex: 1 }} viewBox="0 0 200 200"><polygon points="0,200 200,200 0,0" fill="#FBCB0B" opacity="0.08" /></svg>
 
-        <div style={{ position: "relative", maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "45% 55%", alignItems: "end" }} className="postcard-hero-grid">
-          {/* Left column */}
-          <div className="postcard-hero-text">
+        <div style={{ position: "relative", maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "45% 55%", alignItems: "end", zIndex: 2 }} className="postcard-hero-grid">
+          {/* Left column — solid scrim inline so nothing can override */}
+          <div style={{
+            background: "rgba(26, 29, 46, 0.82)",
+            padding: "48px 24px",
+            borderRadius: 0,
+            maxWidth: "100%",
+            position: "relative",
+            zIndex: 2,
+          }}>
             <div className="section-label" style={{ marginBottom: 16 }}><span style={{ color: "#FBCB0B" }}>Thanks for Scanning!</span></div>
             <h1 style={{ fontFamily: "Merriweather, serif", fontWeight: 900, fontStyle: "normal", fontSize: "clamp(32px, 4.5vw, 46px)", color: "#fff", marginBottom: 16, lineHeight: 1.1 }}>
               You Found the <span style={{ color: "#FBCB0B" }}>Perfect Mover</span>.
@@ -57,18 +64,9 @@ export default function PostcardsPage() {
         </div>
 
         <style>{`
-          .postcard-hero-text {
-            background: linear-gradient(90deg, rgba(26, 29, 46, 0.85) 0%, rgba(26, 29, 46, 0.65) 70%, rgba(26, 29, 46, 0) 100%);
-            padding: 60px 24px 60px 24px;
-            border-radius: 0;
-          }
           @media (max-width: 768px) {
             .postcard-hero-grid { grid-template-columns: 1fr !important; }
             .postcard-hero-photo { display: none !important; }
-            .postcard-hero-text {
-              background: linear-gradient(180deg, rgba(26, 29, 46, 0.78) 0%, rgba(26, 29, 46, 0.78) 100%);
-              padding: 40px 24px;
-            }
           }
         `}</style>
       </section>
@@ -101,13 +99,13 @@ export default function PostcardsPage() {
       <section style={{ background: "#fff", padding: "48px 24px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
           {[
-            { src: "/images/crew-furniture.jpg", alt: "Castle Express crew moving furniture", caption: "Specialty piece moves — handled like our own.", objectPosition: "center top" },
-            { src: "/images/truck-residential.jpg", alt: "Castle Express truck at customer home", caption: "Local moves across Hartford County.", objectPosition: "center center" },
-            { src: "/images/joe-with-customers.jpg", alt: "Joe with happy customers", caption: "Senior moves with patience and care.", objectPosition: "center 30%" },
+            { src: "/images/crew-furniture.jpg", alt: "Castle Express crew moving furniture", caption: "Specialty piece moves — handled like our own.", objectFit: "cover", objectPosition: "center top", bg: "transparent" },
+            { src: "/images/truck-residential.jpg", alt: "Castle Express truck at customer home", caption: "Local moves across Hartford County.", objectFit: "cover", objectPosition: "center center", bg: "transparent" },
+            { src: "/images/joe-with-customers.jpg", alt: "Joe with happy customers", caption: "Senior moves with patience and care.", objectFit: "contain", objectPosition: "center", bg: "#f5f5f7" },
           ].map((p) => (
             <div key={p.src}>
-              <div style={{ position: "relative", height: 260, borderRadius: 12, overflow: "hidden" }}>
-                <Image src={p.src} alt={p.alt} fill style={{ objectFit: "cover", objectPosition: p.objectPosition }} />
+              <div style={{ position: "relative", height: 260, borderRadius: 12, overflow: "hidden", background: p.bg }}>
+                <Image src={p.src} alt={p.alt} fill style={{ objectFit: p.objectFit, objectPosition: p.objectPosition }} />
               </div>
               <p style={{ fontFamily: "Merriweather, serif", fontStyle: "italic", fontSize: 13, color: "#666", textAlign: "center", marginTop: 10 }}>{p.caption}</p>
             </div>
