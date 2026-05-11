@@ -38,6 +38,12 @@ input, select, textarea {
   font-size: 14px;
 }
 
+select option {
+  background-color: #FFFFFF;
+  color: #000000;
+  font-family: var(--font-body);
+}
+
 input:focus, select:focus, textarea:focus {
   outline: 2px solid rgba(212, 160, 23, 0.3);
   outline-offset: 1px;

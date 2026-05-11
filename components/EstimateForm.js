@@ -69,9 +69,9 @@ export default function EstimateForm({ dark = false }) {
 
   // ─── Styles ───
   const bg = dark ? "rgba(255,255,255,0.06)" : "#fff";
-  const inputBg = dark ? "rgba(255,255,255,0.1)" : "#F3F4F6";
-  const inputColor = dark ? "#fff" : "#1A1A2E";
-  const inputBorder = dark ? "rgba(255,255,255,0.15)" : "#E5E7EB";
+  const inputBg = "#FFFFFF";
+  const inputColor = "#000000";
+  const inputBorder = "#969a9d";
   const labelColor = dark ? "rgba(255,255,255,0.75)" : "#6B7280";
 
   const inputStyle = {
@@ -80,6 +80,8 @@ export default function EstimateForm({ dark = false }) {
     color: inputColor, fontFamily: "var(--font-body)", fontSize: 14,
     outline: "none", boxSizing: "border-box",
   };
+
+  const optionStyle = { background: "#FFFFFF", color: "#000000", fontFamily: "var(--font-body)" };
 
   const labelStyle = {
     display: "block", fontFamily: "var(--font-heading)", fontSize: 12,
@@ -255,15 +257,15 @@ export default function EstimateForm({ dark = false }) {
         <div>
           <label htmlFor="move-size" style={labelStyle}>Move Size</label>
           <select id="move-size" name="moveSize" style={{ ...inputStyle, appearance: "auto" }} value={formData.moveSize} onChange={update("moveSize")} aria-label="Move Size">
-            <option value="">Select size...</option>
-            {MOVE_SIZES.map(s => <option key={s} value={s}>{s}</option>)}
+            <option value="" style={optionStyle}>Select size...</option>
+            {MOVE_SIZES.map(s => <option key={s} value={s} style={optionStyle}>{s}</option>)}
           </select>
         </div>
         <div>
           <label htmlFor="how-did-you-hear-about-us" style={labelStyle}>How did you find us?</label>
           <select id="how-did-you-hear-about-us" name="source" style={{ ...inputStyle, appearance: "auto" }} value={formData.source} onChange={update("source")} aria-label="How did you find us?">
-            <option value="">Select...</option>
-            {LEAD_SOURCES.map(s => <option key={s} value={s}>{s}</option>)}
+            <option value="" style={optionStyle}>Select...</option>
+            {LEAD_SOURCES.map(s => <option key={s} value={s} style={optionStyle}>{s}</option>)}
           </select>
         </div>
       </div>
