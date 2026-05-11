@@ -74,7 +74,7 @@ export default function SeniorMovingPage() {
             Senior Moving Services in Connecticut
           </h1>
           <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: 24 }}>
-            Patient, experienced crews for life's biggest transitions. Serving Hartford County and Western Massachusetts since 2013.
+            Patient, experienced crews for life's biggest transitions. Serving Hartford County and Western Massachusetts since 2011.
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>

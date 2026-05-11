@@ -148,7 +148,7 @@ export default function BlogPost({ params }) {
               marginBottom: 12,
             }}>Ready to Get Moving?</h3>
             <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: 24, fontSize: 15 }}>
-              Castle Express Moving &amp; Storage - Enfield, CT. Serving Hartford County and Western MA since 2013.
+              Castle Express Moving &amp; Storage - Enfield, CT. Serving Hartford County and Western MA since 2011.
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
               <Link href="/contact" className="btn btn-primary">Get Free Estimate</Link>

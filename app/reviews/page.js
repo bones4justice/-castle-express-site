@@ -6,7 +6,7 @@ const SITE_URL = "https://www.castleexpressmoving.com";
 
 export const metadata = {
   title: "Reviews | Castle Express Moving & Storage — 200+ Five-Star Customers",
-  description: "Read 200+ verified Google reviews from Castle Express Moving customers across Hartford County CT and Western Massachusetts. 4.9 average rating since 2013.",
+  description: "Read 200+ verified Google reviews from Castle Express Moving customers across Hartford County CT and Western Massachusetts. 4.9 average rating since 2011.",
   alternates: { canonical: "/reviews/" },
   openGraph: {
     title: "Castle Express Moving Reviews — 200+ Five-Star Customers",

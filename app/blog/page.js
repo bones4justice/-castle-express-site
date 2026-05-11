@@ -5,7 +5,7 @@ import { Phone } from "@/components/Icons";
 
 export const metadata = {
   title: "Moving Tips & Local Guides | Castle Express Moving",
-  description: "Moving tips, local guides, and honest advice from Joe Caronna - owner of Castle Express Moving & Storage in Enfield, CT since 2013.",
+  description: "Moving tips, local guides, and honest advice from Joe Caronna - owner of Castle Express Moving & Storage in Enfield, CT since 2011.",
   alternates: { canonical: "/blog/" },
 };
 
@@ -21,7 +21,7 @@ export default function BlogPage() {
             Straight Talk on Moving
           </h1>
           <p className="body-lg text-white-muted" style={{ marginTop: 16 }}>
-            Honest advice from Joe Caronna - owner of Castle Express Moving &amp; Storage since 2013.
+            Honest advice from Joe Caronna - owner of Castle Express Moving &amp; Storage since 2011.
           </p>
         </div>
       </section>

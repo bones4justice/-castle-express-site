@@ -59,8 +59,8 @@ export default function HomePage() {
             </h1>
             <p className="body-lg text-white-muted" style={{ marginBottom: 28, maxWidth: 520 }}>
               {heroVariant === "B"
-                ? "Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2013. Accurate estimates, no hidden fees, and experienced crews who treat your belongings like their own."
-                : "Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2013. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own."}
+                ? "Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and experienced crews who treat your belongings like their own."
+                : "Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own."}
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
               {["Licensed & Insured", "Accurate Estimates", "5-Star Reviews"].map(item => (

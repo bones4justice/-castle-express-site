@@ -137,7 +137,7 @@ export default function LongDistanceMovingPage() {
               Licensed interstate movers from Connecticut and Western Massachusetts. One dedicated truck. Your schedule. Direct delivery.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
-              {["USDOT 2307446", "Family-Owned Since 2013", "Dedicated Trucks Only"].map(item => (
+              {["USDOT 2307446", "Family-Owned Since 2011", "Dedicated Trucks Only"].map(item => (
                 <div key={item} style={{ display: "flex", alignItems: "center", gap: 8 }}>
                   <Check />
                   <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "rgba(255,255,255,0.85)" }}>{item}</span>
@@ -442,7 +442,7 @@ export default function LongDistanceMovingPage() {
             Licensed Interstate Carrier
           </h2>
           <p className="body-md text-gray" style={{ lineHeight: 1.8, marginBottom: 24, maxWidth: 640, margin: "0 auto 24px" }}>
-            Castle Express Moving &amp; Storage is a licensed interstate moving company. Family-owned and operated in Enfield, Connecticut since 2013.
+            Castle Express Moving &amp; Storage is a licensed interstate moving company. Family-owned and operated in Enfield, Connecticut since 2011.
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: 24, flexWrap: "wrap", marginBottom: 24 }}>
             {[

@@ -37,7 +37,7 @@ export default function PostcardsPage() {
               You Found the <span style={{ color: "#FBCB0B" }}>Perfect Mover</span>.
             </h1>
             <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "rgba(255,255,255,0.8)", lineHeight: 1.7, marginBottom: 24, maxWidth: 500 }}>
-              Hi, I'm Joe, owner of Castle Express since 2013. You picked up our postcard and we appreciate that. As a thank-you, here are three exclusive offers just for you.
+              Hi, I'm Joe, owner of Castle Express since 2011. You picked up our postcard and we appreciate that. As a thank-you, here are three exclusive offers just for you.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
               {["Licensed & Insured", "Accurate Flat-Rate Estimates", `${COMPANY.reviewCount} 5-Star Reviews`].map(item => (
