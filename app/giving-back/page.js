@@ -43,7 +43,6 @@ const C = {
 
 export default function GivingBackPage() {
   const months = [...(data.months || [])].sort((a, b) => a.month.localeCompare(b.month));
-  const totalMoves = months.reduce((s, m) => s + (m.moves || 0), 0);
   const totalDonated = months.reduce((s, m) => s + (m.donated || 0), 0);
   const totalMatched = months.reduce((s, m) => s + (m.matched || 0), 0);
   const totalCombined = totalDonated + totalMatched;
@@ -98,7 +97,7 @@ export default function GivingBackPage() {
             Every Move Helps Feed a Family
           </h1>
           <p style={{ fontFamily: fontBody, fontSize: 17, lineHeight: 1.8, color: C.light, margin: "0 auto", maxWidth: 720 }}>
-            Castle Express Moving &amp; Storage donates <strong style={{ color: C.gold }}>$5 to Feeding America</strong> for every move we complete. Feeding America turns every <strong style={{ color: C.gold }}>$1 into 10 meals</strong>{showActiveBanner ? <>, and right now <strong style={{ color: C.gold }}>{data.matchPartner}</strong> is matching every dollar we donate, so the impact is doubled.</> : "."}
+            Every move we complete feeds families. Castle Express Moving &amp; Storage donates <strong style={{ color: C.gold }}>$5 to Feeding America</strong> for every move, and Feeding America turns every <strong style={{ color: C.gold }}>$1 into 10 meals</strong>{showActiveBanner ? <>. Right now <strong style={{ color: C.gold }}>{data.matchPartner}</strong> is matching every dollar we donate, so the impact is doubled.</> : "."} Here&apos;s our impact so far.
           </p>
 
           {showActiveBanner && (
@@ -121,7 +120,6 @@ export default function GivingBackPage() {
           </p>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 20 }}>
-            <StatCard label="Moves Completed" value={fmtInt(totalMoves)} accent />
             <StatCard label="Castle Express Donated" value={fmtMoney(totalDonated)} />
             {anyMatchedHistory && (
               <StatCard label={`Matched by ${data.matchPartner}`} value={fmtMoney(totalMatched)} />
@@ -137,7 +135,7 @@ export default function GivingBackPage() {
                   This Month ({fmtMonth(currentMonth.month)})
                 </div>
                 <div style={{ fontFamily: fontHead, fontWeight: 900, fontSize: 28, color: C.black }}>
-                  {fmtInt(currentMonth.moves || 0)} moves &middot; {fmtMoney((currentMonth.donated || 0) + (currentMonth.matched || 0))} donated &middot; {fmtInt(((currentMonth.donated || 0) + (currentMonth.matched || 0)) * mealsPerDollar)} meals
+                  {fmtMoney((currentMonth.donated || 0) + (currentMonth.matched || 0))} donated &middot; {fmtInt(((currentMonth.donated || 0) + (currentMonth.matched || 0)) * mealsPerDollar)} meals
                 </div>
               </div>
               {currentMonth.partial && (
@@ -161,7 +159,6 @@ export default function GivingBackPage() {
               <thead>
                 <tr style={{ background: C.black, color: C.white }}>
                   <Th>Month</Th>
-                  <Th align="right">Moves</Th>
                   <Th align="right">Castle Donated</Th>
                   <Th align="right">Match</Th>
                   <Th align="right">Total</Th>
@@ -181,7 +178,6 @@ export default function GivingBackPage() {
                           </div>
                         )}
                       </Td>
-                      <Td align="right">{fmtInt(m.moves || 0)}</Td>
                       <Td align="right">{fmtMoney(m.donated || 0)}</Td>
                       <Td align="right">{(m.matched || 0) > 0 ? fmtMoney(m.matched) : <span style={{ color: C.gray }}>$0</span>}</Td>
                       <Td align="right"><strong>{fmtMoney(total)}</strong></Td>
@@ -193,7 +189,6 @@ export default function GivingBackPage() {
               <tfoot>
                 <tr style={{ background: C.black, color: C.white }}>
                   <Td><strong>Lifetime Totals</strong></Td>
-                  <Td align="right"><strong>{fmtInt(totalMoves)}</strong></Td>
                   <Td align="right"><strong>{fmtMoney(totalDonated)}</strong></Td>
                   <Td align="right"><strong>{anyMatchedHistory ? fmtMoney(totalMatched) : "$0"}</strong></Td>
                   <Td align="right"><strong>{fmtMoney(totalCombined)}</strong></Td>

@@ -8,6 +8,12 @@ import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, Che
 import { IconResidential, IconCommercial, IconPacking, IconStorage, IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
 import EstimateForm from "@/components/EstimateForm";
 import { getHeroVariant, trackHeroVariant } from "@/lib/abtest";
+import feedingAmericaData from "@/data/feeding-america.json";
+
+const FEEDING_AMERICA_TOTAL_MEALS = (feedingAmericaData.months || []).reduce(
+  (sum, m) => sum + ((m.donated || 0) + (m.matched || 0)) * (feedingAmericaData.mealsPerDollar || 10),
+  0
+);
 
 function SectionLabel({ children }) {
   return (
@@ -327,6 +333,12 @@ export default function HomePage() {
           <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#374151", lineHeight: 1.8 }}>
             For every move we complete, Castle Express Moving &amp; Storage donates 50 meals to families in need through Feeding America. Moving is about new beginnings. We believe those beginnings should reach beyond just our customers.
           </p>
+          <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#1A1A2E", fontWeight: 700, lineHeight: 1.7, marginTop: 20 }}>
+            Together with our customers, we&apos;ve provided {FEEDING_AMERICA_TOTAL_MEALS.toLocaleString("en-US")} meals so far.
+          </p>
+          <Link href="/giving-back" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 16, fontFamily: "var(--font-body)", fontSize: 14, fontWeight: 700, color: "#1A1A2E", textDecoration: "none", borderBottom: "2px solid #FBCB0B", paddingBottom: 2 }}>
+            See Our Impact <ArrowRight size={16} />
+          </Link>
         </div>
       </section>
 
