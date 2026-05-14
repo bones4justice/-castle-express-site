@@ -46,6 +46,7 @@ export default function Footer() {
             <h4 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em" }}>Company</h4>
             {[
               { label: "About", href: "/about" },
+              { label: "Giving Back", href: "/giving-back" },
               { label: "Reviews", href: "/reviews" },
               { label: "Service Areas", href: "/service-areas" },
               { label: "Blog", href: "/blog" },
