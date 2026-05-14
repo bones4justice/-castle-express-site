@@ -97,7 +97,7 @@ export default function GivingBackPage() {
             Every Move Helps Feed a Family
           </h1>
           <p style={{ fontFamily: fontBody, fontSize: 17, lineHeight: 1.8, color: C.light, margin: "0 auto", maxWidth: 720 }}>
-            Every move we complete feeds families. Castle Express Moving &amp; Storage donates <strong style={{ color: C.gold }}>$5 to Feeding America</strong> for every move, and Feeding America turns every <strong style={{ color: C.gold }}>$1 into 10 meals</strong>{showActiveBanner ? <>. Right now <strong style={{ color: C.gold }}>{data.matchPartner}</strong> is matching every dollar we donate, so the impact is doubled.</> : "."} Here&apos;s our impact so far.
+            Every move we complete provides <strong style={{ color: C.gold }}>50 meals</strong> to families through Feeding America. Here&apos;s how: we donate <strong style={{ color: C.gold }}>$5 to Feeding America</strong> for every move, and Feeding America turns every <strong style={{ color: C.gold }}>$1 into 10 meals</strong>.{showActiveBanner ? <> Right now <strong style={{ color: C.gold }}>{data.matchPartner}</strong> is matching every dollar we donate, so the impact is doubled.</> : ""} Here&apos;s our impact so far.
           </p>
 
           {showActiveBanner && (
