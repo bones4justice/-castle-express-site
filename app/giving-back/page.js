@@ -109,45 +109,6 @@ export default function GivingBackPage() {
         </div>
       </section>
 
-      {/* Live Counters */}
-      <section style={{ background: C.white, color: C.black, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: fontHead, fontWeight: 900, fontSize: "clamp(26px, 3.4vw, 36px)", textAlign: "center", margin: "0 0 8px" }}>
-            Live Impact
-          </h2>
-          <p style={{ fontFamily: fontBody, fontSize: 15, color: C.gray, textAlign: "center", margin: "0 0 40px" }}>
-            Updated as moves complete. Program start: {fmtMonth(data.programStartDate.slice(0, 7))}.
-          </p>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 20 }}>
-            <StatCard label="Castle Express Donated" value={fmtMoney(totalDonated)} />
-            {anyMatchedHistory && (
-              <StatCard label={`Matched by ${data.matchPartner}`} value={fmtMoney(totalMatched)} />
-            )}
-            <StatCard label="Combined Donation" value={fmtMoney(totalCombined)} />
-            <StatCard label="Meals Provided" value={fmtInt(totalMeals)} accent />
-          </div>
-
-          {currentMonth && (
-            <div style={{ marginTop: 36, padding: "24px 28px", background: C.light, borderRadius: 12, display: "flex", flexWrap: "wrap", alignItems: "center", gap: 24, justifyContent: "space-between" }}>
-              <div>
-                <div style={{ fontFamily: fontBody, fontSize: 12, color: C.gray, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 6 }}>
-                  This Month ({fmtMonth(currentMonth.month)})
-                </div>
-                <div style={{ fontFamily: fontHead, fontWeight: 900, fontSize: 28, color: C.black }}>
-                  {fmtMoney((currentMonth.donated || 0) + (currentMonth.matched || 0))} donated &middot; {fmtInt(((currentMonth.donated || 0) + (currentMonth.matched || 0)) * mealsPerDollar)} meals
-                </div>
-              </div>
-              {currentMonth.partial && (
-                <span style={{ fontFamily: fontBody, fontSize: 13, color: C.gray, fontStyle: "italic" }}>
-                  Partial month{currentMonth.note ? `. ${currentMonth.note}` : ""}
-                </span>
-              )}
-            </div>
-          )}
-        </div>
-      </section>
-
       {/* Monthly History Table */}
       <section style={{ background: C.light, color: C.black, padding: "72px 24px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
@@ -235,40 +196,6 @@ export default function GivingBackPage() {
         </div>
       </section>
     </>
-  );
-}
-
-function StatCard({ label, value, accent = false }) {
-  return (
-    <div style={{
-      background: accent ? "#000000" : "#FFFFFF",
-      color: accent ? "#FFFFFF" : "#000000",
-      border: `1px solid ${accent ? "#000000" : "#ebeced"}`,
-      borderRadius: 12,
-      padding: "28px 22px",
-      textAlign: "center"
-    }}>
-      <div style={{
-        fontFamily: "var(--font-body), Merriweather, Georgia, serif",
-        fontWeight: 900,
-        fontSize: "clamp(28px, 3.4vw, 40px)",
-        lineHeight: 1.05,
-        color: accent ? "#FBCB0B" : "#000000",
-        marginBottom: 8,
-        letterSpacing: "-0.01em"
-      }}>
-        {value}
-      </div>
-      <div style={{
-        fontFamily: "var(--font-body), Merriweather, Georgia, serif",
-        fontSize: 12,
-        textTransform: "uppercase",
-        letterSpacing: "0.08em",
-        color: accent ? "#ebeced" : "#969a9d"
-      }}>
-        {label}
-      </div>
-    </div>
   );
 }
 

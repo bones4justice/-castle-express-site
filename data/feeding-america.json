@@ -4,7 +4,7 @@
   "matchActive": true,
   "matchPartner": "Tony Robbins",
   "months": [
-    { "month": "2026-04", "moves": 40, "donated": 200, "matched": 200 },
-    { "month": "2026-05", "moves": 10, "donated": 50, "matched": 50, "partial": true, "note": "Program started mid-month" }
+    { "month": "2026-04", "moves": 10, "donated": 50, "matched": 50, "partial": true, "note": "Program started mid-month" },
+    { "month": "2026-05", "moves": 40, "donated": 200, "matched": 200 }
   ]
 }
