@@ -13,5 +13,11 @@ export function middleware() {
 }
 
 export const config = {
-  matcher: ["/wp-:path*", "/p5y7czn1/:path*"],
+  matcher: [
+    "/wp-:path*", // single-segment probes: /wp-login.php, /wp-config.php, ...
+    "/wp-admin/:path*",
+    "/wp-content/:path*",
+    "/wp-includes/:path*",
+    "/p5y7czn1/:path*",
+  ],
 };
