@@ -129,7 +129,6 @@ const nextConfig = {
       // Old WordPress URLs with backlinks
       { source: '/about-us', destination: '/about/', permanent: true },
       { source: '/about-us/', destination: '/about/', permanent: true },
-      { source: '/wp-content/:path*', destination: '/', permanent: true },
       // Missing root-level town redirects
       { source: '/newington-ct', destination: '/movers-newington-ct/', permanent: true },
       { source: '/newington-ct/', destination: '/movers-newington-ct/', permanent: true },
@@ -212,9 +211,7 @@ const nextConfig = {
       { source: '/embed/', destination: '/', permanent: true },
       { source: '/packing-tips-for-fragile-and-specialty-items-pianos-antiques-safes-more', destination: '/blog/', permanent: true },
       { source: '/packing-tips-for-fragile-and-specialty-items-pianos-antiques-safes-more/', destination: '/blog/', permanent: true },
-      // Google 404 cleanup
-      { source: '/wp-admin/:path*', destination: '/', permanent: true },
-      { source: '/wp-:path*', destination: '/', permanent: true },
+      // Google 404 cleanup (WordPress hack-scan paths /wp-* now return 410 via middleware.js)
       { source: '/moving-and-storage-services-in-ct-trusted-storage-solutions-in-enfield-and-beyond', destination: '/services/storage/', permanent: true },
       { source: '/moving-and-storage-services-in-ct-trusted-storage-solutions-in-enfield-and-beyond/', destination: '/services/storage/', permanent: true },
       { source: '/offer-page', destination: '/storage-offer/', permanent: true },
@@ -224,7 +221,7 @@ const nextConfig = {
       { source: '/contact-us/:path*', destination: '/contact/', permanent: true },
       { source: '/piano-movers-in-enfield-the-castle-express-moving-difference', destination: '/blog/piano-moving-guide-connecticut/', permanent: true },
       { source: '/piano-movers-in-enfield-the-castle-express-moving-difference/', destination: '/blog/piano-moving-guide-connecticut/', permanent: true },
-      { source: '/p5y7czn1/:path*', destination: '/', permanent: true },
+      // /p5y7czn1/* (random-string spam path) now returns 410 via middleware.js
       { source: '/avery-template/:path*', destination: '/', permanent: true },
       { source: '/faqs', destination: '/', permanent: true },
       { source: '/faqs/', destination: '/', permanent: true },
@@ -414,6 +411,10 @@ const nextConfig = {
       { source: '/unpacking-insights-celebrating-national-moving-month-with-must-know-moving-facts', destination: '/blog/', permanent: true },
       { source: '/moving-season-pros-and-cons-a-comprehensive-guide-to-help-you-decide/', destination: '/blog/connecticut-moving-checklist/', permanent: true },
       { source: '/moving-season-pros-and-cons-a-comprehensive-guide-to-help-you-decide', destination: '/blog/connecticut-moving-checklist/', permanent: true },
+
+      // GSC 404 cleanup — May 29 2026 (only genuinely-missing source; the rest of the batch already had rules above)
+      { source: '/specialty-moves-how-to-safely-transport-pianos-safes-other-heavy-items', destination: '/services/specialty-moving/', permanent: true },
+      { source: '/specialty-moves-how-to-safely-transport-pianos-safes-other-heavy-items/', destination: '/services/specialty-moving/', permanent: true },
     ];
   },
 };
