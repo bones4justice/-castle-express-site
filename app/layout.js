@@ -3,6 +3,7 @@ import Script from "next/script";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StorageStickyBar from "@/components/StorageStickyBar";
+import AttributionCapture from "@/components/AttributionCapture";
 import "./globals.css";
 
 const merriweather = Merriweather({
@@ -64,10 +65,6 @@ export default function RootLayout({ children }) {
         <Script id="google-tag-manager" strategy="afterInteractive">{`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KLR2TQC');
         `}</Script>
-        <Script
-          src="https://api.smartmoving.com/api/public/lead-provider-settings/8f882454-9968-445e-8f50-ac5d011a33fc/script"
-          strategy="lazyOnload"
-        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-97Z4EHJM63"
           strategy="afterInteractive"
@@ -175,6 +172,7 @@ export default function RootLayout({ children }) {
             })
           }}
         />
+        <AttributionCapture />
         <Header />
         <main>{children}</main>
         <Footer />
