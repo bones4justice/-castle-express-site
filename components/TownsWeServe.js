@@ -42,7 +42,7 @@ export default function TownsWeServe({ limit = PRIORITY_TOWN_SLUGS.length, light
             <Link key={city.slug} href={`/${city.slug}/`} className="location-chip" style={{ textDecoration: "none" }}>
               <MapPin size={16} />
               <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "#1A1A2E" }}>
-                Movers in {city.town}, {city.state}
+                {city.town}, {city.state}
               </span>
             </Link>
           ))}
