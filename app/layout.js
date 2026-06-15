@@ -80,6 +80,28 @@ export default function RootLayout({ children }) {
               var el = link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
               var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'not_set';
               gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv });
+              // Desktop fallback: tel: links don't dial on a computer with no calling
+              // app, so the click feels dead. Copy the number + confirm so the CTA still
+              // does something. Mobile (and desktops with a real dialer) keep dialing —
+              // we never preventDefault, this only ADDS a clipboard copy + toast.
+              if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+                var num = '(888) 553-4503';
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                  try { navigator.clipboard.writeText(num); } catch (_) {}
+                }
+                var t = document.getElementById('phone-copy-toast');
+                if (!t) {
+                  t = document.createElement('div');
+                  t.id = 'phone-copy-toast';
+                  t.setAttribute('role', 'status');
+                  t.style.cssText = 'position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#1A1A2E;color:#fff;font-family:var(--font-heading),sans-serif;font-weight:700;font-size:15px;padding:14px 22px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.25);z-index:9999;opacity:0;transition:opacity 0.2s ease;pointer-events:none;';
+                  document.body.appendChild(t);
+                }
+                t.textContent = 'Number copied — call ' + num;
+                requestAnimationFrame(function () { t.style.opacity = '1'; });
+                clearTimeout(window.__phoneToast);
+                window.__phoneToast = setTimeout(function () { t.style.opacity = '0'; }, 2800);
+              }
             }
           });
         `}</Script>
