@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { COMPANY, SERVICES, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
-import { CITY_DATA } from "@/lib/cityData";
-import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, MapPin, Phone } from "@/components/Icons";
+import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, Phone } from "@/components/Icons";
 import { IconResidential, IconCommercial, IconPacking, IconStorage, IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
 import EstimateForm from "@/components/EstimateForm";
+import TownsWeServe from "@/components/TownsWeServe";
 import { getHeroVariant, trackHeroVariant } from "@/lib/abtest";
 import feedingAmericaData from "@/data/feeding-america.json";
 
@@ -76,12 +76,23 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            {heroVariant === "A" && (
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
-                <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> Call Now</a>
-              </div>
-            )}
+            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+              <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> (888) 553-4503</a>
+            </div>
+            {/* Compact trust row - kept inside the hero so it lands within the
+                first 40% of the page on mobile (the estimate form stacks below) */}
+            <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 4 }}>
+              <Link href="/reviews" aria-label="Read our Google reviews" style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", alignSelf: "flex-start" }}>
+                <span style={{ display: "inline-flex", gap: 2 }}>{[1, 2, 3, 4, 5].map(i => <Star key={i} size={14} />)}</span>
+                <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, color: "#fff", textDecoration: "underline", textUnderlineOffset: 3 }}>
+                  {COMPANY.reviewAvg} from {COMPANY.reviewCount} Google reviews
+                </span>
+              </Link>
+              <span style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.65)" }}>
+                Family-owned, since {COMPANY.founded} · USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit} · {COMPANY.mc}
+              </span>
+            </div>
           </div>
           <div>
             <EstimateForm dark />
@@ -93,10 +104,14 @@ export default function HomePage() {
       <section className="trust-bar" aria-label="Trust indicators">
         {[
           { icon: <IconBBB size={28} />, label: "A+ BBB Rating" },
-          { icon: <IconGoogle size={28} />, label: `${COMPANY.reviewAvg}★ on Google` },
-          { icon: <IconLicensed size={28} />, label: "Licensed & Insured" },
-          { icon: <IconLocation size={28} />, label: `Serving CT & MA Since ${COMPANY.founded}` },
-        ].map((item, i) => (
+          { icon: <IconGoogle size={28} />, label: `${COMPANY.reviewAvg}★ on Google (${COMPANY.reviewCount} reviews)`, href: "/reviews" },
+          { icon: <IconLicensed size={28} />, label: `Licensed & Insured · USDOT ${COMPANY.usdot}` },
+          { icon: <IconLocation size={28} />, label: `Family-Owned Since ${COMPANY.founded}` },
+        ].map((item, i) => item.href ? (
+          <Link key={i} href={item.href} className="trust-item" style={{ textDecoration: "none", color: "inherit" }}>
+            <span style={{ display: "inline-flex", verticalAlign: "middle" }}>{item.icon}</span> {item.label}
+          </Link>
+        ) : (
           <div key={i} className="trust-item"><span style={{ display: "inline-flex", verticalAlign: "middle" }}>{item.icon}</span> {item.label}</div>
         ))}
       </section>
@@ -184,39 +199,21 @@ export default function HomePage() {
       <section className="section section-light" aria-label="Customer reviews summary">
         <div className="container text-center">
           <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              {[1,2,3,4,5].map(i => <Star key={i} />)}
-            </div>
-            <div style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 20, color: "#1A1A2E" }}>
-              {COMPANY.reviewAvg} from {COMPANY.reviewCount} Google Reviews
-            </div>
+            <Link href="/reviews" aria-label="Read all Google reviews" style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 12, textDecoration: "none" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                {[1,2,3,4,5].map(i => <Star key={i} />)}
+              </div>
+              <div style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 20, color: "#1A1A2E" }}>
+                {COMPANY.reviewAvg} from {COMPANY.reviewCount} Google Reviews
+              </div>
+            </Link>
             <Link href="/reviews" className="btn btn-outline">Read All Reviews <ChevronRight /></Link>
           </div>
         </div>
       </section>
 
-      {/* ─── AREAS ─── */}
-      <section className="section" aria-label="Service areas">
-        <div className="container">
-          <div className="text-center" style={{ marginBottom: 40 }}>
-            <SectionLabel>Coverage Area</SectionLabel>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Proudly Serving CT & Western MA</h2>
-            <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
-              Our moving company provides local and long-distance service throughout Hartford County, the Connecticut River Valley, and Western Massachusetts. From Suffield to Glastonbury, Manchester to West Hartford - we know every neighborhood.
-            </p>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 12 }}>
-            {CITY_DATA.filter(c => c.tier === "Tier 1 - Priority").map(city => (
-              <Link key={city.slug} href={`/${city.slug}`} className="location-chip">
-                <MapPin size={16} /> {city.town}, {city.state}
-              </Link>
-            ))}
-          </div>
-          <div className="text-center" style={{ marginTop: 32 }}>
-            <Link href="/service-areas" className="btn btn-outline">View All Service Areas <ChevronRight /></Link>
-          </div>
-        </div>
-      </section>
+      {/* ─── TOWNS WE SERVE ─── */}
+      <TownsWeServe limit={12} />
 
       {/* ─── PHOTO STRIP ─── */}
       <section style={{ padding: "0", overflow: "hidden" }} aria-label="Photo gallery">
@@ -257,10 +254,10 @@ export default function HomePage() {
               View Packages & Book →
             </a>
           </div>
-          <div style={{ background: "linear-gradient(160deg, #fce4ef 0%, rgba(247,37,133,0.15) 100%)", padding: 40, textAlign: "center", border: "1px solid rgba(247,37,133,0.2)" }}>
+          <a href="/princess-packing.html" aria-label="View Princess Packing packages" style={{ display: "block", background: "linear-gradient(160deg, #fce4ef 0%, rgba(247,37,133,0.15) 100%)", padding: 40, textAlign: "center", border: "1px solid rgba(247,37,133,0.2)", textDecoration: "none" }}>
             <div style={{ position: "relative", width: "100%", height: 280 }}><Image src="/images/princess-packing-crew.jpg" alt="Princess Packing crew in pink polos" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "top" }} /></div>
             <div style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 700, fontSize: 18, color: "#0d0d0d", marginTop: 16 }}>Professional Packing. Done Right.</div>
-          </div>
+          </a>
         </div>
       </section>
 

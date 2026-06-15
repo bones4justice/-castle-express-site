@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SERVICES, SERVICE_PAGES, FAQ } from "@/content";
 import { Check, ArrowRight } from "@/components/Icons";
 import { IconResidential, IconCommercial, IconPacking, IconStorage, IconPiano, IconLongDistance } from "@/components/BrandIcons";
+import TownsWeServe from "@/components/TownsWeServe";
 
 export const metadata = {
   title: "Our Moving Services | Castle Express Moving & Storage",
@@ -33,16 +34,14 @@ export default function ServicesPage() {
         <div className="container-md" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
           {SERVICES.map((svc) => {
             return (
-              <div key={svc.id} className="card grid-2" style={{ alignItems: "start", gap: 32 }}>
+              <Link key={svc.id} href={`/services/${svc.slug}/`} className="card grid-2" style={{ alignItems: "start", gap: 32, textDecoration: "none", cursor: "pointer" }}>
                 <div>
                   <div className="icon-badge" style={{ marginBottom: 16 }}>{ICONS[svc.id]}</div>
                   <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 10 }}>{svc.title}</h2>
                   <p className="body-sm text-gray" style={{ lineHeight: 1.7, marginBottom: 16 }}>{svc.fullDesc}</p>
-                  {svc.slug && (
-                    <Link href={`/services/${svc.slug}/`} style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: 4 }}>
-                      Learn More <ArrowRight />
-                    </Link>
-                  )}
+                  <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", display: "inline-flex", alignItems: "center", gap: 4 }}>
+                    Learn More <ArrowRight />
+                  </span>
                 </div>
                 <div>
                   <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, color: "#D4A017", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 12 }}>What's Included</h3>
@@ -53,7 +52,7 @@ export default function ServicesPage() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
@@ -76,6 +75,8 @@ export default function ServicesPage() {
           </div>
         </div>
       </section>
+
+      <TownsWeServe light />
     </>
   );
 }
