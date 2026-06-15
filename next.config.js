@@ -1,3 +1,51 @@
+// Root-level legacy blog slugs. The old Bluehost/WordPress site served these
+// posts at the domain root; the same content now lives under /blog/. Any
+// root-level hit (old backlinks, stale Google index) 301s to the /blog/ URL.
+const BLOG_SLUGS = [
+  'how-to-choose-a-moving-company-in-connecticut',
+  'why-castle-express',
+  'moving-to-ellington-ct',
+  'how-to-pack-fragile-items-for-a-move',
+  'how-to-avoid-getting-burned-by-a-moving-company',
+  'hartford-neighborhoods-a-movers-perspective',
+  '7-things-movers-wont-move',
+  'moving-to-southwick-ma',
+  'moving-to-ludlow-ma',
+  'how-to-transport-a-mattress-safely',
+  'what-to-do-with-furniture-when-liquidating-an-estate-in-connecticut',
+  'how-to-move-a-sleep-number-bed',
+  'how-to-move-a-hyperbaric-oxygen-chamber',
+  'ultimate-moving-checklist-connecticut',
+  'packing-tips-from-professional-movers',
+  'how-to-move-step-by-step-guide',
+  'benefits-of-climate-controlled-storage',
+  'how-much-do-movers-cost-in-connecticut',
+  'relocating-to-connecticut-guide',
+  'piano-moving-guide-connecticut',
+  'best-towns-hartford-county-families',
+  'how-much-to-tip-movers',
+  'connecticut-moving-checklist',
+  'how-to-declutter-before-a-move',
+  'how-to-pack-a-kitchen-for-moving',
+  'pros-and-cons-of-living-in-connecticut',
+  'free-moving-boxes-connecticut',
+  'moving-supplies-checklist',
+  'what-happens-after-you-request-an-estimate',
+  'how-to-pack-clothes-for-moving',
+  'is-u-haul-cheaper-than-movers',
+  'long-distance-moving-from-ct-and-ma',
+  'how-to-choose-commercial-movers-ct-ma',
+  'corporate-move-planning-peak-season',
+  'how-to-pack-small-kitchen-appliances-and-pantry-items',
+  'storage-during-probate-connecticut',
+  'hartford-county-probate-court-process',
+];
+
+const blogPrefixRedirects = BLOG_SLUGS.flatMap(slug => [
+  { source: `/${slug}`, destination: `/blog/${slug}/`, permanent: true },
+  { source: `/${slug}/`, destination: `/blog/${slug}/`, permanent: true },
+]);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: true,
@@ -415,6 +463,20 @@ const nextConfig = {
       // GSC 404 cleanup — May 29 2026 (only genuinely-missing source; the rest of the batch already had rules above)
       { source: '/specialty-moves-how-to-safely-transport-pianos-safes-other-heavy-items', destination: '/services/specialty-moving/', permanent: true },
       { source: '/specialty-moves-how-to-safely-transport-pianos-safes-other-heavy-items/', destination: '/services/specialty-moving/', permanent: true },
+
+      // GA4 legacy URL leaks — June 12 2026 (old Bluehost-era URLs still receiving traffic)
+      { source: '/commercial-moving-made-simple-benefits-for-your-business', destination: '/services/commercial-moving/', permanent: true },
+      { source: '/commercial-moving-made-simple-benefits-for-your-business/', destination: '/services/commercial-moving/', permanent: true },
+      { source: '/piano-movers-ct-how-to-find-a-trusted-piano-moving-company-near-you', destination: '/blog/piano-moving-guide-connecticut/', permanent: true },
+      { source: '/piano-movers-ct-how-to-find-a-trusted-piano-moving-company-near-you/', destination: '/blog/piano-moving-guide-connecticut/', permanent: true },
+      { source: '/About_Us.html', destination: '/about/', permanent: true },
+      // //checkout (double slash) is normalized to /checkout by Next before routing;
+      // we have no checkout, send it home
+      { source: '/checkout', destination: '/', permanent: true },
+      { source: '/checkout/', destination: '/', permanent: true },
+
+      // Root-level blog slugs missing the /blog/ prefix (generated from BLOG_SLUGS above)
+      ...blogPrefixRedirects,
     ];
   },
 };
