@@ -285,7 +285,7 @@ export default function CityPage({ params }) {
             <div style={{ marginBottom: 32 }}>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>How much do movers cost in {city.town}, {city.state}?</summary>
-                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>The cost varies by home size and distance. Most local moves in {city.town} range from $400–$1,200. We offer free accurate estimates  -  call {COMPANY.phone} or fill out the form.</p>
+                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>The cost varies by home size and distance. Most local moves in {city.town} range from $400–$1,200. We offer free accurate estimates  -  call <a href={COMPANY.phoneLink} style={linkStyle}>{COMPANY.phone}</a> or fill out the form.</p>
               </details>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>Is Castle Express licensed and insured in {city.state}?</summary>
@@ -310,7 +310,7 @@ export default function CityPage({ params }) {
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   {nearbyCities.map(n => (
                     <Link key={n.slug} href={`/${n.slug}`} className="location-chip">
-                      <MapPin size={14} /> {n.town}, {n.state}
+                      <MapPin size={14} /> Movers in {n.town}, {n.state}
                     </Link>
                   ))}
                 </div>

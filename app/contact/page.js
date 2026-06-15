@@ -29,7 +29,7 @@ export default function ContactPage() {
               <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginBottom: 16 }}>Contact Information</h3>
               {[
                 { icon: <Phone size={18} />, label: "Phone", value: COMPANY.phone, href: COMPANY.phoneLink, bold: true },
-                { icon: <MapPin size={18} />, label: "Address", value: COMPANY.fullAddress },
+                { icon: <MapPin size={18} />, label: "Address", value: COMPANY.fullAddress, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(COMPANY.fullAddress)}` },
                 { icon: <Clock size={18} />, label: "Availability", value: COMPANY.hours },
               ].map((item, i) => (
                 <div key={i} style={{ display: "flex", gap: 12, marginBottom: 16, alignItems: "flex-start" }}>
@@ -37,7 +37,7 @@ export default function ContactPage() {
                   <div>
                     <div style={{ fontFamily: "var(--font-heading)", fontSize: 12, fontWeight: 600, color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.04em" }}>{item.label}</div>
                     {item.href ? (
-                      <a href={item.href} style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "#1A1A2E", fontWeight: 600, textDecoration: "none" }}>{item.value}</a>
+                      <a href={item.href} {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})} style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "#1A1A2E", fontWeight: 600, textDecoration: "none" }}>{item.value}</a>
                     ) : (
                       <div style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "#1A1A2E" }}>{item.value}</div>
                     )}
