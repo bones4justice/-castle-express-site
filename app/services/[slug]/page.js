@@ -5,6 +5,7 @@ import { COMPANY, SERVICE_PAGES } from "@/content";
 import { getAllPosts } from "@/lib/blogData";
 import { Check, Phone, Star, Shield, ArrowRight, ChevronRight, MapPin } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
+import TownsWeServe from "@/components/TownsWeServe";
 
 // Parse [text](url) markdown links inside a plain string and return React nodes.
 // Internal links (starting with /) render as Next <Link>; external as <a>.
@@ -250,7 +251,10 @@ export default function ServiceDetailPage({ params }) {
         ) : null;
       })()}
 
-      {/* ���── CTA ─── */}
+      {/* ─── TOWNS WE SERVE (residential only — strongest service page) ─── */}
+      {params.slug === "residential-moving" && <TownsWeServe />}
+
+      {/* ───── CTA ─── */}
       <section className="section section-dark text-center">
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
           <h2 className="heading-2 text-white">Ready to Get Started?</h2>
