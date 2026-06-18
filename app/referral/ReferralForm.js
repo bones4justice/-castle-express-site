@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Check, ArrowRight } from "@/components/Icons";
-import { getAttribution } from "@/lib/utm";
+import { getSmartMovingAttribution } from "@/lib/utm";
 
 const ROLES = [
   "Property Manager",
@@ -97,15 +97,7 @@ export default function ReferralForm() {
       if (formData.moveDate) smPayload.MoveDate = formData.moveDate.replace(/-/g, "");
       smPayload.Notes = `REFERRAL - Referred by: ${formData.referrerFirstName} ${formData.referrerLastName} | Phone: ${formData.referrerPhone} | Email: ${formData.referrerEmail} | Company: ${formData.referrerCompany} | Role: ${formData.referrerType}${formData.notes ? " | Notes: " + formData.notes : ""}`;
 
-      const attribution = getAttribution();
-      if (attribution.utm_source)   smPayload.UtmSource   = attribution.utm_source;
-      if (attribution.utm_medium)   smPayload.UtmMedium   = attribution.utm_medium;
-      if (attribution.utm_campaign) smPayload.UtmCampaign = attribution.utm_campaign;
-      if (attribution.utm_content)  smPayload.UtmContent  = attribution.utm_content;
-      if (attribution.utm_term)     smPayload.UtmKeyword  = attribution.utm_term;
-      if (attribution.utm_adgroup)  smPayload.UtmAdGroup  = attribution.utm_adgroup;
-      const clickId = attribution.gclid || attribution.gbraid || attribution.wbraid || attribution.fbclid || attribution.msclkid;
-      if (clickId) smPayload.UtmCustomTracking = clickId;
+      Object.assign(smPayload, getSmartMovingAttribution());
 
       const smRes = await fetch("https://api.smartmoving.com/api/leads/from-provider/v2?providerKey=d1cc3234-4fdc-4b3d-ad89-b0ec010a0ee8&branchId=352498a1-e171-40cd-8b35-ac5d011720d0", {
         method: "POST",

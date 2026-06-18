@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { MOVE_SIZES, LEAD_SOURCES, COMPANY } from "@/content";
 import { Check, ArrowRight, Phone } from "@/components/Icons";
-import { getAttribution } from "@/lib/utm";
+import { getSmartMovingAttribution } from "@/lib/utm";
 
 export default function EstimateForm({ dark = false }) {
   const [submitted, setSubmitted] = useState(false);
@@ -50,15 +50,7 @@ export default function EstimateForm({ dark = false }) {
       if (formData.moveFrom) smPayload.OriginAddressFull = formData.moveFrom;
       if (formData.moveTo) smPayload.DestinationAddressFull = formData.moveTo;
 
-      const attribution = getAttribution();
-      if (attribution.utm_source)   smPayload.UtmSource   = attribution.utm_source;
-      if (attribution.utm_medium)   smPayload.UtmMedium   = attribution.utm_medium;
-      if (attribution.utm_campaign) smPayload.UtmCampaign = attribution.utm_campaign;
-      if (attribution.utm_content)  smPayload.UtmContent  = attribution.utm_content;
-      if (attribution.utm_term)     smPayload.UtmKeyword  = attribution.utm_term;
-      if (attribution.utm_adgroup)  smPayload.UtmAdGroup  = attribution.utm_adgroup;
-      const clickId = attribution.gclid || attribution.gbraid || attribution.wbraid || attribution.fbclid || attribution.msclkid;
-      if (clickId) smPayload.UtmCustomTracking = clickId;
+      Object.assign(smPayload, getSmartMovingAttribution());
 
       const smRes = await fetch("https://api.smartmoving.com/api/leads/from-provider/v2?providerKey=8f882454-9968-445e-8f50-ac5d011a33fc&branchId=352498a1-e171-40cd-8b35-ac5d011720d0", {
         method: "POST",
