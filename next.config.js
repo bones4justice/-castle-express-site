@@ -346,6 +346,9 @@ const nextConfig = {
       // Princess Packing route fix
       { source: '/princess-packing', destination: '/princess-packing.html', permanent: false },
       { source: '/princess-packing/', destination: '/princess-packing.html', permanent: false },
+      // AI assistant reference page (OIAA) — clean URL → static file
+      { source: '/oiaa', destination: '/oiaa.html', permanent: false },
+      { source: '/oiaa/', destination: '/oiaa.html', permanent: false },
       // GSC crawled-not-indexed cleanup
       { source: '/2025/:path*', destination: '/blog/', permanent: true },
       { source: '/sustainable-moving-solutions-how-to-make-your-move-eco-friendly', destination: '/blog/', permanent: true },
