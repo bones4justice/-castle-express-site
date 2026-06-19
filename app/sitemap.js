@@ -23,6 +23,9 @@ export default function sitemap() {
     { url: `${BASE}/storage-offer/`, changeFrequency: "monthly", priority: 0.7 },
     { url: `${BASE}/piano-moving/`, changeFrequency: "monthly", priority: 0.8 },
     { url: `${BASE}/senior-moving/`, changeFrequency: "monthly", priority: 0.8 },
+    // AI assistant reference page (OIAA) — listed so crawlers/AI bots can discover it
+    // without a visible nav link. Canonical 200 URL is the static .html file.
+    { url: `${BASE}/oiaa.html`, changeFrequency: "monthly", priority: 0.3 },
     { url: `${BASE}/services/long-distance-moving/`, changeFrequency: "monthly", priority: 0.9 },
   ].map(p => ({ ...p, lastModified: CONTENT_UPDATED }));
 
