@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StorageStickyBar from "@/components/StorageStickyBar";
 import AttributionCapture from "@/components/AttributionCapture";
+import { localBusinessJsonLd } from "@/lib/structuredData";
 import "./globals.css";
 
 const merriweather = Merriweather({
@@ -127,72 +128,11 @@ export default function RootLayout({ children }) {
         <noscript>
           <img height="1" width="1" style={{display:"none"}} src="https://www.facebook.com/tr?id=1423378058969444&ev=PageView&noscript=1" alt="" />
         </noscript>
+        {/* Sitewide LocalBusiness JSON-LD. The full MovingCompany graph is
+            added on the homepage only (see app/page.js + lib/structuredData.js). */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "MovingCompany",
-              "name": "Castle Express Moving & Storage",
-              "image": "https://www.castleexpressmoving.com/images/logo.jpg",
-              "url": "https://www.castleexpressmoving.com",
-              "telephone": "+18885534503",
-              "priceRange": "$$",
-              "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "4 Niblick Rd Unit A",
-                "addressLocality": "Enfield",
-                "addressRegion": "CT",
-                "postalCode": "06082",
-                "addressCountry": "US"
-              },
-              "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": 41.9762,
-                "longitude": -72.5918
-              },
-              "openingHoursSpecification": {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-                "opens": "07:00",
-                "closes": "20:00"
-              },
-              "sameAs": [
-                "https://www.facebook.com/cemoving",
-                "https://www.instagram.com/castleexpressmovingandstorage/",
-                "https://www.tiktok.com/@castleexpressmovi",
-                "https://www.linkedin.com/in/joseph-caronna-767a616",
-                "https://linktr.ee/castleexpressmovingandstorage"
-              ],
-              "aggregateRating": {
-                "@type": "AggregateRating",
-                "ratingValue": "4.9",
-                "reviewCount": 200,
-                "bestRating": "5"
-              },
-              "areaServed": [
-                { "@type": "State", "name": "Connecticut" },
-                { "@type": "State", "name": "Massachusetts" }
-              ],
-              "foundingDate": "2011",
-              "founder": {
-                "@type": "Person",
-                "name": "Joseph Caronna"
-              },
-              "description": "Family-owned moving company serving Hartford County, CT and Western Massachusetts since 2011. Residential, commercial, packing, and climate-controlled storage. Accurate estimates, no hidden fees.",
-              "hasOfferCatalog": {
-                "@type": "OfferCatalog",
-                "name": "Moving Services",
-                "itemListElement": [
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Residential Moving" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Commercial Moving" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Packing Services" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Climate-Controlled Storage" } },
-                  { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Specialty Moving" } }
-                ]
-              }
-            })
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd()) }}
         />
         <AttributionCapture />
         <Header />

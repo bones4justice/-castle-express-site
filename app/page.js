@@ -8,6 +8,7 @@ import { IconResidential, IconCommercial, IconPacking, IconStorage, IconBBB, Ico
 import EstimateForm from "@/components/EstimateForm";
 import TownsWeServe from "@/components/TownsWeServe";
 import { getHeroVariant, trackHeroVariant } from "@/lib/abtest";
+import { homepageJsonLd } from "@/lib/structuredData";
 import feedingAmericaData from "@/data/feeding-america.json";
 
 const FEEDING_AMERICA_TOTAL_MEALS = (feedingAmericaData.months || []).reduce(
@@ -41,6 +42,12 @@ export default function HomePage() {
 
   return (
     <>
+      {/* Homepage structured data: single @graph array combining LocalBusiness
+          + the full MovingCompany node (see lib/structuredData.js). */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd()) }}
+      />
       {/* ─── HERO ─── */}
       <section className="section-dark" aria-label="Hero" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, opacity: 0.12, pointerEvents: "none" }}>
