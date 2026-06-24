@@ -30,6 +30,16 @@ export default function BlogPost({ params }) {
       .trim()
       .split("\n\n")
       .map((block, i) => {
+        const imgMatch = block.match(/^!\[(.*?)\]\((.*?)\)$/);
+        if (imgMatch) {
+          return <img key={i} src={imgMatch[2]} alt={imgMatch[1]} loading="lazy" style={{
+            width: "100%",
+            height: "auto",
+            borderRadius: 12,
+            margin: "8px 0 28px",
+            display: "block",
+          }} />;
+        }
         if (block.startsWith("## ")) {
           return <h2 key={i} style={{
             fontFamily: "var(--font-heading)",
