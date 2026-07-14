@@ -62,7 +62,7 @@ export default function Footer() {
             {[
               { label: "Residential Moving", href: "/services/residential-moving" },
               { label: "Commercial Moving", href: "/services/commercial-moving" },
-              { label: "Packing Services", href: "/services/packing-services" },
+              { label: "Packing Services", href: "/services/packing-services/" },
               { label: "Climate-Controlled Storage", href: "/services/storage" },
               { label: "Specialty Moving", href: "/services/specialty-moving" },
               { label: "Piano Moving", href: "/piano-moving" },
@@ -70,7 +70,7 @@ export default function Footer() {
             ].map(s => (
               <Link key={s.href} href={s.href} style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.75)", marginBottom: 8, textDecoration: "none" }}>{s.label}</Link>
             ))}
-            <a href="/princess-packing/" style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "#F72585", fontWeight: 600, marginBottom: 8, textDecoration: "none", marginTop: 4 }}>Princess Packing™</a>
+            <Link href="/princess-packing/" style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "#F72585", fontWeight: 600, marginBottom: 8, textDecoration: "none", marginTop: 4 }}>Princess Packing™</Link>
             <Link href="/referral" style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "#D4A017", fontWeight: 600, marginBottom: 8, textDecoration: "none" }}>Referral Program</Link>
           </div>
 

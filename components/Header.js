@@ -12,7 +12,7 @@ const NAV_ITEMS = [
   { label: "Service Areas", href: "/service-areas" },
   { label: "Reviews", href: "/reviews" },
   { label: "Blog", href: "/blog" },
-  { label: "Princess Packing™", href: "/princess-packing/", gold: true, static: true },
+  { label: "Princess Packing™", href: "/princess-packing/", gold: true },
   { label: "Referral Program", href: "/referral", gold: true },
   { label: "Contact", href: "/contact" },
 ];

@@ -188,8 +188,7 @@ const nextConfig = {
       { source: '/ellington-ct/', destination: '/movers-ellington-ct/', permanent: true },
       { source: '/east-granby-ct', destination: '/movers-east-granby-ct/', permanent: true },
       { source: '/east-granby-ct/', destination: '/movers-east-granby-ct/', permanent: true },
-      { source: '/suffield-ct', destination: '/movers-suffield-ct/', permanent: true },
-      { source: '/suffield-ct/', destination: '/movers-suffield-ct/', permanent: true },
+      // (/suffield-ct rules live in the "Old /town-state/ format" block above)
       // Old WordPress site pages
       { source: '/contact-us', destination: '/contact/', permanent: true },
       { source: '/contact-us/', destination: '/contact/', permanent: true },
@@ -247,8 +246,8 @@ const nextConfig = {
       { source: '/services/construction/', destination: '/services/', permanent: true },
       { source: '/services/you-pack-we-move', destination: '/services/', permanent: true },
       { source: '/services/you-pack-we-move/', destination: '/services/', permanent: true },
-      { source: '/services/packing', destination: '/princess-packing.html', permanent: true },
-      { source: '/services/packing/', destination: '/princess-packing.html', permanent: true },
+      { source: '/services/packing', destination: '/services/packing-services/', permanent: true },
+      { source: '/services/packing/', destination: '/services/packing-services/', permanent: true },
       // Old blog numeric URLs
       { source: '/blogs/:id/', destination: '/blog/', permanent: true },
       { source: '/blogs/:id', destination: '/blog/', permanent: true },
@@ -279,9 +278,9 @@ const nextConfig = {
       { source: '/quick-moving-tips/', destination: '/blog/', permanent: true },
       { source: '/services/assisted-living', destination: '/senior-moving/', permanent: true },
       { source: '/services/assisted-living/', destination: '/senior-moving/', permanent: true },
-      // Princess Packing is the canonical packing service page (replaces outdated /services/packing-services/)
-      { source: '/services/packing-services', destination: '/princess-packing.html', permanent: true },
-      { source: '/services/packing-services/', destination: '/princess-packing.html', permanent: true },
+      // /services/packing-services/ is a real page again (general packing; Princess Packing™
+      // is the premium tier at /princess-packing/) — the old kill-redirects to
+      // princess-packing.html were removed 2026-07-10 to fix the GSC canonical conflict.
       { source: '/movers/west-hartford-ct', destination: '/movers-west-hartford-ct/', permanent: true },
       { source: '/movers/west-hartford-ct/', destination: '/movers-west-hartford-ct/', permanent: true },
       { source: '/client-referral-program', destination: '/referral/', permanent: true },
@@ -290,8 +289,8 @@ const nextConfig = {
       { source: '/testimonials/', destination: '/', permanent: true },
       { source: '/movers/castle-express-moving-and-storage-moving-company-springfield-ma', destination: '/movers-springfield-ma/', permanent: true },
       { source: '/movers/castle-express-moving-and-storage-moving-company-springfield-ma/', destination: '/movers-springfield-ma/', permanent: true },
-      { source: '/services/packers-and-movers', destination: '/princess-packing.html', permanent: true },
-      { source: '/services/packers-and-movers/', destination: '/princess-packing.html', permanent: true },
+      { source: '/services/packers-and-movers', destination: '/services/packing-services/', permanent: true },
+      { source: '/services/packers-and-movers/', destination: '/services/packing-services/', permanent: true },
       { source: '/packing-tips', destination: '/blog/', permanent: true },
       { source: '/packing-tips/', destination: '/blog/', permanent: true },
       // Additional redirects batch
@@ -343,9 +342,9 @@ const nextConfig = {
       { source: '/storage-solutions-in-enfield-how-moving-companies-can-help', destination: '/services/storage/', permanent: true },
       { source: '/what-happens-when-you-forget-the-essentials-on-day-one-of-your-move/', destination: '/blog/', permanent: true },
       { source: '/what-happens-when-you-forget-the-essentials-on-day-one-of-your-move', destination: '/blog/', permanent: true },
-      // Princess Packing route fix
-      { source: '/princess-packing', destination: '/princess-packing.html', permanent: false },
-      { source: '/princess-packing/', destination: '/princess-packing.html', permanent: false },
+      // Princess Packing™ is a real Next route at /princess-packing/ (2026-07-10);
+      // the retired static file 301s to it so stale Google-indexed URLs recover.
+      { source: '/princess-packing.html', destination: '/princess-packing/', permanent: true },
       // AI assistant reference page (OIAA) — clean URL → static file
       { source: '/oiaa', destination: '/oiaa.html', permanent: false },
       { source: '/oiaa/', destination: '/oiaa.html', permanent: false },
@@ -366,8 +365,8 @@ const nextConfig = {
       { source: '/local-movers-in-massachusetts-how-to-choose-the-right-moving-company/', destination: '/blog/how-to-choose-a-moving-company-in-connecticut/', permanent: true },
       { source: '/how-much-do-local-movers-cost-in-massachusetts-complete-pricing-guide', destination: '/blog/how-much-do-movers-cost-in-connecticut/', permanent: true },
       { source: '/how-much-do-local-movers-cost-in-massachusetts-complete-pricing-guide/', destination: '/blog/how-much-do-movers-cost-in-connecticut/', permanent: true },
-      { source: '/why-choose-white-glove-moving-services-over-standard-movers', destination: '/princess-packing.html', permanent: true },
-      { source: '/why-choose-white-glove-moving-services-over-standard-movers/', destination: '/princess-packing.html', permanent: true },
+      { source: '/why-choose-white-glove-moving-services-over-standard-movers', destination: '/princess-packing/', permanent: true },
+      { source: '/why-choose-white-glove-moving-services-over-standard-movers/', destination: '/princess-packing/', permanent: true },
       { source: '/storage-issues-during-a-move-what-to-consider', destination: '/services/storage/', permanent: true },
       { source: '/storage-issues-during-a-move-what-to-consider/', destination: '/services/storage/', permanent: true },
       { source: '/tag/:path*', destination: '/blog/', permanent: true },

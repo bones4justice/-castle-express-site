@@ -218,7 +218,7 @@ export default function CityPage({ params }) {
               {city.h2_packing}
             </h2>
             <p className="body-md" style={{ color: "#1A1A2E", marginBottom: 32 }}>
-              Don&apos;t have time to pack? Our professional <Link href="/services/packing-services/" style={linkStyle}>packing team</Link> comes to your {city.town} home, handles all materials, and packs everything securely. Choose full-service packing or partial  -  including our <a href="/princess-packing/" style={linkStyle}>Princess Packing™</a> white-glove option for fragile or high-value items.
+              Don&apos;t have time to pack? Our professional <Link href="/services/packing-services/" style={linkStyle}>packing team</Link> comes to your {city.town} home, handles all materials, and packs everything securely. Choose full-service packing or partial  -  including our <Link href="/princess-packing/" style={linkStyle}>Princess Packing™</Link> white-glove option for fragile or high-value items.
             </p>
 
             {/* COMMERCIAL */}
@@ -260,7 +260,7 @@ export default function CityPage({ params }) {
               {[
                 { title: "Residential Moving", href: "/services/residential-moving" },
                 { title: "Commercial & Office Moving", href: "/services/commercial-moving" },
-                { title: "Full-Service Packing", href: "/services/packing-services" },
+                { title: "Full-Service Packing", href: "/services/packing-services/" },
                 { title: "Climate-Controlled Storage", href: "/services/storage" },
                 { title: "Specialty Moving", href: "/services/specialty-moving" },
                 { title: "Long Distance Moving", href: "/services/long-distance-moving" },

@@ -271,10 +271,10 @@ export const SERVICE_PAGES = {
       },
     ],
     callout: "Looking for a premium experience? Princess Packing™ is our boutique white-glove packing service  -  your home packed by an experienced team before move day even begins. Starting at $595.",
-    calloutLink: "/princess-packing.html",
+    calloutLink: "/princess-packing/",
     calloutLabel: "Learn About Princess Packing™",
     faq: [
-      { q: "Do I need to provide boxes and materials?", a: "No. We bring everything  -  boxes, tape, bubble wrap, newsprint, and wardrobe boxes. It's all included in your packing quote." },
+      { q: "Do I need to provide boxes and materials?", a: "No. We bring everything  -  boxes, tape, bubble wrap, newsprint, and wardrobe boxes. It's all included in your packing estimate." },
       { q: "How long does packing take?", a: "A typical 3-bedroom home takes 4-6 hours for a full pack. Larger homes may require a full day." },
       { q: "What's the difference between standard packing and Princess Packing?", a: "Standard packing happens on move day. Princess Packing™ is a separate service completed before your move  -  by a dedicated team, with boutique-level care and room-by-room labeling." },
     ],

@@ -257,11 +257,11 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <a href="/princess-packing.html" style={{ display: "inline-block", background: "#F72585", color: "#fff", fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: "0.08em", textTransform: "uppercase", padding: "14px 28px", textDecoration: "none", transition: "all 0.2s" }}>
+            <a href="/princess-packing/" style={{ display: "inline-block", background: "#F72585", color: "#fff", fontFamily: "var(--font-dm-sans), sans-serif", fontWeight: 600, fontSize: 14, letterSpacing: "0.08em", textTransform: "uppercase", padding: "14px 28px", textDecoration: "none", transition: "all 0.2s" }}>
               View Packages & Book →
             </a>
           </div>
-          <a href="/princess-packing.html" aria-label="View Princess Packing packages" style={{ display: "block", background: "linear-gradient(160deg, #fce4ef 0%, rgba(247,37,133,0.15) 100%)", padding: 40, textAlign: "center", border: "1px solid rgba(247,37,133,0.2)", textDecoration: "none" }}>
+          <a href="/princess-packing/" aria-label="View Princess Packing packages" style={{ display: "block", background: "linear-gradient(160deg, #fce4ef 0%, rgba(247,37,133,0.15) 100%)", padding: 40, textAlign: "center", border: "1px solid rgba(247,37,133,0.2)", textDecoration: "none" }}>
             <div style={{ position: "relative", width: "100%", height: 280 }}><Image src="/images/princess-packing-crew.jpg" alt="Princess Packing crew in pink polos" fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "top" }} /></div>
             <div style={{ fontFamily: "var(--font-cormorant), serif", fontWeight: 700, fontSize: 18, color: "#0d0d0d", marginTop: 16 }}>Professional Packing. Done Right.</div>
           </a>
