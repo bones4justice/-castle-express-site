@@ -251,6 +251,9 @@ const nextConfig = {
       // Old blog numeric URLs
       { source: '/blogs/:id/', destination: '/blog/', permanent: true },
       { source: '/blogs/:id', destination: '/blog/', permanent: true },
+      // Post retitled 10 → 8 questions on launch day (2026-07-14); old slug 301s to new
+      { source: '/blog/10-questions-to-ask-a-moving-company-before-you-book', destination: '/blog/8-questions-to-ask-a-moving-company-before-you-book/', permanent: true },
+      { source: '/blog/10-questions-to-ask-a-moving-company-before-you-book/', destination: '/blog/8-questions-to-ask-a-moving-company-before-you-book/', permanent: true },
       // Old misc URLs
       { source: '/castleexpressmoving/about-us', destination: '/about/', permanent: true },
       { source: '/castleexpressmoving/about-us/', destination: '/about/', permanent: true },
