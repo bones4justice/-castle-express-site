@@ -25,7 +25,7 @@ const PACKAGES = [
     tagline: "Pack your kitchen, the most time-consuming room in your home.",
     price: "595",
     featured: false,
-    items: ["Princess Packing Team", "16 Small Boxes", "5 Medium Boxes", "2 Medium-Large Boxes", "Newsprint, bubble wrap & tape", "Room-by-room labeling"],
+    items: ["Princess Packing Team", "18 Small Boxes", "5 Medium Boxes", "2 Medium-Large Boxes", "Newsprint, bubble wrap & tape", "Room-by-room labeling"],
   },
   {
     tier: "Plus Package",
@@ -33,7 +33,7 @@ const PACKAGES = [
     tagline: "Pack your kitchen plus two additional rooms. Ideal for busy families and working professionals.",
     price: "995",
     featured: true,
-    items: ["Princess Packing Team", "28 Small Boxes", "9 Medium Boxes", "4 Medium-Large Boxes", "5 Wardrobe Boxes", "Newsprint, bubble wrap & tape", "Room-by-room labeling"],
+    items: ["Princess Packing Team", "30 Small Boxes", "10 Medium Boxes", "5 Medium-Large Boxes", "5 Wardrobe Boxes", "Newsprint, bubble wrap & tape", "Room-by-room labeling"],
   },
   {
     tier: "Premium Package",
@@ -41,7 +41,7 @@ const PACKAGES = [
     tagline: "Pack your whole house. For households that want everything handled.",
     price: "1,895",
     featured: false,
-    items: ["Princess Packing Team", "46 Small Boxes", "28 Medium Boxes", "9 Medium-Large Boxes", "10 Wardrobe Boxes", "Newsprint, bubble wrap & tape", "Room-by-room labeling", "Priority scheduling"],
+    items: ["Princess Packing Team", "50 Small Boxes", "30 Medium Boxes", "10 Medium-Large Boxes", "10 Wardrobe Boxes", "Newsprint, bubble wrap & tape", "Room-by-room labeling", "Priority scheduling"],
   },
 ];
 
