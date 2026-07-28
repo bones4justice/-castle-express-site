@@ -358,6 +358,15 @@ const nextConfig = {
       { source: '/sustainable-moving-solutions-how-to-make-your-move-eco-friendly/', destination: '/blog/', permanent: true },
       { source: '/service-page', destination: '/services/', permanent: true },
       { source: '/service-page/', destination: '/services/', permanent: true },
+      // GSC 404 cleanup — 2026-07-30 batch (audited redirect-map CSV; 4 of 22 were still live 404s)
+      { source: '/moving-to-enfield-ct-heres-what-you-need-to-know-before-you-go', destination: '/movers-enfield-ct/', permanent: true },
+      { source: '/moving-to-enfield-ct-heres-what-you-need-to-know-before-you-go/', destination: '/movers-enfield-ct/', permanent: true },
+      { source: '/securing-yourself-against-moving-company-scams-an-in-depth-guide', destination: '/blog/how-to-avoid-getting-burned-by-a-moving-company/', permanent: true },
+      { source: '/securing-yourself-against-moving-company-scams-an-in-depth-guide/', destination: '/blog/how-to-avoid-getting-burned-by-a-moving-company/', permanent: true },
+      { source: '/why-poor-planning-makes-moving-day-a-disaster', destination: '/blog/how-to-move-step-by-step-guide/', permanent: true },
+      { source: '/why-poor-planning-makes-moving-day-a-disaster/', destination: '/blog/how-to-move-step-by-step-guide/', permanent: true },
+      { source: '/eco-friendly-moving-ct-ma', destination: '/services/', permanent: true },
+      { source: '/eco-friendly-moving-ct-ma/', destination: '/services/', permanent: true },
       // GSC 404 cleanup — remaining URLs
       { source: '/local-movers-in-connecticut-7-things-to-know-before-hiring-a-moving-company', destination: '/blog/how-to-choose-a-moving-company-in-connecticut/', permanent: true },
       { source: '/local-movers-in-connecticut-7-things-to-know-before-hiring-a-moving-company/', destination: '/blog/how-to-choose-a-moving-company-in-connecticut/', permanent: true },
