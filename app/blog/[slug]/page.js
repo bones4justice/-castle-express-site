@@ -50,6 +50,50 @@ export default function BlogPost({ params }) {
             marginBottom: 12,
           }}>{block.replace("## ", "")}</h2>;
         }
+        if (block.startsWith("### ")) {
+          return <h3 key={i} style={{
+            fontFamily: "var(--font-heading)",
+            fontWeight: 700,
+            fontSize: 18,
+            color: "#1A1A2E",
+            marginTop: 28,
+            marginBottom: 10,
+          }}>{block.replace("### ", "")}</h3>;
+        }
+        if (block === "---") {
+          return <hr key={i} style={{ border: 0, borderTop: "1px solid #E5E7EB", margin: "32px 0" }} />;
+        }
+        // Blocks containing "- " bullet or "1. " numbered lines: render real lists,
+        // with any non-list lines in the same block as paragraphs.
+        const lines = block.split("\n");
+        if (lines.length > 1 && lines.some((l) => /^(- |\d+\. )/.test(l))) {
+          const out = [];
+          let items = null, ordered = false;
+          const flush = () => {
+            if (!items) return;
+            const Tag = ordered ? "ol" : "ul";
+            out.push(<Tag key={`${i}-${out.length}`} className="body-md" style={{
+              color: "#374151", lineHeight: 1.8, marginBottom: 16, paddingLeft: 24,
+            }}>{items.map((it, j) => <li key={j} style={{ marginBottom: 6 }}>{parseInline(it)}</li>)}</Tag>);
+            items = null;
+          };
+          lines.forEach((l) => {
+            const m = l.match(/^(- |(\d+)\. )(.*)$/);
+            if (m) {
+              const isOrdered = m[2] !== undefined;
+              if (items && ordered !== isOrdered) flush();
+              if (!items) { items = []; ordered = isOrdered; }
+              items.push(m[3]);
+            } else {
+              flush();
+              if (l.trim()) out.push(<p key={`${i}-${out.length}`} className="body-md" style={{
+                color: "#374151", lineHeight: 1.8, marginBottom: 8,
+              }}>{parseInline(l)}</p>);
+            }
+          });
+          flush();
+          return <div key={i}>{out}</div>;
+        }
         if (block.startsWith("**") && block.endsWith("**")) {
           return <p key={i} style={{ fontWeight: 700, color: "#1A1A2E", marginBottom: 8 }}>
             {block.replace(/\*\*/g, "")}
@@ -71,7 +115,7 @@ export default function BlogPost({ params }) {
     author: {
       "@type": "Person",
       name: "Joe Caronna",
-      url: "https://www.castleexpressmoving.com/about",
+      url: "https://www.castleexpressmoving.com/about/",
     },
     publisher: {
       "@type": "Organization",
@@ -98,7 +142,7 @@ export default function BlogPost({ params }) {
       <section className="section-dark" style={{ padding: "64px 0 48px" }}>
         <div className="container" style={{ maxWidth: 720, margin: "0 auto" }}>
           <div style={{ marginBottom: 12 }}>
-            <Link href="/blog" style={{
+            <Link href="/blog/" style={{
               color: "#D4A017",
               fontSize: 13,
               fontWeight: 600,
@@ -127,7 +171,7 @@ export default function BlogPost({ params }) {
             <span>By Joe Caronna</span>
             <span>·</span>
             <span>{new Date(post.date).toLocaleDateString("en-US", {
-              month: "long", day: "numeric", year: "numeric"
+              month: "long", day: "numeric", year: "numeric", timeZone: "UTC"
             })}</span>
             <span>·</span>
             <span>{post.readTime}</span>
@@ -161,7 +205,7 @@ export default function BlogPost({ params }) {
               Castle Express Moving &amp; Storage - Enfield, CT. Serving Hartford County and Western MA since 2011.
             </p>
             <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-              <Link href="/contact" className="btn btn-primary">Get Free Estimate</Link>
+              <Link href="/contact/" className="btn btn-primary">Get Free Estimate</Link>
               <a href={COMPANY.phoneLink} className="btn btn-outline" style={{ color: "#fff", borderColor: "rgba(255,255,255,0.3)" }}>
                 <Phone size={18} /> {COMPANY.phone}
               </a>

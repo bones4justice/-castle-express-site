@@ -5,11 +5,11 @@ import { MapPin } from "@/components/Icons";
 
 export const metadata = {
   title: "Service Areas | Castle Express Moving & Storage  -  CT & MA",
-  description: "Castle Express Moving serves 82 towns across Hartford County CT, Western Massachusetts, and beyond. Find your town and get a free moving quote today.",
+  description: "Castle Express Moving serves 96 towns across Hartford County CT, Western Massachusetts, and beyond. Find your town and get a free moving quote today.",
   alternates: { canonical: "/service-areas/" },
   openGraph: {
     title: "Service Areas | Castle Express Moving & Storage",
-    description: "Serving 82 towns across Hartford County CT and Western Massachusetts.",
+    description: "Serving 96 towns across Hartford County CT and Western Massachusetts.",
     url: "/service-areas/",
   },
 };
@@ -30,7 +30,7 @@ export default function ServiceAreasPage() {
           <div className="section-label" style={{ justifyContent: "center" }}><span>Where We Serve</span></div>
           <h1 className="heading-2 text-white">Moving Services Across Connecticut &amp; Massachusetts</h1>
           <p className="body-md text-white-muted" style={{ maxWidth: 600, margin: "8px auto 0" }}>
-            Castle Express Moving &amp; Storage serves 82 towns from our Enfield, CT home base. Find your town below for local pricing, availability, and a free quote.
+            Castle Express Moving &amp; Storage serves 96 towns from our Enfield, CT home base. Find your town below for local pricing, availability, and a free quote.
           </p>
         </div>
       </section>
@@ -48,7 +48,7 @@ export default function ServiceAreasPage() {
                 <p className="body-sm text-gray" style={{ marginBottom: 16 }}>{tier.desc}</p>
                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: 12 }}>
                   {cities.map(city => (
-                    <Link key={city.slug} href={`/${city.slug}`} className="card" style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 18px", textDecoration: "none", cursor: "pointer", transition: "border-color 0.2s" }}>
+                    <Link key={city.slug} href={`/${city.slug}/`} className="card" style={{ display: "flex", alignItems: "center", gap: 10, padding: "14px 18px", textDecoration: "none", cursor: "pointer", transition: "border-color 0.2s" }}>
                       <span className="text-gold"><MapPin size={18} /></span>
                       <div>
                         <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "#1A1A2E", display: "block" }}>{city.town}, {city.state}</span>

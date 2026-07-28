@@ -1,3 +1,4 @@
+import Script from "next/script";
 import Link from "next/link";
 import { COMPANY } from "@/content";
 import { Star, Phone, ArrowRight } from "@/components/Icons";
@@ -54,6 +55,7 @@ export default function ReviewsPage() {
           <div className="text-center" style={{ marginBottom: 32 }}>
             <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700 }}>What Our Customers Say</h2>
           </div>
+          <Script src="https://static.elfsight.com/platform/platform.js" strategy="lazyOnload" />
           <div className="elfsight-app-b017ae90-a962-4044-8d86-0fef65fff1db" data-elfsight-app-lazy style={{ minHeight: 600 }}></div>
         </div>
       </section>
@@ -89,7 +91,7 @@ export default function ReviewsPage() {
             Join {COMPANY.reviewCount} satisfied Castle Express customers. We typically respond within 20 minutes.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+            <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
             <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>

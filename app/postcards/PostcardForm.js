@@ -9,6 +9,7 @@ const HOME_SIZES = ["Studio", "1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4+ Bedro
 export default function PostcardForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [formData, setFormData] = useState({
     firstName: "", lastName: "", phone: "", email: "",
     moveFrom: "", moveTo: "", moveDate: "", homeSize: "", notes: "",
@@ -40,8 +41,9 @@ export default function PostcardForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError(false);
     try {
-      await fetch("https://formspree.io/f/xnjojwly", {
+      const response = await fetch("https://formspree.io/f/xnjojwly", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -50,6 +52,7 @@ export default function PostcardForm() {
           formType: "Postcard Landing Page",
         }),
       });
+      if (!response.ok) throw new Error("submit failed");
       if (typeof window.fbq !== "undefined") window.fbq("track", "Lead");
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "postcard_form", hero_variant: hv }); }
       if (typeof window.gtag !== "undefined") {
@@ -61,7 +64,7 @@ export default function PostcardForm() {
       }
       setSubmitted(true);
     } catch {
-      setSubmitted(true);
+      setError(true);
     }
     setLoading(false);
   };
@@ -161,6 +164,12 @@ export default function PostcardForm() {
       <button type="submit" disabled={loading} className={styles.submit}>
         {loading ? "Submitting..." : <>Send My Free Estimate Request <ArrowRight /></>}
       </button>
+      {error && (
+        <p style={{ color: "#B91C1C", fontSize: 14, marginTop: 10, textAlign: "center" }}>
+          Something went wrong sending your request. Please try again, or call us at{" "}
+          <a href="tel:18885534503" style={{ color: "#B91C1C", fontWeight: 700 }}>1-888-553-4503</a>.
+        </p>
+      )}
     </form>
   );
 }

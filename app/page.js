@@ -84,13 +84,13 @@ export default function HomePage() {
               ))}
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+              <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
               <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> (888) 553-4503</a>
             </div>
             {/* Compact trust row - kept inside the hero so it lands within the
                 first 40% of the page on mobile (the estimate form stacks below) */}
             <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 4 }}>
-              <Link href="/reviews" aria-label="Read our Google reviews" style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", alignSelf: "flex-start" }}>
+              <Link href="/reviews/" aria-label="Read our Google reviews" style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", alignSelf: "flex-start" }}>
                 <span style={{ display: "inline-flex", gap: 2 }}>{[1, 2, 3, 4, 5].map(i => <Star key={i} size={14} />)}</span>
                 <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, color: "#fff", textDecoration: "underline", textUnderlineOffset: 3 }}>
                   {COMPANY.reviewAvg} from {COMPANY.reviewCount} Google reviews
@@ -111,7 +111,7 @@ export default function HomePage() {
       <section className="trust-bar" aria-label="Trust indicators">
         {[
           { icon: <IconBBB size={28} />, label: "A+ BBB Rating" },
-          { icon: <IconGoogle size={28} />, label: `${COMPANY.reviewAvg}★ on Google (${COMPANY.reviewCount} reviews)`, href: "/reviews" },
+          { icon: <IconGoogle size={28} />, label: `${COMPANY.reviewAvg}★ on Google (${COMPANY.reviewCount} reviews)`, href: "/reviews/" },
           { icon: <IconLicensed size={28} />, label: `Licensed & Insured · USDOT ${COMPANY.usdot}` },
           { icon: <IconLocation size={28} />, label: `Family-Owned Since ${COMPANY.founded}` },
         ].map((item, i) => item.href ? (
@@ -146,7 +146,7 @@ export default function HomePage() {
             ))}
           </div>
           <div className="text-center" style={{ marginTop: 32 }}>
-            <Link href="/services" className="btn btn-outline">View All Services <ChevronRight /></Link>
+            <Link href="/services/" className="btn btn-outline">View All Services <ChevronRight /></Link>
           </div>
         </div>
       </section>
@@ -178,7 +178,7 @@ export default function HomePage() {
                 </div>
               </div>
             ))}
-            <Link href="/about" className="btn btn-ghost">Read Our Story <ArrowRight /></Link>
+            <Link href="/about/" className="btn btn-ghost">Read Our Story <ArrowRight /></Link>
           </div>
           <div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginBottom: 12 }}>
@@ -187,7 +187,7 @@ export default function HomePage() {
             </div>
             <div className="hero-stats" style={{ background: "#FFF9EC", borderRadius: 12, padding: 24, display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 12 }}>
             {[
-              { num: "17+", label: "Years in Business" },
+              { num: "15+", label: "Years in Business" },
               { num: "4.9★", label: "Google Reviews" },
               { num: COMPANY.truckCount, label: "Trucks in Fleet" },
               { num: `${COMPANY.facilitySize}`, label: "Sq Ft Facility" },
@@ -206,7 +206,7 @@ export default function HomePage() {
       <section className="section section-light" aria-label="Customer reviews summary">
         <div className="container text-center">
           <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
-            <Link href="/reviews" aria-label="Read all Google reviews" style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 12, textDecoration: "none" }}>
+            <Link href="/reviews/" aria-label="Read all Google reviews" style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 12, textDecoration: "none" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                 {[1,2,3,4,5].map(i => <Star key={i} />)}
               </div>
@@ -214,7 +214,7 @@ export default function HomePage() {
                 {COMPANY.reviewAvg} from {COMPANY.reviewCount} Google Reviews
               </div>
             </Link>
-            <Link href="/reviews" className="btn btn-outline">Read All Reviews <ChevronRight /></Link>
+            <Link href="/reviews/" className="btn btn-outline">Read All Reviews <ChevronRight /></Link>
           </div>
         </div>
       </section>
@@ -340,7 +340,7 @@ export default function HomePage() {
           <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#1A1A2E", fontWeight: 700, lineHeight: 1.7, marginTop: 20 }}>
             Together with our customers, we&apos;ve provided {FEEDING_AMERICA_TOTAL_MEALS.toLocaleString("en-US")} meals so far.
           </p>
-          <Link href="/giving-back" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 16, fontFamily: "var(--font-body)", fontSize: 14, fontWeight: 700, color: "#1A1A2E", textDecoration: "none", borderBottom: "2px solid #FBCB0B", paddingBottom: 2 }}>
+          <Link href="/giving-back/" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 16, fontFamily: "var(--font-body)", fontSize: 14, fontWeight: 700, color: "#1A1A2E", textDecoration: "none", borderBottom: "2px solid #FBCB0B", paddingBottom: 2 }}>
             See Our Impact <ArrowRight size={16} />
           </Link>
         </div>
@@ -372,7 +372,7 @@ export default function HomePage() {
             Call today for a free, no-obligation estimate. We'll walk you through every step of your move.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Your Free Estimate</Link>
+            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate</Link>
             <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>

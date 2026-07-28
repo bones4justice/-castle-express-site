@@ -59,7 +59,6 @@ export default function CityPage({ params }) {
       },
     },
     priceRange: "$$",
-    openingHours: "Mo-Su 07:00-20:00",
     sameAs: [
       COMPANY.facebook,
       COMPANY.instagram,
@@ -133,7 +132,7 @@ export default function CityPage({ params }) {
         <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-residential.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.1, pointerEvents: "none" }} />
         <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-            <Link href="/service-areas" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Service Areas</Link>
+            <Link href="/service-areas/" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Service Areas</Link>
             <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
             <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>{city.town}, {city.state}</span>
           </div>
@@ -149,7 +148,7 @@ export default function CityPage({ params }) {
             </p>
           )}
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+            <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
             <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>
@@ -258,12 +257,12 @@ export default function CityPage({ params }) {
             </h3>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 32 }}>
               {[
-                { title: "Residential Moving", href: "/services/residential-moving" },
-                { title: "Commercial & Office Moving", href: "/services/commercial-moving" },
+                { title: "Residential Moving", href: "/services/residential-moving/" },
+                { title: "Commercial & Office Moving", href: "/services/commercial-moving/" },
                 { title: "Full-Service Packing", href: "/services/packing-services/" },
-                { title: "Climate-Controlled Storage", href: "/services/storage" },
-                { title: "Specialty Moving", href: "/services/specialty-moving" },
-                { title: "Long Distance Moving", href: "/services/long-distance-moving" },
+                { title: "Climate-Controlled Storage", href: "/services/storage/" },
+                { title: "Specialty Moving", href: "/services/specialty-moving/" },
+                { title: "Long Distance Moving", href: "/services/long-distance-moving/" },
               ].map(svc => (
                 <Link key={svc.href} href={svc.href} style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 14px", background: "#F9FAFB", borderRadius: 8, textDecoration: "none", border: "1px solid #E5E7EB", transition: "border-color 0.2s" }}>
                   <span style={{ color: "#D4A017", fontSize: 14 }}>→</span>
@@ -309,7 +308,7 @@ export default function CityPage({ params }) {
                 </h3>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   {nearbyCities.map(n => (
-                    <Link key={n.slug} href={`/${n.slug}`} className="location-chip">
+                    <Link key={n.slug} href={`/${n.slug}/`} className="location-chip">
                       <MapPin size={14} /> Movers in {n.town}, {n.state}
                     </Link>
                   ))}
@@ -317,7 +316,7 @@ export default function CityPage({ params }) {
               </div>
             )}
 
-            <Link href="/service-areas" className="btn btn-ghost" style={{ marginTop: 8 }}>
+            <Link href="/service-areas/" className="btn btn-ghost" style={{ marginTop: 8 }}>
               <ChevronRight style={{ transform: "rotate(180deg)" }} /> View All Service Areas
             </Link>
           </div>
@@ -337,7 +336,7 @@ export default function CityPage({ params }) {
             Call us at <a href={COMPANY.phoneLink} style={{ color: "#D4A017", fontWeight: 600 }}>{COMPANY.phone}</a> or fill out the form above. We typically respond in 20 minutes or less.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Your Free Estimate</Link>
+            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate</Link>
             <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>

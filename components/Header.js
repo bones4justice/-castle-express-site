@@ -7,14 +7,14 @@ import { COMPANY } from "@/content";
 import { Phone, Menu, X } from "@/components/Icons";
 
 const NAV_ITEMS = [
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Service Areas", href: "/service-areas" },
-  { label: "Reviews", href: "/reviews" },
-  { label: "Blog", href: "/blog" },
+  { label: "About", href: "/about/" },
+  { label: "Services", href: "/services/" },
+  { label: "Service Areas", href: "/service-areas/" },
+  { label: "Reviews", href: "/reviews/" },
+  { label: "Blog", href: "/blog/" },
   { label: "Princess Packing™", href: "/princess-packing/", gold: true },
-  { label: "Referral Program", href: "/referral", gold: true },
-  { label: "Contact", href: "/contact" },
+  { label: "Referral Program", href: "/referral/", gold: true },
+  { label: "Contact", href: "/contact/" },
 ];
 
 export default function Header() {
@@ -57,7 +57,8 @@ export default function Header() {
         {/* Desktop Nav */}
         <nav style={{ display: "flex", alignItems: "center", gap: 4 }} className="desktop-nav">
           {NAV_ITEMS.map(item => {
-            const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+            const base = item.href.replace(/\/$/, "");
+            const isActive = pathname === base || pathname.startsWith(base + "/");
             const color = item.gold ? "#D4A017" : isActive ? "#D4A017" : "#1A1A2E";
             const fontWeight = item.gold ? 700 : 600;
             const Tag = item.static ? "a" : Link;
@@ -78,7 +79,7 @@ export default function Header() {
         </nav>
 
         {/* Mobile toggle */}
-        <button onClick={() => setMobileOpen(!mobileOpen)} className="mobile-toggle" aria-label={mobileOpen ? "Close menu" : "Open menu"} style={{
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="mobile-toggle" aria-label={mobileOpen ? "Close menu" : "Open menu"} aria-expanded={mobileOpen} aria-controls="mobile-nav" style={{
           display: "none", background: "none", border: "none", cursor: "pointer", color: "#1A1A2E",
           alignItems: "center", justifyContent: "center",
         }}>
@@ -88,13 +89,13 @@ export default function Header() {
 
       {/* Mobile Nav */}
       {mobileOpen && (
-        <div className="mobile-nav" style={{ padding: "8px 24px 20px", borderTop: "1px solid #E5E7EB" }}>
+        <nav id="mobile-nav" className="mobile-nav" style={{ padding: "8px 24px 20px", borderTop: "1px solid #E5E7EB" }}>
           {NAV_ITEMS.map(item => {
             const MobileTag = item.static ? "a" : Link;
             return (
               <MobileTag key={item.href} href={item.href} style={{
                 display: "block", fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 16,
-                color: pathname === item.href ? "#D4A017" : "#1A1A2E",
+                color: pathname.replace(/\/$/, "") === item.href.replace(/\/$/, "") ? "#D4A017" : "#1A1A2E",
                 padding: "12px 0", borderBottom: "1px solid #E5E7EB", textDecoration: "none",
               }}>{item.label}</MobileTag>
             );
@@ -106,7 +107,7 @@ export default function Header() {
           }}>
             <Phone size={18} /> Call {COMPANY.phone}
           </a>
-        </div>
+        </nav>
       )}
     </header>
   );

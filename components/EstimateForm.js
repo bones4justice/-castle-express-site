@@ -97,7 +97,7 @@ export default function EstimateForm({ dark = false }) {
     if (!submitted || successTracked.current) return;
     successTracked.current = true;
     const hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || "(not set)";
-    const loc = window.location.pathname === "/" ? "homepage" : "contact";
+    const loc = window.location.pathname === "/" ? "homepage" : window.location.pathname;
     if (window.gtag) {
       window.gtag("event", "form_submission_success", { hero_variant: hv, form_location: loc });
     }

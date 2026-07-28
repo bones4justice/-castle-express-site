@@ -66,7 +66,7 @@ export default function PianoMovingPage() {
         <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-tobacco-barn.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.12, pointerEvents: "none" }} />
         <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-            <Link href="/services" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Services</Link>
+            <Link href="/services/" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Services</Link>
             <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
             <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>Piano Moving</span>
           </div>
@@ -77,7 +77,7 @@ export default function PianoMovingPage() {
             Upright, grand, baby grand - we move them all safely. Experienced piano movers serving Hartford County and Western Massachusetts since 2011.
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+            <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
             <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>
@@ -107,7 +107,7 @@ export default function PianoMovingPage() {
                 Pianos are not furniture. They are precision instruments weighing anywhere from 300 to 1,200 pounds, with delicate internal components that can be damaged by vibration, tipping, or temperature changes. Moving a piano requires specialty equipment, experienced handling, and a plan for every doorway, staircase, and tight corner between point A and point B.
               </p>
               <p className="body-md" style={{ color: "#374151", lineHeight: 1.8 }}>
-                In Connecticut, that last part matters more than most places. Older homes in towns like <Link href="/movers-wethersfield-ct" style={{ color: "#D4A017", fontWeight: 600 }}>Wethersfield</Link>, <Link href="/movers-glastonbury-ct" style={{ color: "#D4A017", fontWeight: 600 }}>Glastonbury</Link>, and <Link href="/movers-west-hartford-ct" style={{ color: "#D4A017", fontWeight: 600 }}>West Hartford</Link> often have narrow hallways, steep staircases, and tight turns that make piano moving especially challenging. Our crews handle these situations regularly.
+                In Connecticut, that last part matters more than most places. Older homes in towns like <Link href="/movers-wethersfield-ct/" style={{ color: "#D4A017", fontWeight: 600 }}>Wethersfield</Link>, <Link href="/movers-glastonbury-ct/" style={{ color: "#D4A017", fontWeight: 600 }}>Glastonbury</Link>, and <Link href="/movers-west-hartford-ct/" style={{ color: "#D4A017", fontWeight: 600 }}>West Hartford</Link> often have narrow hallways, steep staircases, and tight turns that make piano moving especially challenging. Our crews handle these situations regularly.
               </p>
             </div>
 
@@ -159,7 +159,7 @@ export default function PianoMovingPage() {
             {/* Callout */}
             <div style={{ background: "#FFF9EC", border: "1px solid rgba(212,160,23,0.2)", borderRadius: 12, padding: "24px 28px", marginBottom: 36 }}>
               <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#1A1A2E", lineHeight: 1.7 }}>
-                We do not claim to be the cheapest piano movers in Connecticut. We claim to do it right. If you have a piano that matters to you, that is what should matter most. Piano moving is part of our <Link href="/services/specialty-moving" style={{ color: "#D4A017", fontWeight: 700 }}>specialty moving</Link> service.
+                We do not claim to be the cheapest piano movers in Connecticut. We claim to do it right. If you have a piano that matters to you, that is what should matter most. Piano moving is part of our <Link href="/services/specialty-moving/" style={{ color: "#D4A017", fontWeight: 700 }}>specialty moving</Link> service.
               </p>
             </div>
 
@@ -180,7 +180,7 @@ export default function PianoMovingPage() {
                   { slug: "movers-avon-ct", label: "Avon" },
                   { slug: "movers-enfield-ct", label: "Enfield" },
                 ].map(t => (
-                  <Link key={t.slug} href={`/${t.slug}`} className="location-chip">
+                  <Link key={t.slug} href={`/${t.slug}/`} className="location-chip">
                     <MapPin size={14} /> {t.label}
                   </Link>
                 ))}
@@ -226,7 +226,7 @@ export default function PianoMovingPage() {
             Call today for a free, no-obligation estimate. We will walk you through every step.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Your Free Estimate</Link>
+            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate</Link>
             <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>

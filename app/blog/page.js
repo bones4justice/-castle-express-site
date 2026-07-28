@@ -79,7 +79,7 @@ export default function BlogPage() {
                     marginTop: "auto",
                   }}>
                     <span style={{ fontSize: 13, color: "#9CA3AF" }}>
-                      {new Date(post.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })}
+                      {new Date(post.date).toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric", timeZone: "UTC" })}
                     </span>
                     <span style={{ fontSize: 13, color: "#9CA3AF" }}>{post.readTime}</span>
                   </div>
@@ -98,7 +98,7 @@ export default function BlogPage() {
             Call us or get a free estimate online. We typically respond in 20 minutes or less.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Free Estimate</Link>
+            <Link href="/contact/" className="btn btn-primary">Get Free Estimate</Link>
             <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>

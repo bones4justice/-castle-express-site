@@ -45,12 +45,12 @@ export default function Footer() {
           <div>
             <h4 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em" }}>Company</h4>
             {[
-              { label: "About", href: "/about" },
-              { label: "Giving Back", href: "/giving-back" },
-              { label: "Reviews", href: "/reviews" },
-              { label: "Service Areas", href: "/service-areas" },
-              { label: "Blog", href: "/blog" },
-              { label: "Contact", href: "/contact" },
+              { label: "About", href: "/about/" },
+              { label: "Giving Back", href: "/giving-back/" },
+              { label: "Reviews", href: "/reviews/" },
+              { label: "Service Areas", href: "/service-areas/" },
+              { label: "Blog", href: "/blog/" },
+              { label: "Contact", href: "/contact/" },
             ].map(s => (
               <Link key={s.href} href={s.href} style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.75)", marginBottom: 8, textDecoration: "none" }}>{s.label}</Link>
             ))}
@@ -60,18 +60,18 @@ export default function Footer() {
           <div>
             <h4 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em" }}>Services</h4>
             {[
-              { label: "Residential Moving", href: "/services/residential-moving" },
-              { label: "Commercial Moving", href: "/services/commercial-moving" },
+              { label: "Residential Moving", href: "/services/residential-moving/" },
+              { label: "Commercial Moving", href: "/services/commercial-moving/" },
               { label: "Packing Services", href: "/services/packing-services/" },
-              { label: "Climate-Controlled Storage", href: "/services/storage" },
-              { label: "Specialty Moving", href: "/services/specialty-moving" },
-              { label: "Piano Moving", href: "/piano-moving" },
-              { label: "Senior Moving", href: "/senior-moving" },
+              { label: "Climate-Controlled Storage", href: "/services/storage/" },
+              { label: "Specialty Moving", href: "/services/specialty-moving/" },
+              { label: "Piano Moving", href: "/piano-moving/" },
+              { label: "Senior Moving", href: "/senior-moving/" },
             ].map(s => (
               <Link key={s.href} href={s.href} style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "rgba(255,255,255,0.75)", marginBottom: 8, textDecoration: "none" }}>{s.label}</Link>
             ))}
             <Link href="/princess-packing/" style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "#F72585", fontWeight: 600, marginBottom: 8, textDecoration: "none", marginTop: 4 }}>Princess Packing™</Link>
-            <Link href="/referral" style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "#D4A017", fontWeight: 600, marginBottom: 8, textDecoration: "none" }}>Referral Program</Link>
+            <Link href="/referral/" style={{ display: "block", fontFamily: "var(--font-body)", fontSize: 13, color: "#D4A017", fontWeight: 600, marginBottom: 8, textDecoration: "none" }}>Referral Program</Link>
           </div>
 
           {/* Contact */}
@@ -105,8 +105,8 @@ export default function Footer() {
             &copy; {COMPANY.founded}–{new Date().getFullYear()} {COMPANY.name} LLC. All rights reserved.
           </p>
           <div style={{ display: "flex", gap: 16 }}>
-            <Link href="/privacy" style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>Privacy Policy</Link>
-            <Link href="/terms" style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>Terms & Conditions</Link>
+            <Link href="/privacy/" style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>Privacy Policy</Link>
+            <Link href="/terms/" style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>Terms & Conditions</Link>
           </div>
         </div>
       </div>

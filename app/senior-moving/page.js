@@ -66,7 +66,7 @@ export default function SeniorMovingPage() {
         <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/crew-furniture.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.12, pointerEvents: "none" }} />
         <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-            <Link href="/services" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Services</Link>
+            <Link href="/services/" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Services</Link>
             <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
             <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>Senior Moving</span>
           </div>
@@ -77,7 +77,7 @@ export default function SeniorMovingPage() {
             Patient, experienced crews for life's biggest transitions. Serving Hartford County and Western Massachusetts since 2011.
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+            <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
             <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>
@@ -160,7 +160,7 @@ export default function SeniorMovingPage() {
             {/* Callout */}
             <div style={{ background: "#FFF9EC", border: "1px solid rgba(212,160,23,0.2)", borderRadius: 12, padding: "24px 28px", marginBottom: 36 }}>
               <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#1A1A2E", lineHeight: 1.7 }}>
-                Senior moves are some of the most important moves we do. When a family trusts us with their parent or grandparent's move, we take that seriously. Learn more about our <Link href="/princess-packing/" style={{ color: "#D4A017", fontWeight: 700 }}>Princess Packing™</Link> service and our full <Link href="/services/residential-moving" style={{ color: "#D4A017", fontWeight: 700 }}>residential moving</Link> options.
+                Senior moves are some of the most important moves we do. When a family trusts us with their parent or grandparent's move, we take that seriously. Learn more about our <Link href="/princess-packing/" style={{ color: "#D4A017", fontWeight: 700 }}>Princess Packing™</Link> service and our full <Link href="/services/residential-moving/" style={{ color: "#D4A017", fontWeight: 700 }}>residential moving</Link> options.
               </p>
             </div>
 
@@ -181,7 +181,7 @@ export default function SeniorMovingPage() {
                   { slug: "movers-enfield-ct", label: "Enfield" },
                   { slug: "movers-wethersfield-ct", label: "Wethersfield" },
                 ].map(t => (
-                  <Link key={t.slug} href={`/${t.slug}`} className="location-chip">
+                  <Link key={t.slug} href={`/${t.slug}/`} className="location-chip">
                     <MapPin size={14} /> {t.label}
                   </Link>
                 ))}
@@ -227,7 +227,7 @@ export default function SeniorMovingPage() {
             Call today for a free, no-obligation estimate. We will walk through the process with you or your family member and answer any questions.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Your Free Estimate</Link>
+            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate</Link>
             <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>

@@ -331,8 +331,9 @@ const nextConfig = {
       { source: '/dont-make-these-mistakes-when-moving-a-mattress-the-pros-way/', destination: '/blog/how-to-transport-a-mattress-safely/', permanent: true },
       // GSC 404 cleanup — new redirects
       { source: '/movers/vernon-ct/', destination: '/movers-vernon-ct/', permanent: true },
-      // Catch-all: /movers/town-state/ → /movers-town-state/ (must be before the wildcard)
+      // Catch-all: /movers/town-state[/] → /movers-town-state/ (must be before the wildcard)
       { source: '/movers/:slug/', destination: '/movers-:slug/', permanent: true },
+      { source: '/movers/:slug', destination: '/movers-:slug/', permanent: true },
       { source: '/movers/:slug*', destination: '/', permanent: true },
       // Old WordPress blog URLs
       { source: '/stress-of-moving-homes', destination: '/blog/', permanent: true },

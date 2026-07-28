@@ -48,7 +48,7 @@ export default function TownsWeServe({ limit = PRIORITY_TOWN_SLUGS.length, light
           ))}
         </div>
         <div className="text-center" style={{ marginTop: 32 }}>
-          <Link href="/service-areas" className="btn btn-outline">View All Service Areas <ChevronRight /></Link>
+          <Link href="/service-areas/" className="btn btn-outline">View All Service Areas <ChevronRight /></Link>
         </div>
       </div>
     </section>

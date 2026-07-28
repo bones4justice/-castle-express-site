@@ -123,7 +123,7 @@ export default function StorageStickyBar() {
         </span>
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
           <a
-            href="/storage-offer?utm_source=website&utm_medium=sticky_bar&utm_campaign=free-storage"
+            href="/storage-offer/?ref=sticky_bar"
             onClick={handleClick}
             style={{
               display: "inline-block",

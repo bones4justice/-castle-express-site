@@ -6,7 +6,7 @@ import { SUBPAGE_TOWNS, SUBPAGE_SERVICES } from "@/lib/serviceSubpages";
 const BASE = "https://www.castleexpressmoving.com";
 
 export default function sitemap() {
-  const CONTENT_UPDATED = "2026-04-17";
+  const CONTENT_UPDATED = "2026-07-28";
 
   // Static pages
   const staticPages = [

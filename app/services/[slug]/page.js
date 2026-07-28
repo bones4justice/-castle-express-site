@@ -120,7 +120,7 @@ export default function ServiceDetailPage({ params }) {
         <div style={{ position: "absolute", inset: 0, backgroundImage: `url(${svc.heroImage})`, backgroundSize: "cover", backgroundPosition: "center", opacity: 0.12, pointerEvents: "none" }} />
         <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-            <Link href="/services" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Services</Link>
+            <Link href="/services/" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Services</Link>
             <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
             <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>{svc.title}</span>
           </div>
@@ -131,7 +131,7 @@ export default function ServiceDetailPage({ params }) {
             {svc.intro}
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+            <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
             <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>
@@ -208,7 +208,7 @@ export default function ServiceDetailPage({ params }) {
                 <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 12 }}>Related Services</h3>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   {related.map(r => (
-                    <Link key={r.slug} href={`/services/${r.slug}`} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 16px", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: 8, textDecoration: "none", fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 13, color: "#1A1A2E", transition: "border-color 0.2s" }}>
+                    <Link key={r.slug} href={`/services/${r.slug}/`} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 16px", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: 8, textDecoration: "none", fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 13, color: "#1A1A2E", transition: "border-color 0.2s" }}>
                       <span style={{ color: "#D4A017" }}>→</span> {r.title}
                     </Link>
                   ))}
@@ -262,7 +262,7 @@ export default function ServiceDetailPage({ params }) {
             Call today for a free, no-obligation estimate. We'll walk you through every step.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Your Free Estimate</Link>
+            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate</Link>
             <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>

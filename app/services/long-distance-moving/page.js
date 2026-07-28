@@ -126,7 +126,7 @@ export default function LongDistanceMovingPage() {
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }} className="grid-2">
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-              <Link href="/services" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Services</Link>
+              <Link href="/services/" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Services</Link>
               <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
               <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>Long-Distance Moving</span>
             </div>
@@ -145,7 +145,7 @@ export default function LongDistanceMovingPage() {
               ))}
             </div>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+              <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
               <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> Call Now</a>
             </div>
           </div>
@@ -485,7 +485,7 @@ export default function LongDistanceMovingPage() {
             Every long-distance move gets a free in-home or video walkthrough and a firm estimate before you commit to anything.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+            <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
             <a href={COMPANY.phoneLink} className="btn btn-outline"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>
@@ -576,7 +576,7 @@ export default function LongDistanceMovingPage() {
             Call today for a free in-home or video walkthrough. We'll give you a firm estimate and a firm delivery date before you commit to anything.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Your Free Estimate</Link>
+            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate</Link>
             <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>

@@ -99,7 +99,7 @@ export default function ServiceSubpage({ params }) {
           <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16, flexWrap: "wrap" }}>
             <Link href="/" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Home</Link>
             <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
-            <Link href={`/${city.slug}`} style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Movers in {city.town}, {city.state}</Link>
+            <Link href={`/${city.slug}/`} style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Movers in {city.town}, {city.state}</Link>
             <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
             <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>{svc.serviceTitle}</span>
           </div>
@@ -111,7 +111,7 @@ export default function ServiceSubpage({ params }) {
             Castle Express Moving &amp; Storage provides professional {svc.serviceTitle.toLowerCase()} in {city.town} and throughout {city.stateFull}. Family-owned since {COMPANY.founded}. {city.slug === "movers-enfield-ct" ? "Based right here in Enfield." : `Located in Enfield, CT, just ${city.drive} away.`}
           </p>
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+            <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
             <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>
@@ -189,7 +189,7 @@ export default function ServiceSubpage({ params }) {
             </div>
 
             {/* Back to parent + nearby */}
-            <Link href={`/${city.slug}`} className="btn btn-ghost" style={{ marginBottom: 24 }}>
+            <Link href={`/${city.slug}/`} className="btn btn-ghost" style={{ marginBottom: 24 }}>
               <ChevronRight style={{ transform: "rotate(180deg)" }} /> All Moving Services in {city.town}
             </Link>
 
@@ -200,7 +200,7 @@ export default function ServiceSubpage({ params }) {
                 </h3>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   {nearbyCities.map(n => (
-                    <Link key={n.slug} href={`/${n.slug}`} className="location-chip">
+                    <Link key={n.slug} href={`/${n.slug}/`} className="location-chip">
                       <MapPin size={14} /> {n.town}, {n.state}
                     </Link>
                   ))}
@@ -224,7 +224,7 @@ export default function ServiceSubpage({ params }) {
             Call us at <a href={COMPANY.phoneLink} style={{ color: "#D4A017", fontWeight: 600 }}>{COMPANY.phone}</a> or fill out the form above. We typically respond in 20 minutes or less.
           </p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact" className="btn btn-primary">Get Your Free Estimate</Link>
+            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate</Link>
             <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>

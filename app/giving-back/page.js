@@ -190,7 +190,7 @@ export default function GivingBackPage() {
           <p style={{ fontFamily: fontBody, fontSize: 16, lineHeight: 1.7, margin: "0 0 28px", color: C.black }}>
             When you choose Castle Express Moving &amp; Storage, your move puts food on someone&apos;s table. Get a free estimate and add your move to the tracker.
           </p>
-          <Link href="/contact" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: C.black, color: C.white, fontFamily: fontBody, fontWeight: 700, fontSize: 16, padding: "16px 28px", borderRadius: 8, textDecoration: "none" }}>
+          <Link href="/contact/" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: C.black, color: C.white, fontFamily: fontBody, fontWeight: 700, fontSize: 16, padding: "16px 28px", borderRadius: 8, textDecoration: "none" }}>
             Get a Free Estimate <ArrowRight />
           </Link>
         </div>

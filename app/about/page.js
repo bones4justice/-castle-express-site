@@ -83,7 +83,7 @@ export default function AboutPage() {
           <p style={{ fontFamily: "var(--font-body)", fontSize: 18, color: "#1A1A2E", lineHeight: 1.8, fontStyle: "italic", marginBottom: 32 }}>
             {ABOUT_TEXT.mission}
           </p>
-          <Link href="/contact" className="btn btn-primary">Get a Free Estimate <ArrowRight /></Link>
+          <Link href="/contact/" className="btn btn-primary">Get a Free Estimate <ArrowRight /></Link>
         </div>
       </section>
     </>

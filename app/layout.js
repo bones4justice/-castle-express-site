@@ -139,7 +139,6 @@ export default function RootLayout({ children }) {
         <main>{children}</main>
         <Footer />
         <StorageStickyBar />
-        <Script src="https://static.elfsight.com/platform/platform.js" strategy="lazyOnload" />
       </body>
     </html>
   );

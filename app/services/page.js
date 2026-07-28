@@ -71,7 +71,7 @@ export default function ServicesPage() {
             </div>
           ))}
           <div className="text-center" style={{ marginTop: 32 }}>
-            <Link href="/contact" className="btn btn-primary">Get Your Free Estimate <ArrowRight /></Link>
+            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate <ArrowRight /></Link>
           </div>
         </div>
       </section>

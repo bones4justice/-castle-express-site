@@ -43,11 +43,12 @@ export default function PackingEstimateForm() {
 
     setStatus("sending");
     try {
-      await fetch("https://formspree.io/f/xpqjkjga", {
+      const response = await fetch("https://formspree.io/f/xpqjkjga", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...values, package: values.pkg }),
       });
+      if (!response.ok) throw new Error("submit failed");
       setStatus("done");
     } catch (err) {
       setStatus("error");
