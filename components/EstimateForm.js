@@ -12,6 +12,8 @@ export default function EstimateForm({ dark = false }) {
     name: "", phone: "", email: "", moveDate: "",
     moveFrom: "", moveTo: "", moveSize: "", source: "",
   });
+  const [honeypot, setHoneypot] = useState("");
+  const openedAt = useRef(Date.now());
 
   const update = (field) => (e) => setFormData(prev => ({ ...prev, [field]: e.target.value }));
 
@@ -19,24 +21,8 @@ export default function EstimateForm({ dark = false }) {
     e.preventDefault();
     setLoading(true);
 
-    // ──────────────────────────────────────────────────
-    // 1. Formspree  -  sends leads to your email
-    // ──────────────────────────────────────────────────
-    try {
-      await fetch("https://formspree.io/f/xpqjkjga", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (typeof fbq === "function") fbq("track", "Lead");
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv }); }
-    } catch (err) {
-      console.error("Formspree submission error:", err);
-    }
-
-    // ──────────────────────────────────────────────────
-    // 2. SmartMoving  -  POST to leads API
-    // ──────────────────────────────────────────────────
+    // Leads go through /api/lead (server-side spam filter + Formspree +
+    // SmartMoving forwarding). Provider keys live server-side only.
     try {
       const smPayload = {
         FullName: formData.name,
@@ -52,17 +38,21 @@ export default function EstimateForm({ dark = false }) {
 
       Object.assign(smPayload, getSmartMovingAttribution());
 
-      const smRes = await fetch("https://api.smartmoving.com/api/leads/from-provider/v2?providerKey=8f882454-9968-445e-8f50-ac5d011a33fc&branchId=352498a1-e171-40cd-8b35-ac5d011720d0", {
+      await fetch("/api/lead/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(smPayload),
+        body: JSON.stringify({
+          form: "estimate",
+          hp: honeypot,
+          elapsedMs: Date.now() - openedAt.current,
+          formspree: formData,
+          smartmoving: smPayload,
+        }),
       });
-      if (!smRes.ok) {
-        const smErr = await smRes.text();
-        console.error("SmartMoving API error:", smRes.status, smErr);
-      }
+      if (typeof fbq === "function") fbq("track", "Lead");
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv }); }
     } catch (err) {
-      console.error("SmartMoving submission error:", err);
+      console.error("Lead submission error:", err);
     }
 
     setLoading(false);
@@ -230,6 +220,13 @@ export default function EstimateForm({ dark = false }) {
         fontFamily: "var(--font-body)", fontSize: 13,
         color: dark ? "rgba(255,255,255,0.75)" : "#6B7280", margin: "0 0 20px 0",
       }}>Typically responds in 20 min. or less</p>
+
+      {/* Honeypot: invisible to humans, bots auto-fill it. Named "website"
+          because that's what form-filler bots look for. */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", height: 0, overflow: "hidden" }}>
+        <label htmlFor="website-field">Website</label>
+        <input id="website-field" name="website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+      </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         <div>

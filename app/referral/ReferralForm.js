@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Check, ArrowRight } from "@/components/Icons";
 import { getSmartMovingAttribution } from "@/lib/utm";
 
@@ -55,6 +55,8 @@ export default function ReferralForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState(false);
+  const [honeypot, setHoneypot] = useState("");
+  const openedAt = useRef(Date.now());
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -65,27 +67,8 @@ export default function ReferralForm() {
     setSubmitting(true);
     setError(false);
 
-    // 1. Formspree  -  email notifications
-    try {
-      const response = await fetch("https://formspree.io/f/xnjojwly", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(formData),
-      });
-      if (!response.ok) {
-        setError(true);
-        setSubmitting(false);
-        return;
-      }
-      if (typeof fbq === "function") fbq("track", "Lead");
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "referral_form", hero_variant: hv }); }
-    } catch {
-      setError(true);
-      setSubmitting(false);
-      return;
-    }
-
-    // 2. SmartMoving  -  create lead from referred person's info
+    // Leads go through /api/lead (server-side spam filter + Formspree +
+    // SmartMoving forwarding). Provider keys live server-side only.
     try {
       const smPayload = {
         FullName: (formData.referredFirstName + " " + formData.referredLastName).trim(),
@@ -99,17 +82,29 @@ export default function ReferralForm() {
 
       Object.assign(smPayload, getSmartMovingAttribution());
 
-      const smRes = await fetch("https://api.smartmoving.com/api/leads/from-provider/v2?providerKey=d1cc3234-4fdc-4b3d-ad89-b0ec010a0ee8&branchId=352498a1-e171-40cd-8b35-ac5d011720d0", {
+      const response = await fetch("/api/lead/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(smPayload),
+        body: JSON.stringify({
+          form: "referral",
+          hp: honeypot,
+          elapsedMs: Date.now() - openedAt.current,
+          formspree: formData,
+          smartmoving: smPayload,
+        }),
       });
-      if (!smRes.ok) {
-        const smErr = await smRes.text();
-        console.error("SmartMoving API error:", smRes.status, smErr);
+      const result = response.ok ? await response.json() : { ok: false };
+      if (!result.ok) {
+        setError(true);
+        setSubmitting(false);
+        return;
       }
-    } catch (err) {
-      console.error("SmartMoving submission error:", err);
+      if (typeof fbq === "function") fbq("track", "Lead");
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "referral_form", hero_variant: hv }); }
+    } catch {
+      setError(true);
+      setSubmitting(false);
+      return;
     }
 
     setSubmitted(true);
@@ -143,6 +138,11 @@ export default function ReferralForm() {
 
   return (
     <form onSubmit={handleSubmit}>
+      {/* Honeypot: invisible to humans, bots auto-fill it. */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", height: 0, overflow: "hidden" }}>
+        <label htmlFor="referral-website-field">Website</label>
+        <input id="referral-website-field" name="website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+      </div>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
         {/* LEFT COLUMN - Your Info */}
         <div className="referral-col">
