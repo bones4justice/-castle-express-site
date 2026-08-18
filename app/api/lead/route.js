@@ -28,6 +28,31 @@ const FORMS = {
 
 const BRANCH_ID = "352498a1-e171-40cd-8b35-ac5d011720d0";
 
+// Failed downstream writes used to die silently in Vercel logs; now they are
+// reported to the ops box, which emails Joe (rate-limited server-side).
+const ALERT_URL = "http://16.59.150.90:8080/api/lead-write-alert";
+const ALERT_SECRET =
+  process.env.LEAD_ALERT_SECRET ||
+  "7c1612913607aa97ff12ca7f4be402bada84922f70c9a576";
+
+async function reportWriteFailure(target, formName, detail) {
+  try {
+    await fetch(ALERT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        secret: ALERT_SECRET,
+        target,
+        form: formName,
+        detail: String(detail).slice(0, 800),
+      }),
+      signal: AbortSignal.timeout(4000),
+    });
+  } catch (err) {
+    console.error("[lead] failure alert not delivered:", err);
+  }
+}
+
 // ─── Spam heuristics ───
 
 // A real name word of 3+ letters virtually always contains a vowel.
@@ -146,10 +171,12 @@ export async function POST(request) {
       if (!r.ok) {
         console.error(`[lead] Formspree error ${r.status} for ${body.form}`);
         ok = false;
+        await reportWriteFailure("formspree", body.form, `HTTP ${r.status}`);
       }
     } catch (err) {
       console.error("[lead] Formspree submission error:", err);
       ok = false;
+      await reportWriteFailure("formspree", body.form, err);
     }
   }
 
@@ -164,13 +191,20 @@ export async function POST(request) {
         }
       );
       if (!r.ok) {
+        const detail = await r.text();
         console.error(
           `[lead] SmartMoving error ${r.status} for ${body.form}:`,
-          await r.text()
+          detail
+        );
+        await reportWriteFailure(
+          "smartmoving",
+          body.form,
+          `HTTP ${r.status}: ${detail}`
         );
       }
     } catch (err) {
       console.error("[lead] SmartMoving submission error:", err);
+      await reportWriteFailure("smartmoving", body.form, err);
     }
   }
 
