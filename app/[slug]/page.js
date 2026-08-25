@@ -74,7 +74,7 @@ export default function CityPage({ params }) {
         name: `How much do movers cost in ${city.town}, ${city.state}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `The cost of movers in ${city.town} varies by job size and distance. Castle Express Moving & Storage offers accurate, transparent estimates with free quotes. Most local moves in ${city.town} range from $400–$1,200 depending on home size. Call us at ${COMPANY.phone} for a free estimate.`,
+          text: `The cost of movers in ${city.town} varies by job size and distance. Castle Express Moving & Storage offers accurate, transparent estimates at no charge. Most local moves in ${city.town} range from $400–$1,200 depending on home size. Call us at ${COMPANY.phone} for a free estimate.`,
         },
       },
       {
@@ -98,7 +98,7 @@ export default function CityPage({ params }) {
         name: `Does Castle Express offer packing services in ${city.town}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Yes. We offer full and partial packing services in ${city.town}, including our Princess Packing™ white-glove service. Our team handles all materials, packing, wrapping, and loading. Ask about our packing add-on when you request your free quote.`,
+          text: `Yes. We offer full and partial packing services in ${city.town}, including our Princess Packing™ white-glove service. Our team handles all materials, packing, wrapping, and loading. Ask about our packing add-on when you request your free estimate.`,
         },
       },
     ],
@@ -240,7 +240,7 @@ export default function CityPage({ params }) {
                 `${COMPANY.reviewCount} five-star Google reviews`,
                 city.slug === 'movers-enfield-ct' ? 'Based right here in Enfield, CT' : `Serving ${city.town} from our Enfield, CT facility - just ${city.drive} away`,
                 "Climate-controlled storage available",
-                "Same-day quotes, typically respond in 20 minutes",
+                "Same-day estimates, typically respond in 20 minutes",
               ].map((feat, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16 }}>
                   <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
