@@ -425,6 +425,12 @@ const nextConfig = {
       { source: '/privacy-policy/', destination: '/privacy/', permanent: true },
       { source: '/sitemap/', destination: '/sitemap.xml', permanent: true },
       { source: '/accessibility/', destination: '/', permanent: true },
+      // GSC 404 cleanup — 2026-08-25 (SEMrush audit): legacy WordPress
+      // /movers-moving-company-in-<town>/ pattern still live-404s; the
+      // Glastonbury URL carries external backlinks. Old pattern was CT-era,
+      // so wildcard to -ct; an unknown town lands on a 404 same as today.
+      { source: '/movers-moving-company-in-:town', destination: '/movers-:town-ct/', permanent: true },
+      { source: '/movers-moving-company-in-:town/', destination: '/movers-:town-ct/', permanent: true },
       // Stale Google-indexed paths from a prior parseInline tel: bug — recover traffic to /contact/
       { source: '/:path*/tel\\:18885534503/:trailing*', destination: '/contact/', permanent: true },
       { source: '/:path*/tel\\:18885534503', destination: '/contact/', permanent: true },
