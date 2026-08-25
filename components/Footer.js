@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { COMPANY } from "@/content";
-import { Shield } from "@/components/Icons";
+import { Shield, Star } from "@/components/Icons";
 
 function SocialLink({ href, label, children }) {
   return (
@@ -94,6 +94,9 @@ export default function Footer() {
               <div>CT Permit {COMPANY.ctPermit}</div>
               <div style={{ marginTop: 8, display: "flex", alignItems: "center", gap: 6, color: "#D4A017" }}>
                 <Shield size={18} /> <span style={{ fontWeight: 600 }}>A+ BBB Rating</span>
+              </div>
+              <div style={{ marginTop: 4, display: "flex", alignItems: "center", gap: 6, color: "#D4A017" }}>
+                <Star /> <span style={{ fontWeight: 600 }}>{COMPANY.reviewAvg}&#9733; Google ({COMPANY.reviewCount} Reviews)</span>
               </div>
             </div>
           </div>

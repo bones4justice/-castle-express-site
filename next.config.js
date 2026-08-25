@@ -451,6 +451,24 @@ const nextConfig = {
       { source: '/movers-scitico-ct/:path+', destination: '/movers-enfield-ct/:path+', permanent: true },
       { source: '/movers-windsorville-ct/:path+', destination: '/movers-east-windsor-ct/', permanent: true },
       { source: '/movers-melrose-ct/:path+', destination: '/movers-east-windsor-ct/', permanent: true },
+      // Zero-lead page consolidation, batch 2 (2026-08-25): remaining 15 pages
+      // with no jobs and no leads ever fold into their parent town or nearest
+      // served neighbor. Villages -> parent; freestanding towns -> adjacent town.
+      { source: '/movers-crystal-lake-ct/:path*', destination: '/movers-ellington-ct/', permanent: true },
+      { source: '/movers-somersville-ct/:path*', destination: '/movers-somers-ct/', permanent: true },
+      { source: '/movers-warehouse-point-ct/:path*', destination: '/movers-east-windsor-ct/', permanent: true },
+      { source: '/movers-andover-ct/:path*', destination: '/movers-coventry-ct/', permanent: true },
+      { source: '/movers-agawam-center-ma/:path*', destination: '/movers-agawam-ma/', permanent: true },
+      { source: '/movers-north-agawam-ma/:path*', destination: '/movers-agawam-ma/', permanent: true },
+      { source: '/movers-granby-ma/:path*', destination: '/movers-south-hadley-ma/', permanent: true },
+      { source: '/movers-charlton-ma/:path*', destination: '/movers-sturbridge-ma/', permanent: true },
+      { source: '/movers-oxford-ma/:path*', destination: '/movers-southbridge-ma/', permanent: true },
+      { source: '/movers-webster-ma/:path*', destination: '/movers-southbridge-ma/', permanent: true },
+      { source: '/movers-deerfield-ma/:path*', destination: '/movers-northampton-ma/', permanent: true },
+      { source: '/movers-hatfield-ma/:path*', destination: '/movers-northampton-ma/', permanent: true },
+      { source: '/movers-whately-ma/:path*', destination: '/movers-northampton-ma/', permanent: true },
+      { source: '/movers-russell-ma/:path*', destination: '/movers-westfield-ma/', permanent: true },
+      { source: '/movers-ware-ma/:path*', destination: '/movers-belchertown-ma/', permanent: true },
       // Stale Google-indexed paths from a prior parseInline tel: bug — recover traffic to /contact/
       { source: '/:path*/tel\\:18885534503/:trailing*', destination: '/contact/', permanent: true },
       { source: '/:path*/tel\\:18885534503', destination: '/contact/', permanent: true },
