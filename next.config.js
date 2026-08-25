@@ -445,6 +445,12 @@ const nextConfig = {
       { source: '/movers-windsorville-ct/', destination: '/movers-east-windsor-ct/', permanent: true },
       { source: '/movers-melrose-ct', destination: '/movers-east-windsor-ct/', permanent: true },
       { source: '/movers-melrose-ct/', destination: '/movers-east-windsor-ct/', permanent: true },
+      // ...and their service subpages (each village had 3 in SUBPAGE_TOWNS)
+      { source: '/movers-thompsonville-ct/:path+', destination: '/movers-enfield-ct/:path+', permanent: true },
+      { source: '/movers-hazardville-ct/:path+', destination: '/movers-enfield-ct/:path+', permanent: true },
+      { source: '/movers-scitico-ct/:path+', destination: '/movers-enfield-ct/:path+', permanent: true },
+      { source: '/movers-windsorville-ct/:path+', destination: '/movers-east-windsor-ct/', permanent: true },
+      { source: '/movers-melrose-ct/:path+', destination: '/movers-east-windsor-ct/', permanent: true },
       // Stale Google-indexed paths from a prior parseInline tel: bug — recover traffic to /contact/
       { source: '/:path*/tel\\:18885534503/:trailing*', destination: '/contact/', permanent: true },
       { source: '/:path*/tel\\:18885534503', destination: '/contact/', permanent: true },
