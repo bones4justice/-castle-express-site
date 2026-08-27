@@ -7,8 +7,8 @@ const PINK = "#F72585";
 const PINK_SOFT = "#fce4ef";
 
 export const metadata = {
-  title: "Princess Packing™ | White-Glove Packing | Castle Express Moving & Storage",
-  description: "Princess Packing™ is the white-glove packing service from Castle Express Moving & Storage. Our experienced all-female crew handles your belongings with extra care. Serving Hartford County CT & Western MA. Call 1-888-553-4503.",
+  title: "Princess Packing™ | White-Glove Packing | Castle Express",
+  description: "Princess Packing™: white-glove packing by an experienced all-female crew. Extra care for your belongings. Hartford County CT & Western MA. 1-888-553-4503.",
   alternates: { canonical: "/princess-packing/" },
   openGraph: {
     title: "Princess Packing™ | Castle Express Moving & Storage",

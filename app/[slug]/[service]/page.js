@@ -22,8 +22,8 @@ export async function generateMetadata({ params }) {
   const svc = SERVICE_SUBPAGES[params.service];
   if (!city || !svc || !SUBPAGE_TOWNS.includes(params.slug)) return {};
 
-  const title = `${svc.serviceTitle} in ${city.town}, ${city.state} | Castle Express Moving & Storage`;
-  const description = `Looking for ${svc.serviceTitle.toLowerCase()} in ${city.town}, ${city.stateFull}? Castle Express Moving & Storage provides professional ${svc.serviceTitle.toLowerCase()} with experienced crews. Free estimates. Call ${COMPANY.phone}.`;
+  const title = `${svc.serviceTitle} in ${city.town}, ${city.state} | Castle Express`;
+  const description = `Professional ${svc.serviceTitle.toLowerCase()} in ${city.town}, ${city.stateFull} from Castle Express. Experienced crews, free estimates. Call ${COMPANY.phone}.`;
 
   return {
     title,

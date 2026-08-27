@@ -5,8 +5,8 @@ import { Check, Phone, Star, Shield, ArrowRight, MapPin } from "@/components/Ico
 import EstimateForm from "@/components/EstimateForm";
 
 export const metadata = {
-  title: "Piano Movers in Connecticut | Castle Express Moving & Storage",
-  description: "Professional piano moving in Hartford County and Western Massachusetts. Upright and grand pianos moved safely by experienced crews. Free estimates. Call (888) 553-4503.",
+  title: "Piano Movers in Connecticut | Castle Express",
+  description: "Professional piano moving in Hartford County & Western MA. Upright & grand pianos moved safely by experienced crews. Free estimates. (888) 553-4503.",
   alternates: { canonical: "/piano-moving/" },
   openGraph: {
     title: "Piano Movers in Connecticut | Castle Express Moving & Storage",

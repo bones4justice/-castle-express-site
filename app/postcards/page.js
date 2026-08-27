@@ -6,7 +6,7 @@ import OfferCards from "./OfferCards";
 
 export const metadata = {
   title: "Welcome! Claim Your Moving Offers | Castle Express Moving CT",
-  description: "You found us! Claim your exclusive moving offers from Castle Express Moving & Storage. Free boxes, free storage, and more. Serving Hartford County CT & Western MA.",
+  description: "You found us! Claim your exclusive moving offers from Castle Express. Free boxes, free storage & more. Serving Hartford County CT & Western MA.",
   alternates: { canonical: "/postcards/" },
 };
 

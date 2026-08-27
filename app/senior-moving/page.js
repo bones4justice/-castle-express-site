@@ -5,8 +5,8 @@ import { Check, Phone, Star, Shield, ArrowRight, MapPin } from "@/components/Ico
 import EstimateForm from "@/components/EstimateForm";
 
 export const metadata = {
-  title: "Senior Movers in Connecticut | Castle Express Moving & Storage",
-  description: "Senior movers serving Hartford County and Western Massachusetts. Castle Express provides patient, experienced crews for downsizing, assisted living transitions, and estate moves. Free estimates. Call (888) 553-4503.",
+  title: "Senior Movers in Connecticut | Castle Express",
+  description: "Patient, experienced senior movers for downsizing, assisted living transitions & estate moves. Hartford County CT & Western MA. (888) 553-4503.",
   alternates: { canonical: "/senior-moving/" },
   openGraph: {
     title: "Senior Movers in Connecticut | Castle Express Moving & Storage",
