@@ -161,7 +161,7 @@ export default function HomePage() {
               Joe Caronna started Castle Express in {COMPANY.founded} with one truck and a commitment to treat every customer like family. Today we operate a fleet of {COMPANY.truckCount} trucks from our {COMPANY.facilitySize} sq ft facility in {COMPANY.city}, {COMPANY.state} - but the values haven't changed.
             </p>
             <p className="body-md text-gray" style={{ marginBottom: 28 }}>
-              Whether you're moving across town in Enfield or relocating from Hartford to Springfield, our moving company handles residential moves, commercial relocations, full-service packing, climate-controlled storage, and specialty items like pianos and gun safes. Every move includes a detailed walkthrough, furniture protection, and careful placement at your new home.
+              Whether you're moving across town in Enfield or relocating from Hartford to Springfield, our moving company handles residential moves, commercial relocations, full-service packing, <Link href="/services/storage/" style={{ color: "inherit", textDecoration: "underline" }}>climate-controlled storage in Enfield, CT</Link>, and specialty items like pianos and gun safes. Every move includes a detailed walkthrough, furniture protection, and careful placement at your new home.
             </p>
             {[
               { title: "Accurate Estimates", desc: "No surprise charges. Your estimate is your price." },
