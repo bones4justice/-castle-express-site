@@ -286,7 +286,7 @@ export const SERVICE_PAGES = {
   "storage": {
     id: "storage",
     title: "Climate-Controlled Storage",
-    headline: "Moving and Storage Services in Connecticut",
+    headline: "Climate-Controlled Storage in Enfield, CT",
     metaTitle: "Climate-Controlled Storage in Enfield, CT | Castle Express",
     metaDesc: "Secure, climate-controlled storage at our 5,000 sq ft Enfield facility. We never raise your price. Free first month with your move. Call (888) 553-4503",
     heroImage: "/images/storage-crates.webp",
