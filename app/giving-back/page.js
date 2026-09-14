@@ -208,16 +208,21 @@ export default function GivingBackPage() {
 
       {/* About the Enfield Food Shelf */}
       <section style={{ background: C.light, color: C.black, padding: "72px 24px" }}>
-        <div style={{ maxWidth: 880, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: fontHead, fontWeight: 900, fontSize: "clamp(22px, 2.6vw, 28px)", margin: "0 0 14px" }}>
-            About the Enfield Food Shelf
-          </h2>
-          <p style={{ fontFamily: fontBody, fontSize: 15, lineHeight: 1.8, color: C.black, margin: "0 0 14px" }}>
-            Starting in July 2026, we chose to keep our giving local. The Enfield Food Shelf is the food pantry serving families right here in Enfield, Connecticut — our hometown — so the meals our moves fund end up on tables in our own community. By their measure, every dollar donated provides about 2.5 meals for local families.
-          </p>
-          <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: fontBody, fontWeight: 700, color: C.black, borderBottom: `2px solid ${C.gold}`, textDecoration: "none", paddingBottom: 2 }}>
-            Visit enfieldfoodshelf.org
+        <div style={{ maxWidth: 880, margin: "0 auto", display: "grid", gridTemplateColumns: "auto 1fr", gap: 32, alignItems: "center" }}>
+          <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit the Enfield Food Shelf" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: C.black, borderRadius: 16, padding: 24 }}>
+            <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={110} height={112} style={{ objectFit: "contain" }} />
           </a>
+          <div>
+            <h2 style={{ fontFamily: fontHead, fontWeight: 900, fontSize: "clamp(22px, 2.6vw, 28px)", margin: "0 0 14px" }}>
+              About the Enfield Food Shelf
+            </h2>
+            <p style={{ fontFamily: fontBody, fontSize: 15, lineHeight: 1.8, color: C.black, margin: "0 0 14px" }}>
+              Starting in July 2026, we chose to keep our giving local. The Enfield Food Shelf is the food pantry serving families right here in Enfield, Connecticut — our hometown — so the meals our moves fund end up on tables in our own community. By their measure, every dollar donated provides about 2.5 meals for local families.
+            </p>
+            <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: fontBody, fontWeight: 700, color: C.black, borderBottom: `2px solid ${C.gold}`, textDecoration: "none", paddingBottom: 2 }}>
+              Visit enfieldfoodshelf.org
+            </a>
+          </div>
         </div>
       </section>
 
