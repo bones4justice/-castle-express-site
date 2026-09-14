@@ -4,12 +4,12 @@ import { ArrowRight } from "@/components/Icons";
 import data from "@/data/feeding-america.json";
 
 export const metadata = {
-  title: "Castle Express Gives Back: Feeding America Partnership",
-  description: "Castle Express Moving & Storage donates $5 to Feeding America for every move we complete. Every $1 becomes 10 meals. See our live donation tracker.",
+  title: "Castle Express Gives Back: Feeding Families With Every Move",
+  description: "Castle Express Moving & Storage donates $5 for every move to hunger-relief partners like Feeding America and the Enfield Food Shelf. See our live donation tracker.",
   alternates: { canonical: "/giving-back/" },
   openGraph: {
-    title: "Castle Express Gives Back: Feeding America Partnership",
-    description: "$5 per move to Feeding America. Every $1 becomes 10 meals. See the live tracker.",
+    title: "Castle Express Gives Back: Feeding Families With Every Move",
+    description: "$5 per move to hunger-relief partners like Feeding America and the Enfield Food Shelf. See the live tracker.",
     url: "/giving-back/",
   },
 };
@@ -41,13 +41,23 @@ const C = {
   light: "#ebeced",
 };
 
+const DEFAULT_ORG = "Feeding America";
+
+function monthRate(m) {
+  return m.mealsPerDollar || data.mealsPerDollar || 10;
+}
+
+function monthMeals(m) {
+  return Math.round(((m.donated || 0) + (m.matched || 0)) * monthRate(m));
+}
+
 export default function GivingBackPage() {
   const months = [...(data.months || [])].sort((a, b) => a.month.localeCompare(b.month));
   const totalDonated = months.reduce((s, m) => s + (m.donated || 0), 0);
   const totalMatched = months.reduce((s, m) => s + (m.matched || 0), 0);
   const totalCombined = totalDonated + totalMatched;
   const mealsPerDollar = data.mealsPerDollar || 10;
-  const totalMeals = totalCombined * mealsPerDollar;
+  const totalMeals = months.reduce((s, m) => s + monthMeals(m), 0);
 
   const nowYM = currentYearMonth();
   const currentMonth = months.find(m => m.month === nowYM);
@@ -60,19 +70,26 @@ export default function GivingBackPage() {
   const ld = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Castle Express Gives Back — Feeding America Partnership",
+    "name": "Castle Express Gives Back — Feeding Families With Every Move",
     "url": "https://www.castleexpressmoving.com/giving-back/",
-    "description": "Castle Express Moving & Storage donates $5 to Feeding America for every move we complete. Tracker of monthly donations, matches, and meals provided.",
+    "description": "Castle Express Moving & Storage donates $5 for every move to hunger-relief partners like Feeding America and the Enfield Food Shelf. Tracker of monthly donations, matches, and meals provided.",
     "isPartOf": {
       "@type": "WebSite",
       "name": "Castle Express Moving & Storage",
       "url": "https://www.castleexpressmoving.com"
     },
-    "about": {
-      "@type": "NGO",
-      "name": "Feeding America",
-      "url": "https://www.feedingamerica.org/"
-    },
+    "about": [
+      {
+        "@type": "NGO",
+        "name": "Feeding America",
+        "url": "https://www.feedingamerica.org/"
+      },
+      {
+        "@type": "NGO",
+        "name": "Enfield Food Shelf",
+        "url": "https://www.enfieldfoodshelf.org/"
+      }
+    ],
     "publisher": {
       "@type": "MovingCompany",
       "name": "Castle Express Moving & Storage",
@@ -97,7 +114,7 @@ export default function GivingBackPage() {
             Every Move Helps Feed a Family
           </h1>
           <p style={{ fontFamily: fontBody, fontSize: 17, lineHeight: 1.8, color: C.light, margin: "0 auto", maxWidth: 720 }}>
-            Every move we complete provides <strong style={{ color: C.gold }}>50 meals</strong> to families through Feeding America. Here&apos;s how: we donate <strong style={{ color: C.gold }}>$5 to Feeding America</strong> for every move, and Feeding America turns every <strong style={{ color: C.gold }}>$1 into 10 meals</strong>.{showActiveBanner ? <> Right now <strong style={{ color: C.gold }}>{data.matchPartner}</strong> is matching every dollar we donate, so the impact is doubled.</> : ""} Here&apos;s our impact so far.
+            For every move we complete, we donate <strong style={{ color: C.gold }}>$5 to hunger relief</strong> — through national partners like <strong style={{ color: C.gold }}>Feeding America</strong> and local ones like the <strong style={{ color: C.gold }}>Enfield Food Shelf</strong>, right here in our hometown. Each organization turns those dollars into meals for families who need them.{showActiveBanner ? <> Right now <strong style={{ color: C.gold }}>{data.matchPartner}</strong> is matching every dollar we donate, so the impact is doubled.</> : ""} Here&apos;s our impact so far.
           </p>
 
           {showActiveBanner && (
@@ -116,10 +133,11 @@ export default function GivingBackPage() {
             Monthly History
           </h2>
           <div style={{ overflowX: "auto", background: C.white, borderRadius: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
-            <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: fontBody, fontSize: 14, minWidth: 720 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontFamily: fontBody, fontSize: 14, minWidth: 820 }}>
               <thead>
                 <tr style={{ background: C.black, color: C.white }}>
                   <Th>Month</Th>
+                  <Th>Organization</Th>
                   <Th align="right">Castle Donated</Th>
                   <Th align="right">Match</Th>
                   <Th align="right">Total</Th>
@@ -139,10 +157,16 @@ export default function GivingBackPage() {
                           </div>
                         )}
                       </Td>
+                      <Td>
+                        <div>{m.org || DEFAULT_ORG}</div>
+                        <div style={{ fontSize: 12, color: C.gray, marginTop: 2 }}>
+                          $1 = {monthRate(m)} meals
+                        </div>
+                      </Td>
                       <Td align="right">{fmtMoney(m.donated || 0)}</Td>
                       <Td align="right">{(m.matched || 0) > 0 ? fmtMoney(m.matched) : <span style={{ color: C.gray }}>$0</span>}</Td>
                       <Td align="right"><strong>{fmtMoney(total)}</strong></Td>
-                      <Td align="right">{fmtInt(total * mealsPerDollar)}</Td>
+                      <Td align="right">{fmtInt(monthMeals(m))}</Td>
                     </tr>
                   );
                 })}
@@ -150,6 +174,7 @@ export default function GivingBackPage() {
               <tfoot>
                 <tr style={{ background: C.black, color: C.white }}>
                   <Td><strong>Lifetime Totals</strong></Td>
+                  <Td>{""}</Td>
                   <Td align="right"><strong>{fmtMoney(totalDonated)}</strong></Td>
                   <Td align="right"><strong>{anyMatchedHistory ? fmtMoney(totalMatched) : "$0"}</strong></Td>
                   <Td align="right"><strong>{fmtMoney(totalCombined)}</strong></Td>
@@ -178,6 +203,21 @@ export default function GivingBackPage() {
               Visit feedingamerica.org
             </a>
           </div>
+        </div>
+      </section>
+
+      {/* About the Enfield Food Shelf */}
+      <section style={{ background: C.light, color: C.black, padding: "72px 24px" }}>
+        <div style={{ maxWidth: 880, margin: "0 auto" }}>
+          <h2 style={{ fontFamily: fontHead, fontWeight: 900, fontSize: "clamp(22px, 2.6vw, 28px)", margin: "0 0 14px" }}>
+            About the Enfield Food Shelf
+          </h2>
+          <p style={{ fontFamily: fontBody, fontSize: 15, lineHeight: 1.8, color: C.black, margin: "0 0 14px" }}>
+            Starting in July 2026, we chose to keep our giving local. The Enfield Food Shelf is the food pantry serving families right here in Enfield, Connecticut — our hometown — so the meals our moves fund end up on tables in our own community. By their measure, every dollar donated provides about 2.5 meals for local families.
+          </p>
+          <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: fontBody, fontWeight: 700, color: C.black, borderBottom: `2px solid ${C.gold}`, textDecoration: "none", paddingBottom: 2 }}>
+            Visit enfieldfoodshelf.org
+          </a>
         </div>
       </section>
 
