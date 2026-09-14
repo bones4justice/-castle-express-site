@@ -331,9 +331,14 @@ export default function HomePage() {
           <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "clamp(22px, 3.5vw, 28px)", color: "#1A1A2E", lineHeight: 1.2, marginBottom: 24 }}>
             Every Move Feeds Families
           </h2>
-          <a href="https://www.feedingamerica.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginBottom: 24 }}>
-            <Image src="/images/feeding-america-logo.png" alt="Feeding America" width={200} height={80} style={{ objectFit: "contain" }} />
-          </a>
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 28, flexWrap: "wrap", marginBottom: 24 }}>
+            <a href="https://www.feedingamerica.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
+              <Image src="/images/feeding-america-logo.png" alt="Feeding America" width={200} height={80} style={{ objectFit: "contain" }} />
+            </a>
+            <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "#000000", borderRadius: 12, width: 80, height: 80 }}>
+              <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={58} height={59} style={{ objectFit: "contain" }} />
+            </a>
+          </div>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#374151", lineHeight: 1.8 }}>
             For every move we complete, Castle Express Moving &amp; Storage donates $5 to hunger-relief partners like Feeding America and our hometown Enfield Food Shelf. Moving is about new beginnings. We believe those beginnings should reach beyond just our customers.
           </p>
