@@ -114,7 +114,7 @@ export default function GivingBackPage() {
             Every Move Helps Feed a Family
           </h1>
           <p style={{ fontFamily: fontBody, fontSize: 17, lineHeight: 1.8, color: C.light, margin: "0 auto", maxWidth: 720 }}>
-            For every move we complete, we donate <strong style={{ color: C.gold }}>$5 to hunger relief</strong> — through national partners like <strong style={{ color: C.gold }}>Feeding America</strong> and local ones like the <strong style={{ color: C.gold }}>Enfield Food Shelf</strong>, right here in our hometown. Each organization turns those dollars into meals for families who need them.{showActiveBanner ? <> Right now <strong style={{ color: C.gold }}>{data.matchPartner}</strong> is matching every dollar we donate, so the impact is doubled.</> : ""} Here&apos;s our impact so far.
+            Every time we finish a move, we give <strong style={{ color: C.gold }}>$5 to help feed families</strong>. Some of that money goes to <strong style={{ color: C.gold }}>Feeding America</strong>, which helps people all across the country. Some goes to the <strong style={{ color: C.gold }}>Enfield Food Shelf</strong>, which helps people right here in our hometown. They turn every dollar into meals for families who need them.{showActiveBanner ? <> Right now <strong style={{ color: C.gold }}>{data.matchPartner}</strong> is matching every dollar we give, so each dollar counts twice.</> : ""} Here&apos;s what we&apos;ve done so far.
           </p>
 
           {showActiveBanner && (
@@ -197,7 +197,7 @@ export default function GivingBackPage() {
               About Feeding America
             </h2>
             <p style={{ fontFamily: fontBody, fontSize: 15, lineHeight: 1.8, color: C.black, margin: "0 0 14px" }}>
-              Feeding America is the largest hunger-relief organization in the United States, with a nationwide network of food banks, food pantries, and meal programs that serve every community. Their efficiency is what makes our pledge meaningful: every dollar we send delivers {mealsPerDollar} meals to families who need them.
+              Feeding America is the biggest hunger-relief group in the United States. They work with food banks and food pantries in every part of the country. Every $1 we send them provides {mealsPerDollar} meals for families who need food.
             </p>
             <a href="https://www.feedingamerica.org/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: fontBody, fontWeight: 700, color: C.black, borderBottom: `2px solid ${C.gold}`, textDecoration: "none", paddingBottom: 2 }}>
               Visit feedingamerica.org
@@ -217,7 +217,7 @@ export default function GivingBackPage() {
               About the Enfield Food Shelf
             </h2>
             <p style={{ fontFamily: fontBody, fontSize: 15, lineHeight: 1.8, color: C.black, margin: "0 0 14px" }}>
-              Starting in July 2026, we chose to keep our giving local. The Enfield Food Shelf is the food pantry serving families right here in Enfield, Connecticut — our hometown — so the meals our moves fund end up on tables in our own community. By their measure, every dollar donated provides about 2.5 meals for local families.
+              In July 2026, we decided to keep our giving close to home. The Enfield Food Shelf is the food pantry that helps families right here in Enfield, Connecticut — our hometown. That means the meals from our moves go to people in our own community. Every $1 we give them provides about 2.5 meals for local families.
             </p>
             <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: fontBody, fontWeight: 700, color: C.black, borderBottom: `2px solid ${C.gold}`, textDecoration: "none", paddingBottom: 2 }}>
               Visit enfieldfoodshelf.org

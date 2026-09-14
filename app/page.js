@@ -340,7 +340,7 @@ export default function HomePage() {
             </a>
           </div>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#374151", lineHeight: 1.8 }}>
-            For every move we complete, Castle Express Moving &amp; Storage donates $5 to hunger-relief partners like Feeding America and our hometown Enfield Food Shelf. Moving is about new beginnings. We believe those beginnings should reach beyond just our customers.
+            Every time we finish a move, Castle Express Moving &amp; Storage gives $5 to help feed families. That money goes to Feeding America and to the Enfield Food Shelf right here in our hometown. Moving is about new beginnings, and we want those new beginnings to reach more people than just our customers.
           </p>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#1A1A2E", fontWeight: 700, lineHeight: 1.7, marginTop: 20 }}>
             Together with our customers, we&apos;ve provided {GIVING_BACK_TOTAL_MEALS.toLocaleString("en-US")} meals so far.

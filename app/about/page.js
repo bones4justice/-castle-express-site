@@ -58,10 +58,10 @@ export default function AboutPage() {
         <div className="container-sm">
           <h2 className="heading-2">Giving Back</h2>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#1A1A2E", lineHeight: 1.8, marginBottom: 16, textAlign: "left" }}>
-            Castle Express Moving &amp; Storage is proud to support organizations that make a difference. We donate to St. Jude Children's Research Hospital every year and we partner with the Enfield Food Shelf by helping with their moving projects when they need us.
+            Castle Express Moving &amp; Storage is proud to support groups that do good work. We give to St. Jude Children's Research Hospital every year. We also help the Enfield Food Shelf with their moving projects when they need us.
           </p>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#1A1A2E", lineHeight: 1.8, marginBottom: 32, textAlign: "left" }}>
-            For every move we complete, we also donate $5 to hunger-relief partners like Feeding America and our hometown Enfield Food Shelf, putting meals on the tables of families in need. Giving back to our community is not something we do for attention. It is part of how we operate.
+            Every time we finish a move, we also give $5 to help feed families. That money goes to groups like Feeding America and the Enfield Food Shelf in our hometown. We don&apos;t give back to get attention. It&apos;s just part of who we are.
           </p>
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 48, flexWrap: "wrap" }}>
             <a href="https://www.stjude.org/" target="_blank" rel="noopener noreferrer">
