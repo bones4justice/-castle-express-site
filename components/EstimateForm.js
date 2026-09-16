@@ -38,6 +38,10 @@ export default function EstimateForm({ dark = false }) {
 
       Object.assign(smPayload, getSmartMovingAttribution());
 
+      // Same id goes to the OpenAI pixel (event_id) and the server-side
+      // Conversions API (oaiEventId) so OpenAI dedupes to one conversion.
+      const oaiEventId = crypto.randomUUID();
+
       await fetch("/api/lead/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -47,10 +51,12 @@ export default function EstimateForm({ dark = false }) {
           elapsedMs: Date.now() - openedAt.current,
           formspree: formData,
           smartmoving: smPayload,
+          oaiEventId,
+          pageUrl: window.location.href,
         }),
       });
       if (typeof fbq === "function") fbq("track", "Lead");
-      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" });
+      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv }); }
     } catch (err) {
       console.error("Lead submission error:", err);

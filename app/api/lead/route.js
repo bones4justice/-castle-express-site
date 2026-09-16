@@ -35,6 +35,51 @@ const ALERT_SECRET =
   process.env.LEAD_ALERT_SECRET ||
   "7c1612913607aa97ff12ca7f4be402bada84922f70c9a576";
 
+// OpenAI Ads Conversions API: server-side lead_created so conversions are
+// counted even when ad blockers eat the browser pixel. The client sends the
+// same event id to the pixel (event_id) and here (oaiEventId); OpenAI dedupes
+// on pixelId + event type + id, so a lead is never double-counted.
+const OPENAI_PIXEL_ID = "CPxY6DboesSjpsV4bFGcp4";
+
+async function sendOpenAIConversion(eventId, sourceUrl) {
+  const key = process.env.OPENAI_ADS_API_KEY;
+  if (!key) return; // not configured yet — pixel-only tracking still works
+  try {
+    const r = await fetch(
+      `https://bzr.openai.com/v1/events?pid=${OPENAI_PIXEL_ID}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${key}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          validate_only: false,
+          events: [
+            {
+              id: eventId,
+              type: "lead_created",
+              timestamp_ms: Date.now(),
+              source_url: sourceUrl,
+              action_source: "web",
+              data: { type: "customer_action" },
+            },
+          ],
+        }),
+        signal: AbortSignal.timeout(4000),
+      }
+    );
+    if (!r.ok) {
+      console.error(
+        `[lead] OpenAI conversion error ${r.status}:`,
+        await r.text()
+      );
+    }
+  } catch (err) {
+    console.error("[lead] OpenAI conversion send failed:", err);
+  }
+}
+
 async function reportWriteFailure(target, formName, detail) {
   try {
     await fetch(ALERT_URL, {
@@ -160,6 +205,18 @@ export async function POST(request) {
   }
 
   let ok = true;
+
+  // Only real (non-spam) leads count as conversions. Falls back to a
+  // server-generated id when the client didn't send one (older cached JS) —
+  // no pixel event exists in that case, so there's nothing to dedupe against.
+  await sendOpenAIConversion(
+    typeof body.oaiEventId === "string" && body.oaiEventId
+      ? body.oaiEventId.slice(0, 64)
+      : crypto.randomUUID(),
+    typeof body.pageUrl === "string" && /^https:\/\/(www\.)?castleexpressmoving\.com\//.test(body.pageUrl)
+      ? body.pageUrl.slice(0, 500)
+      : "https://www.castleexpressmoving.com/"
+  );
 
   if (body.formspree && typeof body.formspree === "object") {
     try {

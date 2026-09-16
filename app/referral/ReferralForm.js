@@ -82,6 +82,10 @@ export default function ReferralForm() {
 
       Object.assign(smPayload, getSmartMovingAttribution());
 
+      // Same id goes to the OpenAI pixel (event_id) and the server-side
+      // Conversions API (oaiEventId) so OpenAI dedupes to one conversion.
+      const oaiEventId = crypto.randomUUID();
+
       const response = await fetch("/api/lead/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -91,6 +95,8 @@ export default function ReferralForm() {
           elapsedMs: Date.now() - openedAt.current,
           formspree: formData,
           smartmoving: smPayload,
+          oaiEventId,
+          pageUrl: window.location.href,
         }),
       });
       const result = response.ok ? await response.json() : { ok: false };
@@ -100,7 +106,7 @@ export default function ReferralForm() {
         return;
       }
       if (typeof fbq === "function") fbq("track", "Lead");
-      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" });
+      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "referral_form", hero_variant: hv }); }
     } catch {
       setError(true);
