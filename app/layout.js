@@ -113,7 +113,7 @@ export default function RootLayout({ children }) {
         `}</Script>
         <Script id="openai-pixel" strategy="lazyOnload">{`
           !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
-          oaiq("init",{pixelId:"CPxY6DboesSjpsV4bFGcp4",debug:true});
+          oaiq("init",{pixelId:"CPxY6DboesSjpsV4bFGcp4",debug:false});
         `}</Script>
         <Script id="microsoft-clarity" strategy="lazyOnload">{`
           (function(c,l,a,r,i,t,y){
