@@ -180,6 +180,7 @@ export default function StorageOfferPage() {
         }),
       });
       if (typeof window.fbq === "function") window.fbq("track", "Lead");
+      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" });
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "storage_offer", event_label: "storage_offer_form", hero_variant: hv }); }
       setSubmitted(true);
     } catch (err) {

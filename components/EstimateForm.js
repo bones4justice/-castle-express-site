@@ -50,6 +50,7 @@ export default function EstimateForm({ dark = false }) {
         }),
       });
       if (typeof fbq === "function") fbq("track", "Lead");
+      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" });
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv }); }
     } catch (err) {
       console.error("Lead submission error:", err);

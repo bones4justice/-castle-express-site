@@ -54,6 +54,7 @@ export default function PostcardForm() {
       });
       if (!response.ok) throw new Error("submit failed");
       if (typeof window.fbq !== "undefined") window.fbq("track", "Lead");
+      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" });
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "postcard_form", hero_variant: hv }); }
       if (typeof window.gtag !== "undefined") {
         window.gtag("event", "postcard_submit", {
