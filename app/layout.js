@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StorageStickyBar from "@/components/StorageStickyBar";
 import AttributionCapture from "@/components/AttributionCapture";
+import ChromeGate from "@/components/ChromeGate";
 import { localBusinessJsonLd } from "@/lib/structuredData";
 import "./globals.css";
 
@@ -139,9 +140,9 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd()) }}
         />
         <AttributionCapture />
-        <Header />
+        <ChromeGate><Header /></ChromeGate>
         <main>{children}</main>
-        <Footer />
+        <ChromeGate><Footer /></ChromeGate>
         <StorageStickyBar />
       </body>
     </html>
