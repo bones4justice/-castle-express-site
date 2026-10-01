@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { COMPANY } from "@/content";
 import { Phone } from "@/components/Icons";
 import { parseInline } from "@/lib/parseInline";
+import imageDims from "@/lib/imageDims.json";
 
 export async function generateStaticParams() {
   return getAllPosts().map(p => ({ slug: p.slug }));
@@ -51,7 +52,11 @@ export default function BlogPost({ params }) {
       .map((block, i) => {
         const imgMatch = block.match(/^!\[(.*?)\]\((.*?)\)$/);
         if (imgMatch) {
-          return <img key={i} src={imgMatch[2]} alt={imgMatch[1]} loading={i === firstImgIdx ? "eager" : "lazy"} fetchPriority={i === firstImgIdx ? "high" : undefined} style={{
+          // Real width/height (lib/imageDims.json, regenerate with
+          // scripts/gen-image-dims.js after adding images) so the browser
+          // reserves the right box before the image loads - no layout shift.
+          const dims = imageDims[imgMatch[2]];
+          return <img key={i} src={imgMatch[2]} alt={imgMatch[1]} width={dims?.w} height={dims?.h} loading={i === firstImgIdx ? "eager" : "lazy"} fetchPriority={i === firstImgIdx ? "high" : undefined} style={{
             width: "100%",
             height: "auto",
             borderRadius: 12,

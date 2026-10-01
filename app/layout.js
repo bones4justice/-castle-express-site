@@ -78,7 +78,11 @@ export default function RootLayout({ children }) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-          gtag('config', 'G-97Z4EHJM63');
+          // send_page_view:false - the GTM container (GTM-KLR2TQC) already fires
+          // a GA4 page_view for this same measurement ID; without this flag every
+          // pageview was counted twice. This config stays only so the custom
+          // gtag('event', ...) calls below keep working.
+          gtag('config', 'G-97Z4EHJM63', { send_page_view: false });
           document.addEventListener('click', function(e) {
             var link = e.target.closest('a[href^="tel:"]');
             if (link) {

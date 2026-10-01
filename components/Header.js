@@ -42,7 +42,7 @@ export default function Header() {
       <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 72 }}>
         {/* Logo */}
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <Image src="/images/logo.jpg" alt="Castle Express Moving & Storage" width={120} height={48} style={{ height: 48, width: "auto" }} />
+          <Image src="/images/logo.jpg" alt="Castle Express Moving & Storage" width={120} height={48} priority style={{ height: 48, width: "auto" }} />
         </Link>
 
         {/* Mobile phone CTA - visible only on mobile, between logo and hamburger */}
