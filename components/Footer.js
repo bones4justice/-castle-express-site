@@ -105,7 +105,7 @@ export default function Footer() {
         {/* Bottom */}
         <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
           <p style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.75)" }}>
-            &copy; {COMPANY.founded}–{new Date().getFullYear()} {COMPANY.name} LLC. All rights reserved.
+            &copy; {COMPANY.founded}-{new Date().getFullYear()} {COMPANY.name} LLC. All rights reserved.
           </p>
           <div style={{ display: "flex", gap: 16 }}>
             <Link href="/privacy/" style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.75)", textDecoration: "none" }}>Privacy Policy</Link>

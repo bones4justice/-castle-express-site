@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StorageStickyBar from "@/components/StorageStickyBar";
 import AttributionCapture from "@/components/AttributionCapture";
+import ChromeGate from "@/components/ChromeGate";
 import { localBusinessJsonLd } from "@/lib/structuredData";
 import "./globals.css";
 
@@ -83,7 +84,7 @@ export default function RootLayout({ children }) {
               gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv });
               // Desktop fallback: tel: links don't dial on a computer with no calling
               // app, so the click feels dead. Copy the number + confirm so the CTA still
-              // does something. Mobile (and desktops with a real dialer) keep dialing —
+              // does something. Mobile (and desktops with a real dialer) keep dialing,
               // we never preventDefault, this only ADDS a clipboard copy + toast.
               if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
                 var num = '(888) 553-4503';
@@ -98,7 +99,7 @@ export default function RootLayout({ children }) {
                   t.style.cssText = 'position:fixed;left:50%;bottom:28px;transform:translateX(-50%);background:#1A1A2E;color:#fff;font-family:var(--font-heading),sans-serif;font-weight:700;font-size:15px;padding:14px 22px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.25);z-index:9999;opacity:0;transition:opacity 0.2s ease;pointer-events:none;';
                   document.body.appendChild(t);
                 }
-                t.textContent = 'Number copied — call ' + num;
+                t.textContent = 'Number copied - call ' + num;
                 requestAnimationFrame(function () { t.style.opacity = '1'; });
                 clearTimeout(window.__phoneToast);
                 window.__phoneToast = setTimeout(function () { t.style.opacity = '0'; }, 2800);
@@ -139,9 +140,9 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd()) }}
         />
         <AttributionCapture />
-        <Header />
+        <ChromeGate><Header /></ChromeGate>
         <main>{children}</main>
-        <Footer />
+        <ChromeGate><Footer /></ChromeGate>
         <StorageStickyBar />
       </body>
     </html>
