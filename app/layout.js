@@ -131,12 +131,9 @@ export default function RootLayout({ children }) {
         <noscript>
           <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLR2TQC" height="0" width="0" style={{display:"none",visibility:"hidden"}}></iframe>
         </noscript>
-        <noscript>
-          <img height="1" width="1" style={{display:"none"}} src="https://www.facebook.com/tr?id=1423378058969444&ev=PageView&noscript=1" alt="" />
-        </noscript>
-        <noscript>
-          <img height="1" width="1" style={{display:"none"}} src="https://www.facebook.com/tr?id=893903650293022&ev=PageView&noscript=1" alt="" />
-        </noscript>
+        {/* No Meta Pixel <noscript> image fallbacks: the JS pixel fires
+            PageView for both pixels, so the noscript images only double-counted
+            PageView on normal (JS-on) loads. */}
         {/* Sitewide LocalBusiness JSON-LD. The full MovingCompany graph is
             added on the homepage only (see app/page.js + lib/structuredData.js). */}
         <script
