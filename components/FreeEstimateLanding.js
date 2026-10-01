@@ -72,8 +72,9 @@ export default function FreeEstimateLanding({ headline, subhead }) {
         borderBottom: `1px solid ${LIGHT}`, display: "flex", alignItems: "center",
         justifyContent: "space-between", padding: "8px 14px",
       }}>
-        <Image src="/images/logo.png" alt="Castle Express Moving & Storage"
-          width={72} height={44} priority style={{ height: 40, width: "auto" }} />
+        <Image src="/images/logo-wordmark.png" alt="Castle Express Moving & Storage"
+          width={300} height={143} priority quality={90}
+          style={{ height: 46, width: "auto" }} />
         <CallButton label="Call now" />
       </header>
 
