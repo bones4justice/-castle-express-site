@@ -110,6 +110,7 @@ export default function RootLayout({ children }) {
         <Script id="facebook-pixel" strategy="lazyOnload">{`
           !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
           fbq('init', '1423378058969444');
+          fbq('init', '893903650293022');
           fbq('track', 'PageView');
         `}</Script>
         <Script id="openai-pixel" strategy="lazyOnload">{`
@@ -132,6 +133,9 @@ export default function RootLayout({ children }) {
         </noscript>
         <noscript>
           <img height="1" width="1" style={{display:"none"}} src="https://www.facebook.com/tr?id=1423378058969444&ev=PageView&noscript=1" alt="" />
+        </noscript>
+        <noscript>
+          <img height="1" width="1" style={{display:"none"}} src="https://www.facebook.com/tr?id=893903650293022&ev=PageView&noscript=1" alt="" />
         </noscript>
         {/* Sitewide LocalBusiness JSON-LD. The full MovingCompany graph is
             added on the homepage only (see app/page.js + lib/structuredData.js). */}

@@ -57,7 +57,7 @@ export default function LandingEstimateForm() {
 
       const oaiEventId = crypto.randomUUID();
 
-      await fetch("/api/lead/", {
+      const leadRes = await fetch("/api/lead/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -71,8 +71,9 @@ export default function LandingEstimateForm() {
         }),
       });
 
-      // Same conversion signals the sitewide form fires.
-      if (typeof fbq === "function") fbq("track", "Lead");
+      // Same conversion signals the sitewide form fires. Meta Lead fires ONLY
+      // on an accepted estimate submit (HTTP 2xx), never on clicks/page views.
+      if (leadRes.ok && typeof fbq === "function") fbq("track", "Lead");
       if (typeof window.oaiq === "function")
         window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       if (typeof window.gtag !== "undefined")
