@@ -105,7 +105,9 @@ export default function ReferralForm() {
         setSubmitting(false);
         return;
       }
-      if (typeof fbq === "function") fbq("track", "Lead");
+      // Non-estimate form: fire Contact, not Lead, so the Meta estimate
+      // campaign optimizes only on real estimate submissions.
+      if (typeof fbq === "function") fbq("track", "Contact");
       if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "referral_form", hero_variant: hv }); }
     } catch {

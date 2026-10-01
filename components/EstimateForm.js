@@ -42,7 +42,7 @@ export default function EstimateForm({ dark = false }) {
       // Conversions API (oaiEventId) so OpenAI dedupes to one conversion.
       const oaiEventId = crypto.randomUUID();
 
-      await fetch("/api/lead/", {
+      const leadRes = await fetch("/api/lead/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -55,7 +55,9 @@ export default function EstimateForm({ dark = false }) {
           pageUrl: window.location.href,
         }),
       });
-      if (typeof fbq === "function") fbq("track", "Lead");
+      // Meta Lead fires ONLY on an accepted estimate submit (HTTP 2xx), never
+      // on button clicks or page views - the ad campaign optimizes on it.
+      if (leadRes.ok && typeof fbq === "function") fbq("track", "Lead");
       if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv }); }
     } catch (err) {
