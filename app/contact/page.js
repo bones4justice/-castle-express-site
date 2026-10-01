@@ -7,7 +7,7 @@ export const metadata = {
   title: "Contact Us | Castle Express Moving & Storage",
   description: "Get a free moving estimate from Castle Express. Call 1-888-553-4503 or fill out our form. Serving Hartford County CT & Western MA.",
   alternates: { canonical: "/contact/" },
-  openGraph: { title: "Contact Us | Castle Express Moving & Storage", description: "Get a free moving estimate. Call 1-888-553-4503 or fill out our form.", url: "/contact/" },
+  openGraph: { title: "Contact Us | Castle Express Moving & Storage", description: "Get a free moving estimate. Call 1-888-553-4503 or fill out our form.", url: "/contact/", images: [{ url: "/images/truck-residential.jpg", alt: "Castle Express Moving & Storage" }] },
 };
 
 export default function ContactPage() {

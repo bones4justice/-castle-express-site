@@ -99,7 +99,7 @@ export default function PostcardsPage() {
       <section style={{ background: "#fff", padding: "48px 24px" }}>
         <div style={{ maxWidth: 960, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
           {[
-            { src: "/images/crew-furniture.jpg", alt: "Castle Express crew moving furniture", caption: "Specialty piece moves — handled like our own.", objectFit: "cover", objectPosition: "center top", bg: "transparent" },
+            { src: "/images/crew-furniture.jpg", alt: "Castle Express crew moving furniture", caption: "Specialty piece moves, handled like our own.", objectFit: "cover", objectPosition: "center top", bg: "transparent" },
             { src: "/images/truck-residential.jpg", alt: "Castle Express truck at customer home", caption: "Local moves across Hartford County.", objectFit: "cover", objectPosition: "center center", bg: "transparent" },
             { src: "/images/joe-with-customers.jpg", alt: "Joe with happy customers", caption: "Senior moves with patience and care.", objectFit: "contain", objectPosition: "center", bg: "#f5f5f7" },
           ].map((p) => (

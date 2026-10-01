@@ -70,7 +70,7 @@ export default function GivingBackPage() {
   const ld = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "name": "Castle Express Gives Back — Feeding Families With Every Move",
+    "name": "Castle Express Gives Back: Feeding Families With Every Move",
     "url": "https://www.castleexpressmoving.com/giving-back/",
     "description": "Castle Express Moving & Storage donates $5 for every move to hunger-relief partners like Feeding America and the Enfield Food Shelf. Tracker of monthly donations, matches, and meals provided.",
     "isPartOf": {
@@ -217,7 +217,7 @@ export default function GivingBackPage() {
               About the Enfield Food Shelf
             </h2>
             <p style={{ fontFamily: fontBody, fontSize: 15, lineHeight: 1.8, color: C.black, margin: "0 0 14px" }}>
-              In July 2026, we decided to keep our giving close to home. The Enfield Food Shelf is the food pantry that helps families right here in Enfield, Connecticut — our hometown. That means the meals from our moves go to people in our own community. Every $1 we give them provides about 2.5 meals for local families.
+              In July 2026, we decided to keep our giving close to home. The Enfield Food Shelf is the food pantry that helps families right here in Enfield, Connecticut, our hometown. That means the meals from our moves go to people in our own community. Every $1 we give them provides about 2.5 meals for local families.
             </p>
             <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: fontBody, fontWeight: 700, color: C.black, borderBottom: `2px solid ${C.gold}`, textDecoration: "none", paddingBottom: 2 }}>
               Visit enfieldfoodshelf.org

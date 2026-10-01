@@ -7,6 +7,9 @@ export const metadata = {
   title: "Free Moving Estimate | Castle Express Moving & Storage",
   description:
     "Get a fast, free moving estimate from Castle Express Moving & Storage. Family owned since 2011, serving Connecticut and Massachusetts.",
+  // Self-canonical: without this the page inherits the root layout's
+  // canonical ("/") and emits a contradictory noindex + canonical-to-homepage.
+  alternates: { canonical: "/free-estimate/" },
   robots: { index: false, follow: false },
 };
 

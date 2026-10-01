@@ -39,6 +39,9 @@ export const metadata = {
   },
   description: "Family-owned movers in Enfield, CT serving Hartford County & Western MA since 2011. 200+ five-star reviews, honest estimates. Call (888) 553-4503.",
   keywords: ["movers", "moving company", "Enfield CT", "Hartford CT", "Springfield MA", "storage", "packing", "local movers", "long distance movers"],
+  // WARNING: this canonical is inherited by ANY page that doesn't set its own
+  // `alternates` — a page added without one silently canonicalizes to the
+  // homepage (deindexing itself). Every new page must set its own canonical.
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",

@@ -68,7 +68,7 @@ export default function ServiceSubpage({ params }) {
       containedInPlace: { "@type": "State", name: city.stateFull },
     },
     priceRange: "$$",
-    openingHours: "Mo-Su 07:00-20:00",
+    // Hours intentionally omitted until confirmed — see HOURS_CONFIRMED in lib/structuredData.js
     sameAs: [COMPANY.facebook, COMPANY.instagram],
   };
 

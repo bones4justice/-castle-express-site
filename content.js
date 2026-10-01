@@ -617,7 +617,7 @@ export const FAQ = [
   },
   {
     q: "How far in advance should I book?",
-    a: "We recommend 2–3 weeks in advance, especially during busy seasons (May–September). Last-minute moves? Call us - we'll do our best to accommodate.",
+    a: "We recommend 2 to 3 weeks in advance, especially during busy seasons (May through September). Last-minute moves? Call us - we'll do our best to accommodate.",
   },
   {
     q: "Are you licensed and insured?",
@@ -625,7 +625,7 @@ export const FAQ = [
   },
   {
     q: "Do I need to tip the movers?",
-    a: "Tips are never required. But if you're happy with the service, we recommend $5–$10 per mover per billed hour.",
+    a: "Tips are never required. But if you're happy with the service, we recommend $5 to $10 per mover per billed hour.",
   },
   {
     q: "What if I need to change my move date?",
@@ -675,9 +675,9 @@ export const MOVE_SIZES = [
 export const LEAD_SOURCES = [
   "Referral (friend, family, realtor, etc.)",
   "Used us before",
-  "Google — saw us on the map with reviews",
-  "Google — clicked an ad (said \"Sponsored\")",
-  "Google — regular search result",
+  "Google - saw us on the map with reviews",
+  "Google - clicked an ad (said \"Sponsored\")",
+  "Google - regular search result",
   "Asked an AI (ChatGPT, etc.)",
   "Facebook",
   "Instagram",

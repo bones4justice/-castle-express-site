@@ -26,6 +26,7 @@ export async function generateMetadata({ params }) {
       url: `https://www.castleexpressmoving.com/${city.slug}/`,
       siteName: "Castle Express Moving & Storage",
       type: "website",
+      images: [{ url: "/images/truck-residential.jpg", alt: `Castle Express movers serving ${city.town}, ${city.state}` }],
     },
   };
 }
@@ -39,7 +40,7 @@ export default function CityPage({ params }) {
     "@type": "MovingCompany",
     name: "Castle Express Moving & Storage",
     url: "https://www.castleexpressmoving.com",
-    logo: "https://www.castleexpressmoving.com/images/logo.png",
+    logo: "https://www.castleexpressmoving.com/images/logo.jpg",
     image: "https://www.castleexpressmoving.com/images/truck-residential.webp",
     telephone: "+18885534503",
     address: {
@@ -74,7 +75,7 @@ export default function CityPage({ params }) {
         name: `How much do movers cost in ${city.town}, ${city.state}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `The cost of movers in ${city.town} varies by job size and distance. Castle Express Moving & Storage offers accurate, transparent estimates at no charge. Most local moves in ${city.town} range from $400–$1,200 depending on home size. Call us at ${COMPANY.phone} for a free estimate.`,
+          text: `The cost of movers in ${city.town} varies by job size and distance. Castle Express Moving & Storage offers accurate, transparent estimates at no charge. Most local moves in ${city.town} range from $400 to $1,200 depending on home size. Call us at ${COMPANY.phone} for a free estimate.`,
         },
       },
       {
@@ -90,7 +91,7 @@ export default function CityPage({ params }) {
         name: `How far in advance should I book movers in ${city.town}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `We recommend booking at least 2–4 weeks in advance, especially for summer moves. However, Castle Express Moving & Storage accommodates last-minute moves when availability allows. Call ${COMPANY.phone} to check our schedule.`,
+          text: `We recommend booking at least 2 to 4 weeks in advance, especially for summer moves. However, Castle Express Moving & Storage accommodates last-minute moves when availability allows. Call ${COMPANY.phone} to check our schedule.`,
         },
       },
       {
@@ -284,7 +285,7 @@ export default function CityPage({ params }) {
             <div style={{ marginBottom: 32 }}>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>How much do movers cost in {city.town}, {city.state}?</summary>
-                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>The cost varies by home size and distance. Most local moves in {city.town} range from $400–$1,200. We offer free accurate estimates  -  call <a href={COMPANY.phoneLink} style={linkStyle}>{COMPANY.phone}</a> or fill out the form.</p>
+                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>The cost varies by home size and distance. Most local moves in {city.town} range from $400 to $1,200. We offer free accurate estimates  -  call <a href={COMPANY.phoneLink} style={linkStyle}>{COMPANY.phone}</a> or fill out the form.</p>
               </details>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>Is Castle Express licensed and insured in {city.state}?</summary>
@@ -292,7 +293,7 @@ export default function CityPage({ params }) {
               </details>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>How far in advance should I book?</summary>
-                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>2–4 weeks is ideal, especially May–September. We do accommodate last-minute moves  -  call to check availability.</p>
+                <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>2 to 4 weeks is ideal, especially May through September. We do accommodate last-minute moves  -  call to check availability.</p>
               </details>
               <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>Do you offer packing services in {city.town}?</summary>

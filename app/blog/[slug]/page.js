@@ -12,10 +12,27 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const post = getPostBySlug(params.slug);
   if (!post) return {};
+  const shareImage = post.image || "/images/truck-residential.jpg";
   return {
     title: post.metaTitle,
     description: post.metaDescription,
     alternates: { canonical: post.canonical },
+    openGraph: {
+      type: "article",
+      title: post.metaTitle,
+      description: post.metaDescription,
+      url: `https://www.castleexpressmoving.com/blog/${post.slug}/`,
+      siteName: "Castle Express Moving & Storage",
+      publishedTime: post.date,
+      modifiedTime: post.updated || post.date,
+      images: [{ url: shareImage, alt: post.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.metaTitle,
+      description: post.metaDescription,
+      images: [shareImage],
+    },
   };
 }
 
@@ -26,13 +43,15 @@ export default function BlogPost({ params }) {
   // parseInline imported from @/lib/parseInline
 
   const renderBody = (body) => {
-    return body
-      .trim()
-      .split("\n\n")
+    const blocks = body.trim().split("\n\n");
+    // The first image is usually the post hero near the top of the viewport:
+    // load it eagerly so it doesn't drag out LCP; lazy-load the rest.
+    const firstImgIdx = blocks.findIndex(b => /^!\[(.*?)\]\((.*?)\)$/.test(b));
+    return blocks
       .map((block, i) => {
         const imgMatch = block.match(/^!\[(.*?)\]\((.*?)\)$/);
         if (imgMatch) {
-          return <img key={i} src={imgMatch[2]} alt={imgMatch[1]} loading="lazy" style={{
+          return <img key={i} src={imgMatch[2]} alt={imgMatch[1]} loading={i === firstImgIdx ? "eager" : "lazy"} fetchPriority={i === firstImgIdx ? "high" : undefined} style={{
             width: "100%",
             height: "auto",
             borderRadius: 12,
@@ -122,7 +141,7 @@ export default function BlogPost({ params }) {
       name: "Castle Express Moving & Storage",
       logo: {
         "@type": "ImageObject",
-        url: "https://www.castleexpressmoving.com/images/logo.png",
+        url: "https://www.castleexpressmoving.com/images/logo.jpg",
       },
     },
     datePublished: post.date,

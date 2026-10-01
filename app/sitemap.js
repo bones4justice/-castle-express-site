@@ -6,7 +6,9 @@ import { SUBPAGE_TOWNS, SUBPAGE_SERVICES } from "@/lib/serviceSubpages";
 const BASE = "https://www.castleexpressmoving.com";
 
 export default function sitemap() {
-  const CONTENT_UPDATED = "2026-07-28";
+  // Bump this on every content deploy — a frozen date tells Google nothing
+  // changed and suppresses recrawl of exactly the pages we want re-evaluated.
+  const CONTENT_UPDATED = "2026-10-01";
 
   // Static pages
   const staticPages = [
@@ -37,7 +39,7 @@ export default function sitemap() {
     priority: 0.8,
   }));
 
-  // City pages  -  96 town landing pages
+  // City pages - one per CITY_DATA town (76 after the 2026-08-25 consolidation)
   const cityPages = CITY_DATA.map(city => ({
     url: `${BASE}/${city.slug}/`,
     lastModified: CONTENT_UPDATED,
@@ -56,7 +58,7 @@ export default function sitemap() {
     priority: 0.6,
   }));
 
-  // Service subpages (18 towns x 3 services = 54 pages)
+  // Service subpages (SUBPAGE_TOWNS x SUBPAGE_SERVICES - counts live in lib/serviceSubpages.js)
   const serviceSubpages = [];
   for (const townSlug of SUBPAGE_TOWNS) {
     for (const svcSlug of SUBPAGE_SERVICES) {

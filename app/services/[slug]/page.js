@@ -49,7 +49,8 @@ export function generateMetadata({ params }) {
     description: svc.metaDesc,
     alternates: { canonical: `/services/${params.slug}/` },
     openGraph: {
-      title: `${svc.metaTitle} | Castle Express Moving & Storage`,
+      // metaTitle already ends in "| Castle Express" — don't append the brand again
+      title: svc.metaTitle,
       description: svc.metaDesc,
       url: `/services/${params.slug}/`,
       images: svc.heroImage ? [{ url: svc.heroImage, alt: svc.title }] : undefined,

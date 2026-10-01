@@ -7,7 +7,7 @@ export const metadata = {
   title: "About Us | Castle Express Moving & Storage",
   description: "Meet Joe Caronna and the Castle Express team. Family-owned moving company in Enfield, CT since 2011. 200+ five-star reviews. (888) 553-4503",
   alternates: { canonical: "/about/" },
-  openGraph: { title: "About Us | Castle Express Moving & Storage", description: "Meet Joe Caronna and the Castle Express team. Family-owned since 2011.", url: "/about/" },
+  openGraph: { title: "About Us | Castle Express Moving & Storage", description: "Meet Joe Caronna and the Castle Express team. Family-owned since 2011.", url: "/about/", images: [{ url: "/images/truck-residential.jpg", alt: "Castle Express Moving & Storage" }] },
 };
 
 export default function AboutPage() {
