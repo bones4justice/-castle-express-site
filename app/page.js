@@ -164,7 +164,7 @@ export default function HomePage() {
               Whether you're moving across town in Enfield or relocating from Hartford to Springfield, our moving company handles residential moves, commercial relocations, full-service packing, <Link href="/services/storage/" style={{ color: "inherit", textDecoration: "underline" }}>climate-controlled storage in Enfield, CT</Link>, and specialty items like pianos and gun safes. Every move includes a detailed walkthrough, furniture protection, and careful placement at your new home.
             </p>
             {[
-              { title: "Accurate Estimates", desc: "No surprise charges. Your estimate is your price." },
+              { title: "Accurate Estimates", desc: "Detailed estimates built from a full inventory of your move. No surprise charges." },
               { title: "Family-Owned & Operated", desc: "Not a franchise. Real people who care about your move." },
               { title: "Professional, Vetted Crews", desc: "Respectful movers who handle your belongings like their own." },
             ].map((item, i) => (

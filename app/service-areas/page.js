@@ -5,11 +5,11 @@ import { MapPin } from "@/components/Icons";
 
 export const metadata = {
   title: "Service Areas | Castle Express Moving & Storage  -  CT & MA",
-  description: "Castle Express Moving serves 96 towns across Hartford County CT, Western Massachusetts, and beyond. Find your town and get a free moving quote today.",
+  description: `Castle Express Moving serves ${CITY_DATA.length} towns across Hartford County CT, Western Massachusetts, and beyond. Find your town and get a free moving quote today.`,
   alternates: { canonical: "/service-areas/" },
   openGraph: {
     title: "Service Areas | Castle Express Moving & Storage",
-    description: "Serving 96 towns across Hartford County CT and Western Massachusetts.",
+    description: `Serving ${CITY_DATA.length} towns across Hartford County CT and Western Massachusetts.`,
     url: "/service-areas/",
   },
 };
@@ -30,7 +30,7 @@ export default function ServiceAreasPage() {
           <div className="section-label" style={{ justifyContent: "center" }}><span>Where We Serve</span></div>
           <h1 className="heading-2 text-white">Moving Services Across Connecticut &amp; Massachusetts</h1>
           <p className="body-md text-white-muted" style={{ maxWidth: 600, margin: "8px auto 0" }}>
-            Castle Express Moving &amp; Storage serves 96 towns from our Enfield, CT home base. Find your town below for local pricing, availability, and a free quote.
+            Castle Express Moving &amp; Storage serves {CITY_DATA.length} towns from our Enfield, CT home base. Find your town below for local pricing, availability, and a free quote.
           </p>
         </div>
       </section>

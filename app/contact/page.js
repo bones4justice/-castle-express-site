@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { COMPANY } from "@/content";
+import { CITY_DATA } from "@/lib/cityData";
 import { Phone, MapPin, Clock, Shield } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
 
@@ -17,7 +18,7 @@ export default function ContactPage() {
         <div className="section-label" style={{ justifyContent: "center" }}><span>Get In Touch</span></div>
         <h1 className="heading-2 text-white">Request Your Free Estimate</h1>
         <p className="body-md text-white-muted" style={{ maxWidth: 520, margin: "8px auto 0" }}>
-          Fill out the form below or call us directly. We typically respond within 20 minutes. Based in <Link href="/movers-enfield-ct/" style={{ color: "#D4A017", fontWeight: 600 }}>Enfield, CT</Link>, we serve <Link href="/movers-hartford-ct/" style={{ color: "#D4A017", fontWeight: 600 }}>Hartford</Link>, <Link href="/movers-springfield-ma/" style={{ color: "#D4A017", fontWeight: 600 }}>Springfield</Link>, and <Link href="/service-areas/" style={{ color: "#D4A017", fontWeight: 600 }}>82 towns across CT &amp; MA</Link>.
+          Fill out the form below or call us directly. We typically respond within 20 minutes. Based in <Link href="/movers-enfield-ct/" style={{ color: "#D4A017", fontWeight: 600 }}>Enfield, CT</Link>, we serve <Link href="/movers-hartford-ct/" style={{ color: "#D4A017", fontWeight: 600 }}>Hartford</Link>, <Link href="/movers-springfield-ma/" style={{ color: "#D4A017", fontWeight: 600 }}>Springfield</Link>, and <Link href="/service-areas/" style={{ color: "#D4A017", fontWeight: 600 }}>{CITY_DATA.length} towns across CT &amp; MA</Link>.
         </p>
       </section>
 
@@ -26,7 +27,7 @@ export default function ContactPage() {
           <EstimateForm />
           <div>
             <div className="card" style={{ marginBottom: 20 }}>
-              <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginBottom: 16 }}>Contact Information</h3>
+              <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginBottom: 16 }}>Contact Information</h2>
               {[
                 { icon: <Phone size={18} />, label: "Phone", value: COMPANY.phone, href: COMPANY.phoneLink, bold: true },
                 { icon: <MapPin size={18} />, label: "Address", value: COMPANY.fullAddress, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(COMPANY.fullAddress)}` },
@@ -49,7 +50,7 @@ export default function ContactPage() {
             <div className="card-gold">
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
                 <Shield size={20} style={{ color: "#D4A017" }} />
-                <h4 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, color: "#1A1A2E" }}>Licensed & Insured</h4>
+                <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, color: "#1A1A2E" }}>Licensed & Insured</h3>
               </div>
               <div style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#6B7280", lineHeight: 1.8 }}>
                 {COMPANY.mc} · USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit}<br />
