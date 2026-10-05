@@ -8,6 +8,7 @@ import { getSmartMovingAttribution } from "@/lib/utm";
 export default function EstimateForm({ dark = false }) {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "", phone: "", email: "", moveDate: "",
     moveFrom: "", moveTo: "", moveSize: "", source: "",
@@ -55,17 +56,27 @@ export default function EstimateForm({ dark = false }) {
           pageUrl: window.location.href,
         }),
       });
-      // Meta Lead fires ONLY on an accepted estimate submit (HTTP 2xx), never
-      // on button clicks or page views - the ad campaign optimizes on it.
-      if (leadRes.ok && typeof fbq === "function") fbq("track", "Lead");
+      const res = await leadRes.json().catch(() => ({}));
+      // Success only when the server confirms the lead was accepted. On any
+      // failure keep the entered details on screen so the customer can retry.
+      if (!leadRes.ok || res.ok === false) {
+        setError(res.error || `Something went wrong sending your request. Please try again, or call us at ${COMPANY.phone}.`);
+        setLoading(false);
+        return;
+      }
+      // Conversion events fire ONLY on a confirmed accepted submit, never on
+      // button clicks, page views, or failed sends - ad campaigns optimize on
+      // these.
+      if (typeof fbq === "function") fbq("track", "Lead");
       if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv }); }
+      setSubmitted(true);
     } catch (err) {
       console.error("Lead submission error:", err);
+      setError(`We could not send your request (connection problem). Please try again, or call us at ${COMPANY.phone}.`);
     }
 
     setLoading(false);
-    setSubmitted(true);
   };
 
   // ─── Styles ───
@@ -279,8 +290,13 @@ export default function EstimateForm({ dark = false }) {
       </div>
 
       <div style={{ marginTop: 16 }}>
+        {error && (
+          <p role="alert" style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#DC2626", background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 6, padding: "10px 12px", margin: "0 0 12px 0" }}>
+            {error}
+          </p>
+        )}
         <button type="submit" disabled={loading} className="btn btn-primary btn-full" style={{ opacity: loading ? 0.7 : 1 }}>
-          {loading ? "Submitting..." : <>Get Free Estimate <ArrowRight /></>}
+          {loading ? "Submitting..." : error ? <>Try Again <ArrowRight /></> : <>Get Free Estimate <ArrowRight /></>}
         </button>
       </div>
       <p style={{

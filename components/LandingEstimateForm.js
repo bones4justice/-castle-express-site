@@ -25,6 +25,7 @@ const BORDER = "#969a9d";
 export default function LandingEstimateForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     name: "", phone: "", email: "", moveDate: "",
     moveFrom: "", moveTo: "", moveSize: "",
@@ -70,10 +71,17 @@ export default function LandingEstimateForm() {
           pageUrl: window.location.href,
         }),
       });
-
-      // Same conversion signals the sitewide form fires. Meta Lead fires ONLY
-      // on an accepted estimate submit (HTTP 2xx), never on clicks/page views.
-      if (leadRes.ok && typeof fbq === "function") fbq("track", "Lead");
+      const res = await leadRes.json().catch(() => ({}));
+      // Success only when the server confirms acceptance; on failure keep the
+      // entered details on screen so the customer can retry.
+      if (!leadRes.ok || res.ok === false) {
+        setError(res.error || "Something went wrong sending your request. Please try again, or call us at 1-888-553-4503.");
+        setLoading(false);
+        return;
+      }
+      // Same conversion signals the sitewide form fires - ONLY on a confirmed
+      // accepted submit, never on clicks, page views, or failed sends.
+      if (typeof fbq === "function") fbq("track", "Lead");
       if (typeof window.oaiq === "function")
         window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       if (typeof window.gtag !== "undefined")
@@ -81,11 +89,12 @@ export default function LandingEstimateForm() {
           event_category: "form",
           event_label: "free_estimate_landing",
         });
+      setSubmitted(true);
     } catch (err) {
       console.error("Lead submission error:", err);
+      setError("We could not send your request (connection problem). Please try again, or call us at 1-888-553-4503.");
     }
     setLoading(false);
-    setSubmitted(true);
   };
 
   const successTracked = useRef(false);
@@ -210,6 +219,11 @@ export default function LandingEstimateForm() {
         </div>
       </div>
 
+      {error && (
+        <p role="alert" style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#DC2626", background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 6, padding: "10px 12px", margin: "0 0 12px 0" }}>
+          {error}
+        </p>
+      )}
       <button type="submit" disabled={loading} style={{
         width: "100%", marginTop: 14, minHeight: 52,
         background: GOLD, color: "#000000", border: "none", borderRadius: 8,

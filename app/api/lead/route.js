@@ -30,7 +30,9 @@ const BRANCH_ID = "352498a1-e171-40cd-8b35-ac5d011720d0";
 
 // Failed downstream writes used to die silently in Vercel logs; now they are
 // reported to the ops box, which emails Joe (rate-limited server-side).
-const ALERT_URL = "http://16.59.150.90:8080/api/lead-write-alert";
+// HTTPS via the marketing vhost (nginx -> :8080) so the shared secret never
+// travels in cleartext.
+const ALERT_URL = "https://marketing.castleexpressmoving.com/api/lead-write-alert";
 const ALERT_SECRET =
   process.env.LEAD_ALERT_SECRET ||
   "7c1612913607aa97ff12ca7f4be402bada84922f70c9a576";
@@ -101,12 +103,14 @@ async function reportWriteFailure(target, formName, detail) {
 // ─── Spam heuristics ───
 
 // A real name word of 3+ letters virtually always contains a vowel.
-// Catches bot names like "Jchr Pzqhzctzd".
+// Catches bot names like "Jchr Pzqhzctzd". Diacritics are folded to ASCII
+// first so real names like Björn or Françoise never trip the check.
 function isGibberishName(name) {
   if (!name || name.trim().length < 2) return true;
   if (/\d/.test(name)) return true;
   if (/https?:|www\./i.test(name)) return true;
-  const words = name.trim().split(/\s+/);
+  const ascii = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const words = ascii.trim().split(/\s+/);
   const gibberish = words.filter(
     (w) => w.replace(/[^a-z]/gi, "").length >= 3 && !/[aeiouy]/i.test(w)
   );
@@ -126,10 +130,11 @@ function isValidPhone(phone) {
 
 // Dot-trick spam signature: gmail ignores dots, so bots generate endless
 // unique addresses like up.a.r.uw.ew51.2@gmail.com. 4+ dots in the local
-// part of a gmail address is never a real customer.
+// part of a gmail address is never a real customer. (A merely malformed
+// email is a typo, not spam - that's handled by validationError below.)
 function isSpamEmail(email) {
   if (!email) return false;
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return true;
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return false;
   const [local, domain] = email.toLowerCase().split("@");
   if (/gmail\.com|googlemail\.com/.test(domain)) {
     const dots = (local.match(/\./g) || []).length;
@@ -155,15 +160,30 @@ function isValidMoveDate(yyyymmdd) {
   return d >= min && d <= max;
 }
 
+// Strong abuse signals only - these get the deceptive { ok: true } so bots
+// can't learn what tripped them.
 function spamReason(body) {
   const sm = body.smartmoving || {};
   if (body.hp) return "honeypot filled";
   if (typeof body.elapsedMs === "number" && body.elapsedMs < 3000)
     return `filled too fast (${body.elapsedMs}ms)`;
   if (isGibberishName(sm.FullName)) return `gibberish name: ${sm.FullName}`;
-  if (!isValidPhone(sm.PhoneNumber)) return `invalid phone: ${sm.PhoneNumber}`;
   if (isSpamEmail(sm.Email)) return `spam email: ${sm.Email}`;
-  if (!isValidMoveDate(sm.MoveDate)) return `bad move date: ${sm.MoveDate}`;
+  return null;
+}
+
+// Honest-mistake validation (typos in phone/email/date). These return a real
+// field error so a legitimate customer can fix it, instead of silently
+// vanishing behind a fake success. A human sees the message; a bot gains
+// nothing it couldn't guess.
+function validationError(body) {
+  const sm = body.smartmoving || {};
+  if (!isValidPhone(sm.PhoneNumber))
+    return "That phone number doesn't look complete - please double-check it.";
+  if (sm.Email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(sm.Email))
+    return "That email address doesn't look right - please double-check it.";
+  if (!isValidMoveDate(sm.MoveDate))
+    return "That move date doesn't look right - please double-check it.";
   return null;
 }
 
@@ -204,40 +224,41 @@ export async function POST(request) {
     return Response.json({ ok: true });
   }
 
-  let ok = true;
+  // Honest typos get a real, fixable error (the forms display it).
+  const fieldError = validationError(body);
+  if (fieldError) {
+    console.warn(`[lead-validation] ${body.form} from ${ip}: ${fieldError}`);
+    return Response.json({ ok: false, error: fieldError }, { status: 400 });
+  }
 
-  // Only real (non-spam) leads count as conversions. Falls back to a
-  // server-generated id when the client didn't send one (older cached JS) —
-  // no pixel event exists in that case, so there's nothing to dedupe against.
-  await sendOpenAIConversion(
-    typeof body.oaiEventId === "string" && body.oaiEventId
-      ? body.oaiEventId.slice(0, 64)
-      : crypto.randomUUID(),
-    typeof body.pageUrl === "string" && /^https:\/\/(www\.)?castleexpressmoving\.com\//.test(body.pageUrl)
-      ? body.pageUrl.slice(0, 500)
-      : "https://www.castleexpressmoving.com/"
-  );
+  // Success = at least one durable sink accepted the lead. Either sink alone
+  // is recoverable (Formspree emails + nightly ingest; SmartMoving is the
+  // CRM), and a failure on either side alerts Joe via reportWriteFailure.
+  let attempted = 0;
+  let accepted = 0;
 
   if (body.formspree && typeof body.formspree === "object") {
+    attempted++;
     try {
       const r = await fetch(form.formspree, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify(body.formspree),
+        signal: AbortSignal.timeout(8000),
       });
-      if (!r.ok) {
+      if (r.ok) accepted++;
+      else {
         console.error(`[lead] Formspree error ${r.status} for ${body.form}`);
-        ok = false;
         await reportWriteFailure("formspree", body.form, `HTTP ${r.status}`);
       }
     } catch (err) {
       console.error("[lead] Formspree submission error:", err);
-      ok = false;
       await reportWriteFailure("formspree", body.form, err);
     }
   }
 
   if (body.smartmoving && typeof body.smartmoving === "object") {
+    attempted++;
     try {
       const r = await fetch(
         `https://api.smartmoving.com/api/leads/from-provider/v2?providerKey=${form.providerKey}&branchId=${BRANCH_ID}`,
@@ -245,9 +266,11 @@ export async function POST(request) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body.smartmoving),
+          signal: AbortSignal.timeout(8000),
         }
       );
-      if (!r.ok) {
+      if (r.ok) accepted++;
+      else {
         const detail = await r.text();
         console.error(
           `[lead] SmartMoving error ${r.status} for ${body.form}:`,
@@ -265,5 +288,30 @@ export async function POST(request) {
     }
   }
 
-  return Response.json({ ok });
+  const ok = attempted === 0 || accepted > 0;
+
+  // Conversions count only leads that were durably accepted somewhere.
+  // Falls back to a server-generated id when the client didn't send one
+  // (older cached JS) — no pixel event exists then, nothing to dedupe.
+  if (ok) {
+    await sendOpenAIConversion(
+      typeof body.oaiEventId === "string" && body.oaiEventId
+        ? body.oaiEventId.slice(0, 64)
+        : crypto.randomUUID(),
+      typeof body.pageUrl === "string" && /^https:\/\/(www\.)?castleexpressmoving\.com\//.test(body.pageUrl)
+        ? body.pageUrl.slice(0, 500)
+        : "https://www.castleexpressmoving.com/"
+    );
+  }
+
+  return Response.json(
+    ok
+      ? { ok: true }
+      : {
+          ok: false,
+          error:
+            "We could not save your request just now. Please try again in a minute, or call us at 1-888-553-4503.",
+        },
+    { status: ok ? 200 : 502 }
+  );
 }
