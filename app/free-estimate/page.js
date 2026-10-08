@@ -13,35 +13,35 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-// Three headline sets, chosen server-side from utm_campaign so the correct
-// message is in the first paint (no client flash). Plain, confident, local.
-// Brand-safe copy: no "quote", no "trained", no "locked in", no em dashes.
-const HEADLINES = {
-  local: {
-    headline: "Connecticut & Massachusetts Movers You Can Trust",
-    subhead:
-      "Family owned since 2011. Get your free estimate in about 20 minutes and we will get you taken care of.",
-  },
-  longdistance: {
-    headline: "Moving Out of State? We Will Get You There.",
-    subhead:
-      "Experienced long distance movers based in Enfield, CT. Get your free estimate today and move with confidence.",
-  },
-  commercial: {
-    headline: "Office & Commercial Moves, Handled with Care",
-    subhead:
-      "Keep your business moving with an experienced crew. Get your free commercial moving estimate today.",
-  },
-};
+// Next 14 passes a repeated query param (?utm_campaign=a&utm_campaign=b) as an
+// ARRAY. Our Google Ads links repeat utm_campaign, so calling a string method
+// on the raw value crashed the page server-side. Always read params through
+// first(): string, array, or missing all collapse to a plain string.
+function first(value) {
+  if (Array.isArray(value)) value = value[0];
+  return typeof value === "string" ? value : "";
+}
 
-function pickHeadline(campaign) {
-  const c = (campaign || "").toLowerCase();
-  if (/long|distance/.test(c)) return HEADLINES.longdistance;
-  if (/commercial|office/.test(c)) return HEADLINES.commercial;
-  return HEADLINES.local;
+// Four versions, chosen server-side so the matched message is in the first
+// paint (no client flash). Content lives in FreeEstimateLanding's VERSIONS map.
+// Channel beats campaign name: Meta/social visitors are not actively searching,
+// so they get the friendlier, shorter version even if the campaign name says
+// long distance or commercial.
+function pickVersion(searchParams) {
+  try {
+    const campaign = first(searchParams?.utm_campaign).toLowerCase();
+    const source = first(searchParams?.utm_source).toLowerCase();
+    const medium = first(searchParams?.utm_medium).toLowerCase();
+    if (source === "facebook" || source === "instagram" || medium === "paid_social") return "social";
+    if (/long|distance/.test(campaign)) return "longdistance";
+    if (/commercial|office/.test(campaign)) return "commercial";
+    return "residential";
+  } catch {
+    // Whatever arrives in the query string, this page must render.
+    return "residential";
+  }
 }
 
 export default function FreeEstimatePage({ searchParams }) {
-  const { headline, subhead } = pickHeadline(searchParams?.utm_campaign);
-  return <FreeEstimateLanding headline={headline} subhead={subhead} />;
+  return <FreeEstimateLanding version={pickVersion(searchParams)} />;
 }

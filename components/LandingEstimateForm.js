@@ -4,12 +4,16 @@ import { COMPANY } from "@/content";
 import { Check, ArrowRight, Phone } from "@/components/Icons";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 
-// Short, ad-only estimate form for /free-estimate. Submission is IDENTICAL to
-// the sitewide EstimateForm: it POSTs to /api/lead/ (server spam filter ->
+// Two-step, ad-only estimate form for /free-estimate. Submission is IDENTICAL
+// to the sitewide EstimateForm: it POSTs to /api/lead/ (server spam filter ->
 // Formspree + SmartMoving) with the same payload shape, so leads land in the
-// exact same pipeline. The only differences are the shorter field set, the
-// UTM/click-id passthrough as explicit hidden fields, and a compact thank-you
-// state built for a phone screen.
+// exact same pipeline. Step 1 asks about the move (size, date, from, to);
+// step 2 asks for contact details. NO conversion events fire on the step 1
+// advance; Meta Lead / gtag generate_lead / oaiq fire only after the server
+// confirms acceptance, same as before.
+//
+// idPrefix keeps element ids unique when the page renders two instances
+// (hero + final CTA).
 
 const SIZES = [
   "Studio / 1 Bedroom",
@@ -22,7 +26,8 @@ const SIZES = [
 const GOLD = "#FBCB0B";
 const BORDER = "#969a9d";
 
-export default function LandingEstimateForm() {
+export default function LandingEstimateForm({ idPrefix = "le", version = "" }) {
+  const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -35,6 +40,19 @@ export default function LandingEstimateForm() {
 
   const update = (field) => (e) =>
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+
+  const continueToStep2 = () => {
+    if (!formData.moveSize) {
+      setError("Please pick a move size so we can estimate accurately.");
+      return;
+    }
+    if (!formData.moveFrom.trim() || !formData.moveTo.trim()) {
+      setError("Please tell us where you are moving from and to (town or ZIP).");
+      return;
+    }
+    setError("");
+    setStep(2);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +83,7 @@ export default function LandingEstimateForm() {
           form: "estimate",
           hp: honeypot,
           elapsedMs: Date.now() - openedAt.current,
-          formspree: { ...formData, ...attribution, landing: "free-estimate" },
+          formspree: { ...formData, ...attribution, landing: "free-estimate", version },
           smartmoving: smPayload,
           oaiEventId,
           pageUrl: window.location.href,
@@ -80,7 +98,7 @@ export default function LandingEstimateForm() {
         return;
       }
       // Same conversion signals the sitewide form fires - ONLY on a confirmed
-      // accepted submit, never on clicks, page views, or failed sends.
+      // accepted submit, never on step changes, clicks, page views, or failed sends.
       if (typeof fbq === "function") fbq("track", "Lead");
       if (typeof window.oaiq === "function")
         window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
@@ -118,6 +136,13 @@ export default function LandingEstimateForm() {
     textTransform: "uppercase", letterSpacing: "0.03em",
   };
   const optionStyle = { background: "#FFFFFF", color: "#000000" };
+  const buttonStyle = (disabled) => ({
+    width: "100%", marginTop: 14, minHeight: 52,
+    background: GOLD, color: "#000000", border: "none", borderRadius: 8,
+    fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 17,
+    cursor: disabled ? "default" : "pointer", opacity: disabled ? 0.7 : 1,
+    display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
+  });
 
   if (submitted) {
     return (
@@ -162,10 +187,17 @@ export default function LandingEstimateForm() {
       background: "#FFFFFF", borderRadius: 12, padding: "18px 16px",
       border: `1px solid #ebeced`, boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
     }}>
-      <h2 style={{
-        fontFamily: "var(--font-heading)", fontWeight: 700,
-        fontSize: 19, color: "#000000", margin: "0 0 2px",
-      }}>Get Your Free Estimate</h2>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 8 }}>
+        <h2 style={{
+          fontFamily: "var(--font-heading)", fontWeight: 700,
+          fontSize: 19, color: "#000000", margin: "0 0 2px",
+        }}>Get Your Free Estimate</h2>
+        <span style={{
+          fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 11,
+          color: "#969a9d", whiteSpace: "nowrap", textTransform: "uppercase",
+          letterSpacing: "0.03em",
+        }}>Step {step} of 2</span>
+      </div>
       <p style={{
         fontFamily: "var(--font-body)", fontSize: 12.5,
         color: "#969a9d", margin: "0 0 12px",
@@ -173,66 +205,88 @@ export default function LandingEstimateForm() {
 
       {/* Honeypot: hidden from humans, bots auto-fill it. */}
       <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", height: 0, overflow: "hidden" }}>
-        <label htmlFor="le-website">Website</label>
-        <input id="le-website" name="website" type="text" tabIndex={-1} autoComplete="off"
+        <label htmlFor={`${idPrefix}-website`}>Website</label>
+        <input id={`${idPrefix}-website`} name="website" type="text" tabIndex={-1} autoComplete="off"
           value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-        <div>
-          <label htmlFor="le-name" style={labelStyle}>Name</label>
-          <input id="le-name" name="name" style={inputStyle} placeholder="Full name"
-            value={formData.name} onChange={update("name")} required aria-label="Name" />
-        </div>
-        <div>
-          <label htmlFor="le-phone" style={labelStyle}>Phone</label>
-          <input id="le-phone" name="phone" type="tel" style={inputStyle} placeholder="(860) 555-0123"
-            value={formData.phone} onChange={update("phone")} required aria-label="Phone" />
-        </div>
-        <div>
-          <label htmlFor="le-email" style={labelStyle}>Email</label>
-          <input id="le-email" name="email" type="email" style={inputStyle} placeholder="you@email.com"
-            value={formData.email} onChange={update("email")} required aria-label="Email" />
-        </div>
-        <div>
-          <label htmlFor="le-date" style={labelStyle}>Move Date</label>
-          <input id="le-date" name="moveDate" type="date" style={inputStyle}
-            value={formData.moveDate} onChange={update("moveDate")} aria-label="Move Date" />
-        </div>
-        <div>
-          <label htmlFor="le-from" style={labelStyle}>Moving From</label>
-          <input id="le-from" name="moveFrom" style={inputStyle} placeholder="Town or ZIP"
-            value={formData.moveFrom} onChange={update("moveFrom")} aria-label="Moving From" />
-        </div>
-        <div>
-          <label htmlFor="le-to" style={labelStyle}>Moving To</label>
-          <input id="le-to" name="moveTo" style={inputStyle} placeholder="Town or ZIP"
-            value={formData.moveTo} onChange={update("moveTo")} aria-label="Moving To" />
-        </div>
-        <div style={{ gridColumn: "1 / -1" }}>
-          <label htmlFor="le-size" style={labelStyle}>Move Size</label>
-          <select id="le-size" name="moveSize" style={{ ...inputStyle, appearance: "auto" }}
-            value={formData.moveSize} onChange={update("moveSize")} aria-label="Move Size">
-            <option value="" style={optionStyle}>Select size...</option>
-            {SIZES.map((s) => <option key={s} value={s} style={optionStyle}>{s}</option>)}
-          </select>
-        </div>
-      </div>
+      {step === 1 && (
+        <>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+            <div style={{ gridColumn: "1 / -1" }}>
+              <label htmlFor={`${idPrefix}-size`} style={labelStyle}>Move Size</label>
+              <select id={`${idPrefix}-size`} name="moveSize" style={{ ...inputStyle, appearance: "auto" }}
+                value={formData.moveSize} onChange={update("moveSize")} aria-label="Move Size">
+                <option value="" style={optionStyle}>Select size...</option>
+                {SIZES.map((s) => <option key={s} value={s} style={optionStyle}>{s}</option>)}
+              </select>
+            </div>
+            <div style={{ gridColumn: "1 / -1" }}>
+              <label htmlFor={`${idPrefix}-date`} style={labelStyle}>Move Date <span style={{ color: "#969a9d", textTransform: "none" }}>(if known)</span></label>
+              <input id={`${idPrefix}-date`} name="moveDate" type="date" style={inputStyle}
+                value={formData.moveDate} onChange={update("moveDate")} aria-label="Move Date" />
+            </div>
+            <div>
+              <label htmlFor={`${idPrefix}-from`} style={labelStyle}>Moving From</label>
+              <input id={`${idPrefix}-from`} name="moveFrom" style={inputStyle} placeholder="Town or ZIP"
+                value={formData.moveFrom} onChange={update("moveFrom")} aria-label="Moving From" />
+            </div>
+            <div>
+              <label htmlFor={`${idPrefix}-to`} style={labelStyle}>Moving To</label>
+              <input id={`${idPrefix}-to`} name="moveTo" style={inputStyle} placeholder="Town or ZIP"
+                value={formData.moveTo} onChange={update("moveTo")} aria-label="Moving To" />
+            </div>
+          </div>
 
-      {error && (
-        <p role="alert" style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#DC2626", background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 6, padding: "10px 12px", margin: "0 0 12px 0" }}>
-          {error}
-        </p>
+          {error && (
+            <p role="alert" style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#DC2626", background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 6, padding: "10px 12px", margin: "12px 0 0 0" }}>
+              {error}
+            </p>
+          )}
+          <button type="button" onClick={continueToStep2} style={buttonStyle(false)}>
+            Continue <ArrowRight />
+          </button>
+        </>
       )}
-      <button type="submit" disabled={loading} style={{
-        width: "100%", marginTop: 14, minHeight: 52,
-        background: GOLD, color: "#000000", border: "none", borderRadius: 8,
-        fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 17,
-        cursor: loading ? "default" : "pointer", opacity: loading ? 0.7 : 1,
-        display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 8,
-      }}>
-        {loading ? "Submitting..." : <>Get My Free Estimate <ArrowRight /></>}
-      </button>
+
+      {step === 2 && (
+        <>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 10 }}>
+            <div>
+              <label htmlFor={`${idPrefix}-name`} style={labelStyle}>Name</label>
+              <input id={`${idPrefix}-name`} name="name" style={inputStyle} placeholder="Full name"
+                value={formData.name} onChange={update("name")} required aria-label="Name" />
+            </div>
+            <div>
+              <label htmlFor={`${idPrefix}-phone`} style={labelStyle}>Phone</label>
+              <input id={`${idPrefix}-phone`} name="phone" type="tel" style={inputStyle} placeholder="(860) 555-0123"
+                value={formData.phone} onChange={update("phone")} required aria-label="Phone" />
+            </div>
+            <div>
+              <label htmlFor={`${idPrefix}-email`} style={labelStyle}>Email</label>
+              <input id={`${idPrefix}-email`} name="email" type="email" style={inputStyle} placeholder="you@email.com"
+                value={formData.email} onChange={update("email")} required aria-label="Email" />
+            </div>
+          </div>
+
+          {error && (
+            <p role="alert" style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#DC2626", background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 6, padding: "10px 12px", margin: "12px 0 0 0" }}>
+              {error}
+            </p>
+          )}
+          <button type="submit" disabled={loading} style={buttonStyle(loading)}>
+            {loading ? "Submitting..." : <>Get My Free Estimate <ArrowRight /></>}
+          </button>
+          <button type="button" onClick={() => { setError(""); setStep(1); }} style={{
+            background: "none", border: "none", width: "100%", marginTop: 8,
+            fontFamily: "var(--font-body)", fontSize: 12.5, color: "#969a9d",
+            cursor: "pointer", textDecoration: "underline",
+          }}>
+            Back to move details
+          </button>
+        </>
+      )}
+
       <p style={{
         fontFamily: "var(--font-body)", fontSize: 10.5, color: "#969a9d",
         marginTop: 8, textAlign: "center",
