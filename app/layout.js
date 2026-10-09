@@ -70,19 +70,22 @@ export default function RootLayout({ children }) {
         <Script id="google-tag-manager" strategy="afterInteractive">{`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KLR2TQC');
         `}</Script>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-97Z4EHJM63"
+          strategy="afterInteractive"
+        />
         <Script id="google-analytics" strategy="afterInteractive">{`
-          // GA4 (G-97Z4EHJM63) and the Google Ads tag are loaded ONCE, by the
-          // GTM container (GTM-KLR2TQC) above. Do not add a second gtag.js
-          // <Script> or a gtag('config', 'G-97Z4EHJM63') here: the duplicate
-          // load is what forced the old send_page_view:false workaround, which
-          // ended up suppressing page_view from BOTH loads (GA4 recorded zero
-          // page views sitewide, Oct 2026). window.gtag stays defined as a
-          // plain dataLayer shim so the window.gtag('event', ...) calls in
-          // components keep reaching GTM, which routes them to the GA4 and
-          // Ads tags and fires the generate_lead conversion trigger.
+          // GA4 is loaded here and only here. The GTM container must not
+          // contain a Google tag for G-97Z4EHJM63 (it was paused Oct 2026);
+          // if one is added back, every page view will count twice. GTM
+          // still owns the Google Ads tag, the call tracking, and the
+          // generate_lead conversion trigger, which reads these gtag()
+          // pushes.
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           window.gtag = window.gtag || gtag;
+          gtag('js', new Date());
+          gtag('config', 'G-97Z4EHJM63');
           document.addEventListener('click', function(e) {
             var link = e.target.closest('a[href^="tel:"]');
             if (link) {
