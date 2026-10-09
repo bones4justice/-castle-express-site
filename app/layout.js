@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StorageStickyBar from "@/components/StorageStickyBar";
 import AttributionCapture from "@/components/AttributionCapture";
+import LpAbTracker from "@/components/LpAbTracker";
 import ChromeGate from "@/components/ChromeGate";
 import { localBusinessJsonLd } from "@/lib/structuredData";
 import "./globals.css";
@@ -91,7 +92,8 @@ export default function RootLayout({ children }) {
             if (link) {
               var el = link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
               var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'not_set';
-              gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv });
+              var lv = (document.cookie.match(/lp_ab=(landing|service)/) || [])[1] || 'not_in_test';
+              gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv, lp_variant: lv });
               // Desktop fallback: tel: links don't dial on a computer with no calling
               // app, so the click feels dead. Copy the number + confirm so the CTA still
               // does something. Mobile (and desktops with a real dialer) keep dialing,
@@ -151,6 +153,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd()) }}
         />
         <AttributionCapture />
+        <LpAbTracker />
         <ChromeGate><Header /></ChromeGate>
         <main>{children}</main>
         <ChromeGate><Footer /></ChromeGate>

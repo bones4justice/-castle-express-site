@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import { COMPANY } from "@/content";
 import { Check, ArrowRight, Phone } from "@/components/Icons";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
+import { readVariantCookie } from "@/lib/lpAbTest";
 
 // Two-step, ad-only estimate form for /free-estimate. Submission is IDENTICAL
 // to the sitewide EstimateForm: it POSTs to /api/lead/ (server spam filter ->
@@ -76,6 +77,11 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "" }) {
 
       const oaiEventId = crypto.randomUUID();
 
+      // Landing page split test: set by middleware.js for Google Ads traffic
+      // only. Goes to Formspree + GA4 so leads can be counted per variant;
+      // NOT added to the SmartMoving payload (unknown fields may be rejected).
+      const lpVariant = readVariantCookie(document.cookie) || "not_in_test";
+
       const leadRes = await fetch("/api/lead/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -83,7 +89,7 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "" }) {
           form: "estimate",
           hp: honeypot,
           elapsedMs: Date.now() - openedAt.current,
-          formspree: { ...formData, ...attribution, landing: "free-estimate", version },
+          formspree: { ...formData, ...attribution, landing: "free-estimate", version, lp_variant: lpVariant },
           smartmoving: smPayload,
           oaiEventId,
           pageUrl: window.location.href,
@@ -106,6 +112,7 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "" }) {
         window.gtag("event", "generate_lead", {
           event_category: "form",
           event_label: "free_estimate_landing",
+          lp_variant: lpVariant,
         });
       setSubmitted(true);
     } catch (err) {
@@ -119,8 +126,10 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "" }) {
   useEffect(() => {
     if (!submitted || successTracked.current) return;
     successTracked.current = true;
-    if (window.gtag)
-      window.gtag("event", "form_submission_success", { form_location: "/free-estimate" });
+    if (window.gtag) {
+      const lv = readVariantCookie(document.cookie) || "not_in_test";
+      window.gtag("event", "form_submission_success", { form_location: "/free-estimate", lp_variant: lv });
+    }
     if (window.clarity) window.clarity("set", "form_completed", "true");
   }, [submitted]);
 

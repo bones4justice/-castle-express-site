@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MOVE_SIZES, LEAD_SOURCES, COMPANY } from "@/content";
 import { Check, ArrowRight, Phone } from "@/components/Icons";
 import { getSmartMovingAttribution } from "@/lib/utm";
+import { readVariantCookie } from "@/lib/lpAbTest";
 
 export default function EstimateForm({ dark = false }) {
   const [submitted, setSubmitted] = useState(false);
@@ -43,6 +44,11 @@ export default function EstimateForm({ dark = false }) {
       // Conversions API (oaiEventId) so OpenAI dedupes to one conversion.
       const oaiEventId = crypto.randomUUID();
 
+      // Landing page split test: set by middleware.js for Google Ads traffic
+      // only. Goes to Formspree + GA4 so leads can be counted per variant;
+      // NOT added to the SmartMoving payload (unknown fields may be rejected).
+      const lpVariant = readVariantCookie(document.cookie) || "not_in_test";
+
       const leadRes = await fetch("/api/lead/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -50,7 +56,7 @@ export default function EstimateForm({ dark = false }) {
           form: "estimate",
           hp: honeypot,
           elapsedMs: Date.now() - openedAt.current,
-          formspree: formData,
+          formspree: { ...formData, lp_variant: lpVariant },
           smartmoving: smPayload,
           oaiEventId,
           pageUrl: window.location.href,
@@ -69,7 +75,7 @@ export default function EstimateForm({ dark = false }) {
       // these.
       if (typeof fbq === "function") fbq("track", "Lead");
       if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv }); }
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant }); }
       setSubmitted(true);
     } catch (err) {
       console.error("Lead submission error:", err);
@@ -109,7 +115,8 @@ export default function EstimateForm({ dark = false }) {
     const hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || "(not set)";
     const loc = window.location.pathname === "/" ? "homepage" : window.location.pathname;
     if (window.gtag) {
-      window.gtag("event", "form_submission_success", { hero_variant: hv, form_location: loc });
+      const lv = readVariantCookie(document.cookie) || "not_in_test";
+      window.gtag("event", "form_submission_success", { hero_variant: hv, form_location: loc, lp_variant: lv });
     }
     if (window.clarity) {
       window.clarity("set", "form_completed", "true");
