@@ -1,4 +1,5 @@
 import FreeEstimateLanding from "@/components/FreeEstimateLanding";
+import { pickVersion } from "@/lib/utm";
 
 // Ads-only landing page. noindex + nofollow (overrides the sitewide
 // robots:index in app/layout.js), and it is deliberately left out of
@@ -13,35 +14,13 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-// Next 14 passes a repeated query param (?utm_campaign=a&utm_campaign=b) as an
-// ARRAY. Our Google Ads links repeat utm_campaign, so calling a string method
-// on the raw value crashed the page server-side. Always read params through
-// first(): string, array, or missing all collapse to a plain string.
-function first(value) {
-  if (Array.isArray(value)) value = value[0];
-  return typeof value === "string" ? value : "";
-}
-
-// Four versions, chosen server-side so the matched message is in the first
-// paint (no client flash). Content lives in FreeEstimateLanding's VERSIONS map.
-// Channel beats campaign name: Meta/social visitors are not actively searching,
-// so they get the friendlier, shorter version even if the campaign name says
-// long distance or commercial.
-function pickVersion(searchParams) {
-  try {
-    const campaign = first(searchParams?.utm_campaign).toLowerCase();
-    const source = first(searchParams?.utm_source).toLowerCase();
-    const medium = first(searchParams?.utm_medium).toLowerCase();
-    if (source === "facebook" || source === "instagram" || medium === "paid_social") return "social";
-    if (/long|distance/.test(campaign)) return "longdistance";
-    if (/commercial|office/.test(campaign)) return "commercial";
-    return "residential";
-  } catch {
-    // Whatever arrives in the query string, this page must render.
-    return "residential";
-  }
-}
-
+// Version picking and all the query-string crash protection live in
+// lib/utm.js, shared with the browser-side attribution capture: first()
+// collapses the arrays Next 14 produces for repeated params
+// (?utm_campaign=a&utm_campaign=b crashed this page server-side Oct 2-8
+// 2026), parseTrackedParams() recovers real keys from the pasted-URL Google
+// Ads mangling ("https://...?utm_source" as a param key), and pickVersion()
+// never throws. Whatever arrives in the query string, this page must render.
 export default function FreeEstimatePage({ searchParams }) {
   return <FreeEstimateLanding version={pickVersion(searchParams)} />;
 }
