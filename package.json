@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/check-dashes.js && node scripts/test-utm.js",
+    "prebuild": "node scripts/check-dashes.js && node scripts/test-utm.js && node scripts/test-lp-ab.js",
     "test:utm": "node scripts/test-utm.js",
+    "test:lpab": "node scripts/test-lp-ab.js",
     "build": "next build",
     "start": "next start"
   },
