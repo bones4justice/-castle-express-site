@@ -56,7 +56,7 @@ export default function PostcardForm() {
       // Non-estimate form: Contact, not Lead (keeps the estimate campaign clean).
       if (typeof window.fbq !== "undefined") window.fbq("track", "Contact");
       if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" });
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "postcard_form", hero_variant: hv }); }
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "postcard_form", hero_variant: hv, send_to: "G-97Z4EHJM63" }); }
       if (typeof window.gtag !== "undefined") {
         window.gtag("event", "postcard_submit", {
           event_category: "postcard",

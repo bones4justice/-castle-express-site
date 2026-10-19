@@ -75,7 +75,11 @@ export default function EstimateForm({ dark = false }) {
       // these.
       if (typeof fbq === "function") fbq("track", "Lead");
       if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant }); }
+      // send_to is required for GA4: GTM claims untargeted gtag() pushes and
+      // (since container v35) has no GA4 tag, so without it the event never
+      // reaches G-97Z4EHJM63. GTM's Ads conversion trigger still fires on this
+      // same push, send_to does not suppress it.
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant, send_to: "G-97Z4EHJM63" }); }
       setSubmitted(true);
     } catch (err) {
       console.error("Lead submission error:", err);
@@ -116,7 +120,7 @@ export default function EstimateForm({ dark = false }) {
     const loc = window.location.pathname === "/" ? "homepage" : window.location.pathname;
     if (window.gtag) {
       const lv = readVariantCookie(document.cookie) || "not_in_test";
-      window.gtag("event", "form_submission_success", { hero_variant: hv, form_location: loc, lp_variant: lv });
+      window.gtag("event", "form_submission_success", { hero_variant: hv, form_location: loc, lp_variant: lv, send_to: "G-97Z4EHJM63" });
     }
     if (window.clarity) {
       window.clarity("set", "form_completed", "true");
