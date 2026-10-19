@@ -62,6 +62,7 @@ export default function PostcardForm() {
           event_category: "postcard",
           event_label: selectedOffer || "no_offer_selected",
           home_size: formData.homeSize,
+          send_to: "G-97Z4EHJM63",
         });
       }
       setSubmitted(true);

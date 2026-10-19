@@ -104,7 +104,11 @@ export default function RootLayout({ children }) {
               var el = link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
               var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'not_set';
               var lv = (document.cookie.match(/lp_ab=(landing|service)/) || [])[1] || 'not_in_test';
-              gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv, lp_variant: lv });
+              // send_to is required for GA4 (GTM claims untargeted pushes and
+              // has no GA4 tag since container v35). Verified live 2026-10-19:
+              // GTM's Website Phone Calls tag fires the same wcm pair on this
+              // push with or without send_to.
+              gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv, lp_variant: lv, send_to: 'G-97Z4EHJM63' });
               // Desktop fallback: tel: links don't dial on a computer with no calling
               // app, so the click feels dead. Copy the number + confirm so the CTA still
               // does something. Mobile (and desktops with a real dialer) keep dialing,
