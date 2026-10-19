@@ -61,10 +61,17 @@ export default function Footer() {
             <h4 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", marginBottom: 16, textTransform: "uppercase", letterSpacing: "0.05em" }}>Services</h4>
             {[
               { label: "Residential Moving", href: "/services/residential-moving/" },
+              { label: "Local Moving", href: "/services/local-moving/" },
+              { label: "House Movers", href: "/services/house-movers/" },
+              { label: "Apartment Movers", href: "/services/apartment-movers/" },
+              { label: "Long Distance Moving", href: "/services/long-distance-moving/" },
               { label: "Commercial Moving", href: "/services/commercial-moving/" },
               { label: "Packing Services", href: "/services/packing-services/" },
+              { label: "Packing & Moving", href: "/services/packing-and-moving/" },
               { label: "Climate-Controlled Storage", href: "/services/storage/" },
+              { label: "Moving & Storage", href: "/services/moving-and-storage/" },
               { label: "Specialty Moving", href: "/services/specialty-moving/" },
+              { label: "White Glove Movers", href: "/services/white-glove-moving/" },
               { label: "Piano Moving", href: "/piano-moving/" },
               { label: "Senior Moving", href: "/senior-moving/" },
             ].map(s => (

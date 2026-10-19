@@ -128,9 +128,14 @@ export default function ServiceDetailPage({ params }) {
           <h1 className="heading-1" style={{ color: "#fff", marginBottom: 16, fontSize: "clamp(28px, 4vw, 44px)" }}>
             {svc.headline}
           </h1>
-          <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: 24 }}>
+          <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: svc.intro2 ? 12 : 24 }}>
             {svc.intro}
           </p>
+          {svc.intro2 && (
+            <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: 24 }}>
+              {svc.intro2}
+            </p>
+          )}
           <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
             <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
             <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> {COMPANY.phone}</a>
@@ -159,10 +164,17 @@ export default function ServiceDetailPage({ params }) {
                 <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 16 }}>
                   {section.heading}
                 </h2>
-                {section.items.map((item, j) => (
+                {section.lead && (
+                  <p className="body-md" style={{ color: "#374151", lineHeight: 1.7, marginBottom: 14 }}>{renderWithLinks(section.lead)}</p>
+                )}
+                {(section.items || []).map((item, j) => (
                   <div key={j} style={{ display: "flex", gap: 12, marginBottom: 12 }}>
                     <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
-                      <Check />
+                      {section.ordered ? (
+                        <span style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 12, color: "#D4A017" }}>{j + 1}</span>
+                      ) : (
+                        <Check />
+                      )}
                     </div>
                     <span className="body-md" style={{ color: "#374151" }}>{renderWithLinks(item)}</span>
                   </div>
@@ -187,6 +199,33 @@ export default function ServiceDetailPage({ params }) {
               <div style={{ position: "relative", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src={svc.photo1} alt={svc.title} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: "center" }} /></div>
               <div style={{ position: "relative", height: 200, borderRadius: 10, overflow: "hidden" }}><Image src={svc.photo2} alt={`${svc.title} team`} fill sizes="(max-width: 768px) 100vw, 50vw" style={{ objectFit: "cover", objectPosition: svc.photo2.includes("joe-with") ? "center 40%" : svc.photo2.includes("crew-commercial") ? "top" : "center" }} /></div>
             </div>
+
+            {/* Towns served */}
+            {svc.towns && (
+              <div style={{ marginBottom: 36 }}>
+                <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 12 }}>
+                  {svc.towns.heading}
+                </h2>
+                {svc.towns.lead && (
+                  <p className="body-md" style={{ color: "#374151", lineHeight: 1.7, marginBottom: 14 }}>{svc.towns.lead}</p>
+                )}
+                {[{ label: "Connecticut", list: svc.towns.ct }, { label: "Massachusetts", list: svc.towns.ma }].map(group => (
+                  group.list && group.list.length > 0 ? (
+                    <div key={group.label} style={{ marginBottom: 14 }}>
+                      <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#1A1A2E", marginBottom: 8 }}>{group.label}</h3>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                        {group.list.map(t => (
+                          <Link key={t.slug} href={`/${t.slug}/`} className="location-chip">{t.name}</Link>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null
+                ))}
+                <Link href="/service-areas/" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#F72585", textDecoration: "none" }}>
+                  See All Service Areas →
+                </Link>
+              </div>
+            )}
 
             {/* FAQ */}
             {svc.faq && svc.faq.length > 0 && (

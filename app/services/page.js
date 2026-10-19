@@ -58,6 +58,28 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      <section className="section" style={{ paddingTop: 0 }}>
+        <div className="container-md text-center">
+          <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 8 }}>More Moving Services</h2>
+          <p className="body-sm text-gray" style={{ marginBottom: 20 }}>Looking for something more specific? These pages cover our most requested moves.</p>
+          <div style={{ display: "flex", justifyContent: "center", gap: 10, flexWrap: "wrap" }}>
+            {[
+              { label: "Apartment Movers", href: "/services/apartment-movers/" },
+              { label: "House Movers", href: "/services/house-movers/" },
+              { label: "Local Moving", href: "/services/local-moving/" },
+              { label: "Packing & Moving", href: "/services/packing-and-moving/" },
+              { label: "Moving & Storage", href: "/services/moving-and-storage/" },
+              { label: "White Glove Movers & Delivery", href: "/services/white-glove-moving/" },
+              { label: "Piano Moving", href: "/piano-moving/" },
+              { label: "Senior Moving", href: "/senior-moving/" },
+              { label: "Princess Packing™", href: "/princess-packing/" },
+            ].map(s => (
+              <Link key={s.href} href={s.href} className="location-chip">{s.label}</Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section className="section">
         <div className="container-sm">
           <h2 className="heading-2">How Our Pricing Works</h2>

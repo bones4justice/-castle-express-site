@@ -5,12 +5,12 @@ import { Check, Phone, Star, Shield, ArrowRight, ChevronRight } from "@/componen
 import EstimateForm from "@/components/EstimateForm";
 
 export const metadata = {
-  title: "Long Distance Movers in CT | Castle Express Moving & Storage",
-  description: "Licensed long-distance movers from Connecticut to Florida, the Carolinas, and across the Northeast. Dedicated truck, your schedule. Call (888) 553-4503.",
+  title: "Long Distance Movers in CT | Dedicated Moving Service",
+  description: "Move from Connecticut with dedicated long distance movers. Castle Express provides direct interstate moving, firm delivery dates, and dedicated trucks.",
   alternates: { canonical: "/services/long-distance-moving/" },
   openGraph: {
-    title: "Long Distance Movers in CT | Castle Express Moving & Storage",
-    description: "Licensed long-distance movers from Connecticut. Dedicated truck, your schedule, direct delivery.",
+    title: "Long Distance Movers in CT | Dedicated Moving Service",
+    description: "Licensed long distance movers from Connecticut. Dedicated truck, your schedule, direct delivery.",
     url: "/services/long-distance-moving/",
     images: [{ url: "/images/hero-white-truck.jpg", alt: "Castle Express long-distance moving truck" }],
   },
@@ -28,6 +28,14 @@ const FAQS = [
   {
     q: "Do you handle packing or do I need to pack myself?",
     a: "We offer full packing services for every long-distance move. Our crew comes to your home, brings all materials, and packs everything professionally. This is especially recommended for long-distance moves because items are in transit longer and need proper protection. You can also pack yourself and we handle loading, transport, and unloading.",
+  },
+  {
+    q: "What's included in your long distance moving services?",
+    a: "A dedicated truck, furniture padding and shrink wrap, mattress bags, floor protection at both locations, disassembly and reassembly, a firm delivery date, and standard cargo protection. Packing, unpacking, and storage are available as add-ons.",
+  },
+  {
+    q: "How do I choose between long distance moving companies?",
+    a: "Check that the company is a licensed interstate carrier (look up its USDOT number on the FMCSA website), uses its own crew, gives a firm estimate after seeing your home, and commits to a delivery date. Ask whether your belongings will share a truck or go to a warehouse.",
   },
   {
     q: "Are you licensed for interstate moves?",
@@ -131,10 +139,10 @@ export default function LongDistanceMovingPage() {
               <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>Long-Distance Moving</span>
             </div>
             <h1 className="heading-1" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, color: "#fff", marginBottom: 20 }}>
-              Long-Distance Moving<br /><span className="text-gold">Without the 2-Week Wait</span>
+              Long Distance Movers in Connecticut,<br /><span className="text-gold">Without the 2-Week Wait</span>
             </h1>
             <p className="body-lg text-white-muted" style={{ maxWidth: 520, marginBottom: 28 }}>
-              Licensed interstate movers from Connecticut and Western Massachusetts. One dedicated truck. Your schedule. Direct delivery.
+              Licensed interstate long distance movers based in Enfield, CT. One dedicated truck. Your schedule. Direct delivery to New England, New York, New Jersey, Pennsylvania, the Carolinas, and Florida.
             </p>
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
               {["USDOT 2307446", "Family-Owned Since 2011", "Dedicated Trucks Only"].map(item => (
@@ -175,7 +183,7 @@ export default function LongDistanceMovingPage() {
           <div className="text-center" style={{ marginBottom: 48 }}>
             <div className="section-label"><span>How We're Different</span></div>
             <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700 }}>
-              Not a Van Line. Not a Broker. A Moving Company.
+              Not a Van Line. Not a Broker. Long Distance Movers in CT Who Do the Work.
             </h2>
             <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
               National van lines share trucks, hand off your belongings to strangers, and give you a 2-week delivery window. We do none of that.
@@ -220,7 +228,7 @@ export default function LongDistanceMovingPage() {
           <div className="text-center" style={{ marginBottom: 48 }}>
             <div className="section-label"><span>Where We Move</span></div>
             <h2 className="heading-2" style={{ fontFamily: "var(--font-heading)", fontWeight: 700 }}>
-              Real Deliveries. Real Addresses.
+              Where Our Long Distance Movers Have Delivered
             </h2>
             <p className="body-md text-gray" style={{ maxWidth: 620, margin: "12px auto 0" }}>
               Castle Express has delivered to every destination below in the last two years. This is not a coverage map. These are actual moves we completed for real families.
@@ -294,8 +302,11 @@ export default function LongDistanceMovingPage() {
           <div className="text-center" style={{ marginBottom: 48 }}>
             <div className="section-label"><span>How It Works</span></div>
             <h2 className="heading-2" style={{ fontFamily: "var(--font-heading)", fontWeight: 700 }}>
-              Four Steps. One Team. Start to Finish.
+              How Our Long Distance Moving Services Work
             </h2>
+            <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
+              Four steps. One team. Start to finish.
+            </p>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 32 }}>
             {[
@@ -347,7 +358,7 @@ export default function LongDistanceMovingPage() {
           <div className="text-center" style={{ marginBottom: 48 }}>
             <div className="section-label"><span>Long-Distance Reviews</span></div>
             <h2 className="heading-2" style={{ fontFamily: "var(--font-heading)", fontWeight: 700 }}>
-              From Our Long-Distance Customers
+              What Our Long Distance Customers Say
             </h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 24 }}>
@@ -439,10 +450,10 @@ export default function LongDistanceMovingPage() {
             <Shield size={28} />
           </div>
           <h2 className="heading-2" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, marginBottom: 16 }}>
-            Licensed Interstate Carrier
+            Long Distance Moving Companies Connecticut Families Trust
           </h2>
           <p className="body-md text-gray" style={{ lineHeight: 1.8, marginBottom: 24, maxWidth: 640, margin: "0 auto 24px" }}>
-            Castle Express Moving &amp; Storage is a licensed interstate moving company. Family-owned and operated in Enfield, Connecticut since 2011.
+            When you compare long distance moving companies in Connecticut, check the license first. Castle Express Moving &amp; Storage is a licensed interstate carrier, family-owned and operated in Enfield, Connecticut since 2011. We started with one truck; today we run a fleet of five from our 5,000 sq ft facility. <Link href="/about/" style={{ color: "#D4A017", fontWeight: 600 }}>Read our story</Link>.
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: 24, flexWrap: "wrap", marginBottom: 24 }}>
             {[
@@ -473,7 +484,7 @@ export default function LongDistanceMovingPage() {
         <div style={{ maxWidth: 800, margin: "0 auto", padding: "0 24px", textAlign: "center" }}>
           <div className="section-label" style={{ justifyContent: "center" }}><span>Pricing</span></div>
           <h2 className="heading-2" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, marginBottom: 24 }}>
-            Honest Pricing for a Premium Service
+            How Much Do Long Distance Movers Cost?
           </h2>
           <p className="body-md" style={{ color: "#1A1A2E", lineHeight: 1.8, marginBottom: 16, maxWidth: 640, margin: "0 auto 16px" }}>
             Long-distance moves are priced per truck and per mile. Every move is different. We can't give you an accurate number over the phone or through a web form because we need to see what's moving.
@@ -526,9 +537,12 @@ export default function LongDistanceMovingPage() {
           </div>
           <div style={{ display: "flex", justifyContent: "center", gap: 12, flexWrap: "wrap", marginBottom: 48 }}>
             <Link href="/services/residential-moving/" className="location-chip">Residential Moving <ChevronRight size={14} /></Link>
-            <Link href="/services/packing-services/" className="location-chip">Packing Services <ChevronRight size={14} /></Link>
+            <Link href="/services/house-movers/" className="location-chip">House Movers <ChevronRight size={14} /></Link>
+            <Link href="/services/packing-and-moving/" className="location-chip">Packing &amp; Moving <ChevronRight size={14} /></Link>
             <Link href="/services/storage/" className="location-chip">Climate-Controlled Storage <ChevronRight size={14} /></Link>
-            <Link href="/services/specialty-moving/" className="location-chip">Specialty Moving <ChevronRight size={14} /></Link>
+            <Link href="/senior-moving/" className="location-chip">Senior Moving <ChevronRight size={14} /></Link>
+            <Link href="/services/commercial-moving/" className="location-chip">Commercial Moving <ChevronRight size={14} /></Link>
+            <Link href="/services/local-moving/" className="location-chip">Local Moving <ChevronRight size={14} /></Link>
           </div>
 
           <div className="text-center" style={{ marginBottom: 24 }}>

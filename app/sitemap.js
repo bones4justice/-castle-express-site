@@ -8,7 +8,7 @@ const BASE = "https://www.castleexpressmoving.com";
 export default function sitemap() {
   // Bump this on every content deploy — a frozen date tells Google nothing
   // changed and suppresses recrawl of exactly the pages we want re-evaluated.
-  const CONTENT_UPDATED = "2026-10-01";
+  const CONTENT_UPDATED = "2026-10-19";
 
   // Static pages
   const staticPages = [
