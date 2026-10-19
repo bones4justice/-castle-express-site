@@ -48,6 +48,7 @@ function monthRate(m) {
 }
 
 function monthMeals(m) {
+  if (m.wreaths) return 0; // wreath months sponsor wreaths, not meals
   return Math.round(((m.donated || 0) + (m.matched || 0)) * monthRate(m));
 }
 
@@ -58,6 +59,7 @@ export default function GivingBackPage() {
   const totalCombined = totalDonated + totalMatched;
   const mealsPerDollar = data.mealsPerDollar || 10;
   const totalMeals = months.reduce((s, m) => s + monthMeals(m), 0);
+  const totalWreaths = months.reduce((s, m) => s + (m.wreaths || 0), 0);
 
   const nowYM = currentYearMonth();
   const currentMonth = months.find(m => m.month === nowYM);
@@ -88,6 +90,11 @@ export default function GivingBackPage() {
         "@type": "NGO",
         "name": "Enfield Food Shelf",
         "url": "https://www.enfieldfoodshelf.org/"
+      },
+      {
+        "@type": "NGO",
+        "name": "Wreaths Across America",
+        "url": "https://www.wreathsacrossamerica.org/"
       }
     ],
     "publisher": {
@@ -160,13 +167,13 @@ export default function GivingBackPage() {
                       <Td>
                         <div>{m.org || DEFAULT_ORG}</div>
                         <div style={{ fontSize: 12, color: C.gray, marginTop: 2 }}>
-                          $1 = {monthRate(m)} meals
+                          {m.wreaths ? "$17 = 1 veteran's wreath" : `$1 = ${monthRate(m)} meals`}
                         </div>
                       </Td>
                       <Td align="right">{fmtMoney(m.donated || 0)}</Td>
                       <Td align="right">{(m.matched || 0) > 0 ? fmtMoney(m.matched) : <span style={{ color: C.gray }}>$0</span>}</Td>
                       <Td align="right"><strong>{fmtMoney(total)}</strong></Td>
-                      <Td align="right">{fmtInt(monthMeals(m))}</Td>
+                      <Td align="right">{m.wreaths ? `${fmtInt(m.wreaths)} wreaths` : fmtInt(monthMeals(m))}</Td>
                     </tr>
                   );
                 })}
@@ -178,7 +185,7 @@ export default function GivingBackPage() {
                   <Td align="right"><strong>{fmtMoney(totalDonated)}</strong></Td>
                   <Td align="right"><strong>{anyMatchedHistory ? fmtMoney(totalMatched) : "$0"}</strong></Td>
                   <Td align="right"><strong>{fmtMoney(totalCombined)}</strong></Td>
-                  <Td align="right"><strong>{fmtInt(totalMeals)}</strong></Td>
+                  <Td align="right"><strong>{fmtInt(totalMeals)}{totalWreaths ? ` + ${fmtInt(totalWreaths)} wreaths` : ""}</strong></Td>
                 </tr>
               </tfoot>
             </table>
@@ -221,6 +228,26 @@ export default function GivingBackPage() {
             </p>
             <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: fontBody, fontWeight: 700, color: C.black, borderBottom: `2px solid ${C.gold}`, textDecoration: "none", paddingBottom: 2 }}>
               Visit enfieldfoodshelf.org
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* About Wreaths Across America (September 2026 special month) */}
+      <section style={{ background: C.white, color: C.black, padding: "72px 24px" }}>
+        <div style={{ maxWidth: 880, margin: "0 auto", display: "grid", gridTemplateColumns: "auto 1fr", gap: 32, alignItems: "center" }}>
+          <a href="https://www.wreathsacrossamerica.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit Wreaths Across America" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: C.black, borderRadius: 16, padding: 24 }}>
+            <Image src="/images/wreaths-across-america-logo.png" alt="Wreaths Across America" width={230} height={56} style={{ objectFit: "contain" }} />
+          </a>
+          <div>
+            <h2 style={{ fontFamily: fontHead, fontWeight: 900, fontSize: "clamp(22px, 2.6vw, 28px)", margin: "0 0 14px" }}>
+              About Wreaths Across America
+            </h2>
+            <p style={{ fontFamily: fontBody, fontSize: 15, lineHeight: 1.8, color: C.black, margin: "0 0 14px" }}>
+              In September 2026 we did something a little different with our monthly donation. That month&apos;s $255 sponsored <strong>15 veterans&apos; wreaths</strong> through Wreaths Across America. Each December, volunteers lay these wreaths on veterans&apos; headstones at cemeteries across the country to remember the fallen, honor those who serve, and teach the next generation the value of freedom. In October our donations went back to feeding local families through the Enfield Food Shelf.
+            </p>
+            <a href="https://www.wreathsacrossamerica.org/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: fontBody, fontWeight: 700, color: C.black, borderBottom: `2px solid ${C.gold}`, textDecoration: "none", paddingBottom: 2 }}>
+              Visit wreathsacrossamerica.org
             </a>
           </div>
         </div>
