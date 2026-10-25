@@ -143,13 +143,44 @@ function isSpamEmail(email) {
   return false;
 }
 
-// Classical-Latin / lorem-ipsum filler in the free-text fields. These bots
-// submit a plausible name + valid-format phone + non-gmail email, so they
-// slip every check above; the only tell is junk origin/destination like
-// "textilis -> tutis" or "dolorem -> bene". No real CT/MA customer types a
-// Latin word for where they are moving. Whole-word, case-insensitive, length
-// >= 4 (so short real tokens never trip). "vero" is deliberately omitted
-// (Vero Beach FL is a real origin).
+// ── Primary bot signature: default dropdowns + skipped date ──
+// The overnight wave (10/24-10/25) takes the FIRST real option of every
+// dropdown and never touches the date picker. Every hit has the first-listed
+// move size AND an empty move date. That combination is the durable tell:
+// the bot can swap its wordlist tomorrow, but it can't cheaply start selecting
+// realistic dropdown values plus a valid future date. Confirmed against 6
+// months of real submissions: this pair matches all 10 known spam hits and
+// zero real leads (Joe, 10/25).
+//
+// First real option = index 0 of the option array (the <select> renders an
+// empty "Select..." placeholder first, then these). Sitewide EstimateForm uses
+// MOVE_SIZES[0] = "Studio"; the /free-estimate LandingEstimateForm uses
+// "Studio / 1 Bedroom". Keep both in sync with those forms if the lists change.
+// IMPORTANT: empty moveDate is NEVER a standalone signal - real customers skip
+// it. It only counts paired with the first-option size.
+const FIRST_SIZE_OPTIONS = new Set(["Studio", "Studio / 1 Bedroom"]);
+
+function isDefaultDropdownSpam(body) {
+  const fs = body.formspree || {};
+  const sm = body.smartmoving || {};
+  const size = String(fs.moveSize || sm.MoveSize || "").trim();
+  if (!FIRST_SIZE_OPTIONS.has(size)) return false;
+  const hasDate = Boolean(
+    (fs.moveDate && String(fs.moveDate).trim()) ||
+      (sm.MoveDate && String(sm.MoveDate).trim())
+  );
+  return !hasDate;
+}
+
+// ── Secondary signal: classical-Latin / lorem-ipsum filler ──
+// Backstop for when the bot varies its structure. These bots submit a
+// plausible name + valid-format phone + non-gmail email, so the only
+// content tell is junk origin/destination like "textilis -> tutis" or
+// "dolorem -> bene". No real CT/MA customer types a Latin word for where they
+// are moving. Checked per-field (a match in EITHER moveFrom OR moveTo is
+// enough - one 10/24 hit had a blank moveFrom and only moveTo). Whole-word,
+// case-insensitive, length >= 4 (so short real tokens never trip). "vero" is
+// deliberately omitted (Vero Beach FL is a real origin).
 const LATIN_FILLER = new Set([
   "lorem", "ipsum", "dolor", "dolore", "dolorem", "doloremque", "dolorum",
   "amet", "consectetur", "adipiscing", "elit", "eiusmod", "tempor",
@@ -206,6 +237,10 @@ function spamReason(body) {
     return `filled too fast (${body.elapsedMs}ms)`;
   if (isGibberishName(sm.FullName)) return `gibberish name: ${sm.FullName}`;
   if (isSpamEmail(sm.Email)) return `spam email: ${sm.Email}`;
+  // Primary structural signature (first-option size + no date).
+  if (isDefaultDropdownSpam(body))
+    return `default-dropdown bot (size=${fs.moveSize || sm.MoveSize || ""}, no date)`;
+  // Secondary content backstop.
   if (
     hasLatinFiller(
       sm.FullName,
