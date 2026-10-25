@@ -143,6 +143,42 @@ function isSpamEmail(email) {
   return false;
 }
 
+// Classical-Latin / lorem-ipsum filler in the free-text fields. These bots
+// submit a plausible name + valid-format phone + non-gmail email, so they
+// slip every check above; the only tell is junk origin/destination like
+// "textilis -> tutis" or "dolorem -> bene". No real CT/MA customer types a
+// Latin word for where they are moving. Whole-word, case-insensitive, length
+// >= 4 (so short real tokens never trip). "vero" is deliberately omitted
+// (Vero Beach FL is a real origin).
+const LATIN_FILLER = new Set([
+  "lorem", "ipsum", "dolor", "dolore", "dolorem", "doloremque", "dolorum",
+  "amet", "consectetur", "adipiscing", "elit", "eiusmod", "tempor",
+  "incididunt", "labore", "magna", "aliqua", "aliquam", "enim", "minim",
+  "veniam", "quis", "nostrud", "exercitation", "ullamco", "laboris", "nisi",
+  "aliquip", "commodo", "consequat", "duis", "aute", "irure", "reprehenderit",
+  "voluptate", "voluptatem", "velit", "esse", "cillum", "fugiat", "nulla",
+  "pariatur", "excepteur", "sint", "occaecat", "cupidatat", "proident", "sunt",
+  "culpa", "officia", "deserunt", "mollit", "anim", "laborum", "tutis",
+  "textilis", "bene", "quia", "quae", "porro", "numquam", "neque", "modi",
+  "tempora", "accusantium", "laudantium", "veritatis", "architecto", "beatae",
+  "vitae", "dicta", "explicabo", "aspernatur", "odit", "fugit", "nemo",
+  "ratione", "sequi", "nesciunt", "fuga", "harum", "quidem", "rerum",
+  "facilis", "expedita", "distinctio", "libero", "soluta", "nobis", "eligendi",
+  "optio", "cumque", "impedit", "maxime", "placeat", "perspiciatis", "unde",
+  "iste", "natus", "totam", "eaque", "quasi", "inventore",
+]);
+
+function hasLatinFiller(...vals) {
+  for (const v of vals) {
+    if (!v) continue;
+    const words = String(v).toLowerCase().match(/[a-z]+/g) || [];
+    for (const w of words) {
+      if (w.length >= 4 && LATIN_FILLER.has(w)) return true;
+    }
+  }
+  return false;
+}
+
 // MoveDate arrives as YYYYMMDD. Anything in the past or more than ~18
 // months out is a bot (the spam lead had 19700531).
 function isValidMoveDate(yyyymmdd) {
@@ -164,11 +200,25 @@ function isValidMoveDate(yyyymmdd) {
 // can't learn what tripped them.
 function spamReason(body) {
   const sm = body.smartmoving || {};
+  const fs = body.formspree || {};
   if (body.hp) return "honeypot filled";
   if (typeof body.elapsedMs === "number" && body.elapsedMs < 3000)
     return `filled too fast (${body.elapsedMs}ms)`;
   if (isGibberishName(sm.FullName)) return `gibberish name: ${sm.FullName}`;
   if (isSpamEmail(sm.Email)) return `spam email: ${sm.Email}`;
+  if (
+    hasLatinFiller(
+      sm.FullName,
+      sm.OriginAddressFull,
+      sm.DestinationAddressFull,
+      fs.moveFrom,
+      fs.moveTo,
+      fs.name,
+      fs.notes,
+      fs.message
+    )
+  )
+    return "latin filler content";
   return null;
 }
 
