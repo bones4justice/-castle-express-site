@@ -558,6 +558,12 @@ const nextConfig = {
       { source: '/checkout', destination: '/', permanent: true },
       { source: '/checkout/', destination: '/', permanent: true },
 
+      // Brochure QR: printed tri-fold points at /Adam (a rep who left). Next
+      // routes are case-sensitive, so cover both cases. permanent: false (307)
+      // so browsers don't cache it forever if the target ever changes.
+      { source: '/Adam', destination: '/brochure', permanent: false },
+      { source: '/adam', destination: '/brochure', permanent: false },
+
       // Root-level blog slugs missing the /blog/ prefix (generated from BLOG_SLUGS above)
       ...blogPrefixRedirects,
     ];

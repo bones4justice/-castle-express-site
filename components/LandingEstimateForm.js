@@ -27,7 +27,7 @@ const SIZES = [
 const GOLD = "#FBCB0B";
 const BORDER = "#969a9d";
 
-export default function LandingEstimateForm({ idPrefix = "le", version = "" }) {
+export default function LandingEstimateForm({ idPrefix = "le", version = "", eventLabel = "free_estimate_landing" }) {
   const [step, setStep] = useState(1);
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -114,7 +114,10 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "" }) {
       if (typeof window.gtag !== "undefined")
         window.gtag("event", "generate_lead", {
           event_category: "form",
-          event_label: "free_estimate_landing",
+          // Default "free_estimate_landing"; the /brochure page passes
+          // "brochure_landing" so brochure leads are distinguishable from the
+          // /free-estimate ads split test in GA4 and the lead pipeline.
+          event_label: eventLabel,
           lp_variant: lpVariant,
           send_to: "G-97Z4EHJM63",
         });
