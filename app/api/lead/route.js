@@ -11,18 +11,19 @@
 // Spam responses still return { ok: true } so bots can't distinguish a
 // rejection from a success and adapt.
 
+// Secrets live ONLY in Vercel env vars (Project Settings -> Environment
+// Variables), never in this repo. A missing key is not fatal to the customer:
+// the SmartMoving write fails, Formspree still catches the lead, and
+// reportWriteFailure alerts Joe — but it should never happen outside a
+// misconfigured deploy, so we also log loudly at module load below.
 const FORMS = {
   estimate: {
     formspree: "https://formspree.io/f/xpqjkjga",
-    providerKey:
-      process.env.SMARTMOVING_PROVIDER_KEY ||
-      "8f882454-9968-445e-8f50-ac5d011a33fc",
+    providerKey: process.env.SMARTMOVING_PROVIDER_KEY,
   },
   referral: {
     formspree: "https://formspree.io/f/xnjojwly",
-    providerKey:
-      process.env.SMARTMOVING_REFERRAL_PROVIDER_KEY ||
-      "d1cc3234-4fdc-4b3d-ad89-b0ec010a0ee8",
+    providerKey: process.env.SMARTMOVING_REFERRAL_PROVIDER_KEY,
   },
 };
 
@@ -33,9 +34,15 @@ const BRANCH_ID = "352498a1-e171-40cd-8b35-ac5d011720d0";
 // HTTPS via the marketing vhost (nginx -> :8080) so the shared secret never
 // travels in cleartext.
 const ALERT_URL = "https://marketing.castleexpressmoving.com/api/lead-write-alert";
-const ALERT_SECRET =
-  process.env.LEAD_ALERT_SECRET ||
-  "7c1612913607aa97ff12ca7f4be402bada84922f70c9a576";
+const ALERT_SECRET = process.env.LEAD_ALERT_SECRET;
+
+for (const [name, val] of [
+  ["SMARTMOVING_PROVIDER_KEY", FORMS.estimate.providerKey],
+  ["SMARTMOVING_REFERRAL_PROVIDER_KEY", FORMS.referral.providerKey],
+  ["LEAD_ALERT_SECRET", ALERT_SECRET],
+]) {
+  if (!val) console.error(`[lead] MISCONFIGURED DEPLOY: env var ${name} is not set`);
+}
 
 // OpenAI Ads Conversions API: server-side lead_created so conversions are
 // counted even when ad blockers eat the browser pixel. The client sends the
