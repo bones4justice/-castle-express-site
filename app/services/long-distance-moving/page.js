@@ -12,7 +12,7 @@ export const metadata = {
     title: "Long Distance Movers in CT | Dedicated Moving Service",
     description: "Licensed long distance movers from Connecticut. Dedicated truck, your schedule, direct delivery.",
     url: "/services/long-distance-moving/",
-    images: [{ url: "/images/hero-white-truck.jpg", alt: "Castle Express long-distance moving truck" }],
+    images: [{ url: "/images/og-default.jpg", width: 1200, height: 630, alt: "Castle Express long-distance moving truck" }],
   },
 };
 
@@ -139,7 +139,7 @@ export default function LongDistanceMovingPage() {
               <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>Long-Distance Moving</span>
             </div>
             <h1 className="heading-1" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, color: "#fff", marginBottom: 20 }}>
-              Long Distance Movers in Connecticut,<br /><span className="text-gold">Without the 2-Week Wait</span>
+              Long Distance Movers in Connecticut, <br /><span className="text-gold">Without the 2-Week Wait</span>
             </h1>
             <p className="body-lg text-white-muted" style={{ maxWidth: 520, marginBottom: 28 }}>
               Licensed interstate long distance movers based in Enfield, CT. One dedicated truck. Your schedule. Direct delivery to New England, New York, New Jersey, Pennsylvania, the Carolinas, and Florida.

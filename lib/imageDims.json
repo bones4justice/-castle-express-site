@@ -83,6 +83,10 @@
   "w": 1200,
   "h": 626
  },
+ "/images/crew-commercial-blog.webp": {
+  "w": 864,
+  "h": 1080
+ },
  "/images/crew-commercial.jpg": {
   "w": 864,
   "h": 1080
@@ -90,6 +94,10 @@
  "/images/crew-commercial.webp": {
   "w": 864,
   "h": 1080
+ },
+ "/images/crew-furniture-blog.webp": {
+  "w": 226,
+  "h": 305
  },
  "/images/crew-furniture.jpg": {
   "w": 226,
@@ -119,6 +127,10 @@
   "w": 599,
   "h": 800
  },
+ "/images/joe-with-customers-blog.webp": {
+  "w": 768,
+  "h": 1024
+ },
  "/images/joe-with-customers.jpg": {
   "w": 768,
   "h": 1024
@@ -135,6 +147,14 @@
   "w": 2000,
   "h": 1227
  },
+ "/images/og-default.jpg": {
+  "w": 1200,
+  "h": 630
+ },
+ "/images/packed-truck-blog.webp": {
+  "w": 900,
+  "h": 1200
+ },
  "/images/packed-truck.jpg": {
   "w": 900,
   "h": 1200
@@ -143,9 +163,17 @@
   "w": 900,
   "h": 1200
  },
+ "/images/princess-packing-crew-blog.webp": {
+  "w": 600,
+  "h": 900
+ },
  "/images/princess-packing-crew.jpg": {
   "w": 600,
   "h": 900
+ },
+ "/images/right-time-to-move-ct-blog.webp": {
+  "w": 960,
+  "h": 640
  },
  "/images/right-time-to-move-ct.png": {
   "w": 1200,
@@ -159,6 +187,10 @@
   "w": 400,
   "h": 400
  },
+ "/images/storage-crates-blog.webp": {
+  "w": 960,
+  "h": 1281
+ },
  "/images/storage-crates.jpg": {
   "w": 1049,
   "h": 1400
@@ -166,6 +198,10 @@
  "/images/storage-crates.webp": {
   "w": 1049,
   "h": 1400
+ },
+ "/images/truck-aframe-blog.webp": {
+  "w": 960,
+  "h": 720
  },
  "/images/truck-aframe.jpg": {
   "w": 1200,
@@ -175,6 +211,10 @@
   "w": 1200,
   "h": 900
  },
+ "/images/truck-brick-building-blog.webp": {
+  "w": 960,
+  "h": 720
+ },
  "/images/truck-brick-building.jpg": {
   "w": 1200,
   "h": 900
@@ -183,6 +223,10 @@
   "w": 1200,
   "h": 900
  },
+ "/images/truck-loading-blog.webp": {
+  "w": 960,
+  "h": 960
+ },
  "/images/truck-loading.jpg": {
   "w": 1200,
   "h": 1200
@@ -190,6 +234,10 @@
  "/images/truck-loading.webp": {
   "w": 1200,
   "h": 1200
+ },
+ "/images/truck-residential-blog.webp": {
+  "w": 960,
+  "h": 720
  },
  "/images/truck-residential.jpg": {
   "w": 1200,
@@ -207,8 +255,16 @@
   "w": 1200,
   "h": 900
  },
+ "/images/truck-tobacco-barn-blog.webp": {
+  "w": 960,
+  "h": 720
+ },
  "/images/truck-tobacco-barn.jpg": {
   "w": 1200,
   "h": 900
+ },
+ "/images/wreaths-across-america-logo.png": {
+  "w": 350,
+  "h": 85
  }
 }

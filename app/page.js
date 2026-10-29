@@ -50,6 +50,7 @@ export default function HomePage() {
       />
       {/* ─── HERO ─── */}
       <section className="section-dark" aria-label="Hero" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
+        {/* Decorative 12%-opacity background texture — empty alt is intentional. */}
         <div style={{ position: "absolute", inset: 0, opacity: 0.12, pointerEvents: "none" }}>
           <Image src={heroVariant === "B" ? "/images/hero-white-truck.webp" : "/images/truck-residential.webp"} alt="" fill sizes="100vw" priority style={{ objectFit: "cover", objectPosition: "center" }} />
         </div>

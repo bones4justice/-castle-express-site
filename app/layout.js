@@ -39,7 +39,6 @@ export const metadata = {
     default: "Castle Express Moving & Storage | CT & MA Movers Since 2011",
   },
   description: "Family-owned movers in Enfield, CT serving Hartford County & Western MA since 2011. 200+ five-star reviews, honest estimates. Call (888) 553-4503.",
-  keywords: ["movers", "moving company", "Enfield CT", "Hartford CT", "Springfield MA", "storage", "packing", "local movers", "long distance movers"],
   // WARNING: this canonical is inherited by ANY page that doesn't set its own
   // `alternates`: a page added without one silently canonicalizes to the
   // homepage (deindexing itself). Every new page must set its own canonical.
@@ -51,13 +50,13 @@ export const metadata = {
     siteName: "Castle Express Moving & Storage",
     title: "Castle Express Moving & Storage | CT & MA Movers Since 2011",
     description: "Family-owned moving company serving Hartford County, CT and Western MA. Transparent pricing, professional crews, 200+ 5-star reviews.",
-    images: [{ url: "/images/logo.jpg", width: 1200, height: 630, alt: "Castle Express Moving & Storage" }],
+    images: [{ url: "/images/og-default.jpg", width: 1200, height: 630, alt: "Castle Express moving truck at a Connecticut home" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Castle Express Moving & Storage | CT & MA Movers Since 2011",
     description: "Family-owned moving company serving Hartford County, CT and Western MA. Transparent pricing, professional crews, 200+ 5-star reviews.",
-    images: ["/images/logo.jpg"],
+    images: ["/images/og-default.jpg"],
   },
   robots: { index: true, follow: true },
 };

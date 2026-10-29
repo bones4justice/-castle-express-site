@@ -66,6 +66,27 @@ const nextConfig = {
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+          // Report-Only: logs violations to the browser console without
+          // blocking anything. Covers GTM/GA4/Ads, Meta pixel, OpenAI pixel,
+          // Clarity, and Elfsight (/reviews). GTM injects tags dynamically,
+          // so watch console violations across pages for a few weeks before
+          // promoting this to an enforced Content-Security-Policy header.
+          // 'unsafe-inline' is required by the inline GTM/GA bootstrap
+          // snippets and JSON-LD in app/layout.js.
+          {
+            key: 'Content-Security-Policy-Report-Only',
+            value: [
+              "default-src 'self'",
+              "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://googleads.g.doubleclick.net https://www.googleadservices.com https://connect.facebook.net https://bzrcdn.openai.com https://www.clarity.ms https://scripts.clarity.ms https://static.elfsight.com https://universe-static.elfsightcdn.com",
+              "style-src 'self' 'unsafe-inline' https://universe-static.elfsightcdn.com",
+              "img-src 'self' data: https:",
+              "font-src 'self' data: https://universe-static.elfsightcdn.com",
+              "connect-src 'self' https:",
+              "frame-src https://www.googletagmanager.com https://td.doubleclick.net https://www.google.com https://www.facebook.com",
+              "object-src 'none'",
+              "base-uri 'self'",
+            ].join('; '),
+          },
         ],
       },
     ];

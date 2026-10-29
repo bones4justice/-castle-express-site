@@ -50,7 +50,7 @@ const FAQ = {
 
 const VERSIONS = {
   residential: {
-    headline: "Connecticut & Massachusetts Movers You Can Trust",
+    headline: "Get Your Free Moving Estimate from CT & MA Movers You Can Trust",
     subhead: "Family owned since 2011. Tell us about your move and we will usually respond in about 20 minutes with your free estimate.",
     bullets: [
       "Honest estimates with no hidden fees",
