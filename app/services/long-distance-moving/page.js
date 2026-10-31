@@ -114,7 +114,7 @@ const SERVICE_SCHEMA = {
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "4.9",
-    "reviewCount": "200",
+    "reviewCount": "223",
     "bestRating": "5",
   },
 };

@@ -32,8 +32,8 @@ export const COMPANY = {
   tiktok: "https://www.tiktok.com/@castleexpressmovi",
   linkedin: "https://www.linkedin.com/in/joseph-caronna-767a616",
 
-  // Stats
-  reviewCount: "200+",
+  // Stats (reviewCount verified 2026-10-31 via Places API: 223)
+  reviewCount: "220+",
   reviewAvg: "4.9",
   truckCount: "5",
   facilitySize: "5,000",
@@ -1526,6 +1526,46 @@ export const FAQ = [
   {
     q: "Do you offer commercial and office moving?",
     a: "Yes. Castle Express handles office relocations, retail moves, and commercial relocations with minimal downtime. We offer after-hours and weekend scheduling, IT equipment coordination, and custom move planning.",
+  },
+];
+
+// Real Google reviews, fetched 2026-10-31 via Places API (New)
+// (place details for GOOGLE_PLACE_ID, fieldmask "reviews" - returns the 5
+// most relevant). Replaced the Elfsight widget when its subscription ended.
+// Text is verbatim except em dashes (brand rule: plain hyphens). To refresh,
+// re-pull and swap entries; update COMPANY.reviewCount while you're in here.
+export const GOOGLE_PLACE_ID = "ChIJr4ERfGj75okR-pvWu2PbwSk";
+
+export const GOOGLE_REVIEWS = [
+  {
+    author: "Louise Durej",
+    rating: 5,
+    date: "August 2026",
+    text: "Since we enjoyed our last move with Castle Express, I was happy to plan my latest move with them. Once again, Castle Express provided excellent service at a competitive rate. If you are lucky enough to have any or all of these gentlemen on your moving team, you are certain to be pleased: Mel, Raf, Louis and Vell are to be commended. They were friendly, careful with my furnishings, timely and very helpful overall. Thank you Castle Express for another successful move!",
+  },
+  {
+    author: "Kathleen",
+    rating: 5,
+    date: "July 2026",
+    text: "5 Star service was given to me. 5 guys showed up, very friendly, professional, they held their shock in when they saw what they had to deal with! I wasted putting “Fragile” stickers on everything as they were gentle with everything! They were swift, careful and helped with items I didn’t have time to pack. They filled 2 trucks in just 3 hours. Thank you, 5 guys!!",
+  },
+  {
+    author: "Lisa W",
+    rating: 5,
+    date: "June 2026",
+    text: "We had a great experience from start to finish! From the first phone call with Monique we felt confident in their service. Monique provided very clear explanations for the process and the costs involved. On the day Dylan, Greg & Shane were friendly and professional. They showed care for all of our possessions, very carefully wrapping and moving them into some tricky spaces - and we finished faster than we ever expected, and without any issues! The whole day went so smooth, we wouldn’t hesitate to recommend them.",
+  },
+  {
+    author: "Mia Charette",
+    rating: 5,
+    date: "April 2026",
+    text: "We had the best moving experience with Alberto, Louis, Dylan, Greg and Chris. They worked an extended day to ensure our move went smoothly. They went above and beyond to ensure our items were handled with care. As a military family, we have moved MANY times, and this was hands down the best moving experience we’ve ever had. A+ crew and A+ experience. Thank you guys for making what could have been a very stressful day feel easy.",
+  },
+  {
+    author: "Courtney Busk",
+    rating: 5,
+    date: "April 2026",
+    text: "We had a great experience with our movers - Greg, Chris, and James. From the moment they arrived, everything felt organized! Their process was seamless and efficient, which made our 6-hour move fly by. They handled our belongings with care while still keeping a steady pace, striking the perfect balance between speed and attention to detail. We’re so glad we had the 3 of them as our movers and would absolutely recommend them!",
   },
 ];
 

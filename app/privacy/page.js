@@ -45,8 +45,8 @@ export default function PrivacyPage() {
 
           <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 16 }}>Third-Party Services</h2>
           <p style={{ marginBottom: 24 }}>
-            We use third-party services including Google Analytics, Formspree (for contact forms), and Elfsight (for
-            reviews display). These services may collect data according to their own privacy policies.
+            We use third-party services including Google Analytics and Formspree (for contact forms). These services
+            may collect data according to their own privacy policies.
           </p>
 
           <h2 style={{ fontSize: 22, fontWeight: 700, marginBottom: 16 }}>Contact Us</h2>
