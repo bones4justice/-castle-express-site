@@ -6,6 +6,12 @@
  * ═══════════════════════════════════════════════════════
  */
 
+// Number of live town pages (/movers-<town>-<st>/), i.e. CITY_DATA.length in
+// lib/cityData.js. Kept as a constant instead of importing cityData here
+// because content.js ships to client bundles (Header, homepage) and cityData
+// is ~210KB. scripts/check-town-count.js fails the build if this drifts.
+export const TOWN_COUNT = 76;
+
 export const COMPANY = {
   name: "Castle Express Moving & Storage",
   shortName: "Castle Express",
@@ -721,7 +727,7 @@ export const SERVICE_PAGES = {
     },
     callout: "We're not a franchise or a broker. The movers who show up at your door work for us  -  vetted, trained, and local. That's why Connecticut families keep coming back.",
     faq: [
-      { q: "What areas does your local moving company serve?", a: "We serve all of Hartford County and Tolland County in Connecticut, plus Western Massachusetts including Springfield and Agawam. We dispatch from Enfield, CT and cover 21+ cities." },
+      { q: "What areas does your local moving company serve?", a: `We serve all of Hartford County and Tolland County in Connecticut, plus Western Massachusetts including Springfield and Agawam. We dispatch from Enfield, CT and cover ${TOWN_COUNT} towns.` },
       { q: "Do you charge by the hour for local moves?", a: "Yes. We charge hourly, but our estimates are built from a detailed inventory and aim to be within 10% of the final cost. No hidden fees or fuel surcharges." },
       { q: "What's included in your local moving services?", a: "Loading, transport, and unloading at your new home, plus furniture protection, disassembly and reassembly as needed. Packing and storage are available as add-ons." },
       { q: "How far in advance should I book local movers in CT?", a: "We recommend 2 to 3 weeks ahead, especially from May through September. For last-minute moves, contact us and we'll do our best to fit you in." },
@@ -1501,7 +1507,7 @@ export const FAQ = [
   },
   {
     q: "What areas does Castle Express serve?",
-    a: "Castle Express serves all of Hartford County and Tolland County in Connecticut, plus Western Massachusetts including Springfield and Agawam. We dispatch from our Enfield, CT headquarters and cover 21+ cities.",
+    a: `Castle Express serves all of Hartford County and Tolland County in Connecticut, plus Western Massachusetts including Springfield and Agawam. We dispatch from our Enfield, CT headquarters and cover ${TOWN_COUNT} towns.`,
   },
   {
     q: "How much does it cost to hire movers in Connecticut?",
