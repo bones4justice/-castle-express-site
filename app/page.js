@@ -7,6 +7,7 @@ import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, Che
 import { IconResidential, IconCommercial, IconPacking, IconStorage, IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
 import EstimateForm from "@/components/EstimateForm";
 import TownsWeServe from "@/components/TownsWeServe";
+import AdBoxOffer from "@/components/AdBoxOffer";
 import { getHeroVariant, trackHeroVariant } from "@/lib/abtest";
 import { homepageJsonLd } from "@/lib/structuredData";
 import feedingAmericaData from "@/data/feeding-america.json";
@@ -76,6 +77,8 @@ export default function HomePage() {
                 ? "Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and experienced crews who treat your belongings like their own."
                 : "Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own."}
             </p>
+            {/* Google Ads visitors only; renders nothing for everyone else. */}
+            <AdBoxOffer />
             <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
               {["Licensed & Insured", "Accurate Estimates", "5-Star Reviews"].map(item => (
                 <div key={item} style={{ display: "flex", alignItems: "center", gap: 8 }}>

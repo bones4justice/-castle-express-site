@@ -4,6 +4,7 @@ import Link from "next/link";
 import { MOVE_SIZES, LEAD_SOURCES, COMPANY } from "@/content";
 import { Check, ArrowRight, Phone } from "@/components/Icons";
 import { getSmartMovingAttribution } from "@/lib/utm";
+import { boxOfferSeen, BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
 import { readVariantCookie } from "@/lib/lpAbTest";
 
 export default function EstimateForm({ dark = false }) {
@@ -40,6 +41,11 @@ export default function EstimateForm({ dark = false }) {
 
       Object.assign(smPayload, getSmartMovingAttribution());
 
+      // Homepage free box offer (Google Ads visitors only). Notes is already
+      // accepted by SmartMoving (ReferralForm sends it through /api/lead).
+      const boxOffer = boxOfferSeen() ? "shown" : "not_shown";
+      if (boxOffer === "shown") smPayload.Notes = BOX_OFFER_NOTE;
+
       // Same id goes to the OpenAI pixel (event_id) and the server-side
       // Conversions API (oaiEventId) so OpenAI dedupes to one conversion.
       const oaiEventId = crypto.randomUUID();
@@ -56,7 +62,7 @@ export default function EstimateForm({ dark = false }) {
           form: "estimate",
           hp: honeypot,
           elapsedMs: Date.now() - openedAt.current,
-          formspree: { ...formData, lp_variant: lpVariant },
+          formspree: { ...formData, lp_variant: lpVariant, box_offer: boxOffer },
           smartmoving: smPayload,
           oaiEventId,
           pageUrl: window.location.href,
@@ -79,7 +85,7 @@ export default function EstimateForm({ dark = false }) {
       // (since container v35) has no GA4 tag, so without it the event never
       // reaches G-97Z4EHJM63. GTM's Ads conversion trigger still fires on this
       // same push, send_to does not suppress it.
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant, send_to: "G-97Z4EHJM63" }); }
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant, box_offer: boxOffer, send_to: "G-97Z4EHJM63" }); }
       setSubmitted(true);
     } catch (err) {
       console.error("Lead submission error:", err);

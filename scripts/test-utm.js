@@ -175,6 +175,28 @@ check("first-touch wins: second navigation does not overwrite attribution", () =
   assert.strictEqual(utm.getAttribution().utm_source, "google");
 });
 
+check("isGoogleAdsVisitor: gclid, gbraid, google/cpc, and stored session qualify", () => {
+  assert.strictEqual(loadUtm(CLEAN).isGoogleAdsVisitor(), true);
+  assert.strictEqual(loadUtm(MANGLED).isGoogleAdsVisitor(), true);
+  // Auto-tagged ads to the plain homepage arrive with ONLY a click id.
+  assert.strictEqual(loadUtm("?gclid=test").isGoogleAdsVisitor(), true);
+  assert.strictEqual(loadUtm("?gbraid=test").isGoogleAdsVisitor(), true);
+  assert.strictEqual(loadUtm("?wbraid=test").isGoogleAdsVisitor(), true);
+  assert.strictEqual(loadUtm("?utm_source=Google&utm_medium=CPC").isGoogleAdsVisitor(), true);
+  const utm = loadUtm(CLEAN);
+  utm.captureAttribution();
+  utm.window.location.search = "";
+  assert.strictEqual(utm.isGoogleAdsVisitor(), true);
+});
+
+check("isGoogleAdsVisitor: organic, direct, Meta, and SSR do not qualify", () => {
+  assert.strictEqual(loadUtm("").isGoogleAdsVisitor(), false);
+  assert.strictEqual(loadUtm("?utm_source=google&utm_medium=organic").isGoogleAdsVisitor(), false);
+  assert.strictEqual(loadUtm("?utm_source=facebook&utm_medium=paid_social&fbclid=F").isGoogleAdsVisitor(), false);
+  assert.strictEqual(loadUtm("?utm_source=bing&utm_medium=cpc&msclkid=M").isGoogleAdsVisitor(), false);
+  assert.strictEqual(loadUtm().isGoogleAdsVisitor(), false);
+});
+
 if (failures) {
   console.error(`\ntest-utm: ${failures} case(s) failed`);
   process.exit(1);
