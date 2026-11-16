@@ -258,9 +258,15 @@ a { touch-action: manipulation; }
    original single 2-column form. */
 .ef-next, .ef-back, .ef-phone-only { display: none !important; }
 @media (max-width: 768px) {
-  .ef-two-step { padding: 20px 16px !important; }
-  .ef-two-step .ef-response { margin-bottom: 10px !important; }
+  .ef-two-step { padding: 14px 14px 12px !important; }
+  .ef-two-step .ef-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .ef-two-step .ef-head h3 { font-size: 19px !important; margin: 0 !important; }
+  .ef-two-step .ef-response { margin: 2px 0 8px !important; font-size: 12.5px !important; }
   .ef-two-step .ef-phone-only { display: block !important; }
+  .ef-two-step .ef-grid { gap: 8px !important; }
+  .ef-two-step label { margin-bottom: 3px !important; font-size: 11px !important; }
+  .ef-two-step input, .ef-two-step select { padding-top: 10px !important; padding-bottom: 10px !important; }
+  .ef-two-step .ef-next, .ef-two-step .ef-submit { margin-top: -4px; }
   .ef-two-step .ef-grid { grid-template-columns: 1fr !important; }
   .ef-two-step input, .ef-two-step select { font-size: 16px !important; }
   .ef-two-step[data-step="1"] .ef-s2,
@@ -274,18 +280,20 @@ a { touch-action: manipulation; }
    .hero-copy becomes display:contents so its children and the form column
    can be reordered in one flex column. Desktop grid untouched. */
 @media (max-width: 768px) {
-  .home-hero { padding: 28px 16px 40px !important; }
+  .home-hero { padding: 12px 16px 40px !important; }
   .home-hero .hero-grid { display: flex !important; flex-direction: column; gap: 0 !important; align-items: stretch !important; }
   .home-hero .hero-copy { display: contents; }
-  .home-hero .hero-label { order: 1; margin-bottom: 8px !important; }
-  .home-hero .hero-h1 { order: 2; margin-bottom: 10px !important; font-size: 30px !important; line-height: 1.2 !important; }
+  .home-hero .hero-label { order: 1; margin-bottom: 2px !important; }
+  .home-hero .hero-label .section-label, .home-hero .hero-label .hv-b { margin-bottom: 0 !important; }
+  .home-hero .hero-h1 { order: 2; margin-bottom: 2px !important; font-size: 26px !important; line-height: 1.2 !important; }
   .home-hero .hero-intro { display: none !important; }
-  .home-hero .hero-reviews { order: 3; margin-top: 0 !important; margin-bottom: 12px !important; }
+  .home-hero .hero-reviews { order: 3; margin-top: 0 !important; margin-bottom: 6px !important; }
   .home-hero .hero-offer { order: 4; }
-  .home-hero .hero-offer > div { margin-bottom: 14px !important; }
   .home-hero .hero-form { order: 5; }
   .home-hero .hero-badges { order: 6; margin: 24px 0 16px !important; }
   .home-hero .hero-ctas { order: 7; }
+  /* The sticky bar covers "Get Free Estimate" on phones; keep the call button. */
+  .home-hero .hero-ctas .btn-primary { display: none !important; }
   .home-hero .hero-legal { order: 8; margin-top: 16px !important; }
 }
 
@@ -342,3 +350,24 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
 /* Giving-back logos: gray until hovered (was inline JS handlers). */
 .grayscale-hover { display: inline-block; filter: grayscale(100%); transition: filter 0.3s ease; }
 .grayscale-hover:hover { filter: grayscale(0%); }
+
+/* ─── AD BOX OFFER (components/AdBoxOffer.js) ───
+   Desktop: full box. Phones: one short line + "Details" toggle. */
+.abo-short { display: none; }
+@media (max-width: 768px) {
+  .abo-full { display: none !important; }
+  .abo-short { display: block; margin: 0 0 8px; }
+  .abo-line {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    border-left: 3px solid #D4A017; background: rgba(212,160,23,0.14);
+    border-radius: 6px; padding: 0 4px 0 10px;
+  }
+  .abo-text { font-family: var(--font-heading); font-weight: 700; font-size: 13px; line-height: 1.3; color: #fff; padding: 6px 0; }
+  .abo-toggle {
+    flex: none; background: none; border: none; cursor: pointer; padding: 0 8px;
+    font-family: var(--font-heading); font-weight: 700; font-size: 13px; color: #FBCB0B;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  .abo-details { padding: 8px 10px 2px; }
+  .abo-details p { margin: 0 0 6px; font-family: var(--font-body); font-size: 12.5px; line-height: 1.5; color: rgba(255,255,255,0.8); }
+}

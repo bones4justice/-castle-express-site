@@ -6,14 +6,20 @@ import { Check, ArrowRight, Phone } from "@/components/Icons";
 import { getSmartMovingAttribution } from "@/lib/utm";
 import { boxOfferSeen, BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
 import { readVariantCookie } from "@/lib/lpAbTest";
-import { isWithinSalesHours } from "@/lib/salesHours";
+import { responseWindow } from "@/lib/salesHours";
 
-// Response-time wording. Inside sales hours (lib/salesHours.js) we keep the
-// 20 minute promise; outside them we say next business morning instead.
-const RESPONSE_LINE_IN = "Typically responds in 20 min. or less";
-const RESPONSE_LINE_OUT = "We reply first thing the next business morning";
-const THANKS_IN = "We will reach out to you usually within 20 minutes.";
-const THANKS_OUT = "Our office is closed right now. We will reach out first thing the next business morning.";
+// Response-time wording, keyed by responseWindow() in lib/salesHours.js.
+// Inside sales hours we keep the 20 minute promise.
+const RESPONSE_LINE = {
+  now: "Typically responds in 20 min. or less",
+  this_morning: "We reply first thing this morning",
+  next_business: "We reply first thing the next business morning",
+};
+const THANKS = {
+  now: "We will reach out to you usually within 20 minutes.",
+  this_morning: "Our office is closed right now. We will reach out first thing this morning.",
+  next_business: "Our office is closed right now. We will reach out first thing the next business morning.",
+};
 
 // twoStep: homepage only. On phones (<=768px) the form splits into
 // step 1 (name, phone, move date) and step 2 (the rest). It is still ONE form
@@ -22,7 +28,7 @@ const THANKS_OUT = "Our office is closed right now. We will reach out first thin
 // until the real submit. Desktop always gets the original single form.
 export default function EstimateForm({ dark = false, twoStep = false }) {
   const [submitted, setSubmitted] = useState(false);
-  const [inHours, setInHours] = useState(null); // null until mounted (SSR is static)
+  const [replyWindow, setReplyWindow] = useState(null); // null until mounted (SSR is static)
   const [isPhone, setIsPhone] = useState(false);
   const [step, setStep] = useState(1);
   const step1Tracked = useRef(false);
@@ -41,7 +47,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
   // Re-check sales hours on mount and every minute, so a tab left open past
   // 5:00 PM switches wording. The thank-you screen reads the value at submit.
   useEffect(() => {
-    const check = () => setInHours(isWithinSalesHours());
+    const check = () => setReplyWindow(responseWindow());
     check();
     const t = setInterval(check, 60000);
     return () => clearInterval(t);
@@ -260,7 +266,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
             fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.5,
             color: textColor, marginBottom: 20,
           }}>
-            {inHours === false ? THANKS_OUT : THANKS_IN}
+            {THANKS[replyWindow] || THANKS.now}
           </p>
           <p style={{
             fontFamily: "var(--font-body)", fontSize: 13, color: mutedColor, marginBottom: 14,
@@ -320,7 +326,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
   const fieldStyle = inputStyle;
   const s1 = twoStep ? "ef-s1" : undefined;
   const s2 = twoStep ? "ef-s2" : undefined;
-  const responseLine = inHours === null ? " " : inHours ? RESPONSE_LINE_IN : RESPONSE_LINE_OUT;
+  const responseLine = replyWindow === null ? "\u00A0" : RESPONSE_LINE[replyWindow] || RESPONSE_LINE.now;
 
   return (
     <form id="estimate-form" onSubmit={handleSubmit} onKeyDown={twoStep ? onFormKeyDown : undefined} className={twoStep ? "ef-two-step" : undefined} data-step={twoStep ? step : undefined} style={{
@@ -328,22 +334,24 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
       border: dark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #E5E7EB",
       scrollMarginTop: 88,
     }}>
-      <h3 style={{
-        fontFamily: "var(--font-heading)", fontWeight: 800,
-        fontSize: 22, color: dark ? "#fff" : "#1A1A2E", margin: "0 0 4px 0",
-      }}>Get Your Free Estimate</h3>
+      {/* Title row. On phones (twoStep) the step counter sits at the right
+          end of this row to keep step 1 inside the first screen. */}
+      <div className={twoStep ? "ef-head" : undefined}>
+        <h3 style={{
+          fontFamily: "var(--font-heading)", fontWeight: 800,
+          fontSize: 22, color: dark ? "#fff" : "#1A1A2E", margin: "0 0 4px 0",
+        }}>Get Your Free Estimate</h3>
+        {twoStep && (
+          <p aria-live="polite" className="ef-phone-only ef-step" style={{
+            fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 12, letterSpacing: "0.04em",
+            textTransform: "uppercase", color: "#D4A017", margin: 0, whiteSpace: "nowrap",
+          }}>Step {step} of 2</p>
+        )}
+      </div>
       <p style={{
         fontFamily: "var(--font-body)", fontSize: 13,
         color: dark ? "rgba(255,255,255,0.75)" : "#6B7280", margin: "0 0 20px 0",
       }} className={twoStep ? "ef-response" : undefined}>{responseLine}</p>
-
-      {twoStep && (
-        <p aria-live="polite" className="ef-phone-only" style={{
-          fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 12, letterSpacing: "0.04em",
-          textTransform: "uppercase", color: "#D4A017", margin: "0 0 12px 0",
-        }}>Step {step} of 2{step === 2 ? ": your move" : ""}</p>
-      )}
-
       {/* Honeypot: invisible to humans, bots auto-fill it. Named "website"
           because that's what form-filler bots look for. */}
       <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", height: 0, overflow: "hidden" }}>

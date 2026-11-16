@@ -11,7 +11,7 @@ const src = fs
   .replace(/^export /gm, "");
 const ctx = { Intl, Date };
 vm.createContext(ctx);
-vm.runInContext(src + "\nthis.isWithinSalesHours = isWithinSalesHours;", ctx);
+vm.runInContext(src + "\nthis.isWithinSalesHours = isWithinSalesHours; this.responseWindow = responseWindow;", ctx);
 const inHours = (iso) => ctx.isWithinSalesHours(new Date(iso));
 
 const cases = [
@@ -31,4 +31,18 @@ const cases = [
 for (const [iso, want, label] of cases) {
   assert.strictEqual(inHours(iso), want, `${label} (${iso}) expected ${want}`);
 }
-console.log(`test-sales-hours: ${cases.length} cases passed`);
+const windows = [
+  ["2026-11-17T05:30:00-05:00", "this_morning", "Tue 5:30 AM"],
+  ["2026-11-17T00:00:00-05:00", "this_morning", "Tue 12:00 AM"],
+  ["2026-11-17T10:00:00-05:00", "now", "Tue 10:00 AM"],
+  ["2026-11-17T20:00:00-05:00", "next_business", "Tue 8:00 PM"],
+  ["2026-11-20T20:00:00-05:00", "next_business", "Fri 8:00 PM"],
+  ["2026-11-21T12:00:00-05:00", "next_business", "Sat noon"],
+  ["2026-11-23T05:00:00-05:00", "this_morning", "Mon 5:00 AM"],
+  ["2026-11-26T12:00:00-05:00", "next_business", "Thanksgiving noon"],
+  ["2026-11-26T05:00:00-05:00", "next_business", "Thanksgiving 5:00 AM (closed day)"],
+];
+for (const [iso, want, label] of windows) {
+  assert.strictEqual(ctx.responseWindow(new Date(iso)), want, `${label} (${iso}) expected ${want}`);
+}
+console.log(`test-sales-hours: ${cases.length + windows.length} cases passed`);
