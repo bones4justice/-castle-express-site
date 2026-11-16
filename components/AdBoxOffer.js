@@ -10,6 +10,9 @@ import { isGoogleAdsVisitor } from "@/lib/utm";
 // Decided by Joe 2026-11-12: limit the offer's cost to paid clicks.
 export const BOX_OFFER = "Book a free walk-through estimate and pick up 20 free moving boxes at our Enfield facility.";
 export const BOX_PICKUP_HOURS = "Monday to Friday, 7am to 3pm";
+// Phone one-liner. Same offer, shortened; full terms sit behind "Details".
+export const BOX_OFFER_SHORT = "Free walk-through estimate + 20 free moving boxes";
+const BOX_OFFER_TERMS = `20 free boxes per booked walk-through estimate. Pick up at ${COMPANY.fullAddress}, ${BOX_PICKUP_HOURS}.`;
 
 const VIEW_FLAG = "castle_box_offer_viewed";
 
@@ -27,6 +30,7 @@ export function boxOfferSeen() {
 
 export default function AdBoxOffer() {
   const [show, setShow] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (!isGoogleAdsVisitor()) return;
@@ -46,17 +50,34 @@ export default function AdBoxOffer() {
   }, []);
 
   if (!show) return null;
+  // Desktop: the full offer box. Phones (<=768px, globals.css .abo-*): one
+  // short line above the form plus a "Details" toggle for the full terms and
+  // pickup info, so step 1 of the form stays in the first screen.
   return (
-    <div style={{
-      borderLeft: "4px solid #D4A017", background: "rgba(212,160,23,0.12)",
-      borderRadius: 8, padding: "12px 16px", marginBottom: 24, maxWidth: 520,
-    }}>
-      <p style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 17, lineHeight: 1.4, color: "#fff", margin: 0 }}>
-        {BOX_OFFER}
-      </p>
-      <p style={{ fontFamily: "var(--font-body)", fontSize: 12.5, lineHeight: 1.5, color: "rgba(255,255,255,0.7)", margin: "6px 0 0" }}>
-        20 free boxes per booked walk-through estimate. Pick up at {COMPANY.fullAddress}, {BOX_PICKUP_HOURS}.
-      </p>
-    </div>
+    <>
+      <div className="abo-full" style={{
+        borderLeft: "4px solid #D4A017", background: "rgba(212,160,23,0.12)",
+        borderRadius: 8, padding: "12px 16px", marginBottom: 24, maxWidth: 520,
+      }}>
+        <p style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 17, lineHeight: 1.4, color: "#fff", margin: 0 }}>
+          {BOX_OFFER}
+        </p>
+        <p style={{ fontFamily: "var(--font-body)", fontSize: 12.5, lineHeight: 1.5, color: "rgba(255,255,255,0.7)", margin: "6px 0 0" }}>
+          {BOX_OFFER_TERMS}
+        </p>
+      </div>
+      <div className="abo-short">
+        <div className="abo-line">
+          <span className="abo-text">{BOX_OFFER_SHORT}</span>
+          <button type="button" className="abo-toggle" aria-expanded={open} aria-controls="abo-details" onClick={() => setOpen(o => !o)}>
+            {open ? "Hide" : "Details"}
+          </button>
+        </div>
+        <div id="abo-details" className="abo-details" hidden={!open}>
+          <p>{BOX_OFFER}</p>
+          <p>{BOX_OFFER_TERMS}</p>
+        </div>
+      </div>
+    </>
   );
 }

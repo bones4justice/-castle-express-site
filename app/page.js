@@ -1,5 +1,6 @@
-"use client";
-import { useState, useEffect } from "react";
+// Server component: only the interactive pieces (estimate form, ad offer,
+// sticky bar, hero A/B tracker, scroll button) ship as client JS, so the
+// big content.js data no longer has to download and run on phones.
 import Link from "next/link";
 import Image from "next/image";
 import { COMPANY, SERVICES, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
@@ -8,7 +9,9 @@ import { IconResidential, IconCommercial, IconPacking, IconStorage, IconBBB, Ico
 import EstimateForm from "@/components/EstimateForm";
 import TownsWeServe from "@/components/TownsWeServe";
 import AdBoxOffer from "@/components/AdBoxOffer";
-import { getHeroVariant, trackHeroVariant } from "@/lib/abtest";
+import MobileStickyCta from "@/components/MobileStickyCta";
+import EstimateScrollButton from "@/components/EstimateScrollButton";
+import HeroAbTracker from "@/components/HeroAbTracker";
 import { homepageJsonLd } from "@/lib/structuredData";
 import feedingAmericaData from "@/data/feeding-america.json";
 
@@ -26,13 +29,6 @@ function SectionLabel({ children }) {
 }
 
 export default function HomePage() {
-  const [heroVariant, setHeroVariant] = useState("A");
-
-  useEffect(() => {
-    const variant = getHeroVariant();
-    setHeroVariant(variant);
-    trackHeroVariant(variant);
-  }, []);
 
   const serviceIcons = [
     <IconResidential key="h" size={96} />,
@@ -50,66 +46,69 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd()) }}
       />
       {/* ─── HERO ─── */}
-      <section className="section-dark" aria-label="Hero" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
-        {/* Decorative 12%-opacity background texture — empty alt is intentional. */}
-        <div style={{ position: "absolute", inset: 0, opacity: 0.12, pointerEvents: "none" }}>
-          <Image src={heroVariant === "B" ? "/images/hero-white-truck.webp" : "/images/truck-residential.webp"} alt="" fill sizes="100vw" priority style={{ objectFit: "cover", objectPosition: "center" }} />
-        </div>
+      {/* Hero A/B variant + background preload: inline script in app/layout.js
+          <head> (lib/heroVariantScript.js), runs before first paint. */}
+      <section className="section-dark home-hero" aria-label="Hero" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
+        {/* Decorative 12%-opacity background texture (CSS: .hero-bg in globals.css). */}
+        <div className="hero-bg" aria-hidden="true" />
         <div style={{ position: "absolute", top: 0, right: 0, width: "40%", height: "100%", background: "linear-gradient(135deg, transparent 40%, rgba(212,160,23,0.07) 100%)", pointerEvents: "none" }} />
-        <div className="container grid-2" style={{ alignItems: "center" }}>
-          <div>
-            {heroVariant === "A" ? (
-              <SectionLabel>Connecticut &amp; Massachusetts</SectionLabel>
-            ) : (
-              <div style={{ marginBottom: 12 }}>
+        <div className="container grid-2 hero-grid" style={{ alignItems: "center" }}>
+          <div className="hero-copy">
+            <div className="hero-label">
+              <div className="hv-a"><SectionLabel>Connecticut &amp; Massachusetts</SectionLabel></div>
+              <div className="hv-b" style={{ marginBottom: 12 }}>
                 <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#D4A017" }}>Connecticut &amp; Massachusetts</span>
               </div>
-            )}
-            <h1 className="heading-1" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal", color: "#fff", marginBottom: 20 }}>
-              {heroVariant === "B" ? (
-                <>Looking for the<br /><span className="text-gold">Perfect Mover?</span></>
-              ) : (
-                <>Professional Movers in <span className="text-gold">CT &amp; MA</span></>
-              )}
-            </h1>
-            <p className="body-lg text-white-muted" style={{ marginBottom: 28, maxWidth: 520 }}>
-              {heroVariant === "B"
-                ? "Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and experienced crews who treat your belongings like their own."
-                : "Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own."}
-            </p>
-            {/* Google Ads visitors only; renders nothing for everyone else. */}
-            <AdBoxOffer />
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
-              {["Licensed & Insured", "Accurate Estimates", "5-Star Reviews"].map(item => (
-                <div key={item} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <Check />
-                  <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "rgba(255,255,255,0.85)" }}>{item}</span>
-                </div>
-              ))}
             </div>
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
+            <h1 className="heading-1 hero-h1" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal", color: "#fff", marginBottom: 20 }}>
+              <span className="hv-a">Professional Movers in <span className="text-gold">CT &amp; MA</span></span>
+              <span className="hv-b">Looking for the<br /><span className="text-gold">Perfect Mover?</span></span>
+            </h1>
+            <p className="body-lg text-white-muted hero-intro" style={{ marginBottom: 28, maxWidth: 520 }}>
+              <span className="hv-a">Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own.</span>
+              <span className="hv-b">Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and experienced crews who treat your belongings like their own.</span>
+            </p>
+            {/* Google Ads visitors only; renders nothing for everyone else.
+                On phones it sits directly above the estimate form. */}
+            <div className="hero-offer"><AdBoxOffer /></div>
+            {/* Plain proof points (not links, styled as text). Only
+                "5-Star Reviews" is a link. */}
+            <div className="hero-badges" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px 18px", marginBottom: 32 }}>
+              {["Licensed & Insured", "Accurate Estimates"].map(item => (
+                <span key={item} style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: 14, color: "rgba(255,255,255,0.7)", cursor: "default" }}>{item}</span>
+              ))}
+              <Link href="/reviews/" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#FBCB0B", textDecoration: "underline", textUnderlineOffset: 3 }}>
+                <Star size={14} /> 5-Star Reviews
+              </Link>
+            </div>
+            <div className="hero-ctas" style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+              <EstimateScrollButton className="btn btn-primary">Get Free Estimate <ArrowRight /></EstimateScrollButton>
               <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> (888) 553-4503</a>
             </div>
-            {/* Compact trust row - kept inside the hero so it lands within the
-                first 40% of the page on mobile (the estimate form stacks below) */}
-            <div style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 4 }}>
-              <Link href="/reviews/" aria-label="Read our Google reviews" style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none", alignSelf: "flex-start" }}>
+            {/* Compact trust row. On phones the review line moves up under
+                the headline (the one line of proof) and the license line
+                drops below the form. */}
+            <div className="hero-reviews" style={{ marginTop: 20 }}>
+              <Link href="/reviews/" aria-label="Read our Google reviews" style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
                 <span style={{ display: "inline-flex", gap: 2 }}>{[1, 2, 3, 4, 5].map(i => <Star key={i} size={14} />)}</span>
                 <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, color: "#fff", textDecoration: "underline", textUnderlineOffset: 3 }}>
                   {COMPANY.reviewAvg} from {COMPANY.reviewCount} Google reviews
                 </span>
               </Link>
+            </div>
+            <div className="hero-legal" style={{ marginTop: 4 }}>
               <span style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.65)" }}>
                 Family-owned, since {COMPANY.founded} · USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit} · {COMPANY.mc}
               </span>
             </div>
           </div>
-          <div>
-            <EstimateForm dark />
+          <div className="hero-form">
+            <EstimateForm dark twoStep />
           </div>
         </div>
       </section>
+      <MobileStickyCta />
+      <HeroAbTracker />
 
       {/* ─── TRUST BAR ─── */}
       <section className="trust-bar" aria-label="Trust indicators">
@@ -277,7 +276,7 @@ export default function HomePage() {
         <div className="container">
           <div className="text-center" style={{ marginBottom: 32 }}>
             <div className="section-label" style={{ justifyContent: "center" }}><span>Follow Us</span></div>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>@castleexpressmovingandstorage</h2>
+            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal", overflowWrap: "anywhere" }}>@castleexpressmovingandstorage</h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
             {[
@@ -359,10 +358,10 @@ export default function HomePage() {
       <section style={{ padding: "40px 24px 32px", textAlign: "center" }} aria-label="Giving back">
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 32, flexWrap: "wrap", marginBottom: 16 }}>
-            <a href="https://www.stjude.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", filter: "grayscale(100%)", transition: "filter 0.3s ease" }} onMouseEnter={e => e.currentTarget.style.filter = "grayscale(0%)"} onMouseLeave={e => e.currentTarget.style.filter = "grayscale(100%)"}>
+            <a href="https://www.stjude.org/" target="_blank" rel="noopener noreferrer" className="grayscale-hover">
               <Image src="/images/st-jude-logo.jpg" alt="St. Jude Children's Research Hospital" width={90} height={90} style={{ borderRadius: 8, objectFit: "contain" }} />
             </a>
-            <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", filter: "grayscale(100%)", transition: "filter 0.3s ease" }} onMouseEnter={e => e.currentTarget.style.filter = "grayscale(0%)"} onMouseLeave={e => e.currentTarget.style.filter = "grayscale(100%)"}>
+            <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" className="grayscale-hover">
               <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={90} height={90} style={{ objectFit: "contain" }} />
             </a>
           </div>

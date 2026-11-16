@@ -41,7 +41,21 @@ export default function StorageStickyBar() {
   const [dismissed, setDismissed] = useState(false);
   const impressionFired = useRef(false);
 
-  const shouldRender = isAllowedPage(pathname);
+  // Homepage on phones: the Call / Get Free Estimate sticky bar
+  // (MobileStickyCta) owns the bottom of the screen, so this banner stays out
+  // of the way there (no render, no impression event). Desktop and every
+  // other page are unchanged.
+  const [phoneHome, setPhoneHome] = useState(false);
+  useEffect(() => {
+    if (pathname !== "/" || !window.matchMedia) { setPhoneHome(false); return; }
+    const mq = window.matchMedia("(max-width: 768px)");
+    const apply = () => setPhoneHome(mq.matches);
+    apply();
+    mq.addEventListener ? mq.addEventListener("change", apply) : mq.addListener(apply);
+    return () => { mq.removeEventListener ? mq.removeEventListener("change", apply) : mq.removeListener(apply); };
+  }, [pathname]);
+
+  const shouldRender = isAllowedPage(pathname) && !phoneHome;
 
   useEffect(() => {
     if (!shouldRender) return;
@@ -86,6 +100,7 @@ export default function StorageStickyBar() {
     <div
       role="complementary"
       aria-label="Storage offer"
+      className="storage-sticky-bar"
       style={{
         position: "fixed",
         bottom: 0,

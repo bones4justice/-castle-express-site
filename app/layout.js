@@ -7,6 +7,7 @@ import AttributionCapture from "@/components/AttributionCapture";
 import LpAbTracker from "@/components/LpAbTracker";
 import ChromeGate from "@/components/ChromeGate";
 import { localBusinessJsonLd } from "@/lib/structuredData";
+import { HERO_VARIANT_SCRIPT } from "@/lib/heroVariantScript";
 import "./globals.css";
 
 const merriweather = Merriweather({
@@ -63,8 +64,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${merriweather.variable} ${cormorant.variable} ${dmSans.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${merriweather.variable} ${cormorant.variable} ${dmSans.variable}`}>
       <head>
+        {/* Homepage hero A/B variant + background preload (no-op elsewhere). */}
+        <script dangerouslySetInnerHTML={{ __html: HERO_VARIANT_SCRIPT }} />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
         <Script id="google-tag-manager" strategy="afterInteractive">{`
@@ -100,7 +103,7 @@ export default function RootLayout({ children }) {
           document.addEventListener('click', function(e) {
             var link = e.target.closest('a[href^="tel:"]');
             if (link) {
-              var el = link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
+              var el = link.closest('.mobile-sticky-cta') ? 'sticky' : link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
               var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'not_set';
               var lv = (document.cookie.match(/lp_ab=(landing|service)/) || [])[1] || 'not_in_test';
               // send_to is required for GA4 (GTM claims untargeted pushes and
