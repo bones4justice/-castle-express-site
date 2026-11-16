@@ -6,9 +6,27 @@ import { Check, ArrowRight, Phone } from "@/components/Icons";
 import { getSmartMovingAttribution } from "@/lib/utm";
 import { boxOfferSeen, BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
 import { readVariantCookie } from "@/lib/lpAbTest";
+import { isWithinSalesHours } from "@/lib/salesHours";
 
-export default function EstimateForm({ dark = false }) {
+// Response-time wording. Inside sales hours (lib/salesHours.js) we keep the
+// 20 minute promise; outside them we say next business morning instead.
+const RESPONSE_LINE_IN = "Typically responds in 20 min. or less";
+const RESPONSE_LINE_OUT = "We reply first thing the next business morning";
+const THANKS_IN = "We will reach out to you usually within 20 minutes.";
+const THANKS_OUT = "Our office is closed right now. We will reach out first thing the next business morning.";
+
+// twoStep: homepage only. On phones (<=768px) the form splits into
+// step 1 (name, phone, move date) and step 2 (the rest). It is still ONE form
+// and ONE submission at the end of step 2; "Next" is a plain button, never a
+// submit, so nothing is sent (and GTM's form-submit trigger does not fire)
+// until the real submit. Desktop always gets the original single form.
+export default function EstimateForm({ dark = false, twoStep = false }) {
   const [submitted, setSubmitted] = useState(false);
+  const [inHours, setInHours] = useState(null); // null until mounted (SSR is static)
+  const [isPhone, setIsPhone] = useState(false);
+  const [step, setStep] = useState(1);
+  const step1Tracked = useRef(false);
+  const step2FirstRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [formData, setFormData] = useState({
@@ -19,6 +37,56 @@ export default function EstimateForm({ dark = false }) {
   const openedAt = useRef(Date.now());
 
   const update = (field) => (e) => setFormData(prev => ({ ...prev, [field]: e.target.value }));
+
+  // Re-check sales hours on mount and every minute, so a tab left open past
+  // 5:00 PM switches wording. The thank-you screen reads the value at submit.
+  useEffect(() => {
+    const check = () => setInHours(isWithinSalesHours());
+    check();
+    const t = setInterval(check, 60000);
+    return () => clearInterval(t);
+  }, []);
+
+  useEffect(() => {
+    if (!twoStep || typeof window === "undefined" || !window.matchMedia) return;
+    const mq = window.matchMedia("(max-width: 768px)");
+    const apply = () => setIsPhone(mq.matches);
+    apply();
+    mq.addEventListener ? mq.addEventListener("change", apply) : mq.addListener(apply);
+    return () => { mq.removeEventListener ? mq.removeEventListener("change", apply) : mq.removeListener(apply); };
+  }, [twoStep]);
+
+  const split = twoStep && isPhone; // phone two-step active (behavior only; layout is CSS)
+
+  const goToStep2 = (form) => {
+    // Native validation on the step 1 fields only.
+    for (const id of ["customer-name", "phone-number", "date"]) {
+      const el = form && form.querySelector(`#${id}`);
+      if (el && !el.reportValidity()) return;
+    }
+    setStep(2);
+    // Funnel measurement only (no lead is created). Not a conversion: GTM's
+    // Ads tag listens for generate_lead, not this.
+    if (!step1Tracked.current) {
+      step1Tracked.current = true;
+      try {
+        if (typeof window.gtag !== "undefined") window.gtag("event", "estimate_step1_complete", { form_location: "homepage", send_to: "G-97Z4EHJM63" });
+      } catch {}
+    }
+  };
+
+  // Enter/Go on the phone keyboard during step 1 advances instead of trying
+  // to submit a half-filled form.
+  const onFormKeyDown = (e) => {
+    if (split && step === 1 && e.key === "Enter" && e.target.tagName === "INPUT") {
+      e.preventDefault();
+      goToStep2(e.currentTarget);
+    }
+  };
+
+  useEffect(() => {
+    if (split && step === 2 && step2FirstRef.current) step2FirstRef.current.focus({ preventScroll: false });
+  }, [split, step]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -192,7 +260,7 @@ export default function EstimateForm({ dark = false }) {
             fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.5,
             color: textColor, marginBottom: 20,
           }}>
-            We will reach out to you usually within 20 minutes.
+            {inHours === false ? THANKS_OUT : THANKS_IN}
           </p>
           <p style={{
             fontFamily: "var(--font-body)", fontSize: 13, color: mutedColor, marginBottom: 14,
@@ -244,10 +312,21 @@ export default function EstimateForm({ dark = false }) {
   }
 
   // ─── Form ───
+  // Phone layout for twoStep lives in globals.css (.ef-two-step, <=768px):
+  // one column, 16px inputs (iOS zooms on focus below 16px), and only the
+  // current step's fields. CSS, not JS, so the server HTML already has the
+  // step 1 layout on phones (no layout shift at hydration). Desktop and every
+  // other page keep the original 2-column form.
+  const fieldStyle = inputStyle;
+  const s1 = twoStep ? "ef-s1" : undefined;
+  const s2 = twoStep ? "ef-s2" : undefined;
+  const responseLine = inHours === null ? " " : inHours ? RESPONSE_LINE_IN : RESPONSE_LINE_OUT;
+
   return (
-    <form onSubmit={handleSubmit} style={{
+    <form id="estimate-form" onSubmit={handleSubmit} onKeyDown={twoStep ? onFormKeyDown : undefined} className={twoStep ? "ef-two-step" : undefined} data-step={twoStep ? step : undefined} style={{
       background: bg, borderRadius: 12, padding: "28px 24px",
       border: dark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #E5E7EB",
+      scrollMarginTop: 88,
     }}>
       <h3 style={{
         fontFamily: "var(--font-heading)", fontWeight: 800,
@@ -256,7 +335,14 @@ export default function EstimateForm({ dark = false }) {
       <p style={{
         fontFamily: "var(--font-body)", fontSize: 13,
         color: dark ? "rgba(255,255,255,0.75)" : "#6B7280", margin: "0 0 20px 0",
-      }}>Typically responds in 20 min. or less</p>
+      }} className={twoStep ? "ef-response" : undefined}>{responseLine}</p>
+
+      {twoStep && (
+        <p aria-live="polite" className="ef-phone-only" style={{
+          fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 12, letterSpacing: "0.04em",
+          textTransform: "uppercase", color: "#D4A017", margin: "0 0 12px 0",
+        }}>Step {step} of 2{step === 2 ? ": your move" : ""}</p>
+      )}
 
       {/* Honeypot: invisible to humans, bots auto-fill it. Named "website"
           because that's what form-filler bots look for. */}
@@ -265,41 +351,43 @@ export default function EstimateForm({ dark = false }) {
         <input id="website-field" name="website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        <div>
+      {/* All 8 fields stay mounted in one form (step 2 fields are only hidden
+          on phones during step 1), so the submit payload is identical. */}
+      <div className={twoStep ? "ef-grid" : undefined} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+        <div className={s1}>
           <label htmlFor="customer-name" style={labelStyle}>Name</label>
-          <input id="customer-name" name="name" style={inputStyle} placeholder="Your full name" value={formData.name} onChange={update("name")} required aria-label="Name" />
+          <input id="customer-name" name="name" style={fieldStyle} placeholder="Your full name" autoComplete="name" value={formData.name} onChange={update("name")} required aria-label="Name" />
         </div>
-        <div>
+        <div className={s1}>
           <label htmlFor="phone-number" style={labelStyle}>Phone</label>
-          <input id="phone-number" name="phone" style={inputStyle} placeholder="(860) 555-0123" type="tel" value={formData.phone} onChange={update("phone")} required aria-label="Phone" />
+          <input id="phone-number" name="phone" style={fieldStyle} placeholder="(860) 555-0123" type="tel" autoComplete="tel" value={formData.phone} onChange={update("phone")} required aria-label="Phone" />
         </div>
-        <div>
+        <div className={s2}>
           <label htmlFor="email" style={labelStyle}>Email</label>
-          <input id="email" name="email" style={inputStyle} placeholder="you@email.com" type="email" value={formData.email} onChange={update("email")} required aria-label="Email" />
+          <input id="email" name="email" ref={step2FirstRef} style={fieldStyle} placeholder="you@email.com" type="email" autoComplete="email" value={formData.email} onChange={update("email")} required aria-label="Email" />
         </div>
-        <div>
+        <div className={s1}>
           <label htmlFor="date" style={labelStyle}>Move Date</label>
-          <input id="date" name="moveDate" style={inputStyle} type="date" value={formData.moveDate} onChange={update("moveDate")} aria-label="Move Date" />
+          <input id="date" name="moveDate" style={fieldStyle} type="date" value={formData.moveDate} onChange={update("moveDate")} aria-label="Move Date" />
         </div>
-        <div>
+        <div className={s2}>
           <label htmlFor="origin-full" style={labelStyle}>Moving From</label>
-          <input id="origin-full" name="moveFrom" style={inputStyle} placeholder="City, State or ZIP" value={formData.moveFrom} onChange={update("moveFrom")} aria-label="Moving From" />
+          <input id="origin-full" name="moveFrom" style={fieldStyle} placeholder="City, State or ZIP" value={formData.moveFrom} onChange={update("moveFrom")} aria-label="Moving From" />
         </div>
-        <div>
+        <div className={s2}>
           <label htmlFor="destination-full" style={labelStyle}>Moving To</label>
-          <input id="destination-full" name="moveTo" style={inputStyle} placeholder="City, State or ZIP" value={formData.moveTo} onChange={update("moveTo")} aria-label="Moving To" />
+          <input id="destination-full" name="moveTo" style={fieldStyle} placeholder="City, State or ZIP" value={formData.moveTo} onChange={update("moveTo")} aria-label="Moving To" />
         </div>
-        <div>
+        <div className={s2}>
           <label htmlFor="move-size" style={labelStyle}>Move Size</label>
-          <select id="move-size" name="moveSize" style={{ ...inputStyle, appearance: "auto" }} value={formData.moveSize} onChange={update("moveSize")} aria-label="Move Size">
+          <select id="move-size" name="moveSize" style={{ ...fieldStyle, appearance: "auto" }} value={formData.moveSize} onChange={update("moveSize")} aria-label="Move Size">
             <option value="" style={optionStyle}>Select size...</option>
             {MOVE_SIZES.map(s => <option key={s} value={s} style={optionStyle}>{s}</option>)}
           </select>
         </div>
-        <div>
+        <div className={s2}>
           <label htmlFor="how-did-you-hear-about-us" style={labelStyle}>How did you find us?</label>
-          <select id="how-did-you-hear-about-us" name="source" style={{ ...inputStyle, appearance: "auto" }} value={formData.source} onChange={update("source")} aria-label="How did you find us?">
+          <select id="how-did-you-hear-about-us" name="source" style={{ ...fieldStyle, appearance: "auto" }} value={formData.source} onChange={update("source")} aria-label="How did you find us?">
             <option value="" style={optionStyle}>Select...</option>
             {LEAD_SOURCES.map(s => <option key={s} value={s} style={optionStyle}>{s}</option>)}
           </select>
@@ -312,9 +400,22 @@ export default function EstimateForm({ dark = false }) {
             {error}
           </p>
         )}
-        <button type="submit" disabled={loading} className="btn btn-primary btn-full" style={{ opacity: loading ? 0.7 : 1 }}>
+        {twoStep && (
+          // type="button": advancing is NOT a submit (no lead, no GTM form event).
+          <button type="button" onClick={(e) => goToStep2(e.currentTarget.form)} className="btn btn-primary btn-full ef-next">
+            Next: Move Details <ArrowRight />
+          </button>
+        )}
+        <button type="submit" disabled={loading} className={`btn btn-primary btn-full${twoStep ? " ef-submit" : ""}`} style={{ opacity: loading ? 0.7 : 1 }}>
           {loading ? "Submitting..." : error ? <>Try Again <ArrowRight /></> : <>Get Free Estimate <ArrowRight /></>}
         </button>
+        {twoStep && (
+          <button type="button" className="ef-back" onClick={() => setStep(1)} style={{
+            display: "block", margin: "10px auto 0", background: "none", border: "none", padding: "10px 12px",
+            minHeight: 44, cursor: "pointer", fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14,
+            color: dark ? "rgba(255,255,255,0.8)" : "#6B7280", textDecoration: "underline", textUnderlineOffset: 3,
+          }}>Back to step 1</button>
+        )}
       </div>
       <p style={{
         fontFamily: "var(--font-body)", fontSize: 11,

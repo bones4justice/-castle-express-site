@@ -251,3 +251,94 @@ a { touch-action: manipulation; }
   .mobile-nav { display: none !important; }
   .mobile-toggle { display: none !important; }
 }
+
+/* ─── HOMEPAGE ESTIMATE FORM: two steps on phones (EstimateForm twoStep) ───
+   Layout is CSS-only so the server HTML already shows step 1 on phones. The
+   Next / Back buttons and step label exist only on phones; desktop keeps the
+   original single 2-column form. */
+.ef-next, .ef-back, .ef-phone-only { display: none !important; }
+@media (max-width: 768px) {
+  .ef-two-step { padding: 20px 16px !important; }
+  .ef-two-step .ef-response { margin-bottom: 10px !important; }
+  .ef-two-step .ef-phone-only { display: block !important; }
+  .ef-two-step .ef-grid { grid-template-columns: 1fr !important; }
+  .ef-two-step input, .ef-two-step select { font-size: 16px !important; }
+  .ef-two-step[data-step="1"] .ef-s2,
+  .ef-two-step[data-step="1"] .ef-submit { display: none !important; }
+  .ef-two-step[data-step="1"] .ef-next { display: flex !important; }
+  .ef-two-step[data-step="2"] .ef-s1 { display: none !important; }
+  .ef-two-step[data-step="2"] .ef-back { display: block !important; }
+}
+
+/* ─── HOMEPAGE HERO, phones: headline, one trust line, (ad offer), form ───
+   .hero-copy becomes display:contents so its children and the form column
+   can be reordered in one flex column. Desktop grid untouched. */
+@media (max-width: 768px) {
+  .home-hero { padding: 28px 16px 40px !important; }
+  .home-hero .hero-grid { display: flex !important; flex-direction: column; gap: 0 !important; align-items: stretch !important; }
+  .home-hero .hero-copy { display: contents; }
+  .home-hero .hero-label { order: 1; margin-bottom: 8px !important; }
+  .home-hero .hero-h1 { order: 2; margin-bottom: 10px !important; font-size: 30px !important; line-height: 1.2 !important; }
+  .home-hero .hero-intro { display: none !important; }
+  .home-hero .hero-reviews { order: 3; margin-top: 0 !important; margin-bottom: 12px !important; }
+  .home-hero .hero-offer { order: 4; }
+  .home-hero .hero-offer > div { margin-bottom: 14px !important; }
+  .home-hero .hero-form { order: 5; }
+  .home-hero .hero-badges { order: 6; margin: 24px 0 16px !important; }
+  .home-hero .hero-ctas { order: 7; }
+  .home-hero .hero-legal { order: 8; margin-top: 16px !important; }
+}
+
+/* ─── HOMEPAGE HERO BACKGROUND ───
+   Decorative 12% texture. Picked by html[data-hero] (set by the inline
+   script at the top of app/page.js before first paint, from the existing
+   hero_ab_test cookie), so each variant downloads only its own image and
+   phones get a small portrait crop. */
+.hero-bg {
+  position: absolute; inset: 0; opacity: 0.12; pointer-events: none;
+  background-size: cover; background-position: center; background-repeat: no-repeat;
+}
+html[data-hero="A"] .hero-bg { background-image: url(/images/hero-a-desktop.webp); }
+html[data-hero="B"] .hero-bg { background-image: url(/images/hero-b-desktop.webp); }
+@media (max-width: 768px) {
+  html[data-hero="A"] .hero-bg { background-image: url(/images/hero-a-mobile.webp); }
+  html[data-hero="B"] .hero-bg { background-image: url(/images/hero-b-mobile.webp); }
+}
+
+/* ─── MOBILE STICKY BAR (homepage, phones only) ─── */
+.mobile-sticky-cta { display: none; }
+@media (max-width: 768px) {
+  .mobile-sticky-cta {
+    display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 9000;
+    gap: 10px; padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: #0F1022; border-top: 1px solid rgba(255,255,255,0.12);
+    box-shadow: 0 -6px 18px rgba(0,0,0,0.25);
+    transition: transform 0.25s ease;
+  }
+  .mobile-sticky-cta[data-hidden="true"] { transform: translateY(110%); pointer-events: none; }
+  .mobile-sticky-cta a, .mobile-sticky-cta button {
+    flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 48px; border-radius: 8px; font-family: var(--font-heading); font-weight: 700;
+    font-size: 15px; text-decoration: none; cursor: pointer; border: none;
+    min-width: 0; white-space: nowrap; box-sizing: border-box;
+  }
+  .mobile-sticky-cta { box-sizing: border-box; width: 100%; }
+  .mobile-sticky-cta .msc-call { flex: 0 0 34%; background: #fff; color: #1A1A2E; }
+  .mobile-sticky-cta .msc-estimate { background: #FBCB0B; color: #000; }
+  /* Homepage on phones: the sticky bar owns the bottom of the screen, so the
+     storage offer banner is hidden there (it stays on desktop and on other
+     pages). Footer content gets room so the bar never covers it. */
+  body.has-mobile-sticky .storage-sticky-bar,
+  body:has(.mobile-sticky-cta) .storage-sticky-bar { display: none !important; }
+  body.has-mobile-sticky footer,
+  body:has(.mobile-sticky-cta) footer { padding-bottom: 96px !important; }
+}
+
+/* Hero A/B copy: both variants are in the HTML; html[data-hero] (set before
+   first paint) shows one. No attribute (script blocked) = variant A. */
+html[data-hero="B"] .hv-a { display: none !important; }
+html:not([data-hero="B"]) .hv-b { display: none !important; }
+
+/* Giving-back logos: gray until hovered (was inline JS handlers). */
+.grayscale-hover { display: inline-block; filter: grayscale(100%); transition: filter 0.3s ease; }
+.grayscale-hover:hover { filter: grayscale(0%); }
