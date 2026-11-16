@@ -28,20 +28,6 @@ function SectionLabel({ children }) {
   );
 }
 
-// Runs inline before the hero paints. Keep the assignment rule identical to
-// getHeroVariant() in lib/abtest.js (cookie hero_ab_test, 50/50, 30 days).
-// It only adds html[data-hero] (picks the CSS background + headline) and a
-// preload for that one background image, phone or desktop size.
-const HERO_VARIANT_SCRIPT = `(function(){try{
-var v=null,c=document.cookie.split(";");
-for(var i=0;i<c.length;i++){var p=c[i].trim().split("=");if(p[0]==="hero_ab_test"){v=p[1];break;}}
-if(v===null){v=Math.random()<0.5?"A":"B";var e=new Date();e.setDate(e.getDate()+30);
-document.cookie="hero_ab_test="+v+";expires="+e.toUTCString()+";path=/;SameSite=Lax";}
-var h=v==="B"?"B":"A",d=document.documentElement;d.setAttribute("data-hero",h);
-var n=h.toLowerCase(),add=function(href,media){var l=document.createElement("link");l.rel="preload";l.as="image";l.href=href;l.media=media;l.setAttribute("fetchpriority","high");document.head.appendChild(l);};
-add("/images/hero-"+n+"-mobile.webp","(max-width: 768px)");add("/images/hero-"+n+"-desktop.webp","(min-width: 769px)");
-}catch(_){document.documentElement.setAttribute("data-hero","A");}})();`;
-
 export default function HomePage() {
 
   const serviceIcons = [
@@ -60,13 +46,8 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd()) }}
       />
       {/* ─── HERO ─── */}
-      {/* Hero A/B test (lib/abtest.js): this runs during HTML parsing, before
-          first paint, so the right background image and headline show from
-          the start (no swap after the JS loads, which was costing mobile LCP).
-          Same rule as getHeroVariant(): reuse the hero_ab_test cookie, or
-          assign A/B 50/50 and set it for 30 days. getHeroVariant() then finds
-          the cookie and the hero_ab_test exposure event fires as before. */}
-      <script dangerouslySetInnerHTML={{ __html: HERO_VARIANT_SCRIPT }} />
+      {/* Hero A/B variant + background preload: inline script in app/layout.js
+          <head> (lib/heroVariantScript.js), runs before first paint. */}
       <section className="section-dark home-hero" aria-label="Hero" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
         {/* Decorative 12%-opacity background texture (CSS: .hero-bg in globals.css). */}
         <div className="hero-bg" aria-hidden="true" />

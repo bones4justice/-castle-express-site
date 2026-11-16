@@ -7,6 +7,7 @@ import AttributionCapture from "@/components/AttributionCapture";
 import LpAbTracker from "@/components/LpAbTracker";
 import ChromeGate from "@/components/ChromeGate";
 import { localBusinessJsonLd } from "@/lib/structuredData";
+import { HERO_VARIANT_SCRIPT } from "@/lib/heroVariantScript";
 import "./globals.css";
 
 const merriweather = Merriweather({
@@ -65,6 +66,8 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning className={`${merriweather.variable} ${cormorant.variable} ${dmSans.variable}`}>
       <head>
+        {/* Homepage hero A/B variant + background preload (no-op elsewhere). */}
+        <script dangerouslySetInnerHTML={{ __html: HERO_VARIANT_SCRIPT }} />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
         <Script id="google-tag-manager" strategy="afterInteractive">{`
