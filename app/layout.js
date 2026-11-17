@@ -7,7 +7,16 @@ import AttributionCapture from "@/components/AttributionCapture";
 import LpAbTracker from "@/components/LpAbTracker";
 import ChromeGate from "@/components/ChromeGate";
 import { localBusinessJsonLd } from "@/lib/structuredData";
-import { HERO_VARIANT_SCRIPT } from "@/lib/heroVariantScript";
+import { heroVariantScript } from "@/lib/heroVariantScript";
+
+// Vercel PREVIEW builds (branch / PR / CLI deploys) do not load GTM, GA4, the
+// Meta and OpenAI pixels, or Clarity, so review clicks and test submissions
+// never reach production reporting or ad conversions. The dataLayer/gtag shim
+// still runs, so every event is still pushed to window.dataLayer for testing.
+// Only an explicit "preview"/"development" turns trackers off: production,
+// and any build where VERCEL_ENV is missing, load everything exactly as before.
+const IS_PREVIEW = process.env.VERCEL_ENV === "preview" || process.env.VERCEL_ENV === "development";
+const HERO_VARIANT_SCRIPT = heroVariantScript({ allowOverride: IS_PREVIEW });
 import "./globals.css";
 
 const merriweather = Merriweather({
@@ -29,7 +38,7 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",
   display: "swap",
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const SITE_URL = "https://www.castleexpressmoving.com";
@@ -70,9 +79,9 @@ export default function RootLayout({ children }) {
         <script dangerouslySetInnerHTML={{ __html: HERO_VARIANT_SCRIPT }} />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
-        <Script id="google-tag-manager" strategy="afterInteractive">{`
+        {!IS_PREVIEW && <Script id="google-tag-manager" strategy="afterInteractive">{`
           (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KLR2TQC');
-        `}</Script>
+        `}</Script>}
         <Script id="google-analytics" strategy="afterInteractive">{`
           // GA4 is loaded here and only here. The GTM container must not
           // contain a Google tag for G-97Z4EHJM63 (it was paused Oct 2026);
@@ -92,7 +101,7 @@ export default function RootLayout({ children }) {
           var isBot = navigator.webdriver === true
             || ua.indexOf('HeadlessChrome') !== -1
             || /bot|crawler|spider|python-requests|curl/i.test(ua);
-          if (!isBot) {
+          if (!isBot && !${IS_PREVIEW}) {
             var ga = document.createElement('script');
             ga.async = true;
             ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-97Z4EHJM63';
@@ -103,14 +112,18 @@ export default function RootLayout({ children }) {
           document.addEventListener('click', function(e) {
             var link = e.target.closest('a[href^="tel:"]');
             if (link) {
-              var el = link.closest('.mobile-sticky-cta') ? 'sticky' : link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
+              var el = link.closest('.mobile-sticky-cta') ? 'sticky' : link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark,.home-hero') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
               var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'not_set';
               var lv = (document.cookie.match(/lp_ab=(landing|service)/) || [])[1] || 'not_in_test';
               // send_to is required for GA4 (GTM claims untargeted pushes and
               // has no GA4 tag since container v35). Verified live 2026-10-19:
               // GTM's Website Phone Calls tag fires the same wcm pair on this
               // push with or without send_to.
-              gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv, lp_variant: lv, send_to: 'G-97Z4EHJM63' });
+              var cp = { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv, lp_variant: lv, send_to: 'G-97Z4EHJM63' };
+              // Homepage redesign marker (lib/homeDesign.js); absent on the old design.
+              var hd = document.querySelector('[data-home-design]');
+              if (hd) cp.home_design = hd.getAttribute('data-home-design');
+              gtag('event', 'click_phone', cp);
               // Desktop fallback: tel: links don't dial on a computer with no calling
               // app, so the click feels dead. Copy the number + confirm so the CTA still
               // does something. Mobile (and desktops with a real dialer) keep dialing,
@@ -136,17 +149,17 @@ export default function RootLayout({ children }) {
             }
           });
         `}</Script>
-        <Script id="facebook-pixel" strategy="lazyOnload">{`
+        {!IS_PREVIEW && <Script id="facebook-pixel" strategy="lazyOnload">{`
           !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
           fbq('init', '1423378058969444');
           fbq('init', '893903650293022');
           fbq('track', 'PageView');
-        `}</Script>
-        <Script id="openai-pixel" strategy="lazyOnload">{`
+        `}</Script>}
+        {!IS_PREVIEW && <Script id="openai-pixel" strategy="lazyOnload">{`
           !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
           oaiq("init",{pixelId:"CPxY6DboesSjpsV4bFGcp4",debug:false});
-        `}</Script>
-        <Script id="microsoft-clarity" strategy="lazyOnload">{`
+        `}</Script>}
+        {!IS_PREVIEW && <Script id="microsoft-clarity" strategy="lazyOnload">{`
           (function(c,l,a,r,i,t,y){
             c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
             t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
@@ -154,12 +167,12 @@ export default function RootLayout({ children }) {
           })(window, document, "clarity", "script", "wcqd0mksz9");
           var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'unknown';
           window.clarity('set', 'hero_variant', hv);
-        `}</Script>
+        `}</Script>}
       </head>
       <body>
-        <noscript>
+        {!IS_PREVIEW && <noscript>
           <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLR2TQC" height="0" width="0" style={{display:"none",visibility:"hidden"}}></iframe>
-        </noscript>
+        </noscript>}
         {/* No Meta Pixel <noscript> image fallbacks: the JS pixel fires
             PageView for both pixels, so the noscript images only double-counted
             PageView on normal (JS-on) loads. */}

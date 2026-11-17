@@ -27,7 +27,10 @@ const THANKS = {
 // and ONE submission at the end of step 2; "Next" is a plain button, never a
 // submit, so nothing is sent (and GTM's form-submit trigger does not fire)
 // until the real submit. Desktop always gets the original single form.
-export default function EstimateForm({ dark = false, twoStep = false }) {
+// design: homepage only (lib/homeDesign.js HOME_DESIGN). When set, it is sent
+// as home_design to Formspree and on generate_lead / form_submission_success;
+// other pages pass nothing and their payloads are unchanged.
+export default function EstimateForm({ dark = false, twoStep = false, design }) {
   const [submitted, setSubmitted] = useState(false);
   const [replyWindow, setReplyWindow] = useState(null); // null until mounted (SSR is static)
   const [isPhone, setIsPhone] = useState(false);
@@ -140,7 +143,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
           form: "estimate",
           hp: honeypot,
           elapsedMs: Date.now() - openedAt.current,
-          formspree: { ...formData, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer },
+          formspree: { ...formData, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer, ...(design ? { home_design: design } : {}) },
           smartmoving: smPayload,
           oaiEventId,
           pageUrl: window.location.href,
@@ -163,7 +166,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
       // (since container v35) has no GA4 tag, so without it the event never
       // reaches G-97Z4EHJM63. GTM's Ads conversion trigger still fires on this
       // same push, send_to does not suppress it.
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer, send_to: "G-97Z4EHJM63" }); }
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer, ...(design ? { home_design: design } : {}), send_to: "G-97Z4EHJM63" }); }
       setSubmitted(true);
     } catch (err) {
       console.error("Lead submission error:", err);
@@ -204,12 +207,12 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
     const loc = window.location.pathname === "/" ? "homepage" : window.location.pathname;
     if (window.gtag) {
       const lv = readVariantCookie(document.cookie) || "not_in_test";
-      window.gtag("event", "form_submission_success", { hero_variant: hv, form_location: loc, lp_variant: lv, ge_variant: geVariantForLead(document.cookie), send_to: "G-97Z4EHJM63" });
+      window.gtag("event", "form_submission_success", { hero_variant: hv, form_location: loc, lp_variant: lv, ge_variant: geVariantForLead(document.cookie), ...(design ? { home_design: design } : {}), send_to: "G-97Z4EHJM63" });
     }
     if (window.clarity) {
       window.clarity("set", "form_completed", "true");
     }
-  }, [submitted]);
+  }, [submitted, design]);
 
   if (submitted) {
     const textColor = dark ? "#fff" : "#1A1A2E";

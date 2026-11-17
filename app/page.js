@@ -12,6 +12,7 @@ import AdBoxOffer from "@/components/AdBoxOffer";
 import MobileStickyCta from "@/components/MobileStickyCta";
 import EstimateScrollButton from "@/components/EstimateScrollButton";
 import HeroAbTracker from "@/components/HeroAbTracker";
+import { HOME_DESIGN } from "@/lib/homeDesign";
 import { homepageJsonLd } from "@/lib/structuredData";
 import feedingAmericaData from "@/data/feeding-america.json";
 
@@ -45,65 +46,77 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd()) }}
       />
-      {/* ─── HERO ─── */}
-      {/* Hero A/B variant + background preload: inline script in app/layout.js
-          <head> (lib/heroVariantScript.js), runs before first paint. */}
-      <section className="section-dark home-hero" aria-label="Hero" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
-        {/* Decorative 12%-opacity background texture (CSS: .hero-bg in globals.css). */}
-        <div className="hero-bg" aria-hidden="true" />
-        <div style={{ position: "absolute", top: 0, right: 0, width: "40%", height: "100%", background: "linear-gradient(135deg, transparent 40%, rgba(212,160,23,0.07) 100%)", pointerEvents: "none" }} />
-        <div className="container grid-2 hero-grid" style={{ alignItems: "center" }}>
+      {/* ─── HERO (Nov 2026 redesign, lib/homeDesign.js) ─── */}
+      {/* Hero A/B copy (hv-a / hv-b) is unchanged: html[data-hero] is set by
+          the inline script in app/layout.js <head> before first paint.
+          Layout (globals.css .hero-v2): phones keep the form-first order with
+          the truck photo under the form; 769-1359px the photo sits in the
+          copy column beside (or below) the estimate card; 1440px+ the photo
+          is the full-width hero and the card sits over the house, clear of
+          the truck. */}
+      <section className="home-hero hero-v2" aria-label="Hero" data-home-design={HOME_DESIGN}>
+        <div className="container hero-grid">
           <div className="hero-copy">
             <div className="hero-label">
               <div className="hv-a"><SectionLabel>Connecticut &amp; Massachusetts</SectionLabel></div>
-              <div className="hv-b" style={{ marginBottom: 12 }}>
-                <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#D4A017" }}>Connecticut &amp; Massachusetts</span>
-              </div>
+              <div className="hv-b"><span className="hv2-eyebrow">Connecticut &amp; Massachusetts</span></div>
             </div>
-            <h1 className="heading-1 hero-h1" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal", color: "#fff", marginBottom: 20 }}>
+            <h1 className="hero-h1">
               <span className="hv-a">Professional Movers in <span className="text-gold">CT &amp; MA</span></span>
               <span className="hv-b">Looking for the<br /><span className="text-gold">Perfect Mover?</span></span>
             </h1>
-            <p className="body-lg text-white-muted hero-intro" style={{ marginBottom: 28, maxWidth: 520 }}>
+            <p className="hero-intro">
               <span className="hv-a">Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own.</span>
               <span className="hv-b">Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and experienced crews who treat your belongings like their own.</span>
             </p>
-            {/* Google Ads visitors only; renders nothing for everyone else.
-                On phones it sits directly above the estimate form. */}
-            <div className="hero-offer"><AdBoxOffer /></div>
             {/* Plain proof points (not links, styled as text). Only
                 "5-Star Reviews" is a link. */}
-            <div className="hero-badges" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px 18px", marginBottom: 32 }}>
+            <div className="hero-badges">
               {["Licensed & Insured", "Accurate Estimates"].map(item => (
-                <span key={item} style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: 14, color: "rgba(255,255,255,0.7)", cursor: "default" }}>{item}</span>
+                <span key={item} className="hv2-badge">{item}</span>
               ))}
-              <Link href="/reviews/" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#FBCB0B", textDecoration: "underline", textUnderlineOffset: 3 }}>
+              <Link href="/reviews/" className="hv2-badge-link">
                 <Star size={14} /> 5-Star Reviews
               </Link>
             </div>
-            <div className="hero-ctas" style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <div className="hero-ctas">
               <EstimateScrollButton className="btn btn-primary">Get Free Estimate <ArrowRight /></EstimateScrollButton>
-              <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> (888) 553-4503</a>
+              <a href={COMPANY.phoneLink} className="btn hv2-call"><Phone size={18} /> (888) 553-4503</a>
             </div>
-            {/* Compact trust row. On phones the review line moves up under
-                the headline (the one line of proof) and the license line
-                drops below the form. */}
-            <div className="hero-reviews" style={{ marginTop: 20 }}>
-              <Link href="/reviews/" aria-label="Read our Google reviews" style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
-                <span style={{ display: "inline-flex", gap: 2 }}>{[1, 2, 3, 4, 5].map(i => <Star key={i} size={14} />)}</span>
-                <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, color: "#fff", textDecoration: "underline", textUnderlineOffset: 3 }}>
-                  {COMPANY.reviewAvg} from {COMPANY.reviewCount} Google reviews
-                </span>
+            <div className="hero-reviews">
+              <Link href="/reviews/" aria-label="Read our Google reviews" className="hv2-reviews">
+                <span className="hv2-stars">{[1, 2, 3, 4, 5].map(i => <Star key={i} size={14} />)}</span>
+                <span className="hv2-reviews-text">{COMPANY.reviewAvg} from {COMPANY.reviewCount} Google reviews</span>
               </Link>
             </div>
-            <div className="hero-legal" style={{ marginTop: 4 }}>
-              <span style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.65)" }}>
-                Family-owned, since {COMPANY.founded} · USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit} · {COMPANY.mc}
-              </span>
+            <div className="hero-legal">
+              <span>Family-owned, since {COMPANY.founded} · USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit} · {COMPANY.mc}</span>
             </div>
+            {/* Hero photo: phones get a cropped truck band (shown under the
+                form), larger screens the full street scene. Plain <picture>
+                so each screen downloads one pre-sized WebP. */}
+            <picture className="hv2-media">
+              <source media="(max-width: 768px)" srcSet="/images/hero-v2-mobile-750.webp 750w, /images/hero-v2-mobile-1122.webp 1122w" sizes="calc(100vw - 32px)" width={1122} height={900} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/hero-v2-desktop-1200.webp"
+                srcSet="/images/hero-v2-desktop-800.webp 800w, /images/hero-v2-desktop-1200.webp 1200w, /images/hero-v2-desktop-1672.webp 1672w"
+                sizes="(min-width: 1440px) 100vw, (min-width: 1024px) calc(100vw - 488px), (min-width: 769px) 720px, 100vw"
+                width={1672}
+                height={941}
+                alt="Castle Express Moving & Storage box truck parked in front of a white colonial home on a tree-lined New England street"
+                fetchPriority="high"
+                decoding="async"
+              />
+            </picture>
           </div>
           <div className="hero-form">
-            <EstimateForm dark twoStep />
+            {/* Google Ads visitors only; renders nothing for everyone else.
+                On phones it sits directly above the estimate form. */}
+            <div className="hero-offer"><AdBoxOffer /></div>
+            <div className="hv2-card">
+              <EstimateForm twoStep design={HOME_DESIGN} />
+            </div>
           </div>
         </div>
       </section>
@@ -111,7 +124,7 @@ export default function HomePage() {
       <HeroAbTracker />
 
       {/* ─── TRUST BAR ─── */}
-      <section className="trust-bar" aria-label="Trust indicators">
+      <section className="trust-bar tb-v2" aria-label="Trust indicators">
         {[
           { icon: <IconBBB size={28} />, label: "A+ BBB Rating" },
           { icon: <IconGoogle size={28} />, label: `${COMPANY.reviewAvg}★ on Google (${COMPANY.reviewCount} reviews)`, href: "/reviews/" },
