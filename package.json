@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/check-dashes.js && node scripts/check-town-count.js && node scripts/test-utm.js && node scripts/test-lp-ab.js && node scripts/test-sales-hours.js",
+    "prebuild": "node scripts/check-dashes.js && node scripts/check-town-count.js && node scripts/test-utm.js && node scripts/test-lp-ab.js && node scripts/test-ge-ab.js && node scripts/test-sales-hours.js",
     "test:utm": "node scripts/test-utm.js",
-    "test:lpab": "node scripts/test-lp-ab.js && node scripts/test-sales-hours.js",
+    "test:lpab": "node scripts/test-lp-ab.js && node scripts/test-ge-ab.js && node scripts/test-sales-hours.js",
     "build": "next build",
     "start": "next start"
   },
