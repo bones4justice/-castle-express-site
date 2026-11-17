@@ -407,7 +407,7 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
 /* Gold words become a yellow marker underline: gold text on a light
    background fails contrast. */
 .hero-v2 .text-gold {
-  color: inherit; padding: 0 0.05em;
+  color: inherit; padding: 0 0.05em; white-space: nowrap;
   background: linear-gradient(transparent 64%, var(--hv2-yellow) 64%, var(--hv2-yellow) 90%, transparent 90%);
   -webkit-box-decoration-break: clone; box-decoration-break: clone;
 }
@@ -530,7 +530,8 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   .home-hero.hero-v2 .hero-legal { order: 9; }
   .hero-v2 .hv2-card #estimate-form { box-shadow: 0 8px 24px rgba(26, 26, 46, 0.16); }
   .hero-v2 .abo-line { background: #FFF5C7; border-left-color: #E0A800; }
-  .hero-v2 .abo-text { color: var(--hv2-ink); }
+  .hero-v2 .abo-text { color: var(--hv2-ink); font-family: var(--font-dm-sans), Arial, sans-serif; }
+  .hero-v2 .abo-toggle, .hero-v2 .abo-details p { font-family: var(--font-dm-sans), Arial, sans-serif; }
   .hero-v2 .abo-toggle { color: var(--hv2-ink); }
   .hero-v2 .abo-details p { color: var(--hv2-ink-soft); }
 }
