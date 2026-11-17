@@ -167,9 +167,22 @@ function isSpamEmail(email) {
 // it. It only counts paired with the first-option size.
 const FIRST_SIZE_OPTIONS = new Set(["Studio", "Studio / 1 Bedroom"]);
 
+// The /get-estimate/ step form is exempt: it has no default dropdowns (every
+// answer is a deliberate tap) and "Not sure" is a real date answer, so a small
+// move with no date is normal there. Its smallest size is labeled
+// "1 bedroom or studio", which is not in FIRST_SIZE_OPTIONS either; the
+// exemption keeps a future label change from silently dropping its leads.
+// The under-3-seconds rule and every other spam check still apply.
+const DEFAULT_DROPDOWN_EXEMPT_LANDINGS = new Set(["get-estimate"]);
+
 function isDefaultDropdownSpam(body) {
   const fs = body.formspree || {};
   const sm = body.smartmoving || {};
+  if (
+    DEFAULT_DROPDOWN_EXEMPT_LANDINGS.has(body.landing) ||
+    DEFAULT_DROPDOWN_EXEMPT_LANDINGS.has(fs.landing)
+  )
+    return false;
   const size = String(fs.moveSize || sm.MoveSize || "").trim();
   if (!FIRST_SIZE_OPTIONS.has(size)) return false;
   const hasDate = Boolean(
