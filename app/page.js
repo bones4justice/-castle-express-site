@@ -5,7 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { COMPANY, SERVICES, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
 import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, Phone } from "@/components/Icons";
-import { IconResidential, IconCommercial, IconPacking, IconStorage, IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
+import { LineTruck, LineOffice, LineBox, LineStorage } from "@/components/ServiceLineIcons";
+import { IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
 import EstimateForm from "@/components/EstimateForm";
 import TownsWeServe from "@/components/TownsWeServe";
 import AdBoxOffer from "@/components/AdBoxOffer";
@@ -31,11 +32,11 @@ function SectionLabel({ children }) {
 
 export default function HomePage() {
 
-  const serviceIcons = [
-    <IconResidential key="h" size={96} />,
-    <IconCommercial key="b" size={96} />,
-    <IconPacking key="bx" size={96} />,
-    <IconStorage key="s" size={96} />,
+  const serviceLineIcons = [
+    <LineTruck key="t" />,
+    <LineOffice key="o" />,
+    <LineBox key="b" />,
+    <LineStorage key="s" />,
   ];
 
   return (
@@ -69,6 +70,9 @@ export default function HomePage() {
               <span className="hv-a">Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own.</span>
               <span className="hv-b">Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and experienced crews who treat your belongings like their own.</span>
             </p>
+            {/* Brand promise: same line for both hero variants (outside the
+                A/B copy, which stays word-for-word). */}
+            <p className="hv2-promise">Thoughtful service. Clear estimates. No hidden fees.</p>
             {/* Plain proof points (not links, styled as text). Only
                 "5-Star Reviews" is a link. */}
             <div className="hero-badges">
@@ -139,30 +143,34 @@ export default function HomePage() {
         ))}
       </section>
 
-      {/* ─── SERVICES ─── */}
-      <section className="section section-light" aria-label="Services">
+      {/* ─── SERVICES ───
+          Same four services, links and wording; restyled white cards with
+          yellow line icons on an ivory band (Nov 2026 redesign). */}
+      <section className="section svc-v2" aria-label="Services">
         <div className="container">
-          <div className="text-center" style={{ marginBottom: 48 }}>
+          <div className="svc-v2-head">
             <SectionLabel>What We Do</SectionLabel>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Full-Service Moving Solutions</h2>
-            <p className="body-md text-gray" style={{ maxWidth: 560, margin: "0 auto" }}>
+            <h2 className="svc-v2-title">Full-Service Moving Solutions</h2>
+            <p className="svc-v2-intro">
               From packing your first box to placing the last piece of furniture, we handle every detail of your move.
             </p>
           </div>
-          <div className="grid-auto">
+          <div className="svc-v2-grid">
             {SERVICES.slice(0, 4).map((svc, i) => (
-              <Link key={svc.id} href={`/services/${svc.slug}/`} className="card" style={{ textDecoration: "none", position: "relative", cursor: "pointer" }}>
-                {svc.popular && (
-                  <div style={{ position: "absolute", top: 16, right: 16, background: "#FFF9EC", color: "#D4A017", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 11, padding: "4px 10px", borderRadius: 20 }}>Most Popular</div>
-                )}
-                <div className="icon-badge" style={{ marginBottom: 16 }}>{serviceIcons[i]}</div>
-                <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginBottom: 8 }}>{svc.title}</h3>
-                <p className="body-sm text-gray">{svc.shortDesc}</p>
+              <Link key={svc.id} href={`/services/${svc.slug}/`} className="svc-v2-card">
+                <span className="svc-v2-icon">{serviceLineIcons[i]}</span>
+                <span className="svc-v2-body">
+                  <span className="svc-v2-name">
+                    <h3>{svc.title}</h3>
+                    {svc.popular && <span className="svc-v2-pill">Most Popular</span>}
+                  </span>
+                  <p>{svc.shortDesc}</p>
+                </span>
               </Link>
             ))}
           </div>
-          <div className="text-center" style={{ marginTop: 32 }}>
-            <Link href="/services/" className="btn btn-outline">View All Services <ChevronRight /></Link>
+          <div className="svc-v2-more">
+            <Link href="/services/" className="btn svc-v2-all">View All Services <ChevronRight /></Link>
           </div>
         </div>
       </section>
