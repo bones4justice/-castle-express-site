@@ -6,6 +6,7 @@ import { Check, ArrowRight, Phone } from "@/components/Icons";
 import { getSmartMovingAttribution } from "@/lib/utm";
 import { boxOfferSeen, BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
 import { readVariantCookie } from "@/lib/lpAbTest";
+import { geVariantForLead } from "@/lib/geAbTest";
 import { responseWindow } from "@/lib/salesHours";
 
 // Response-time wording, keyed by responseWindow() in lib/salesHours.js.
@@ -128,6 +129,9 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
       // only. Goes to Formspree + GA4 so leads can be counted per variant;
       // NOT added to the SmartMoving payload (unknown fields may be rejected).
       const lpVariant = readVariantCookie(document.cookie) || "not_in_test";
+      // /get-estimate/ vs homepage split test (middleware.js): "home" visitors
+      // land here, so their leads carry the group too. Formspree + GA4 only.
+      const geVariant = geVariantForLead(document.cookie);
 
       const leadRes = await fetch("/api/lead/", {
         method: "POST",
@@ -136,7 +140,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
           form: "estimate",
           hp: honeypot,
           elapsedMs: Date.now() - openedAt.current,
-          formspree: { ...formData, lp_variant: lpVariant, box_offer: boxOffer },
+          formspree: { ...formData, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer },
           smartmoving: smPayload,
           oaiEventId,
           pageUrl: window.location.href,
@@ -159,7 +163,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
       // (since container v35) has no GA4 tag, so without it the event never
       // reaches G-97Z4EHJM63. GTM's Ads conversion trigger still fires on this
       // same push, send_to does not suppress it.
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant, box_offer: boxOffer, send_to: "G-97Z4EHJM63" }); }
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer, send_to: "G-97Z4EHJM63" }); }
       setSubmitted(true);
     } catch (err) {
       console.error("Lead submission error:", err);
@@ -200,7 +204,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
     const loc = window.location.pathname === "/" ? "homepage" : window.location.pathname;
     if (window.gtag) {
       const lv = readVariantCookie(document.cookie) || "not_in_test";
-      window.gtag("event", "form_submission_success", { hero_variant: hv, form_location: loc, lp_variant: lv, send_to: "G-97Z4EHJM63" });
+      window.gtag("event", "form_submission_success", { hero_variant: hv, form_location: loc, lp_variant: lv, ge_variant: geVariantForLead(document.cookie), send_to: "G-97Z4EHJM63" });
     }
     if (window.clarity) {
       window.clarity("set", "form_completed", "true");

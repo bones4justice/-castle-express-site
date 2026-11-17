@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 // pages have no nav to wander off through. The wrapped children are still
 // server-rendered everywhere else. StorageStickyBar already self-hides on any
 // path outside its allow-list, so it needs no gating here.
-const BARE_ROUTES = new Set(["/free-estimate"]);
+const BARE_ROUTES = new Set(["/free-estimate", "/get-estimate"]);
 
 export default function ChromeGate({ children }) {
   const pathname = usePathname() || "";
