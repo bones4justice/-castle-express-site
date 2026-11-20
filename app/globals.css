@@ -539,7 +539,6 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   .hero-v2 .hero-copy > .hero-ctas { grid-column: 1; margin: 0; }
   .hero-v2 .hero-copy > .hero-reviews { grid-column: 2; margin: 0 0 0 22px; }
   .hero-v2 .hero-h1 br { display: none; }
-  .hero-v2 .hero-h1 .hv-b .text-gold { margin-left: 0.26em; }
   .hero-v2 .hero-copy > .hv2-media { aspect-ratio: 2.868 / 1; }
   .hero-v2 .hv2-media img { width: 100%; margin-left: 0; margin-top: -7.87%; }
 }

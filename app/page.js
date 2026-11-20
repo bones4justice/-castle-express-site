@@ -64,7 +64,7 @@ export default function HomePage() {
             </div>
             <h1 className="hero-h1">
               <span className="hv-a">Professional Movers in <span className="text-gold">CT &amp; MA</span></span>
-              <span className="hv-b">Looking for the<br /><span className="text-gold">Perfect Mover?</span></span>
+              <span className="hv-b">Looking for the{" "}<br /><span className="text-gold">Perfect Mover?</span></span>
             </h1>
             <p className="hero-intro">
               <span className="hv-a">Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own.</span>
