@@ -6,6 +6,8 @@ import { COMPANY, SERVICES } from "@/content";
 import { MapPin, Phone, Check, Star, Shield, ArrowRight, ChevronRight } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
 import { parseInline } from "@/lib/parseInline";
+import { InteriorHero, HeroActions, EstimateBand } from "@/components/InteriorKit";
+import { INTERIOR_V2_TOWNS, TOWN_HERO_PHOTOS, DEFAULT_TOWN_HERO_PHOTO } from "@/lib/interiorDesign";
 
 export async function generateStaticParams() {
   return getAllSlugs().map(slug => ({ slug }));
@@ -120,15 +122,32 @@ export default function CityPage({ params }) {
     ? city.nearby.map(slug => CITY_DATA.find(c => c.slug === slug)).filter(Boolean)
     : CITY_DATA.filter(c => c.slug !== city.slug && c.state === city.state).slice(0, 6);
 
+  // Design v2 (lib/interiorDesign.js): same content, new header/cards/estimate sections.
+  const v2 = INTERIOR_V2_TOWNS.has(city.slug);
+
   const linkStyle = { color: "#D4A017", fontWeight: 600, textDecoration: "underline", textUnderlineOffset: 2 };
 
   return (
-    <>
+    <div className={v2 ? "ip" : undefined}>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       {/* HERO */}
+      {v2 ? (
+        <InteriorHero
+          crumbs={[{ label: "Service Areas", href: "/service-areas/" }, { label: `${city.town}, ${city.state}` }]}
+          title={city.h1}
+          image={TOWN_HERO_PHOTOS[city.slug] || DEFAULT_TOWN_HERO_PHOTO}
+          imageAlt={`Castle Express moving truck at a home near ${city.town}, ${city.state}`}
+          actions={<HeroActions />}
+        >
+          <p>
+            Castle Express Moving &amp; Storage  -  family-owned, licensed &amp; insured, serving {city.town} and all of {city.stateFull} since {COMPANY.founded}. {city.slug === 'movers-enfield-ct' ? 'Based right here in Enfield.' : `Located in Enfield, CT, just ${city.drive} away.`}
+          </p>
+          {city.localBlurb && <p>{parseInline(city.localBlurb)}</p>}
+        </InteriorHero>
+      ) : (
       <section className="section-dark" style={{ padding: "70px 24px 50px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-residential.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.1, pointerEvents: "none" }} />
         <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto" }}>
@@ -154,9 +173,10 @@ export default function CityPage({ params }) {
           </div>
         </div>
       </section>
+      )}
 
       {/* TRUST BAR */}
-      <section className="trust-bar">
+      <section className={v2 ? "trust-bar tb-v2" : "trust-bar"}>
         {[
           { icon: <Shield size={18} />, label: "A+ BBB Rating" },
           { icon: <Star />, label: `${COMPANY.reviewAvg}★ Google (${COMPANY.reviewCount} Reviews)` },
@@ -167,7 +187,7 @@ export default function CityPage({ params }) {
       </section>
 
       {/* MAIN CONTENT */}
-      <section className="section">
+      <section className={v2 ? "section ip-body" : "section"}>
         <div className="container grid-2" style={{ alignItems: "start" }}>
           {/* Left  -  Content */}
           <div>
@@ -244,7 +264,7 @@ export default function CityPage({ params }) {
                 "Same-day estimates, typically respond in 20 minutes",
               ].map((feat, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 16 }}>
-                  <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
+                  <div className="ip-check" style={{ width: 28, height: 28, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
                     <Check />
                   </div>
                   <span className="body-md" style={{ color: "#1A1A2E" }}>{feat}</span>
@@ -265,7 +285,7 @@ export default function CityPage({ params }) {
                 { title: "Specialty Moving", href: "/services/specialty-moving/" },
                 { title: "Long Distance Moving", href: "/services/long-distance-moving/" },
               ].map(svc => (
-                <Link key={svc.href} href={svc.href} style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 14px", background: "#F9FAFB", borderRadius: 8, textDecoration: "none", border: "1px solid #E5E7EB", transition: "border-color 0.2s" }}>
+                <Link key={svc.href} href={svc.href} className="ip-pill" style={{ display: "flex", alignItems: "center", gap: 8, padding: "10px 14px", background: "#F9FAFB", borderRadius: 8, textDecoration: "none", border: "1px solid #E5E7EB", transition: "border-color 0.2s" }}>
                   <span style={{ color: "#D4A017", fontSize: 14 }}>→</span>
                   <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 13, color: "#1A1A2E" }}>{svc.title}</span>
                 </Link>
@@ -283,19 +303,19 @@ export default function CityPage({ params }) {
               Frequently Asked Questions  -  Movers in {city.town}, {city.state}
             </h2>
             <div style={{ marginBottom: 32 }}>
-              <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
+              <details className="ip-faq" style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>How much do movers cost in {city.town}, {city.state}?</summary>
                 <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>The cost varies by home size and distance. Most local moves in {city.town} range from $400 to $1,200. We offer free accurate estimates  -  call <a href={COMPANY.phoneLink} style={linkStyle}>{COMPANY.phone}</a> or fill out the form.</p>
               </details>
-              <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
+              <details className="ip-faq" style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>Is Castle Express licensed and insured in {city.state}?</summary>
                 <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>Yes. We are fully licensed for moves in {city.stateFull}{city.state === "MA" ? " and Connecticut" : ""}. USDOT# {COMPANY.usdot}, CT Permit {COMPANY.ctPermit}. Liability insurance covers your home and vehicles; the belongings we move are protected under our cargo coverage.</p>
               </details>
-              <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
+              <details className="ip-faq" style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>How far in advance should I book?</summary>
                 <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>2 to 4 weeks is ideal, especially May through September. We do accommodate last-minute moves  -  call to check availability.</p>
               </details>
-              <details style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
+              <details className="ip-faq" style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
                 <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>Do you offer packing services in {city.town}?</summary>
                 <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>Yes  -  full packing, partial packing, and our Princess Packing™ white-glove option. We bring all materials. Ask when you call.</p>
               </details>
@@ -323,13 +343,18 @@ export default function CityPage({ params }) {
           </div>
 
           {/* Right  -  Estimate Form */}
-          <div style={{ position: "sticky", top: 96 }}>
+          <div className={v2 ? "ip-estimate" : undefined} style={v2 ? undefined : { position: "sticky", top: 96 }}>
             <EstimateForm />
           </div>
         </div>
       </section>
 
       {/* CTA */}
+      {v2 ? (
+        <EstimateBand title={city.cta}>
+          Call us at <a href={COMPANY.phoneLink}>{COMPANY.phone}</a> or fill out the form above. We typically respond in 20 minutes or less.
+        </EstimateBand>
+      ) : (
       <section className="section section-dark text-center">
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
           <h2 className="heading-2 text-white">{city.cta}</h2>
@@ -342,6 +367,7 @@ export default function CityPage({ params }) {
           </div>
         </div>
       </section>
-    </>
+      )}
+    </div>
   );
 }
