@@ -559,7 +559,7 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
    The card has its own cream column, so nothing covers the cab, the over-cab
    attic or the truck lettering (truck = image x 47-99%, y 20-72%).
    --pw is the photo width; the hero is tall enough that the copy text ends
-   above the attic. The photo is pinned 298px-minus-fade from the top, so a
+   above the attic. The photo is pinned 312px-minus-fade from the top, so a
    taller hero (ads visitors see the offer above the card) never pushes the
    truck below the first screen. */
 @media (min-width: 1200px) {
@@ -567,7 +567,7 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
     --card-off: max(24px, calc((100vw - 1240px) / 2 + 24px));
     --pw: calc(100vw - var(--card-off) - 420px);
     padding: 0; display: flex;
-    min-height: calc(var(--pw) * 0.441 + 298px);
+    min-height: calc(var(--pw) * 0.441 + 312px);
     background: linear-gradient(180deg, rgba(255,255,255,0) 70%, #fff 100%), linear-gradient(90deg, #E3EEF9 0%, #EEF4FA calc(var(--pw) - 80px), #FDF8F2 calc(var(--pw) + 10px));
   }
   .hero-v2::before {
@@ -589,7 +589,7 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   .hero-v2 .hero-legal { position: absolute; z-index: 2; left: var(--card-off); bottom: 14px; margin: 0; white-space: nowrap; }
   .hero-v2 .hv2-media {
     position: absolute; left: 0; bottom: 0; z-index: 0; margin: 0; border-radius: 0; box-shadow: none; background: none;
-    top: calc(298px - var(--pw) * 0.126); bottom: auto; width: var(--pw); height: calc(var(--pw) * 0.567); overflow: hidden;
+    top: calc(312px - var(--pw) * 0.126); bottom: auto; width: var(--pw); height: calc(var(--pw) * 0.567); overflow: hidden;
     -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 21%, #000 94%, transparent 100%), linear-gradient(90deg, #000 97%, transparent 100%);
     -webkit-mask-composite: source-in;
     mask-image: linear-gradient(180deg, transparent 0%, #000 21%, #000 94%, transparent 100%), linear-gradient(90deg, #000 97%, transparent 100%);
