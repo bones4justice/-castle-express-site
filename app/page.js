@@ -51,10 +51,10 @@ export default function HomePage() {
       {/* Hero A/B copy (hv-a / hv-b) is unchanged: html[data-hero] is set by
           the inline script in app/layout.js <head> before first paint.
           Layout (globals.css .hero-v2): phones keep the form-first order with
-          the truck photo under the form; 769-1359px the photo sits in the
-          copy column beside (or below) the estimate card; 1440px+ the photo
-          is the full-width hero and the card sits over the house, clear of
-          the truck. */}
+          the truck photo under the form; from 769px the photo sits in its
+          own box in the copy column, beside (or above) the estimate card,
+          cropped by CSS to a band framed on the truck. Headline and card
+          are never laid over the photo. */}
       <section className="home-hero hero-v2" aria-label="Hero" data-home-design={HOME_DESIGN}>
         <div className="container hero-grid">
           <div className="hero-copy">
@@ -96,19 +96,20 @@ export default function HomePage() {
             <div className="hero-legal">
               <span>Family-owned, since {COMPANY.founded} · USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit} · {COMPANY.mc}</span>
             </div>
-            {/* Hero photo: phones get a cropped truck band (shown under the
-                form), larger screens the full street scene. Plain <picture>
-                so each screen downloads one pre-sized WebP. */}
+            {/* Hero photo (real Castle Express truck, truck on the right):
+                phones get the tighter shot under the form; larger screens
+                the wide yard shot, cropped by CSS to a band framed on the
+                truck. Plain <picture> so each screen downloads one WebP. */}
             <picture className="hv2-media">
-              <source media="(max-width: 768px)" srcSet="/images/hero-v2-mobile-750.webp 750w, /images/hero-v2-mobile-1122.webp 1122w" sizes="calc(100vw - 32px)" width={1122} height={900} />
+              <source media="(max-width: 768px)" srcSet="/images/hero-real-tight-640.webp 640w, /images/hero-real-tight-956.webp 956w" sizes="calc(100vw - 32px)" width={956} height={600} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/hero-v2-desktop-1200.webp"
-                srcSet="/images/hero-v2-desktop-800.webp 800w, /images/hero-v2-desktop-1200.webp 1200w, /images/hero-v2-desktop-1672.webp 1672w"
-                sizes="(min-width: 1440px) 100vw, (min-width: 1024px) calc(100vw - 488px), (min-width: 769px) 720px, 100vw"
-                width={1672}
-                height={941}
-                alt="Castle Express Moving & Storage box truck parked in front of a white colonial home on a tree-lined New England street"
+                src="/images/hero-real-wide-1346.webp"
+                srcSet="/images/hero-real-wide-800.webp 800w, /images/hero-real-wide-1346.webp 1346w"
+                sizes="(min-width: 1288px) 800px, (min-width: 1200px) calc(100vw - 488px), (min-width: 1024px) calc(120vw - 586px), (min-width: 769px) 720px, 100vw"
+                width={1346}
+                height={757}
+                alt="Castle Express Moving box truck parked in the driveway of a customer's home on a sunny morning"
                 fetchPriority="high"
                 decoding="async"
               />

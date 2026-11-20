@@ -400,11 +400,12 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
    Light photo hero. Copy and form behavior are unchanged; only layout/look.
    <=768px   phones: the existing form-first order (rules above), truck photo
              moves under the form so step 1 still fits the first screen.
-   769-1023  one column: copy, photo, offer + estimate card.
-   1024-1439 two columns: copy + photo | offer + estimate card.
-   >=1440    the photo is the full-width hero; the card sits over the house,
-             to the right of the truck (card left edge stays past the truck's
-             front bumper at 68% of the image width). */
+   769-1023  one column: copy, truck photo band, offer + estimate card.
+   >=1024    two columns: copy + truck photo band | offer + estimate card.
+             The headline and the card always sit on the solid light
+             background, never over the photo (the truck is on the right, an
+             overlaid card would cover the cab).
+*/
 .hero-v2 {
   --hv2-ink: #1A1A2E; --hv2-ink-soft: #3A3F55; --hv2-yellow: #FBCB0B;
   position: relative; isolation: isolate; overflow: hidden;
@@ -494,52 +495,58 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
 .hero-v2 .hv2-card #estimate-form p,
 .hero-v2 .hv2-card #estimate-form button { font-family: var(--font-dm-sans), Arial, sans-serif !important; }
 
-/* Tablet: one column, estimate card right after the copy, photo below it. */
+/* >=769: the real truck photo (truck on the right) sits in its own box under
+   the copy, never under the headline or the estimate card. It is cropped to a
+   wide band (image y about 14-76%: over-cab attic to wheels) so the truck is
+   in the first screen. The img is oversized inside the clipped box; percent
+   margins are relative to the box width, so the crop holds at every width. */
+/* Tablet: one column: copy, truck band, offer + estimate card. */
 @media (min-width: 769px) and (max-width: 1023px) {
+  .hero-v2 { padding-top: 28px; }
   .hero-v2 .hero-grid { display: flex; flex-direction: column; gap: 0; max-width: 720px; }
   .hero-v2 .hero-copy, .hero-v2 .hero-form { display: contents; }
   .hero-v2 .hero-copy > * { order: 1; }
-  .hero-v2 .hero-offer { order: 2; margin-top: 24px; }
-  .hero-v2 .hv2-card { order: 3; margin-top: 4px; }
-  .hero-v2 .hero-copy > .hv2-media { order: 4; margin-top: 28px; }
+  .hero-v2 .hero-copy > .hv2-media { order: 2; margin-top: 20px; aspect-ratio: 2.868 / 1; }
+  .hero-v2 .hv2-media img { margin-top: -7.87%; }
+  .hero-v2 .hero-offer { order: 3; margin-top: 24px; }
+  .hero-v2 .hv2-card { order: 4; margin-top: 4px; }
+  .hero-v2 .hero-copy > .hero-legal { order: 5; margin-top: 18px; }
+  .hero-v2 .hero-intro { max-width: none; }
   .hero-v2 .hero-offer:empty { display: none; }
 }
 
-/* Small laptops: the badges repeat the trust bar; dropping them lifts the
-   photo higher in the first screen. */
-@media (min-width: 1024px) and (max-width: 1439px) {
+/* Laptops and up: copy + truck band | offer + estimate card. The badges
+   repeat the trust bar and the legal line moves under the photo. Below
+   1200px the band zooms 1.2x on the truck (right-anchored). */
+@media (min-width: 1024px) {
+  .hero-v2 { padding-top: 26px; padding-bottom: 44px; }
   .hero-v2 .hero-badges { display: none; }
-  .hero-v2 .hv2-media { margin-top: 22px; }
+  .hero-v2 .hero-copy { display: flex; flex-direction: column; align-items: flex-start; }
+  .hero-v2 .hero-copy > * { order: 1; }
+  .hero-v2 .hero-copy > .hv2-media { order: 2; align-self: stretch; margin-top: 18px; aspect-ratio: 2.39 / 1; }
+  .hero-v2 .hv2-media img { width: 120%; max-width: none; margin-left: -20%; margin-top: -9.45%; }
+  .hero-v2 .hero-copy > .hero-legal { order: 3; margin-top: 12px; }
+  .hero-v2 .hero-h1 { margin-bottom: 10px; }
+  .hero-v2 .hero-intro { margin-bottom: 12px; max-width: none; }
+  .hero-v2 .hv2-promise { margin: 0 0 14px; }
 }
-
-@media (min-width: 1440px) {
-  .hero-v2 { padding: 0; display: flex; min-height: min(56.28vw, 840px); background: #DCE8F1; }
-  /* Soft white wash behind the copy so dark text reads over leaves and sky. */
-  .hero-v2::before {
-    content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
-    background: radial-gradient(ellipse 46% 56% at 17% 23%, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.6) 48%, rgba(255,255,255,0) 78%);
-  }
-  .hero-v2 .hero-grid {
-    width: 100%; max-width: none; margin: 0;
-    padding: 40px 40px 72px clamp(48px, 6vw, 120px);
-    grid-template-columns: minmax(0, 620px) 400px; justify-content: space-between;
-  }
-  /* The photo and the legal pill position against the section (the grid
-     and .hero-copy stay unpositioned). Copy blocks are lifted above the
-     photo (z 0) and the white wash (z 1); the form is a grid item, so its
-     z-index works unpositioned. */
-  .hero-v2 .hero-copy > :where(:not(.hv2-media)) { position: relative; z-index: 2; }
-  .hero-v2 .hero-form { z-index: 2; }
-  .hero-v2 .hero-intro { max-width: 520px; }
-  .hero-v2 .hv2-media { position: absolute; inset: 0; z-index: 0; margin: 0; border-radius: 0; box-shadow: none; }
-  .hero-v2 .hv2-media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 80%; }
-  /* Same proof points as the trust bar right below; hidden so they do not
-     sit on the truck. */
-  .hero-v2 .hero-badges { display: none; }
-  .hero-v2 .hero-legal {
-    position: absolute; z-index: 2; left: clamp(48px, 6vw, 120px); bottom: 16px; margin: 0;
-    background: rgba(255, 255, 255, 0.9); padding: 5px 12px; border-radius: 999px;
-  }
+/* 1200px and up: the copy column is wide enough for a shorter stack (one-line
+   headline, reviews beside the buttons) and the full-width band (house on the
+   left, truck on the right), so the whole truck clears a 720px-tall screen. */
+@media (min-width: 1200px) {
+  .hero-v2 .hero-copy { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; }
+  .hero-v2 .hero-copy > * { grid-column: 1 / -1; }
+  .hero-v2 .hero-copy > .hero-ctas { grid-column: 1; margin: 0; }
+  .hero-v2 .hero-copy > .hero-reviews { grid-column: 2; margin: 0 0 0 22px; }
+  .hero-v2 .hero-h1 br { display: none; }
+  .hero-v2 .hero-h1 .hv-b .text-gold { margin-left: 0.26em; }
+  .hero-v2 .hero-copy > .hv2-media { aspect-ratio: 2.868 / 1; }
+  .hero-v2 .hv2-media img { width: 100%; margin-left: 0; margin-top: -7.87%; }
+}
+/* Tall desktop screens have room for more of the photo (image y 8-82%). */
+@media (min-width: 1440px) and (min-height: 860px) {
+  .hero-v2 .hero-copy > .hv2-media { aspect-ratio: 2.403 / 1; }
+  .hero-v2 .hv2-media img { margin-top: -4.5%; }
 }
 
 @media (max-width: 768px) {
@@ -577,20 +584,6 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700;
   font-size: 19px; line-height: 1.35; letter-spacing: -0.005em;
   color: var(--hv2-ink); margin: -4px 0 20px; text-wrap: balance;
-}
-/* Wide screens: tighter copy stack so the CTAs and reviews line stay above
-   the truck's box; the reviews line gets a white pill like the legal line. */
-@media (min-width: 1440px) {
-  .hero-v2 { min-height: min(56.28vw, 900px); }
-  .hero-v2 .hero-grid { padding-top: 24px; grid-template-columns: minmax(0, 720px) 400px; }
-  .hero-v2 .hero-h1 { font-size: clamp(42px, 3vw, 56px); margin-bottom: 12px; }
-  .hero-v2 .hero-ctas, .hero-v2 .hero-reviews { max-width: 620px; }
-  /* Lower crop on wide screens puts the truck lower (wheels stay in frame). */
-  .hero-v2 .hv2-media img { object-position: 50% 66%; }
-  .hero-v2 .hero-intro { max-width: 600px; font-size: 16.5px; margin-bottom: 14px; }
-  .hero-v2 .hv2-promise { font-size: 20px; margin: 0 0 18px; }
-  .hero-v2 .hero-reviews { margin-top: 14px; }
-  .hero-v2 .hv2-reviews { background: rgba(255, 255, 255, 0.92); padding: 5px 12px; border-radius: 999px; }
 }
 @media (max-width: 768px) {
   /* Under the form so step 1 keeps its place on the first screen. */
