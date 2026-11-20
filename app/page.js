@@ -4,7 +4,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { COMPANY, SERVICES, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
-import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, Phone } from "@/components/Icons";
+import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, Phone, MapPin } from "@/components/Icons";
 import { LineTruck, LineOffice, LineBox, LineStorage } from "@/components/ServiceLineIcons";
 import { IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
 import EstimateForm from "@/components/EstimateForm";
@@ -106,7 +106,7 @@ export default function HomePage() {
               <img
                 src="/images/hero-real-wide-1346.webp"
                 srcSet="/images/hero-real-wide-800.webp 800w, /images/hero-real-wide-1346.webp 1346w"
-                sizes="(min-width: 1288px) 800px, (min-width: 1200px) calc(100vw - 488px), (min-width: 1024px) calc(120vw - 586px), (min-width: 769px) 720px, 100vw"
+                sizes="(min-width: 1240px) calc(50vw + 180px), (min-width: 1200px) calc(100vw - 444px), (min-width: 1024px) calc(120vw - 586px), (min-width: 769px) 720px, 100vw"
                 width={1346}
                 height={757}
                 alt="Castle Express Moving box truck parked in the driveway of a customer's home on a sunny morning"
@@ -173,6 +173,7 @@ export default function HomePage() {
           <div className="svc-v2-more">
             <Link href="/services/" className="btn svc-v2-all">View All Services <ChevronRight /></Link>
           </div>
+          <p className="svc-v2-address"><span><MapPin size={20} /> 4 Niblick Rd, Enfield CT 06082</span></p>
         </div>
       </section>
 

@@ -62,14 +62,14 @@ export default function Header() {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img className="site-logo" src="/images/logo-header-120.webp"
             srcSet="/images/logo-header-120.webp 251w, /images/logo-header-180.webp 377w"
-            sizes="(max-width: 1199px) 105px, 126px"
+            sizes="(max-width: 768px) 105px, (max-width: 1199px) 122px, 164px"
             width={251} height={120} alt="Castle Express Moving & Storage" />
         </Link>
 
         {/* Mobile phone CTA - visible only on mobile, between logo and hamburger */}
         <a href={COMPANY.phoneLink} className="mobile-phone-cta" aria-label={`Call Castle Express at ${COMPANY.phone}`} style={{
           display: "none", alignItems: "center", gap: 6,
-          fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: GOLD_TEXT,
+          fontFamily: "var(--font-dm-sans), Arial, sans-serif", fontWeight: 700, fontSize: 15, color: GOLD_TEXT,
           textDecoration: "none", padding: "8px 14px", background: "#FFF9EC", borderRadius: 8, marginLeft: "auto", marginRight: 8,
         }}>
           <Phone size={18} /> <span className="mpc-short">Call</span><span className="mpc-long">{COMPANY.phone}</span>
@@ -81,21 +81,16 @@ export default function Header() {
             const base = item.href.replace(/\/$/, "");
             const isActive = pathname === base || pathname.startsWith(base + "/");
             const color = item.gold ? GOLD_TEXT : isActive ? GOLD_TEXT : "#1A1A2E";
-            const fontWeight = item.gold ? 700 : 600;
-            const Tag = item.static ? "a" : Link;
+                        const Tag = item.static ? "a" : Link;
             return (
               <Tag key={item.href} href={item.href} style={{
-                fontFamily: "var(--font-heading)", fontWeight, fontSize: 14,
-                color, padding: "8px 12px", borderRadius: 6, textDecoration: "none", transition: "color 0.2s", whiteSpace: "nowrap",
+                fontFamily: "var(--font-dm-sans), Arial, sans-serif", fontWeight: 700, fontSize: 15,
+                color, padding: "8px 11px", borderRadius: 6, textDecoration: "none", transition: "color 0.2s", whiteSpace: "nowrap",
               }}>{item.label}</Tag>
             );
           })}
-          <a href={COMPANY.phoneLink} style={{
-            marginLeft: 8, display: "flex", alignItems: "center", gap: 6,
-            fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: GOLD_TEXT,
-            textDecoration: "none", padding: "10px 16px", background: "#FFF9EC", borderRadius: 8, whiteSpace: "nowrap",
-          }}>
-            <Phone size={18} /> {COMPANY.phone}
+          <a href={COMPANY.phoneLink} className="header-phone">
+            <span className="header-phone-ico" aria-hidden="true"><Phone size={16} /></span> (888) 553-4503
           </a>
         </nav>
 
