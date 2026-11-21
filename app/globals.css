@@ -855,7 +855,11 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   .ip-hero-intro p { font-size: 16px; }
   .ip-actions { margin-top: 20px; }
   .ip-actions .ip-btn { flex: 1 1 100%; }
-  .ip-estimate { position: static; }
+  /* Phones: the estimate form comes first, right under the trust strip. */
+  .ip-estimate { position: static; order: -1; }
+  .ip-body.section { padding-top: 20px; }
+  .ip-body .grid-2 { gap: 36px; }
+  .ip-estimate #estimate-form { scroll-margin-top: 88px !important; box-shadow: 0 8px 24px rgba(26, 26, 46, 0.14); }
   .ip-cta { padding: 48px 20px; }
   /* Service Areas on phones: short header, then town links straight away. */
   .ip-hero-compact { padding: 18px 16px 18px; }

@@ -127,7 +127,7 @@ export default function ServiceDetailPage({ params }) {
           title={svc.headline}
           image={svc.heroImage}
           imageAlt={`Castle Express moving truck on a ${svc.title.toLowerCase()} job`}
-          actions={<HeroActions />}
+          actions={<HeroActions scrollToForm />}
         >
           <p>{svc.intro}</p>
           {svc.intro2 && <p>{svc.intro2}</p>}

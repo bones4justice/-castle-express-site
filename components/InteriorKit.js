@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { COMPANY } from "@/content";
 import { Phone, ArrowRight } from "@/components/Icons";
+import EstimateScrollButton from "@/components/EstimateScrollButton";
 
 // Reusable pieces for interior pages (design v2). Styles: "INTERIOR PAGES v2"
 // in app/globals.css. Wrap the page in <div className="ip"> so headings, body
@@ -40,11 +41,15 @@ export function InteriorHero({ crumbs = [], eyebrow, title, children, actions, i
   );
 }
 
-// The standard pair of header buttons (same destinations as the old headers).
-export function HeroActions() {
+// The standard pair of header buttons. With scrollToForm (pages that carry the
+// estimate form) the yellow button scrolls to the form instead of leaving for
+// /contact/.
+export function HeroActions({ scrollToForm = false }) {
   return (
     <>
-      <Link href="/contact/" className="ip-btn ip-btn-primary">Get Free Estimate <ArrowRight /></Link>
+      {scrollToForm
+        ? <EstimateScrollButton className="ip-btn ip-btn-primary">Get Free Estimate <ArrowRight /></EstimateScrollButton>
+        : <Link href="/contact/" className="ip-btn ip-btn-primary">Get Free Estimate <ArrowRight /></Link>}
       <a href={COMPANY.phoneLink} className="ip-btn ip-btn-outline"><Phone size={18} /> {COMPANY.phone}</a>
     </>
   );

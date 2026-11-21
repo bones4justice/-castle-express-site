@@ -140,7 +140,7 @@ export default function CityPage({ params }) {
           title={city.h1}
           image={TOWN_HERO_PHOTOS[city.slug] || DEFAULT_TOWN_HERO_PHOTO}
           imageAlt={`Castle Express moving truck at a home near ${city.town}, ${city.state}`}
-          actions={<HeroActions />}
+          actions={<HeroActions scrollToForm />}
         >
           <p>
             Castle Express Moving &amp; Storage  -  family-owned, licensed &amp; insured, serving {city.town} and all of {city.stateFull} since {COMPANY.founded}. {city.slug === 'movers-enfield-ct' ? 'Based right here in Enfield.' : `Located in Enfield, CT, just ${city.drive} away.`}
