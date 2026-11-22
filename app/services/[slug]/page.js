@@ -6,6 +6,7 @@ import { getAllPosts } from "@/lib/blogData";
 import { Check, Phone, Star, Shield, ArrowRight, ChevronRight, MapPin } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
 import TownsWeServe from "@/components/TownsWeServe";
+import { InteriorHero, HeroActions, EstimateBand } from "@/components/InteriorKit";
 
 // Parse [text](url) markdown links inside a plain string and return React nodes.
 // Internal links (starting with /) render as Next <Link>; external as <a>.
@@ -61,7 +62,6 @@ export function generateMetadata({ params }) {
 export default function ServiceDetailPage({ params }) {
   const svc = SERVICE_PAGES[params.slug];
   if (!svc) notFound();
-
   const related = (svc.relatedServices || []).map(slug => {
     const r = SERVICE_PAGES[slug];
     return r ? { slug, title: r.title } : null;
@@ -112,39 +112,24 @@ export default function ServiceDetailPage({ params }) {
   } : null;
 
   return (
-    <>
+    <div className="ip">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
       {/* ─── HERO ─── */}
-      <section className="section-dark" style={{ padding: "70px 24px 50px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: `url(${svc.heroImage})`, backgroundSize: "cover", backgroundPosition: "center", opacity: 0.12, pointerEvents: "none" }} />
-        <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-            <Link href="/services/" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Services</Link>
-            <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
-            <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>{svc.title}</span>
-          </div>
-          <h1 className="heading-1" style={{ color: "#fff", marginBottom: 16, fontSize: "clamp(28px, 4vw, 44px)" }}>
-            {svc.headline}
-          </h1>
-          <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: svc.intro2 ? 12 : 24 }}>
-            {svc.intro}
-          </p>
-          {svc.intro2 && (
-            <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: 24 }}>
-              {svc.intro2}
-            </p>
-          )}
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
-            <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> {COMPANY.phone}</a>
-          </div>
-        </div>
-      </section>
+              <InteriorHero
+          crumbs={[{ label: "Services", href: "/services/" }, { label: svc.title }]}
+          title={svc.headline}
+          image={svc.heroImage}
+          imageAlt={`Castle Express moving truck on a ${svc.title.toLowerCase()} job`}
+          actions={<HeroActions scrollToForm />}
+        >
+          <p>{svc.intro}</p>
+          {svc.intro2 && <p>{svc.intro2}</p>}
+        </InteriorHero>
 
       {/* ─── TRUST BAR ─── */}
-      <section className="trust-bar">
+      <section className="trust-bar tb-v2">
         {[
           { icon: <Shield size={18} />, label: "A+ BBB Rating" },
           { icon: <Star />, label: `${COMPANY.reviewAvg}★ Google (${COMPANY.reviewCount} Reviews)` },
@@ -155,7 +140,7 @@ export default function ServiceDetailPage({ params }) {
       </section>
 
       {/* ─── MAIN CONTENT ─── */}
-      <section className="section">
+      <section className="section ip-body">
         <div className="container grid-2" style={{ alignItems: "start" }}>
           <div>
             {/* Content Sections */}
@@ -169,7 +154,7 @@ export default function ServiceDetailPage({ params }) {
                 )}
                 {(section.items || []).map((item, j) => (
                   <div key={j} style={{ display: "flex", gap: 12, marginBottom: 12 }}>
-                    <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
+                    <div className="ip-check" style={{ width: 24, height: 24, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
                       {section.ordered ? (
                         <span style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 12, color: "#D4A017" }}>{j + 1}</span>
                       ) : (
@@ -183,12 +168,12 @@ export default function ServiceDetailPage({ params }) {
             ))}
 
             {/* Callout Box */}
-            <div style={{ background: "#FFF9EC", border: "1px solid rgba(212,160,23,0.2)", borderRadius: 12, padding: "24px 28px", marginBottom: 36 }}>
+            <div className="ip-callout" style={{ background: "#FFF9EC", border: "1px solid rgba(212,160,23,0.2)", borderRadius: 12, padding: "24px 28px", marginBottom: 36 }}>
               <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#1A1A2E", lineHeight: 1.7, marginBottom: svc.calloutLink ? 16 : 0 }}>
                 {svc.callout}
               </p>
               {svc.calloutLink && (
-                <a href={svc.calloutLink} style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#F72585", textDecoration: "none" }}>
+                <a href={svc.calloutLink} className="ip-more" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#F72585", textDecoration: "none" }}>
                   {svc.calloutLabel || "Learn More"} →
                 </a>
               )}
@@ -221,7 +206,7 @@ export default function ServiceDetailPage({ params }) {
                     </div>
                   ) : null
                 ))}
-                <Link href="/service-areas/" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#F72585", textDecoration: "none" }}>
+                <Link href="/service-areas/" className="ip-more" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#F72585", textDecoration: "none" }}>
                   See All Service Areas →
                 </Link>
               </div>
@@ -248,7 +233,7 @@ export default function ServiceDetailPage({ params }) {
                 <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 12 }}>Related Services</h3>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
                   {related.map(r => (
-                    <Link key={r.slug} href={`/services/${r.slug}/`} style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 16px", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: 8, textDecoration: "none", fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 13, color: "#1A1A2E", transition: "border-color 0.2s" }}>
+                    <Link key={r.slug} href={`/services/${r.slug}/`} className="ip-pill" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "10px 16px", background: "#F9FAFB", border: "1px solid #E5E7EB", borderRadius: 8, textDecoration: "none", fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 13, color: "#1A1A2E", transition: "border-color 0.2s" }}>
                       <span style={{ color: "#D4A017" }}>→</span> {r.title}
                     </Link>
                   ))}
@@ -258,7 +243,7 @@ export default function ServiceDetailPage({ params }) {
           </div>
 
           {/* Right  -  Estimate Form */}
-          <div style={{ position: "sticky", top: 96 }}>
+          <div className="ip-estimate">
             <EstimateForm />
           </div>
         </div>
@@ -277,7 +262,7 @@ export default function ServiceDetailPage({ params }) {
               <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 20, textAlign: "center" }}>Related Reading</h2>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
                 {related.map(post => (
-                  <Link key={post.slug} href={`/blog/${post.slug}/`} style={{ textDecoration: "none" }}>
+                  <Link key={post.slug} href={`/blog/${post.slug}/`} className="ip-cardlink" style={{ textDecoration: "none" }}>
                     <div className="card" style={{ padding: 20, height: "100%" }}>
                       <span style={{ fontSize: 12, fontWeight: 700, color: "#D4A017", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8, display: "block" }}>{post.category}</span>
                       <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 8, lineHeight: 1.4 }}>{post.title}</h3>
@@ -295,18 +280,9 @@ export default function ServiceDetailPage({ params }) {
       {params.slug === "residential-moving" && <TownsWeServe />}
 
       {/* ───── CTA ─── */}
-      <section className="section section-dark text-center">
-        <div style={{ maxWidth: 600, margin: "0 auto" }}>
-          <h2 className="heading-2 text-white">Ready to Get Started?</h2>
-          <p className="body-md text-white-muted" style={{ marginBottom: 28 }}>
-            Call today for a free, no-obligation estimate. We'll walk you through every step.
-          </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate</Link>
-            <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
-          </div>
-        </div>
-      </section>
-    </>
+              <EstimateBand scrollToForm title="Ready to Get Started?">
+          Call today for a free, no-obligation estimate. We&apos;ll walk you through every step.
+        </EstimateBand>
+    </div>
   );
 }

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { COMPANY } from "@/content";
 import { Check, Phone, Star, Shield, ArrowRight, MapPin } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
+import { InteriorHero, HeroActions, EstimateBand } from "@/components/InteriorKit";
 
 export const metadata = {
   title: "Piano Movers in Connecticut | Castle Express",
@@ -57,34 +58,23 @@ const FAQ_SCHEMA = {
 
 export default function PianoMovingPage() {
   return (
-    <>
+    <div className="ip">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }} />
 
       {/* ─── HERO ─── */}
-      <section className="section-dark" style={{ padding: "70px 24px 50px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-tobacco-barn.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.12, pointerEvents: "none" }} />
-        <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-            <Link href="/services/" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Services</Link>
-            <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
-            <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>Piano Moving</span>
-          </div>
-          <h1 className="heading-1" style={{ color: "#fff", marginBottom: 16, fontSize: "clamp(28px, 4vw, 44px)" }}>
-            Piano Moving Services in Connecticut
-          </h1>
-          <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: 24 }}>
-            Upright, grand, baby grand - we move them all safely. Experienced piano movers serving Hartford County and Western Massachusetts since 2011.
-          </p>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
-            <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> {COMPANY.phone}</a>
-          </div>
-        </div>
-      </section>
+      <InteriorHero
+        crumbs={[{ label: "Services", href: "/services/" }, { label: "Piano Moving" }]}
+        title="Piano Moving Services in Connecticut"
+        image="/images/truck-tobacco-barn.jpg"
+        imageAlt="Castle Express moving truck beside a Connecticut tobacco barn"
+        actions={<HeroActions scrollToForm />}
+      >
+        <p>Upright, grand, baby grand - we move them all safely. Experienced piano movers serving Hartford County and Western Massachusetts since 2011.</p>
+      </InteriorHero>
 
       {/* ─── TRUST BAR ─── */}
-      <section className="trust-bar">
+      <section className="trust-bar tb-v2">
         {[
           { icon: <Shield size={18} />, label: "Licensed & Insured" },
           { icon: <Star />, label: `${COMPANY.reviewAvg}★ Google (${COMPANY.reviewCount} Reviews)` },
@@ -95,7 +85,7 @@ export default function PianoMovingPage() {
       </section>
 
       {/* ─── MAIN CONTENT ─── */}
-      <section className="section">
+      <section className="section ip-body">
         <div className="container grid-2" style={{ alignItems: "start" }}>
           <div>
             {/* Section 1: Why Piano Moving Is Different */}
@@ -212,25 +202,16 @@ export default function PianoMovingPage() {
           </div>
 
           {/* Right - Estimate Form */}
-          <div style={{ position: "sticky", top: 96 }}>
+          <div className="ip-estimate">
             <EstimateForm />
           </div>
         </div>
       </section>
 
       {/* ─── CTA ─── */}
-      <section className="section section-dark text-center">
-        <div style={{ maxWidth: 600, margin: "0 auto" }}>
-          <h2 className="heading-2 text-white">Get a Free Piano Moving Estimate</h2>
-          <p className="body-md text-white-muted" style={{ marginBottom: 28 }}>
-            Call today for a free, no-obligation estimate. We will walk you through every step.
-          </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate</Link>
-            <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
-          </div>
-        </div>
-      </section>
-    </>
+      <EstimateBand scrollToForm title="Get a Free Piano Moving Estimate">
+        Call today for a free, no-obligation estimate. We will walk you through every step.
+      </EstimateBand>
+    </div>
   );
 }

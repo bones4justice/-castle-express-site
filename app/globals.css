@@ -372,3 +372,211 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   .abo-details { padding: 8px 10px 2px; }
   .abo-details p { margin: 0 0 6px; font-family: var(--font-body); font-size: 12.5px; line-height: 1.5; color: rgba(255,255,255,0.8); }
 }
+
+/* ─── INTERIOR PAGES v2 (Nov 2026) ─────────────────────────────────────────
+   Reusable look for interior pages, taken from the homepage redesign: warm
+   white, charcoal, Castle yellow, DM Sans. Components: components/InteriorKit.js.
+   Rollout switch: lib/interiorDesign.js.
+     .ip            page wrapper (fonts + accent colors for everything inside)
+     .ip-hero       page header (InteriorHero)
+     .ip-btn        buttons (-primary yellow, -outline, -white)
+     .ip-card       white card;  .ip-town  compact town link card
+     .ip-estimate   wrapper that turns EstimateForm into the white estimate card
+     .ip-cta        closing estimate band (EstimateBand)
+   Text gold on white is the darker #8A6400 (readable); bright #FFC003 is for
+   fills, rules and icons only. */
+.ip {
+  --ip-ink: #1A1A2E; --ip-ink-soft: #4A4F63; --ip-yellow: #FFC003; --ip-warm: #FDF8F2; --ip-line: #ECE5D3; --ip-gold-text: #8A6400;
+  --font-heading: var(--font-dm-sans), Arial, sans-serif; --font-body: var(--font-dm-sans), Arial, sans-serif;
+  --gold: #8A6400; --gold-bg: #FFF6D6; --gold-light: #FFE28A; --off-white: #FDF8F2;
+  font-family: var(--font-body); color: var(--ip-ink);
+}
+.ip .heading-1, .ip .heading-2, .ip .heading-3 { font-family: var(--font-heading) !important; font-weight: 800 !important; letter-spacing: -0.015em; }
+.ip .body-md { font-size: 16px; }
+.ip a:focus-visible, .ip button:focus-visible, .ip summary:focus-visible { outline: 3px solid var(--ip-ink); outline-offset: 2px; }
+
+/* Header */
+.ip-hero { background: var(--ip-warm); border-bottom: 1px solid var(--ip-line); padding: 44px 24px 48px; }
+.ip-hero-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 52px; align-items: center; }
+.ip-hero-noimg .ip-hero-grid { grid-template-columns: minmax(0, 820px); }
+.ip-crumbs { display: flex; flex-wrap: wrap; align-items: center; margin-bottom: 14px; font-size: 13.5px; font-weight: 600; color: var(--ip-ink-soft); }
+.ip-crumbs a { color: var(--ip-ink-soft); text-decoration: underline; text-underline-offset: 3px; min-height: 0; min-width: 0; }
+.ip-crumbs a:hover { color: var(--ip-ink); }
+.ip-crumbs [aria-current] { color: var(--ip-gold-text); font-weight: 700; }
+.ip-crumb-sep { margin: 0 8px; color: #B5AE9C; }
+.ip-eyebrow { font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ip-gold-text); margin-bottom: 10px; }
+.ip-h1 { font-family: var(--font-heading); font-weight: 800; font-size: clamp(30px, 3.5vw, 46px); line-height: 1.1; letter-spacing: -0.02em; color: var(--ip-ink); margin: 0; text-wrap: balance; }
+.ip-h1::after { content: ""; display: block; width: 72px; height: 5px; border-radius: 3px; background: var(--ip-yellow); margin: 16px 0 18px; }
+.ip-hero-intro { max-width: 640px; }
+.ip-hero-intro p { font-size: 17px; line-height: 1.6; color: var(--ip-ink-soft); margin: 0 0 12px; }
+.ip-hero-intro p:last-child { margin-bottom: 0; }
+.ip-hero-intro a { color: var(--ip-gold-text) !important; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+.ip-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+.ip-actions-center { justify-content: center; }
+.ip-hero-media { position: relative; aspect-ratio: 4 / 3; border-radius: 18px; overflow: hidden; background: #E9E2D2; box-shadow: 0 18px 48px rgba(26, 26, 46, 0.18); }
+
+@media (min-width: 901px) {
+  .ip-hero-compact { padding: 32px 24px 34px; }
+  .ip-hero-compact .ip-hero-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr); }
+  .ip-hero-compact .ip-hero-media { aspect-ratio: 16 / 10; }
+}
+
+/* Buttons */
+.ip-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 26px; border-radius: 6px;
+  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 15.5px; line-height: 1.2;
+  border: 2px solid transparent; text-decoration: none; transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+.ip-btn-primary { background: #FFC003; color: #1A1A2E; border-color: #FFC003; }
+.ip-btn-primary:hover { background: #F0BE00; border-color: #F0BE00; }
+.ip-btn-outline { background: #fff; color: #1A1A2E; border-color: #1A1A2E; }
+.ip-btn-outline:hover { background: #1A1A2E; color: #fff; }
+.ip-btn-white { background: #fff; color: #1A1A2E; border-color: #fff; }
+.ip-btn-white:hover { background: #FDF8F2; }
+
+/* Cards */
+.ip-card, .ip .card {
+  background: #fff; border: 1px solid var(--ip-line, #ECE5D3); border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(26, 26, 46, 0.04), 0 8px 24px rgba(26, 26, 46, 0.06);
+}
+.ip-card { padding: 24px 26px; }
+.ip .card:hover { border-color: #E3CF8F; box-shadow: 0 2px 4px rgba(26, 26, 46, 0.05), 0 14px 32px rgba(26, 26, 46, 0.10); }
+.ip-card h3 { font-family: var(--font-heading); font-weight: 800; font-size: 19px; margin: 0 0 8px; }
+.ip-card p { font-size: 15.5px; line-height: 1.6; color: var(--ip-ink-soft); margin: 0; }
+.ip-card a { color: var(--ip-gold-text); font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+
+/* Body content inside the shared templates (they still carry inline styles,
+   so a few rules need !important until every page is on v2). */
+.ip-body a:not([class]) { color: var(--ip-gold-text) !important; text-decoration: underline; text-underline-offset: 2px; min-height: 0; min-width: 0; }
+.ip-body .heading-2 { font-size: clamp(24px, 2.5vw, 31px); }
+.ip-body .section-label span { color: var(--ip-gold-text); }
+.ip-body .section-label::before { background: var(--ip-yellow); }
+.ip .ip-check { background: #FFF1B8 !important; }
+.ip .ip-check svg { color: #6B4E00; stroke: #6B4E00; }
+.ip .ip-pill { background: #fff !important; border: 1px solid var(--ip-line) !important; border-radius: 10px !important; color: var(--ip-ink) !important; }
+.ip .ip-pill:hover { border-color: #E3CF8F !important; background: var(--ip-warm) !important; }
+.ip .ip-pill span:first-child { color: #D99A00 !important; }
+.ip .ip-more { color: var(--ip-ink) !important; text-decoration: underline !important; text-decoration-color: var(--ip-yellow) !important; text-decoration-thickness: 3px !important; text-underline-offset: 4px; }
+.ip .ip-callout { background: var(--ip-warm) !important; border: 1px solid var(--ip-line) !important; border-left: 5px solid var(--ip-yellow) !important; border-radius: 12px !important; }
+.ip .ip-faq { background: #fff !important; border: 1px solid var(--ip-line) !important; border-radius: 12px !important; }
+.ip .ip-faq[open] { border-color: #E3CF8F !important; }
+.ip .ip-faq p { color: var(--ip-ink-soft) !important; font-size: 15.5px; }
+.ip .location-chip { background: #fff; border: 1px solid var(--ip-line); font-weight: 600; font-size: 14px; }
+.ip .location-chip:hover { background: var(--ip-warm); border-color: #E3CF8F; }
+.ip .location-chip svg, .ip .trust-item svg { color: #E0A800; }
+.ip .btn-outline { font-family: var(--font-heading); background: #fff; border-radius: 6px; }
+.ip .btn-outline:hover { background: var(--ip-ink); color: #fff; opacity: 1; }
+.ip .btn-ghost { color: var(--ip-ink); text-decoration: underline; text-decoration-color: var(--ip-yellow); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+
+/* Trust strip under interior page headers: larger labels, thin dividers. */
+.trust-bar.tb-v2 { gap: 0; padding: 18px 16px; background: #fff; }
+.trust-bar.tb-v2 .trust-item {
+  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 16.5px; color: #1A1A2E;
+  padding: 6px 28px; gap: 10px;
+}
+.trust-bar.tb-v2 .trust-item + .trust-item { border-left: 1px solid #E5E7EB; }
+@media (max-width: 768px) {
+  .trust-bar.tb-v2 { gap: 6px 0; }
+  .trust-bar.tb-v2 .trust-item { font-size: 13.5px; padding: 6px 14px; }
+  .trust-bar.tb-v2 .trust-item + .trust-item { border-left: none; }
+}
+.ip-hero-points { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; }
+.ip-hero-points div { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14.5px; color: var(--ip-ink); }
+.ip-hero-points svg { color: #6B4E00; stroke: #6B4E00; flex: none; }
+.ip-cta-eyebrow { font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: #FFC003; margin-bottom: 10px; }
+
+/* Princess Packing keeps its own pink look. Its request form answers to the
+   same #estimate-form anchor; on phones it moves up under the badge strip. */
+.pp-page #estimate-form { scroll-margin-top: 116px; }
+@media (max-width: 768px) {
+  .pp-page { display: flex; flex-direction: column; }
+  .pp-page > .pp-hero { order: -3; }
+  .pp-page > .pp-badges { order: -2; }
+  .pp-page > .pp-request { order: -1; padding-top: 36px !important; padding-bottom: 44px !important; }
+  .pp-page #estimate-form { scroll-margin-top: 88px; }
+}
+
+/* Estimate card: EstimateForm (light mode) as the homepage's white card. */
+.ip-estimate { position: sticky; top: 116px; }
+.ip-estimate #estimate-form { border: none !important; border-radius: 16px !important; box-shadow: 0 18px 48px rgba(26, 26, 46, 0.18); scroll-margin-top: 116px !important; }
+.ip-estimate #estimate-form h3 { font-weight: 800 !important; font-size: 24px !important; letter-spacing: -0.015em; }
+.ip-estimate #estimate-form h3::after { content: ""; display: block; width: 56px; height: 4px; border-radius: 2px; background: var(--ip-yellow); margin: 8px 0; }
+.ip-estimate #estimate-form,
+.ip-estimate #estimate-form input,
+.ip-estimate #estimate-form select,
+.ip-estimate #estimate-form textarea,
+.ip-estimate #estimate-form label,
+.ip-estimate #estimate-form p,
+.ip-estimate #estimate-form button { font-family: var(--font-dm-sans), Arial, sans-serif !important; }
+.ip-estimate #estimate-form input:focus,
+.ip-estimate #estimate-form select:focus,
+.ip-estimate #estimate-form textarea:focus { outline: 3px solid var(--ip-ink) !important; outline-offset: 1px; border-color: var(--ip-ink) !important; }
+.ip-estimate #estimate-form button[type="submit"] { background: #FFC003 !important; color: #1A1A2E !important; }
+
+/* Closing estimate band */
+.ip-cta { background: #1A1A2E; padding: 64px 24px; text-align: center; }
+.ip-cta-inner { max-width: 640px; margin: 0 auto; }
+.ip-cta-title { font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 800; font-size: clamp(26px, 3vw, 36px); line-height: 1.15; letter-spacing: -0.015em; color: #fff; margin: 0; text-wrap: balance; }
+.ip-cta-title::after { content: ""; display: block; width: 64px; height: 4px; border-radius: 2px; background: #FFC003; margin: 14px auto 16px; }
+.ip-cta-text { font-family: var(--font-dm-sans), Arial, sans-serif; font-size: 16.5px; line-height: 1.6; color: rgba(255, 255, 255, 0.82); margin: 0; }
+.ip-cta-text a { color: #FFC003; font-weight: 700; }
+.ip-cta a:focus-visible { outline: 3px solid #FFC003; outline-offset: 3px; }
+
+/* Service Areas: tier sections and compact town cards */
+.ip-areas { background: #fff; padding: 36px 24px 64px; }
+.ip-areas-inner { max-width: 1080px; margin: 0 auto; }
+.ip-jump { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 30px; }
+.ip-jump a { display: inline-flex; align-items: center; padding: 8px 16px; min-height: 40px; border-radius: 999px; background: var(--ip-warm); border: 1px solid var(--ip-line); font-weight: 700; font-size: 14px; color: var(--ip-ink); }
+.ip-jump a:hover { border-color: #E3CF8F; background: #FFF6D6; }
+.ip-tier { margin-bottom: 38px; scroll-margin-top: 120px; }
+.ip-tier-title { display: flex; align-items: center; gap: 10px; font-family: var(--font-heading); font-weight: 800; font-size: 23px; letter-spacing: -0.015em; margin: 0 0 4px; }
+.ip-tier-title::before { content: ""; flex: none; width: 12px; height: 12px; border-radius: 50%; background: var(--ip-yellow); }
+.ip-tier-count { font-weight: 600; font-size: 14px; color: var(--ip-ink-soft); letter-spacing: 0; }
+.ip-tier-desc { font-size: 15px; line-height: 1.5; color: var(--ip-ink-soft); margin: 0 0 14px; }
+.ip-town-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.ip-town {
+  display: flex; align-items: center; gap: 10px; padding: 13px 16px; background: #fff; border: 1px solid var(--ip-line); border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(26, 26, 46, 0.04); transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.ip-town:hover { border-color: #E3CF8F; box-shadow: 0 6px 18px rgba(26, 26, 46, 0.10); }
+.ip-town svg { flex: none; color: #E0A800; }
+.ip-town-name { display: block; font-weight: 700; font-size: 14.5px; line-height: 1.25; color: var(--ip-ink); }
+.ip-town-drive { display: block; font-size: 12.5px; line-height: 1.3; color: #5F6472; }
+
+@media (max-width: 900px) {
+  .ip-hero { padding: 28px 20px 32px; }
+  .ip-hero-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .ip-hero-media { aspect-ratio: 16 / 9; border-radius: 14px; }
+  .ip-hero-compact .ip-hero-media { display: none; }
+}
+@media (max-width: 768px) {
+  .ip-h1::after { width: 56px; height: 4px; margin: 12px 0 14px; }
+  .ip-hero-intro p { font-size: 16px; }
+  .ip-actions { margin-top: 20px; }
+  .ip-actions .ip-btn { flex: 1 1 100%; }
+  /* Phones: the estimate form comes first, right under the trust strip. */
+  .ip-estimate { position: static; order: -1; }
+  .ip-body.section { padding-top: 20px; }
+  .ip-body .grid-2 { gap: 36px; }
+  .ip-estimate #estimate-form { scroll-margin-top: 88px !important; box-shadow: 0 8px 24px rgba(26, 26, 46, 0.14); }
+  .ip-cta { padding: 48px 20px; }
+  /* Service Areas on phones: short header, then town links straight away. */
+  .ip-hero-compact { padding: 18px 16px 18px; }
+  .ip-hero-compact .ip-eyebrow { margin-bottom: 6px; font-size: 12px; }
+  .ip-hero-compact .ip-h1 { font-size: 25px; }
+  .ip-hero-compact .ip-h1::after { margin: 10px 0 10px; }
+  .ip-hero-compact .ip-hero-intro p { font-size: 15px; line-height: 1.45; }
+  .ip-areas { padding: 16px 16px 48px; }
+  .ip-jump { flex-wrap: nowrap; overflow-x: auto; margin: 0 -16px 16px; padding: 0 16px 4px; scrollbar-width: none; }
+  .ip-jump::-webkit-scrollbar { display: none; }
+  .ip-jump a { flex: none; padding: 6px 14px; font-size: 13.5px; }
+  .ip-tier { margin-bottom: 26px; }
+  .ip-tier-title { font-size: 19px; }
+  .ip-tier-desc { font-size: 14px; margin-bottom: 10px; }
+  .ip-town-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .ip-town { padding: 8px 10px; gap: 7px; border-radius: 10px; min-height: 48px; }
+  .ip-town svg { width: 15px; height: 15px; }
+  .ip-town-name { font-size: 13.5px; }
+  .ip-town-drive { font-size: 11.5px; }
+}
+@media (prefers-reduced-motion: reduce) { .ip-btn, .ip-town { transition: none; } }

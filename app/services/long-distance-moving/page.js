@@ -3,6 +3,8 @@ import Image from "next/image";
 import { COMPANY } from "@/content";
 import { Check, Phone, Star, Shield, ArrowRight, ChevronRight } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
+import EstimateScrollButton from "@/components/EstimateScrollButton";
+import { InteriorHero, HeroActions, EstimateBand } from "@/components/InteriorKit";
 
 export const metadata = {
   title: "Long Distance Movers in CT | Dedicated Moving Service",
@@ -121,50 +123,31 @@ const SERVICE_SCHEMA = {
 
 export default function LongDistanceMovingPage() {
   return (
-    <>
+    <div className="ip">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(BREADCRUMB_SCHEMA) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SERVICE_SCHEMA) }} />
 
       {/* ─── HERO ─── */}
-      <section className="section-dark" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, opacity: 0.12, pointerEvents: "none" }}>
-          <Image src="/images/hero-white-truck.webp" alt="" fill sizes="100vw" priority style={{ objectFit: "cover", objectPosition: "center" }} />
+      <InteriorHero
+        crumbs={[{ label: "Services", href: "/services/" }, { label: "Long-Distance Moving" }]}
+        title={<>Long Distance Movers in Connecticut, <br /><span className="text-gold">Without the 2-Week Wait</span></>}
+        image="/images/enfield-truck-home.webp"
+        imageAlt="Castle Express moving truck parked at a Connecticut home"
+        actions={<HeroActions scrollToForm phoneLabel="Call Now" />}
+      >
+        <p>
+          Licensed interstate long distance movers based in Enfield, CT. One dedicated truck. Your schedule. Direct delivery to New England, New York, New Jersey, Pennsylvania, the Carolinas, and Florida.
+        </p>
+        <div className="ip-hero-points">
+          {["USDOT 2307446", "Family-Owned Since 2011", "Dedicated Trucks Only"].map(item => (
+            <div key={item}><Check /> <span>{item}</span></div>
+          ))}
         </div>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }} className="grid-2">
-          <div>
-            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16 }}>
-              <Link href="/services/" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Services</Link>
-              <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
-              <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>Long-Distance Moving</span>
-            </div>
-            <h1 className="heading-1" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, color: "#fff", marginBottom: 20 }}>
-              Long Distance Movers in Connecticut, <br /><span className="text-gold">Without the 2-Week Wait</span>
-            </h1>
-            <p className="body-lg text-white-muted" style={{ maxWidth: 520, marginBottom: 28 }}>
-              Licensed interstate long distance movers based in Enfield, CT. One dedicated truck. Your schedule. Direct delivery to New England, New York, New Jersey, Pennsylvania, the Carolinas, and Florida.
-            </p>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: 16, marginBottom: 32 }}>
-              {["USDOT 2307446", "Family-Owned Since 2011", "Dedicated Trucks Only"].map(item => (
-                <div key={item} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <Check />
-                  <span style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14, color: "rgba(255,255,255,0.85)" }}>{item}</span>
-                </div>
-              ))}
-            </div>
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
-              <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> Call Now</a>
-            </div>
-          </div>
-          <div>
-            <EstimateForm dark />
-          </div>
-        </div>
-      </section>
+      </InteriorHero>
 
       {/* ─── TRUST BAR ─── */}
-      <section className="trust-bar" aria-label="Trust indicators">
+      <section className="trust-bar tb-v2" aria-label="Trust indicators">
         {[
           { icon: <Shield size={18} />, label: "A+ BBB Rating" },
           { icon: <Star size={18} />, label: `${COMPANY.reviewAvg}★ on Google` },
@@ -178,14 +161,16 @@ export default function LongDistanceMovingPage() {
       </section>
 
       {/* ─── SERVICE MODEL ─── */}
-      <section className="section section-light" aria-label="How we're different">
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-          <div className="text-center" style={{ marginBottom: 48 }}>
+      {/* Desktop: estimate form beside this section. Phones: form first, right under the trust strip. */}
+      <section className="section section-light ip-body" aria-label="How we're different">
+        <div className="container grid-2" style={{ alignItems: "start" }}>
+        <div>
+          <div style={{ marginBottom: 32 }}>
             <div className="section-label"><span>How We're Different</span></div>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700 }}>
+            <h2 className="heading-2" style={{ fontFamily: "var(--font-heading)", fontWeight: 700 }}>
               Not a Van Line. Not a Broker. Long Distance Movers in CT Who Do the Work.
             </h2>
-            <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
+            <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px 0 0" }}>
               National van lines share trucks, hand off your belongings to strangers, and give you a 2-week delivery window. We do none of that.
             </p>
           </div>
@@ -213,11 +198,15 @@ export default function LongDistanceMovingPage() {
               },
             ].map((card, i) => (
               <div key={i} className="card" style={{ padding: "28px 24px", position: "relative" }}>
-                <div style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontSize: 32, color: "rgba(212,160,23,0.15)", position: "absolute", top: 16, right: 20 }}>{card.num}</div>
+                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 32, color: "rgba(212,160,23,0.15)", position: "absolute", top: 16, right: 20 }}>{card.num}</div>
                 <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 17, color: "#1A1A2E", marginBottom: 10 }}>{card.title}</h3>
                 <p className="body-sm text-gray" style={{ lineHeight: 1.7 }}>{card.text}</p>
               </div>
             ))}
+          </div>
+        </div>
+          <div className="ip-estimate">
+            <EstimateForm />
           </div>
         </div>
       </section>
@@ -496,8 +485,8 @@ export default function LongDistanceMovingPage() {
             Every long-distance move gets a free in-home or video walkthrough and a firm estimate before you commit to anything.
           </p>
           <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
-            <a href={COMPANY.phoneLink} className="btn btn-outline"><Phone size={18} /> {COMPANY.phone}</a>
+            <EstimateScrollButton className="ip-btn ip-btn-primary">Get Free Estimate <ArrowRight /></EstimateScrollButton>
+            <a href={COMPANY.phoneLink} className="ip-btn ip-btn-outline"><Phone size={18} /> {COMPANY.phone}</a>
           </div>
         </div>
       </section>
@@ -580,21 +569,9 @@ export default function LongDistanceMovingPage() {
       </section>
 
       {/* ─── CTA FOOTER ─── */}
-      <section className="section section-dark text-center" aria-label="Get a free estimate">
-        <div style={{ maxWidth: 600, margin: "0 auto" }}>
-          <div className="section-label" style={{ justifyContent: "center" }}><span>Ready to Move?</span></div>
-          <h2 className="heading-2 text-white" style={{ fontFamily: "var(--font-heading)", fontWeight: 700 }}>
-            Let's Get You Where You're Going
-          </h2>
-          <p className="body-md text-white-muted" style={{ marginBottom: 32 }}>
-            Call today for a free in-home or video walkthrough. We'll give you a firm estimate and a firm delivery date before you commit to anything.
-          </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate</Link>
-            <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
-          </div>
-        </div>
-      </section>
-    </>
+      <EstimateBand scrollToForm eyebrow="Ready to Move?" title="Let's Get You Where You're Going">
+        Call today for a free in-home or video walkthrough. We'll give you a firm estimate and a firm delivery date before you commit to anything.
+      </EstimateBand>
+    </div>
   );
 }
