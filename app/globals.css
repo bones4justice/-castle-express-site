@@ -413,7 +413,6 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   .abo-details p { margin: 0 0 6px; font-family: var(--font-body); font-size: 12.5px; line-height: 1.5; color: rgba(255,255,255,0.8); }
 }
 
-<<<<<<< HEAD
 /* ─── HOMEPAGE HERO v2 (Nov 2026 redesign, app/page.js .hero-v2) ───────────
    Light photo hero. Copy and form behavior are unchanged; only layout/look.
    <=768px   phones: the existing form-first order (rules above), truck photo
@@ -617,7 +616,92 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
 }
 
 /* Trust bar under the redesigned hero: larger labels, thin dividers. */
-=======
+.trust-bar.tb-v2 { gap: 0; padding: 18px 16px; background: #fff; }
+.trust-bar.tb-v2 .trust-item {
+  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 16.5px; color: #1A1A2E;
+  padding: 6px 28px; gap: 10px;
+}
+.trust-bar.tb-v2 .trust-item + .trust-item { border-left: 1px solid #E5E7EB; }
+@media (max-width: 768px) {
+  .trust-bar.tb-v2 { gap: 6px 0; }
+  .trust-bar.tb-v2 .trust-item { font-size: 13.5px; padding: 6px 14px; }
+  .trust-bar.tb-v2 .trust-item + .trust-item { border-left: none; }
+}
+
+/* Brand promise line under the hero paragraph (both variants). */
+.hero-v2 .hv2-promise {
+  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700;
+  font-size: 19px; line-height: 1.35; letter-spacing: -0.005em;
+  color: var(--hv2-ink); margin: -4px 0 20px; text-wrap: balance;
+}
+@media (max-width: 768px) {
+  /* Under the form so step 1 keeps its place on the first screen. */
+  .home-hero.hero-v2 .hv2-promise { order: 6; font-size: 17px; line-height: 1.35; margin: 22px 4px 0; text-align: center; }
+}
+
+/* ─── HOMEPAGE SERVICES v2: white cards, yellow line icons, ivory band ─── */
+.svc-v2 { background: #FDF8F2; }
+.svc-v2-head { text-align: center; margin: 0 auto 40px; max-width: 640px; }
+.svc-v2-head .section-label { justify-content: center; }
+.svc-v2-head .section-label span { font-family: var(--font-dm-sans), Arial, sans-serif; color: #8A6400; }
+.svc-v2-title {
+  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 800;
+  font-size: clamp(28px, 3.2vw, 42px); line-height: 1.12; letter-spacing: -0.02em;
+  color: #1A1A2E; margin: 0 0 14px; text-wrap: balance;
+}
+.svc-v2-title::after {
+  content: ""; display: block; width: 72px; height: 4px; border-radius: 2px;
+  background: #FFC003; margin: 12px auto 0;
+}
+.svc-v2-intro { font-family: var(--font-dm-sans), Arial, sans-serif; font-size: 17px; line-height: 1.55; color: #4A4F63; margin: 0; }
+.svc-v2-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 1080px; margin: 0 auto; }
+.svc-v2-card {
+  display: flex; gap: 20px; align-items: flex-start; padding: 26px 26px 24px;
+  background: #fff; border: 1px solid #ECE5D3; border-radius: 14px;
+  box-shadow: 0 1px 2px rgba(26, 26, 46, 0.04), 0 8px 24px rgba(26, 26, 46, 0.06);
+  text-decoration: none; color: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.svc-v2-card:hover { border-color: #E3CF8F; box-shadow: 0 2px 4px rgba(26, 26, 46, 0.05), 0 14px 32px rgba(26, 26, 46, 0.10); transform: translateY(-2px); }
+.svc-v2-card:focus-visible { outline: 3px solid #1A1A2E; outline-offset: 3px; }
+.svc-v2-icon {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  width: 68px; height: 68px; border-radius: 14px; background: none; color: #FFB800;
+}
+.svc-v2-icon svg { width: 60px; height: 60px; }
+.svc-v2-address {
+  display: flex; align-items: center; justify-content: center; gap: 18px; margin: 36px auto 0; max-width: 1080px;
+  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 18px; color: #1A1A2E;
+}
+.svc-v2-address::before, .svc-v2-address::after { content: ""; flex: 1; height: 2px; background: #FFC003; opacity: 0.7; }
+.svc-v2-address span { display: inline-flex; align-items: center; gap: 8px; }
+.svc-v2-address svg { color: #FFB800; }
+@media (max-width: 768px) { .svc-v2-address { font-size: 15px; gap: 10px; } }
+.svc-v2-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.svc-v2-name { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.svc-v2-card h3 { font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 20px; line-height: 1.25; color: #1A1A2E; margin: 0; }
+.svc-v2-pill {
+  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 11px;
+  letter-spacing: 0.04em; text-transform: uppercase; color: #6B4E00; background: #FFF1B8;
+  padding: 3px 9px; border-radius: 999px;
+}
+.svc-v2-card p { font-family: var(--font-dm-sans), Arial, sans-serif; font-size: 15.5px; line-height: 1.55; color: #4A4F63; margin: 0; }
+.svc-v2-more { text-align: center; margin-top: 32px; }
+.svc-v2-all {
+  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700;
+  background: #fff; color: #1A1A2E; border: 2px solid #1A1A2E;
+}
+.svc-v2-all:hover { background: #1A1A2E; color: #fff; }
+.svc-v2-all:focus-visible { outline: 3px solid #FFC003; outline-offset: 2px; }
+@media (max-width: 768px) {
+  .svc-v2-grid { grid-template-columns: 1fr; gap: 14px; }
+  .svc-v2-card { padding: 20px 18px; gap: 16px; }
+  .svc-v2-icon { width: 54px; height: 54px; }
+  .svc-v2-icon svg { width: 40px; height: 40px; }
+  .svc-v2-card h3 { font-size: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { .svc-v2-card { transition: none; } .svc-v2-card:hover { transform: none; } }
+
 /* ─── INTERIOR PAGES v2 (Nov 2026) ─────────────────────────────────────────
    Reusable look for interior pages, taken from the homepage redesign: warm
    white, charcoal, Castle yellow, DM Sans. Components: components/InteriorKit.js.
@@ -714,7 +798,6 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
 .ip .btn-ghost { color: var(--ip-ink); text-decoration: underline; text-decoration-color: var(--ip-yellow); text-decoration-thickness: 3px; text-underline-offset: 4px; }
 
 /* Trust strip under interior page headers: larger labels, thin dividers. */
->>>>>>> feat/interior-rollout
 .trust-bar.tb-v2 { gap: 0; padding: 18px 16px; background: #fff; }
 .trust-bar.tb-v2 .trust-item {
   font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 16.5px; color: #1A1A2E;
@@ -726,82 +809,6 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   .trust-bar.tb-v2 .trust-item { font-size: 13.5px; padding: 6px 14px; }
   .trust-bar.tb-v2 .trust-item + .trust-item { border-left: none; }
 }
-<<<<<<< HEAD
-
-/* Brand promise line under the hero paragraph (both variants). */
-.hero-v2 .hv2-promise {
-  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700;
-  font-size: 19px; line-height: 1.35; letter-spacing: -0.005em;
-  color: var(--hv2-ink); margin: -4px 0 20px; text-wrap: balance;
-}
-@media (max-width: 768px) {
-  /* Under the form so step 1 keeps its place on the first screen. */
-  .home-hero.hero-v2 .hv2-promise { order: 6; font-size: 17px; line-height: 1.35; margin: 22px 4px 0; text-align: center; }
-}
-
-/* ─── HOMEPAGE SERVICES v2: white cards, yellow line icons, ivory band ─── */
-.svc-v2 { background: #FDF8F2; }
-.svc-v2-head { text-align: center; margin: 0 auto 40px; max-width: 640px; }
-.svc-v2-head .section-label { justify-content: center; }
-.svc-v2-head .section-label span { font-family: var(--font-dm-sans), Arial, sans-serif; color: #8A6400; }
-.svc-v2-title {
-  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 800;
-  font-size: clamp(28px, 3.2vw, 42px); line-height: 1.12; letter-spacing: -0.02em;
-  color: #1A1A2E; margin: 0 0 14px; text-wrap: balance;
-}
-.svc-v2-title::after {
-  content: ""; display: block; width: 72px; height: 4px; border-radius: 2px;
-  background: #FFC003; margin: 12px auto 0;
-}
-.svc-v2-intro { font-family: var(--font-dm-sans), Arial, sans-serif; font-size: 17px; line-height: 1.55; color: #4A4F63; margin: 0; }
-.svc-v2-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; max-width: 1080px; margin: 0 auto; }
-.svc-v2-card {
-  display: flex; gap: 20px; align-items: flex-start; padding: 26px 26px 24px;
-  background: #fff; border: 1px solid #ECE5D3; border-radius: 14px;
-  box-shadow: 0 1px 2px rgba(26, 26, 46, 0.04), 0 8px 24px rgba(26, 26, 46, 0.06);
-  text-decoration: none; color: inherit;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-}
-.svc-v2-card:hover { border-color: #E3CF8F; box-shadow: 0 2px 4px rgba(26, 26, 46, 0.05), 0 14px 32px rgba(26, 26, 46, 0.10); transform: translateY(-2px); }
-.svc-v2-card:focus-visible { outline: 3px solid #1A1A2E; outline-offset: 3px; }
-.svc-v2-icon {
-  flex: none; display: inline-flex; align-items: center; justify-content: center;
-  width: 68px; height: 68px; border-radius: 14px; background: none; color: #FFB800;
-}
-.svc-v2-icon svg { width: 60px; height: 60px; }
-.svc-v2-address {
-  display: flex; align-items: center; justify-content: center; gap: 18px; margin: 36px auto 0; max-width: 1080px;
-  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 18px; color: #1A1A2E;
-}
-.svc-v2-address::before, .svc-v2-address::after { content: ""; flex: 1; height: 2px; background: #FFC003; opacity: 0.7; }
-.svc-v2-address span { display: inline-flex; align-items: center; gap: 8px; }
-.svc-v2-address svg { color: #FFB800; }
-@media (max-width: 768px) { .svc-v2-address { font-size: 15px; gap: 10px; } }
-.svc-v2-body { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
-.svc-v2-name { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
-.svc-v2-card h3 { font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 20px; line-height: 1.25; color: #1A1A2E; margin: 0; }
-.svc-v2-pill {
-  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 11px;
-  letter-spacing: 0.04em; text-transform: uppercase; color: #6B4E00; background: #FFF1B8;
-  padding: 3px 9px; border-radius: 999px;
-}
-.svc-v2-card p { font-family: var(--font-dm-sans), Arial, sans-serif; font-size: 15.5px; line-height: 1.55; color: #4A4F63; margin: 0; }
-.svc-v2-more { text-align: center; margin-top: 32px; }
-.svc-v2-all {
-  font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700;
-  background: #fff; color: #1A1A2E; border: 2px solid #1A1A2E;
-}
-.svc-v2-all:hover { background: #1A1A2E; color: #fff; }
-.svc-v2-all:focus-visible { outline: 3px solid #FFC003; outline-offset: 2px; }
-@media (max-width: 768px) {
-  .svc-v2-grid { grid-template-columns: 1fr; gap: 14px; }
-  .svc-v2-card { padding: 20px 18px; gap: 16px; }
-  .svc-v2-icon { width: 54px; height: 54px; }
-  .svc-v2-icon svg { width: 40px; height: 40px; }
-  .svc-v2-card h3 { font-size: 18px; }
-}
-@media (prefers-reduced-motion: reduce) { .svc-v2-card { transition: none; } .svc-v2-card:hover { transform: none; } }
-=======
 .ip-hero-points { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; }
 .ip-hero-points div { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 14.5px; color: var(--ip-ink); }
 .ip-hero-points svg { color: #6B4E00; stroke: #6B4E00; flex: none; }
@@ -902,4 +909,3 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   .ip-town-drive { font-size: 11.5px; }
 }
 @media (prefers-reduced-motion: reduce) { .ip-btn, .ip-town { transition: none; } }
->>>>>>> feat/interior-rollout
