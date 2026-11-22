@@ -909,3 +909,48 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   .ip-town-drive { font-size: 11.5px; }
 }
 @media (prefers-reduced-motion: reduce) { .ip-btn, .ip-town { transition: none; } }
+
+/* Services index: service cards in the interior look. */
+.ip-svc-section { background: var(--ip-warm); padding: 44px 24px 56px; }
+.ip-svc-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.ip-svc {
+  display: flex; flex-direction: column; background: #fff; border: 1px solid var(--ip-line); border-radius: 14px; padding: 26px 26px 22px;
+  box-shadow: 0 1px 2px rgba(26, 26, 46, 0.04), 0 8px 24px rgba(26, 26, 46, 0.06); transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.ip-svc:hover { border-color: #E3CF8F; box-shadow: 0 2px 4px rgba(26, 26, 46, 0.05), 0 14px 32px rgba(26, 26, 46, 0.10); }
+.ip-svc-top { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.ip-svc-icon { flex: none; width: 60px; height: 60px; border-radius: 14px; background: #FFF6D6; display: flex; align-items: center; justify-content: center; }
+.ip-svc-icon svg { width: 44px; height: 44px; }
+.ip-svc h2 { font-family: var(--font-heading); font-weight: 800; font-size: 22px; line-height: 1.2; letter-spacing: -0.01em; color: var(--ip-ink); margin: 0; }
+.ip-svc-desc { font-size: 15.5px; line-height: 1.6; color: var(--ip-ink-soft); margin: 0 0 16px; }
+.ip-svc h3 { font-family: var(--font-heading); font-weight: 700; font-size: 12.5px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--ip-gold-text); margin: 0 0 10px; }
+.ip-svc-feats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 16px; margin-bottom: 18px; }
+.ip-svc-feats div { display: flex; align-items: flex-start; gap: 8px; font-size: 14.5px; line-height: 1.4; color: var(--ip-ink); min-width: 0; }
+.ip-svc-feats span { min-width: 0; overflow-wrap: anywhere; }
+.ip-svc-feats svg { flex: none; margin-top: 2px; color: #6B4E00; stroke: #6B4E00; }
+.ip-svc-more { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; font-size: 15px; color: var(--ip-ink); text-decoration: underline; text-decoration-color: var(--ip-yellow); text-decoration-thickness: 3px; text-underline-offset: 4px; }
+.ip-svc-also { background: #fff; padding-top: 48px; padding-bottom: 48px; }
+.ip-qa { padding: 16px 0; border-bottom: 1px solid var(--ip-line); }
+.ip-qa p { color: var(--ip-ink-soft) !important; font-size: 15px; }
+
+/* Contact: the form card sits in the page flow (not sticky); phone number stands out. */
+.ip-estimate.ip-estimate-inline { position: static; }
+.ip-contact .ip-contact-phone { font-size: 22px !important; font-weight: 800 !important; color: var(--ip-ink) !important; text-decoration: underline !important; text-decoration-color: var(--ip-yellow) !important; text-decoration-thickness: 3px !important; text-underline-offset: 4px; }
+.ip-contact .ip-contact-link { color: var(--ip-gold-text) !important; text-decoration: underline !important; text-underline-offset: 2px; }
+.ip .card-gold { background: #FFF6D6; border: 1px solid #F0DC9A; border-radius: 14px; }
+.ip .icon-badge-sm { background: #FFF6D6; color: #6B4E00; }
+@media (max-width: 768px) {
+  .ip-svc-section { padding: 18px 16px 36px; }
+  .ip-svc-grid { grid-template-columns: 1fr; gap: 12px; }
+  .ip-svc { padding: 16px 16px 14px; }
+  .ip-svc-top { gap: 12px; margin-bottom: 8px; }
+  .ip-svc-icon { width: 46px; height: 46px; border-radius: 12px; }
+  .ip-svc-icon svg { width: 34px; height: 34px; }
+  .ip-svc h2 { font-size: 19px; }
+  .ip-svc-desc { font-size: 14.5px; line-height: 1.5; margin-bottom: 12px; }
+  .ip-svc-feats { gap: 6px 12px; margin-bottom: 12px; }
+  .ip-svc-feats div { font-size: 13.5px; }
+  .ip-svc-also { padding-top: 32px; padding-bottom: 32px; }
+  .ip-contact.section { padding-top: 20px; }
+  .ip-contact-call { font-size: 17px; }
+}
