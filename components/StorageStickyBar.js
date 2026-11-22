@@ -57,6 +57,29 @@ export default function StorageStickyBar() {
 
   const shouldRender = isAllowedPage(pathname) && !phoneHome;
 
+  // Phones: while a field in the estimate form has focus, the sticky header
+  // and the on-screen keyboard already take most of the screen, so this bar
+  // slides away and comes back when focus leaves the form.
+  const [formFocus, setFormFocus] = useState(false);
+  useEffect(() => {
+    if (!shouldRender || !window.matchMedia) return;
+    const mq = window.matchMedia("(max-width: 768px)");
+    const inForm = (el) => !!(el && el.closest && el.closest("#estimate-form") && /^(INPUT|SELECT|TEXTAREA)$/.test(el.tagName));
+    const update = () => setFormFocus(mq.matches && inForm(document.activeElement));
+    // focusout fires before the next field takes focus; wait a tick so moving
+    // between fields does not flash the bar.
+    const later = () => setTimeout(update, 0);
+    update();
+    document.addEventListener("focusin", update);
+    document.addEventListener("focusout", later);
+    mq.addEventListener ? mq.addEventListener("change", update) : mq.addListener(update);
+    return () => {
+      document.removeEventListener("focusin", update);
+      document.removeEventListener("focusout", later);
+      mq.removeEventListener ? mq.removeEventListener("change", update) : mq.removeListener(update);
+    };
+  }, [shouldRender, pathname]);
+
   useEffect(() => {
     if (!shouldRender) return;
     if (getCookie("storage_bar_dismissed") === "1") {
@@ -101,6 +124,8 @@ export default function StorageStickyBar() {
       role="complementary"
       aria-label="Storage offer"
       className="storage-sticky-bar"
+      data-form-focus={formFocus ? "true" : undefined}
+      aria-hidden={formFocus ? "true" : undefined}
       style={{
         position: "fixed",
         bottom: 0,
@@ -110,7 +135,8 @@ export default function StorageStickyBar() {
         background: "#000000",
         color: "#FFFFFF",
         padding: "16px 24px",
-        transform: show ? "translateY(0)" : "translateY(100%)",
+        transform: show && !formFocus ? "translateY(0)" : "translateY(100%)",
+        visibility: formFocus ? "hidden" : "visible",
         transition: "transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
       }}
     >
