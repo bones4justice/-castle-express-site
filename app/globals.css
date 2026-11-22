@@ -954,3 +954,20 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   .ip-contact.section { padding-top: 20px; }
   .ip-contact-call { font-size: 17px; }
 }
+
+/* About, Reviews, Referral, Giving Back: small pieces for the interior look. */
+.ip .ip-stat-num { color: var(--ip-ink) !important; font-weight: 800 !important; }
+.ip-rating { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin-bottom: 12px; font-size: 16px; color: var(--ip-ink-soft); }
+.ip-stars { display: inline-flex; gap: 2px; color: #F5B301; }
+.ip-rating-num { font-weight: 800; font-size: 22px; color: var(--ip-ink); }
+.ip-review { padding: 26px 24px; }
+.ip-review p { color: var(--ip-ink-soft); }
+.ip-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.ip-badges span { display: inline-flex; align-items: center; padding: 8px 18px; border-radius: 999px; background: #FFF1B8; border: 1px solid #F0DC9A; font-weight: 700; font-size: 14px; color: #5A4100; }
+.ip-notice { margin-top: 18px; display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; background: var(--ip-yellow); color: var(--ip-ink); border-radius: 8px; font-weight: 700; font-size: 15px; }
+.ip-hero-intro strong { color: var(--ip-ink); font-weight: 700; }
+.ip .section-label span { color: var(--ip-gold-text); }
+.ip .section-label::before { background: var(--ip-yellow); }
+.ip .heading-2 { overflow-wrap: anywhere; }
+.ip .btn-primary { background: #FFC003; color: #1A1A2E; border-color: #FFC003; font-family: var(--font-dm-sans), Arial, sans-serif; border-radius: 6px; }
+.ip .btn-primary:hover { background: #F0BE00; opacity: 1; }

@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { COMPANY, ABOUT_TEXT } from "@/content";
 import { ArrowRight } from "@/components/Icons";
+import { InteriorHero, EstimateBand } from "@/components/InteriorKit";
+
 
 export const metadata = {
   title: "About Us | Castle Express Moving & Storage",
@@ -12,11 +14,8 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <>
-      <section className="section-dark" style={{ padding: "60px 24px", textAlign: "center" }}>
-        <div className="section-label" style={{ justifyContent: "center" }}><span>Our Story</span></div>
-        <h1 className="heading-2 text-white">Family Values, Professional Results</h1>
-      </section>
+    <div className="ip">
+      <InteriorHero compact eyebrow="Our Story" title="Family Values, Professional Results" />
 
       <section className="section">
         <div className="container-sm">
@@ -41,7 +40,7 @@ export default function AboutPage() {
               { num: `${COMPANY.reviewAvg}★`, label: `${COMPANY.reviewCount} Google Reviews` },
             ].map((s, i) => (
               <div key={i} className="card-gold" style={{ textAlign: "center" }}>
-                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: 28, color: "#D4A017" }}>{s.num}</div>
+                <div className="ip-stat-num" style={{ fontFamily: "var(--font-heading)", fontWeight: 900, fontSize: 28, color: "#D4A017" }}>{s.num}</div>
                 <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "#6B7280" }}>{s.label}</div>
               </div>
             ))}
@@ -83,9 +82,9 @@ export default function AboutPage() {
           <p style={{ fontFamily: "var(--font-body)", fontSize: 18, color: "#1A1A2E", lineHeight: 1.8, fontStyle: "italic", marginBottom: 32 }}>
             {ABOUT_TEXT.mission}
           </p>
-          <Link href="/contact/" className="btn btn-primary">Get a Free Estimate <ArrowRight /></Link>
+          <Link href="/contact/" className="ip-btn ip-btn-primary">Get a Free Estimate <ArrowRight /></Link>
         </div>
       </section>
-    </>
+    </div>
   );
 }

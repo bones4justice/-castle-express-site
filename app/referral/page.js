@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { COMPANY } from "@/content";
 import { Phone, Check, ArrowRight } from "@/components/Icons";
+import { InteriorHero, EstimateBand } from "@/components/InteriorKit";
 import ReferralForm from "./ReferralForm";
 
 export const metadata = {
@@ -38,26 +39,17 @@ const FAQS = [
 
 export default function ReferralPage() {
   return (
-    <>
+    <div className="ip">
       {/* HERO */}
-      <section className="section-dark" style={{ padding: "70px 24px 50px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "relative" }}>
-          <h1 className="heading-1" style={{ color: "#fff", marginBottom: 16, fontSize: "clamp(28px, 4vw, 44px)" }}>
-            Get Paid to Refer. It&apos;s That Simple.
-          </h1>
-          <p className="body-lg text-white-muted" style={{ maxWidth: 560, margin: "0 auto 24px" }}>
-            Send us a move. We take great care of them with our <Link href="/services/" style={{ color: "#D4A017", fontWeight: 600 }}>full range of moving services</Link> from our <Link href="/movers-enfield-ct/" style={{ color: "#D4A017", fontWeight: 600 }}>Enfield, CT</Link> base. You earn 10% of the completed invoice - paid by check within 30 days.
-          </p>
-          <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 18px", background: "rgba(212,160,23,0.15)", border: "1px solid rgba(212,160,23,0.3)", borderRadius: 20, fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017" }}>
-              10% Commission
-            </span>
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "8px 18px", background: "rgba(212,160,23,0.15)", border: "1px solid rgba(212,160,23,0.3)", borderRadius: 20, fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017" }}>
-              Paid Within 30 Days
-            </span>
-          </div>
+      <InteriorHero compact title={<>Get Paid to Refer. It&apos;s That Simple.</>}>
+        <p>
+          Send us a move. We take great care of them with our <Link href="/services/">full range of moving services</Link> from our <Link href="/movers-enfield-ct/">Enfield, CT</Link> base. You earn 10% of the completed invoice - paid by check within 30 days.
+        </p>
+        <div className="ip-badges">
+          <span>10% Commission</span>
+          <span>Paid Within 30 Days</span>
         </div>
-      </section>
+      </InteriorHero>
 
       {/* WHO THIS IS FOR */}
       <section className="section section-light">
@@ -133,7 +125,7 @@ export default function ReferralPage() {
             Common Questions
           </h2>
           {FAQS.map((faq, i) => (
-            <details key={i} style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
+            <details key={i} className="ip-faq" style={{ marginBottom: 12, padding: "14px 18px", background: "#F9FAFB", borderRadius: 8, border: "1px solid #E5E7EB" }}>
               <summary style={{ fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 15, color: "#1A1A2E", cursor: "pointer" }}>{faq.q}</summary>
               <p className="body-sm" style={{ color: "#6B7280", marginTop: 8, lineHeight: 1.6 }}>{faq.a}</p>
             </details>
@@ -142,15 +134,17 @@ export default function ReferralPage() {
       </section>
 
       {/* CTA */}
-      <section className="section section-dark text-center">
-        <div style={{ maxWidth: 500, margin: "0 auto" }}>
-          <h2 className="heading-2 text-white">Questions About the Program?</h2>
-          <p className="body-md text-white-muted" style={{ marginBottom: 24 }}>
-            Call us directly or email <a href="mailto:joe@cemoving.com" style={{ color: "#D4A017", fontWeight: 600 }}>joe@cemoving.com</a> - we&apos;ll get you taken care of.
+      <section className="ip-cta">
+        <div className="ip-cta-inner">
+          <h2 className="ip-cta-title">Questions About the Program?</h2>
+          <p className="ip-cta-text">
+            Call us directly or email <a href="mailto:joe@cemoving.com">joe@cemoving.com</a> - we&apos;ll get you taken care of.
           </p>
-          <a href={COMPANY.phoneLink} className="btn btn-primary"><Phone size={18} /> {COMPANY.phone}</a>
+          <div className="ip-actions ip-actions-center">
+            <a href={COMPANY.phoneLink} className="ip-btn ip-btn-primary"><Phone size={18} /> {COMPANY.phone}</a>
+          </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -28,7 +28,7 @@ export function InteriorHero({ crumbs = [], eyebrow, title, children, actions, i
           )}
           {eyebrow && <div className="ip-eyebrow">{eyebrow}</div>}
           <h1 className="ip-h1">{title}</h1>
-          <div className="ip-hero-intro">{children}</div>
+          {children && <div className="ip-hero-intro">{children}</div>}
           {actions && <div className="ip-actions">{actions}</div>}
         </div>
         {image && (
