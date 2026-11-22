@@ -38,6 +38,7 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "", eve
   });
   const [honeypot, setHoneypot] = useState("");
   const openedAt = useRef(Date.now());
+  const quiet = useRef(false); // true when the server discarded the send as spam
 
   const update = (field) => (e) =>
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
@@ -105,6 +106,10 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "", eve
       }
       // Same conversion signals the sitewide form fires - ONLY on a confirmed
       // accepted submit, never on step changes, clicks, page views, or failed sends.
+      // res.s = the server quietly discarded this as spam: show the normal
+      // thank-you screen but send no conversions.
+      quiet.current = Boolean(res.s);
+      if (!quiet.current) {
       if (typeof fbq === "function") fbq("track", "Lead");
       if (typeof window.oaiq === "function")
         window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
@@ -121,6 +126,7 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "", eve
           lp_variant: lpVariant,
           send_to: "G-97Z4EHJM63",
         });
+      }
       setSubmitted(true);
     } catch (err) {
       console.error("Lead submission error:", err);
@@ -131,7 +137,7 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "", eve
 
   const successTracked = useRef(false);
   useEffect(() => {
-    if (!submitted || successTracked.current) return;
+    if (!submitted || successTracked.current || quiet.current) return;
     successTracked.current = true;
     if (window.gtag) {
       const lv = readVariantCookie(document.cookie) || "not_in_test";

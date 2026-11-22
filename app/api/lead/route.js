@@ -112,16 +112,31 @@ async function reportWriteFailure(target, formName, detail) {
 // A real name word of 3+ letters virtually always contains a vowel.
 // Catches bot names like "Jchr Pzqhzctzd". Diacritics are folded to ASCII
 // first so real names like Björn or Françoise never trip the check.
+//
+// Two narrow exceptions (2026-11-22) so real customers are not dropped:
+//  - common vowel-less titles and business abbreviations ("Mrs. Linda Smith",
+//    "Smith & Sons LLC", "Hartford Property Mgmt") skip the vowel test;
+//  - a generational ordinal ("John Smith 3rd") is the only digit allowed.
+// Every other word is still checked, so "Mrs Pzqhzctzd" stays blocked.
+const NAME_ABBREVIATIONS = new Set([
+  "mr", "mrs", "ms", "mx", "dr", "jr", "sr", "md", "phd", "dds", "rn",
+  "llc", "inc", "ltd", "llp", "pllc", "corp", "mgmt", "svc", "svcs", "dept",
+  "bldg", "ctr",
+]);
+
 function isGibberishName(name) {
   if (!name || name.trim().length < 2) return true;
-  if (/\d/.test(name)) return true;
   if (/https?:|www\./i.test(name)) return true;
   const ascii = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   const words = ascii.trim().split(/\s+/);
-  const gibberish = words.filter(
-    (w) => w.replace(/[^a-z]/gi, "").length >= 3 && !/[aeiouy]/i.test(w)
-  );
-  return gibberish.length > 0;
+  for (const w of words) {
+    const core = w.toLowerCase().replace(/[^a-z0-9]/g, "");
+    if (/\d/.test(core) && !/^(1st|2nd|3rd|[4-9]th)$/.test(core)) return true;
+    const letters = core.replace(/[^a-z]/g, "");
+    if (NAME_ABBREVIATIONS.has(letters)) continue;
+    if (letters.length >= 3 && !/[aeiouy]/.test(letters)) return true;
+  }
+  return false;
 }
 
 // NANP: 10 digits (optionally 11 with leading 1); area code and exchange
@@ -325,8 +340,11 @@ export async function POST(request) {
     console.warn(
       `[lead-spam] blocked ${body.form} lead from ${ip}: ${reason}`
     );
-    // Fake success — don't teach the bot what tripped.
-    return Response.json({ ok: true });
+    // Fake success — don't teach the bot what tripped. The `s` flag tells our
+    // own forms to show the thank-you screen but NOT fire ad/analytics
+    // conversions, so blocked bots stop being counted as leads by Google
+    // and Meta. It reveals nothing about which rule matched.
+    return Response.json({ ok: true, s: 1 });
   }
 
   // Honest typos get a real, fixable error (the forms display it).

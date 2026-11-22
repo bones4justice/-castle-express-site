@@ -42,6 +42,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
   });
   const [honeypot, setHoneypot] = useState("");
   const openedAt = useRef(Date.now());
+  const quiet = useRef(false); // true when the server discarded the send as spam
 
   const update = (field) => (e) => setFormData(prev => ({ ...prev, [field]: e.target.value }));
 
@@ -157,6 +158,10 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
       // Conversion events fire ONLY on a confirmed accepted submit, never on
       // button clicks, page views, or failed sends - ad campaigns optimize on
       // these.
+      // res.s = the server quietly discarded this as spam: show the normal
+      // thank-you screen but send no conversions.
+      quiet.current = Boolean(res.s);
+      if (!quiet.current) {
       if (typeof fbq === "function") fbq("track", "Lead");
       if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       // send_to is required for GA4: GTM claims untargeted gtag() pushes and
@@ -164,6 +169,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
       // reaches G-97Z4EHJM63. GTM's Ads conversion trigger still fires on this
       // same push, send_to does not suppress it.
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer, send_to: "G-97Z4EHJM63" }); }
+      }
       setSubmitted(true);
     } catch (err) {
       console.error("Lead submission error:", err);
@@ -198,7 +204,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
   // ─── Success State ───
   const successTracked = useRef(false);
   useEffect(() => {
-    if (!submitted || successTracked.current) return;
+    if (!submitted || successTracked.current || quiet.current) return;
     successTracked.current = true;
     const hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || "(not set)";
     const loc = window.location.pathname === "/" ? "homepage" : window.location.pathname;

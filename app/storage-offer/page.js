@@ -145,6 +145,7 @@ const s = {
 export default function StorageOfferPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [sendError, setSendError] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
   const [form, setForm] = useState({
     firstName: "",
@@ -165,7 +166,8 @@ export default function StorageOfferPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await fetch("https://formspree.io/f/xnjojwly", {
+      setSendError(false);
+      const resp = await fetch("https://formspree.io/f/xnjojwly", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -179,6 +181,9 @@ export default function StorageOfferPage() {
           source: "storage-offer-popup",
         }),
       });
+      // fetch() does not throw on an HTTP error, so check it: never show
+      // "Thank you" for a request that was not accepted.
+      if (!resp.ok) throw new Error(`Formspree responded ${resp.status}`);
       // Non-estimate form: Contact, not Lead (keeps the estimate campaign clean).
       if (typeof window.fbq === "function") window.fbq("track", "Contact");
       if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" });
@@ -186,6 +191,7 @@ export default function StorageOfferPage() {
       setSubmitted(true);
     } catch (err) {
       console.error("Form error:", err);
+      setSendError(true);
     }
     setLoading(false);
   };
@@ -458,6 +464,11 @@ export default function StorageOfferPage() {
               <button type="submit" disabled={loading} style={{ ...s.btnFull, opacity: loading ? 0.7 : 1 }}>
                 {loading ? "Submitting..." : "Claim My Free Month"}
               </button>
+              {sendError && (
+                <p role="alert" style={{ fontFamily: "var(--font-body), 'Merriweather', serif", fontSize: "14px", color: "#FCA5A5", marginTop: "12px", textAlign: "center" }}>
+                  We could not send your request. Please try again, or call us at 1-888-553-4503.
+                </p>
+              )}
               <p style={{ textAlign: "center", color: "#969a9d", fontSize: "13px", marginTop: "12px" }}>
                 We respond within 24 hours. Usually much faster.
               </p>
