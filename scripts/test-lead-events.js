@@ -177,9 +177,10 @@ check("host gate: previews and localhost load no tags at all", () => {
   }
 });
 
-check("production, untagged visit: nothing loads until the first tap", () => {
+check("production, untagged visit: GA4 loads at once, everything else waits for the first tap", () => {
   const b = runLoader({ host: PROD });
-  assert.deepStrictEqual(b.injected, []);
+  assert.strictEqual(b.injected.length, 1);
+  assert.ok(b.has("gtag/js?id=G-97Z4EHJM63"));
   assert.strictEqual(typeof b.window.fbq, "function"); // queues exist from the start
   b.fire("pointerdown");
   assert.ok(b.has("gtm.js?id=GTM-KLR2TQC"));
@@ -194,6 +195,7 @@ check("production, untagged visit with no interaction: loads after the delay", (
   const b = runLoader({ host: PROD });
   assert.strictEqual(b.timers.length, 1);
   assert.strictEqual(b.timers[0].ms, DEFER_MS);
+  assert.ok(!b.has("gtm.js"), "Tag Manager must wait on an untagged visit");
   b.runTimers();
   assert.strictEqual(b.injected.length, 5);
   b.fire("scroll"); // a later interaction must not load anything twice
@@ -210,6 +212,21 @@ check("production, ad click: Tag Manager and GA4 load right away", () => {
     assert.ok(!b.has("clarity.ms"), `${search}: Clarity should wait`);
   }
   assert.ok(runLoader({ host: PROD, search: "?fbclid=F" }).has("fbevents.js"), "Meta click loads Meta");
+});
+
+check("production: a phone tap before Tag Manager loads is still queued for it", () => {
+  // The site pushes click_phone to the dataLayer itself (app/layout.js), so
+  // GA4 gets it directly and Tag Manager finds it in the queue when it loads.
+  const b = runLoader({ host: PROD });
+  b.window.gtag("event", "click_phone", { send_to: "G-97Z4EHJM63" });
+  assert.ok(!b.has("gtm.js"));
+  b.fire("pointerdown");
+  const dl = Array.from(b.window.dataLayer);
+  const tap = dl.findIndex((a) => a && a[0] === "event" && a[1] === "click_phone");
+  const gtmStart = dl.findIndex((a) => a && a.event === "gtm.js");
+  assert.ok(tap >= 0 && gtmStart > tap, "click_phone must already be in the dataLayer when Tag Manager starts");
+  const layout = read("app/layout.js");
+  assert.ok(/gtag\('event', 'click_phone'/.test(layout), "click_phone is no longer pushed by the site");
 });
 
 check("production: GA4 config is pushed once and only on production", () => {
