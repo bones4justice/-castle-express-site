@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
+import { sendGenerateLead } from "@/lib/leadEvents";
 
 const FIELD_STYLE = {
   background: "rgba(255,255,255,0.06)",
@@ -46,7 +47,20 @@ export default function PackingEstimateForm() {
 
   const set = (k) => (e) => setValues(v => ({ ...v, [k]: e.target.value }));
 
+  // One submission at a time: a double tap must not send two leads. Same
+  // lock the estimate forms use.
+  const inFlight = useRef(false);
   async function handleSubmit() {
+    if (inFlight.current) return;
+    inFlight.current = true;
+    try {
+      await submitLead();
+    } finally {
+      inFlight.current = false;
+    }
+  }
+
+  async function submitLead() {
     const bad = {};
     REQUIRED.forEach(k => { if (!values[k].trim()) bad[k] = true; });
     setInvalid(bad);
@@ -95,7 +109,7 @@ export default function PackingEstimateForm() {
       if (!res.s) {
         if (typeof window.fbq === "function") window.fbq("track", "Contact");
         if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
-        if (typeof window.gtag !== "undefined") window.gtag("event", "generate_lead", { event_category: "form", event_label: "packing_form", packing_package: values.pkg, send_to: "G-97Z4EHJM63" });
+        sendGenerateLead(oaiEventId, { event_category: "form", event_label: "packing_form", packing_package: values.pkg });
       }
       setStatus("done");
     } catch (err) {

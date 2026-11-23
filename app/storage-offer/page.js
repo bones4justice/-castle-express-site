@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
+import { sendGenerateLead } from "@/lib/leadEvents";
 import { Check, Phone, Shield, Star, Clock, Box, Home, DollarSign } from "@/components/Icons";
 
 /* ─── VALUE STACK DATA ─── */
@@ -167,7 +168,21 @@ export default function StorageOfferPage() {
     setForm((prev) => ({ ...prev, [field]: val }));
   };
 
+  // One submission at a time: a double tap (or Enter + tap) must not send two
+  // leads. Same lock the estimate forms use.
+  const inFlight = useRef(false);
   const handleSubmit = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (inFlight.current) return;
+    inFlight.current = true;
+    try {
+      await submitLead(e);
+    } finally {
+      inFlight.current = false;
+    }
+  };
+
+  const submitLead = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -222,7 +237,7 @@ export default function StorageOfferPage() {
       // Non-estimate form: Contact, not Lead (keeps the estimate campaign clean).
       if (typeof window.fbq === "function") window.fbq("track", "Contact");
       if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "storage_offer", event_label: "storage_offer_form", hero_variant: hv, send_to: "G-97Z4EHJM63" }); }
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; sendGenerateLead(oaiEventId, { event_category: "storage_offer", event_label: "storage_offer_form", hero_variant: hv }); }
       }
       setSubmitted(true);
     } catch (err) {

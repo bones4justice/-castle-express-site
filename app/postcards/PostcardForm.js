@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Check, ArrowRight } from "@/components/Icons";
 import { OFFERS } from "./offers";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
+import { sendGenerateLead } from "@/lib/leadEvents";
 import styles from "./postcard-form.module.css";
 
 const HOME_SIZES = ["Studio", "1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4+ Bedrooms"];
@@ -41,7 +42,21 @@ export default function PostcardForm() {
 
   const update = (field) => (e) => setFormData(prev => ({ ...prev, [field]: e.target.value }));
 
+  // One submission at a time: a double tap (or Enter + tap) must not send two
+  // leads. Same lock the estimate forms use.
+  const inFlight = useRef(false);
   const handleSubmit = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (inFlight.current) return;
+    inFlight.current = true;
+    try {
+      await submitLead(e);
+    } finally {
+      inFlight.current = false;
+    }
+  };
+
+  const submitLead = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
@@ -93,7 +108,7 @@ export default function PostcardForm() {
       // Non-estimate form: Contact, not Lead (keeps the estimate campaign clean).
       if (typeof window.fbq !== "undefined") window.fbq("track", "Contact");
       if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "postcard_form", hero_variant: hv, send_to: "G-97Z4EHJM63" }); }
+      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; sendGenerateLead(oaiEventId, { event_category: "form", event_label: "postcard_form", hero_variant: hv }); }
       if (typeof window.gtag !== "undefined") {
         window.gtag("event", "postcard_submit", {
           event_category: "postcard",
