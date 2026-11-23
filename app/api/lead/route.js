@@ -25,6 +25,23 @@ const FORMS = {
     formspree: "https://formspree.io/f/xnjojwly",
     providerKey: process.env.SMARTMOVING_REFERRAL_PROVIDER_KEY,
   },
+  // Promo / packing forms (2026-11-22). These used to post straight to
+  // Formspree from the browser, so their leads never reached SmartMoving and
+  // had no spam filter or failure alert. Each keeps the Formspree inbox it
+  // always used; in SmartMoving they arrive under the website provider with
+  // the form named at the start of Notes.
+  postcard: {
+    formspree: "https://formspree.io/f/xnjojwly",
+    providerKey: process.env.SMARTMOVING_PROVIDER_KEY,
+  },
+  "storage-offer": {
+    formspree: "https://formspree.io/f/xnjojwly",
+    providerKey: process.env.SMARTMOVING_PROVIDER_KEY,
+  },
+  packing: {
+    formspree: "https://formspree.io/f/xpqjkjga",
+    providerKey: process.env.SMARTMOVING_PROVIDER_KEY,
+  },
 };
 
 const BRANCH_ID = "352498a1-e171-40cd-8b35-ac5d011720d0";
@@ -190,9 +207,16 @@ const FIRST_SIZE_OPTIONS = new Set(["Studio", "Studio / 1 Bedroom"]);
 // The under-3-seconds rule and every other spam check still apply.
 const DEFAULT_DROPDOWN_EXEMPT_LANDINGS = new Set(["get-estimate"]);
 
+// The promo / packing forms are outside this rule too: it was calibrated on
+// the sitewide estimate forms only (Joe, 10/25), the postcard form requires a
+// move date, and the other two have no size dropdown at all. Every other spam
+// check still applies to them.
+const DEFAULT_DROPDOWN_EXEMPT_FORMS = new Set(["postcard", "storage-offer", "packing"]);
+
 function isDefaultDropdownSpam(body) {
   const fs = body.formspree || {};
   const sm = body.smartmoving || {};
+  if (DEFAULT_DROPDOWN_EXEMPT_FORMS.has(body.form)) return false;
   if (
     DEFAULT_DROPDOWN_EXEMPT_LANDINGS.has(body.landing) ||
     DEFAULT_DROPDOWN_EXEMPT_LANDINGS.has(fs.landing)

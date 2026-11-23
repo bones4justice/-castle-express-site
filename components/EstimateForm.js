@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { MOVE_SIZES, LEAD_SOURCES, COMPANY } from "@/content";
 import { Check, ArrowRight, Phone } from "@/components/Icons";
-import { getSmartMovingAttribution } from "@/lib/utm";
+import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import { boxOfferSeen, BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
 import { readVariantCookie } from "@/lib/lpAbTest";
 import { geVariantForLead } from "@/lib/geAbTest";
@@ -141,7 +141,9 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
           form: "estimate",
           hp: honeypot,
           elapsedMs: Date.now() - openedAt.current,
-          formspree: { ...formData, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer },
+          // UTM + click ids ride along to Formspree too, so the lead keeps its
+          // ad attribution even if the SmartMoving write fails.
+          formspree: { ...formData, ...getAttribution(), lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer },
           smartmoving: smPayload,
           oaiEventId,
           pageUrl: window.location.href,

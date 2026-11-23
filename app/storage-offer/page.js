@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
+import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import { Check, Phone, Shield, Star, Clock, Box, Home, DollarSign } from "@/components/Icons";
 
 /* ─── VALUE STACK DATA ─── */
@@ -142,10 +143,14 @@ const s = {
   },
 };
 
+const SEND_FALLBACK = "We could not send your request. Please try again, or call us at 1-888-553-4503.";
+
 export default function StorageOfferPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [sendError, setSendError] = useState(false);
+  const [sendError, setSendError] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const openedAt = useRef(Date.now());
   const [openFaq, setOpenFaq] = useState(null);
   const [form, setForm] = useState({
     firstName: "",
@@ -166,32 +171,63 @@ export default function StorageOfferPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      setSendError(false);
-      const resp = await fetch("https://formspree.io/f/xnjojwly", {
+      setSendError("");
+      // Leads go through /api/lead (server-side spam filter + Formspree +
+      // SmartMoving), same as the estimate forms, so storage-offer leads land
+      // in the CRM with their ad attribution instead of only in an inbox.
+      const smPayload = {
+        FullName: `${form.firstName} ${form.lastName}`.trim(),
+        PhoneNumber: form.phone,
+        Email: form.email,
+        UserOptIn: true,
+        Notes: `STORAGE OFFER (first month free) - Storing: ${form.storing || "not specified"} | Booking a move too: ${form.hasMove ? "yes" : "no"}`,
+      };
+      if (form.moveDate) smPayload.MoveDate = form.moveDate.replace(/-/g, "");
+      Object.assign(smPayload, getSmartMovingAttribution());
+
+      const oaiEventId = crypto.randomUUID();
+      const resp = await fetch("/api/lead/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          firstName: form.firstName,
-          lastName: form.lastName,
-          phone: form.phone,
-          email: form.email,
-          moveDate: form.moveDate,
-          storing: form.storing,
-          hasMove: form.hasMove,
-          source: "storage-offer-popup",
+          form: "storage-offer",
+          hp: honeypot,
+          elapsedMs: Date.now() - openedAt.current,
+          formspree: {
+            firstName: form.firstName,
+            lastName: form.lastName,
+            phone: form.phone,
+            email: form.email,
+            moveDate: form.moveDate,
+            storing: form.storing,
+            hasMove: form.hasMove,
+            source: "storage-offer-popup",
+            ...getAttribution(),
+          },
+          smartmoving: smPayload,
+          oaiEventId,
+          pageUrl: window.location.href,
         }),
       });
-      // fetch() does not throw on an HTTP error, so check it: never show
-      // "Thank you" for a request that was not accepted.
-      if (!resp.ok) throw new Error(`Formspree responded ${resp.status}`);
+      const res = await resp.json().catch(() => ({}));
+      // Never show "Thank you" for a request that was not accepted. A fixable
+      // typo (phone, email, date) comes back with its own message.
+      if (!resp.ok || res.ok === false) {
+        setSendError(res.error || SEND_FALLBACK);
+        setLoading(false);
+        return;
+      }
+      // res.s = quietly discarded as spam: thank-you screen, no conversions.
+      if (!res.s) {
       // Non-estimate form: Contact, not Lead (keeps the estimate campaign clean).
       if (typeof window.fbq === "function") window.fbq("track", "Contact");
-      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" });
+      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "storage_offer", event_label: "storage_offer_form", hero_variant: hv, send_to: "G-97Z4EHJM63" }); }
+      }
       setSubmitted(true);
     } catch (err) {
       console.error("Form error:", err);
-      setSendError(true);
+      setSendError(SEND_FALLBACK);
     }
     setLoading(false);
   };
@@ -461,12 +497,17 @@ export default function StorageOfferPage() {
                 </label>
               </div>
               <input type="hidden" name="source" value="storage-offer-popup" />
+              {/* Honeypot: invisible to humans, bots auto-fill it. */}
+              <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", height: 0, overflow: "hidden" }}>
+                <label htmlFor="so-website-field">Website</label>
+                <input id="so-website-field" name="website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+              </div>
               <button type="submit" disabled={loading} style={{ ...s.btnFull, opacity: loading ? 0.7 : 1 }}>
                 {loading ? "Submitting..." : "Claim My Free Month"}
               </button>
               {sendError && (
                 <p role="alert" style={{ fontFamily: "var(--font-body), 'Merriweather', serif", fontSize: "14px", color: "#FCA5A5", marginTop: "12px", textAlign: "center" }}>
-                  We could not send your request. Please try again, or call us at 1-888-553-4503.
+                  {sendError}
                 </p>
               )}
               <p style={{ textAlign: "center", color: "#969a9d", fontSize: "13px", marginTop: "12px" }}>
