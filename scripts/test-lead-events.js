@@ -241,6 +241,18 @@ check("production: GA4 config is pushed once and only on production", () => {
   assert.strictEqual(gtmStarts.length, 1);
 });
 
+check("production: Meta Contact for a phone tap is sent once, even when Tag Manager sends its own", () => {
+  const b = runLoader({ host: PROD });
+  const contacts = () => Array.from(b.window.fbq.queue).filter((a) => a[0] === "track" && a[1] === "Contact").length;
+  b.window.fbq("track", "Contact"); // the site, on the tap
+  b.window.fbq("track", "Contact"); // Tag Manager's tag, a moment later
+  assert.strictEqual(contacts(), 1);
+  b.window.fbq("track", "Lead"); // other events are never dropped
+  b.window.fbq("track", "Lead");
+  assert.strictEqual(Array.from(b.window.fbq.queue).filter((a) => a[1] === "Lead").length, 2);
+  assert.ok(/window\.fbq\('track', 'Contact'\)/.test(read("app/layout.js")), "site no longer sends Contact on phone taps");
+});
+
 check("production, headless bot: GA4 is skipped, other tags still load", () => {
   const b = runLoader({ host: PROD, webdriver: true });
   b.fire("pointerdown");

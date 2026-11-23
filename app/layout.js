@@ -83,6 +83,10 @@ export default function RootLayout({ children }) {
           document.addEventListener('click', function(e) {
             var link = e.target.closest('a[href^="tel:"]');
             if (link) {
+              // Meta "Contact" for the call. Tag Manager sends one too once it
+              // has loaded; duplicates are dropped in lib/trackerLoaderScript.js.
+              if (typeof window.fbq === 'function') window.fbq('track', 'Contact');
+
               var el = link.closest('.mobile-sticky-cta') ? 'sticky' : link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
               var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'not_set';
               var lv = (document.cookie.match(/lp_ab=(landing|service)/) || [])[1] || 'not_in_test';
