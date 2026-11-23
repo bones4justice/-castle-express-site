@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { getPostBySlug, getAllPosts } from "@/lib/blogData";
 import { notFound } from "next/navigation";
-import { COMPANY } from "@/content";
-import { Phone } from "@/components/Icons";
+import { ArrowRight } from "@/components/Icons";
 import { parseInline } from "@/lib/parseInline";
 import imageDims from "@/lib/imageDims.json";
+import { InteriorHero, EstimateBand } from "@/components/InteriorKit";
 
 export async function generateStaticParams() {
-  return getAllPosts().map(p => ({ slug: p.slug }));
+  return getAllPosts().map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }) {
@@ -41,94 +41,69 @@ export default function BlogPost({ params }) {
   const post = getPostBySlug(params.slug);
   if (!post) notFound();
 
-  // parseInline imported from @/lib/parseInline
-
   const renderBody = (body) => {
     const blocks = body.trim().split("\n\n");
-    // The first image is usually the post hero near the top of the viewport:
-    // load it eagerly so it doesn't drag out LCP; lazy-load the rest.
-    const firstImgIdx = blocks.findIndex(b => /^!\[(.*?)\]\((.*?)\)$/.test(b));
-    return blocks
-      .map((block, i) => {
-        const imgMatch = block.match(/^!\[(.*?)\]\((.*?)\)$/);
-        if (imgMatch) {
-          // Real width/height (lib/imageDims.json, regenerate with
-          // scripts/gen-image-dims.js after adding images) so the browser
-          // reserves the right box before the image loads - no layout shift.
-          const dims = imageDims[imgMatch[2]];
-          return <img key={i} src={imgMatch[2]} alt={imgMatch[1]} width={dims?.w} height={dims?.h} loading={i === firstImgIdx ? "eager" : "lazy"} fetchPriority={i === firstImgIdx ? "high" : undefined} style={{
-            width: "100%",
-            height: "auto",
-            borderRadius: 12,
-            margin: "8px 0 28px",
-            display: "block",
-          }} />;
-        }
-        if (block.startsWith("## ")) {
-          return <h2 key={i} style={{
-            fontFamily: "var(--font-heading)",
-            fontWeight: 800,
-            fontSize: 22,
-            color: "#1A1A2E",
-            marginTop: 36,
-            marginBottom: 12,
-          }}>{block.replace("## ", "")}</h2>;
-        }
-        if (block.startsWith("### ")) {
-          return <h3 key={i} style={{
-            fontFamily: "var(--font-heading)",
-            fontWeight: 700,
-            fontSize: 18,
-            color: "#1A1A2E",
-            marginTop: 28,
-            marginBottom: 10,
-          }}>{block.replace("### ", "")}</h3>;
-        }
-        if (block === "---") {
-          return <hr key={i} style={{ border: 0, borderTop: "1px solid #E5E7EB", margin: "32px 0" }} />;
-        }
-        // Blocks containing "- " bullet or "1. " numbered lines: render real lists,
-        // with any non-list lines in the same block as paragraphs.
-        const lines = block.split("\n");
-        if (lines.length > 1 && lines.some((l) => /^(- |\d+\. )/.test(l))) {
-          const out = [];
-          let items = null, ordered = false;
-          const flush = () => {
-            if (!items) return;
-            const Tag = ordered ? "ol" : "ul";
-            out.push(<Tag key={`${i}-${out.length}`} className="body-md" style={{
-              color: "#374151", lineHeight: 1.8, marginBottom: 16, paddingLeft: 24,
-            }}>{items.map((it, j) => <li key={j} style={{ marginBottom: 6 }}>{parseInline(it)}</li>)}</Tag>);
-            items = null;
-          };
-          lines.forEach((l) => {
-            const m = l.match(/^(- |(\d+)\. )(.*)$/);
-            if (m) {
-              const isOrdered = m[2] !== undefined;
-              if (items && ordered !== isOrdered) flush();
-              if (!items) { items = []; ordered = isOrdered; }
-              items.push(m[3]);
-            } else {
-              flush();
-              if (l.trim()) out.push(<p key={`${i}-${out.length}`} className="body-md" style={{
-                color: "#374151", lineHeight: 1.8, marginBottom: 8,
-              }}>{parseInline(l)}</p>);
-            }
-          });
-          flush();
-          return <div key={i}>{out}</div>;
-        }
-        if (block.startsWith("**") && block.endsWith("**")) {
-          return <p key={i} style={{ fontWeight: 700, color: "#1A1A2E", marginBottom: 8 }}>
-            {block.replace(/\*\*/g, "")}
-          </p>;
-        }
-        return <p key={i} className="body-md" style={{
-          color: "#374151",
-          lineHeight: 1.8,
-          marginBottom: 16,
-        }}>{parseInline(block)}</p>;
-      });
+    const firstImgIdx = blocks.findIndex((b) => /^!\[(.*?)\]\((.*?)\)$/.test(b));
+    return blocks.map((block, i) => {
+      const imgMatch = block.match(/^!\[(.*?)\]\((.*?)\)$/);
+      if (imgMatch) {
+        const dims = imageDims[imgMatch[2]];
+        return (
+          <img
+            key={i}
+            src={imgMatch[2]}
+            alt={imgMatch[1]}
+            width={dims?.w}
+            height={dims?.h}
+            loading={i === firstImgIdx ? "eager" : "lazy"}
+            fetchPriority={i === firstImgIdx ? "high" : undefined}
+            className="ip-blog-img"
+          />
+        );
+      }
+      if (block.startsWith("## ")) {
+        return <h2 key={i} className="ip-blog-h2">{block.replace("## ", "")}</h2>;
+      }
+      if (block.startsWith("### ")) {
+        return <h3 key={i} className="ip-blog-h3">{block.replace("### ", "")}</h3>;
+      }
+      if (block === "---") {
+        return <hr key={i} className="ip-blog-hr" />;
+      }
+      const lines = block.split("\n");
+      if (lines.length > 1 && lines.some((l) => /^(- |\d+\. )/.test(l))) {
+        const out = [];
+        let items = null, ordered = false;
+        const flush = () => {
+          if (!items) return;
+          const Tag = ordered ? "ol" : "ul";
+          out.push(
+            <Tag key={`${i}-${out.length}`} className="ip-blog-list">
+              {items.map((it, j) => <li key={j}>{parseInline(it)}</li>)}
+            </Tag>
+          );
+          items = null;
+        };
+        lines.forEach((l) => {
+          const m = l.match(/^(- |(\d+)\. )(.*)$/);
+          if (m) {
+            const isOrdered = m[2] !== undefined;
+            if (items && ordered !== isOrdered) flush();
+            if (!items) { items = []; ordered = isOrdered; }
+            items.push(m[3]);
+          } else {
+            flush();
+            if (l.trim()) out.push(<p key={`${i}-${out.length}`} className="ip-blog-p">{parseInline(l)}</p>);
+          }
+        });
+        flush();
+        return <div key={i}>{out}</div>;
+      }
+      if (block.startsWith("**") && block.endsWith("**")) {
+        return <p key={i} className="ip-blog-lead">{block.replace(/\*\*/g, "")}</p>;
+      }
+      return <p key={i} className="ip-blog-p">{parseInline(block)}</p>;
+    });
   };
 
   const articleSchema = {
@@ -155,114 +130,92 @@ export default function BlogPost({ params }) {
       "@type": "WebPage",
       "@id": `https://www.castleexpressmoving.com/blog/${post.slug}/`,
     },
-    image: post.image ? `https://www.castleexpressmoving.com${post.image}` : "https://www.castleexpressmoving.com/images/truck-residential.jpg",
+    image: post.image
+      ? `https://www.castleexpressmoving.com${post.image}`
+      : "https://www.castleexpressmoving.com/images/truck-residential.jpg",
   };
 
+  const allPosts = getAllPosts();
+  const related = allPosts
+    .filter((p) => p.slug !== post.slug && p.category === post.category)
+    .slice(0, 3);
+
   return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
+    <div className="ip">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
 
-      {/* Hero */}
-      <section className="section-dark" style={{ padding: "64px 0 48px" }}>
-        <div className="container" style={{ maxWidth: 720, margin: "0 auto" }}>
-          <div style={{ marginBottom: 12 }}>
-            <Link href="/blog/" style={{
-              color: "#D4A017",
-              fontSize: 13,
-              fontWeight: 600,
-              textDecoration: "none",
-              letterSpacing: "0.05em",
-            }}>&larr; Back to Blog</Link>
-          </div>
-          <span style={{
-            fontSize: 12,
-            fontWeight: 700,
-            color: "#FBCB0B",
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            display: "block",
-            marginBottom: 16,
-          }}>{post.category}</span>
-          <h1 className="heading-1" style={{ fontSize: "clamp(24px, 3.5vw, 32px)", lineHeight: 1.3, color: "#FFFFFF" }}>{post.title}</h1>
-          <div style={{
-            display: "flex",
-            gap: 16,
-            marginTop: 20,
-            color: "rgba(255,255,255,0.8)",
-            fontSize: 14,
-            flexWrap: "wrap",
-          }}>
-            <span>By Joe Caronna</span>
-            <span>·</span>
-            <span>{new Date(post.date).toLocaleDateString("en-US", {
-              month: "long", day: "numeric", year: "numeric", timeZone: "UTC"
-            })}</span>
-            <span>·</span>
-            <span>{post.readTime}</span>
-          </div>
+      <InteriorHero
+        compact
+        crumbs={[
+          { label: "Home", href: "/" },
+          { label: "Blog", href: "/blog/" },
+          { label: post.category },
+        ]}
+        eyebrow={post.category}
+        title={post.title}
+      >
+        <div className="ip-blog-byline">
+          <span>By Joe Caronna</span>
+          <span aria-hidden="true">·</span>
+          <span>
+            {new Date(post.date).toLocaleDateString("en-US", {
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+              timeZone: "UTC",
+            })}
+          </span>
+          <span aria-hidden="true">·</span>
+          <span>{post.readTime}</span>
         </div>
-      </section>
+      </InteriorHero>
 
-      {/* Body */}
-      <section className="section section-light">
-        <div className="container" style={{ maxWidth: 720, margin: "0 auto" }}>
-          <article style={{ paddingBottom: 48 }}>
+      <section className="section ip-blog-post-section">
+        <div className="container" style={{ maxWidth: 740, margin: "0 auto" }}>
+          <div className="ip-blog-back-wrap">
+            <Link href="/blog/" className="ip-blog-back">&larr; All Moving Guides</Link>
+          </div>
+          <article className="ip-blog-article">
             {renderBody(post.body)}
           </article>
-
-          {/* CTA Card */}
-          <div style={{
-            background: "#1A1A2E",
-            borderRadius: 12,
-            padding: "32px 36px",
-            marginTop: 48,
-            textAlign: "center",
-          }}>
-            <h3 style={{
-              fontFamily: "var(--font-heading)",
-              fontWeight: 800,
-              fontSize: 22,
-              color: "#fff",
-              marginBottom: 12,
-            }}>Ready to Get Moving?</h3>
-            <p style={{ color: "rgba(255,255,255,0.7)", marginBottom: 24, fontSize: 15 }}>
-              Castle Express Moving &amp; Storage - Enfield, CT. Serving Hartford County and Western MA since 2011.
-            </p>
-            <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-              <Link href="/contact/" className="btn btn-primary">Get Free Estimate</Link>
-              <a href={COMPANY.phoneLink} className="btn btn-outline" style={{ color: "#fff", borderColor: "rgba(255,255,255,0.3)" }}>
-                <Phone size={18} /> {COMPANY.phone}
-              </a>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* YOU MIGHT ALSO LIKE */}
-      {(() => {
-        const allPosts = getAllPosts();
-        const related = allPosts.filter(p => p.slug !== post.slug && p.category === post.category).slice(0, 3);
-        if (related.length === 0) return null;
-        return (
-          <section className="section section-light">
-            <div className="container" style={{ maxWidth: 900, margin: "0 auto" }}>
-              <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 24, textAlign: "center" }}>You Might Also Like</h2>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: 20 }}>
-                {related.map(r => (
-                  <Link key={r.slug} href={`/blog/${r.slug}/`} style={{ textDecoration: "none" }}>
-                    <div className="card" style={{ padding: 24, height: "100%", display: "flex", flexDirection: "column" }}>
-                      <span style={{ fontSize: 12, fontWeight: 700, color: "#D4A017", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10, display: "block" }}>{r.category}</span>
-                      <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 10, lineHeight: 1.4 }}>{r.title}</h3>
-                      <p className="body-sm text-gray" style={{ lineHeight: 1.5, flex: 1 }}>{r.excerpt}</p>
-                      <span style={{ fontSize: 13, color: "#9CA3AF", marginTop: 12 }}>{r.readTime}</span>
+      <EstimateBand
+        eyebrow="Ready to Move?"
+        title="Ready to Get Moving?"
+        buttonLabel={<>Get Free Estimate <ArrowRight /></>}
+      >
+        Castle Express Moving &amp; Storage in Enfield, CT. Serving Hartford County and Western MA since 2011.
+      </EstimateBand>
+
+      {related.length > 0 && (
+        <section className="section section-light ip-blog-related">
+          <div className="container" style={{ maxWidth: 1080, margin: "0 auto" }}>
+            <h2 className="ip-blog-related-title">You Might Also Like</h2>
+            <div className="ip-blog-grid">
+              {related.map((r) => (
+                <Link key={r.slug} href={`/blog/${r.slug}/`} className="ip-blog-link">
+                  <article className="ip-card ip-blog-card">
+                    <span className="ip-blog-cat">{r.category}</span>
+                    <h3 className="ip-blog-title">{r.title}</h3>
+                    <p className="ip-blog-excerpt">{r.excerpt}</p>
+                    <div className="ip-blog-meta">
+                      <span>{r.readTime}</span>
+                      <span className="ip-blog-more">
+                        Read <ArrowRight size={14} />
+                      </span>
                     </div>
-                  </Link>
-                ))}
-              </div>
+                  </article>
+                </Link>
+              ))}
             </div>
-          </section>
-        );
-      })()}
-    </>
+          </div>
+        </section>
+      )}
+    </div>
   );
 }
