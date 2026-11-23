@@ -6,7 +6,7 @@
 // lib/utm.js is ESM syntax inside a CommonJS package, so plain node cannot
 // require() or import() it directly. Instead we strip the "export " keywords
 // and evaluate the module in a vm sandbox; that also lets each case run with
-// a fresh fake window + sessionStorage so captureAttribution and
+// a fresh fake window + storage so captureAttribution and
 // getSmartMovingAttribution are exercised end to end, exactly as the browser
 // runs them.
 const fs = require("fs");
@@ -18,21 +18,38 @@ const UTM_SOURCE = fs
   .readFileSync(path.join(__dirname, "..", "lib", "utm.js"), "utf8")
   .replace(/^export /gm, "");
 
-function makeWindow(search) {
-  const store = new Map();
+function makeStorage(store = new Map()) {
   return {
-    location: { search, pathname: "/free-estimate/" },
-    sessionStorage: {
-      getItem: (k) => (store.has(k) ? store.get(k) : null),
-      setItem: (k, v) => store.set(k, String(v)),
-    },
+    getItem: (k) => (store.has(k) ? store.get(k) : null),
+    setItem: (k, v) => store.set(k, String(v)),
+    removeItem: (k) => store.delete(k),
   };
 }
 
+// local: pass a Map to share one "browser profile" (localStorage) between
+// sandboxes, the way a returning visitor's new session sees the old data.
+// Pass null for a browser with localStorage blocked.
+function makeWindow(search, local = new Map()) {
+  const win = {
+    location: { search, pathname: "/free-estimate/" },
+    sessionStorage: makeStorage(),
+  };
+  if (local) win.localStorage = makeStorage(local);
+  return win;
+}
+
 // Fresh sandbox per call: module-level state cannot leak between cases.
-function loadUtm(search) {
-  const sandbox = { URLSearchParams, Date, JSON };
-  if (search !== undefined) sandbox.window = makeWindow(search);
+function loadUtm(search, { local, now } = {}) {
+  // now: fixed clock (ms) so the 30-day expiry can be tested.
+  let clock = Date;
+  if (now !== undefined) {
+    clock = class extends Date {
+      constructor(...args) { args.length ? super(...args) : super(now); }
+      static now() { return now; }
+    };
+  }
+  const sandbox = { URLSearchParams, Date: clock, JSON, Number };
+  if (search !== undefined) sandbox.window = makeWindow(search, local);
   vm.createContext(sandbox);
   vm.runInContext(UTM_SOURCE, sandbox);
   return sandbox;
@@ -167,12 +184,67 @@ check("pickVersion covers all four ad groups + Next searchParams objects", () =>
   assert.strictEqual(utm.pickVersion({ utm_campaign: 42 }), "residential");
 });
 
-check("first-touch wins: second navigation does not overwrite attribution", () => {
+check("last ad click wins: landing again with tags replaces the stored attribution", () => {
   const utm = loadUtm(CLEAN);
   utm.captureAttribution();
-  utm.window.location.search = "?utm_source=bing&utm_medium=cpc";
+  utm.window.location.search = "?utm_source=bing&utm_medium=cpc&msclkid=M1";
   utm.captureAttribution();
-  assert.strictEqual(utm.getAttribution().utm_source, "google");
+  assert.strictEqual(utm.getAttribution().utm_source, "bing");
+  assert.strictEqual(utm.getAttribution().gclid, undefined);
+});
+
+check("tags survive moving to another page: an untagged page view keeps them", () => {
+  const utm = loadUtm("?utm_source=google&utm_medium=cpc&utm_campaign=c&utm_content=x&utm_term=t&utm_adgroup=g&gclid=G1&gbraid=B1&wbraid=W1&fbclid=F1");
+  utm.captureAttribution();
+  utm.window.location.search = "";
+  utm.window.location.pathname = "/contact/";
+  utm.captureAttribution();
+  const a = utm.getAttribution();
+  for (const [k, v] of Object.entries({
+    utm_source: "google", utm_medium: "cpc", utm_campaign: "c", utm_content: "x",
+    utm_term: "t", utm_adgroup: "g", gclid: "G1", gbraid: "B1", wbraid: "W1", fbclid: "F1",
+  })) assert.strictEqual(a[k], v, k);
+  assert.strictEqual(a._landing_path, "/free-estimate/");
+  assert.strictEqual(utm.getSmartMovingAttribution().UtmAdGroup, "g");
+  assert.strictEqual(utm.getSmartMovingAttribution().UtmCustomTracking, "G1");
+});
+
+const DAY = 24 * 60 * 60 * 1000;
+const T0 = Date.UTC(2026, 10, 1);
+
+check("30 days: a returning visitor in a new session keeps their ad attribution", () => {
+  const profile = new Map();
+  const first = loadUtm("?utm_source=google&utm_medium=cpc&gclid=G30", { local: profile, now: T0 });
+  first.captureAttribution();
+  // New session 29 days later: fresh sessionStorage, same localStorage, no tags.
+  const later = loadUtm("", { local: profile, now: T0 + 29 * DAY });
+  later.captureAttribution();
+  assert.strictEqual(later.getAttribution().gclid, "G30");
+  assert.strictEqual(later.getSmartMovingAttribution().UtmSource, "google");
+});
+
+check("30 days: attribution older than 30 days is dropped", () => {
+  const profile = new Map();
+  loadUtm("?utm_source=google&utm_medium=cpc&gclid=GOLD", { local: profile, now: T0 }).captureAttribution();
+  const later = loadUtm("", { local: profile, now: T0 + 31 * DAY });
+  assert.deepStrictEqual({ ...later.getAttribution() }, {});
+  assert.deepStrictEqual({ ...later.getSmartMovingAttribution() }, {});
+  assert.strictEqual(profile.size, 0);
+});
+
+check("localStorage blocked: falls back to the session copy", () => {
+  const utm = loadUtm("?gclid=GS", { local: null });
+  utm.captureAttribution();
+  utm.window.location.search = "";
+  assert.strictEqual(utm.getAttribution().gclid, "GS");
+});
+
+check("box offer check stays per visit: a 30-day-old ad click does not qualify", () => {
+  const profile = new Map();
+  loadUtm("?gclid=GB", { local: profile, now: T0 }).captureAttribution();
+  const later = loadUtm("", { local: profile, now: T0 + 3 * DAY });
+  assert.strictEqual(later.getAttribution().gclid, "GB");
+  assert.strictEqual(later.isGoogleAdsVisitor(), false);
 });
 
 check("isGoogleAdsVisitor: gclid, gbraid, google/cpc, and stored session qualify", () => {

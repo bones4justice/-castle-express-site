@@ -1,55 +1,254 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { MOVE_SIZES, LEAD_SOURCES, COMPANY } from "@/content";
-import { Check, ArrowRight, Phone } from "@/components/Icons";
-import { getSmartMovingAttribution } from "@/lib/utm";
+import { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
+import { COMPANY } from "@/content";
+import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import { boxOfferSeen, BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
 import { readVariantCookie } from "@/lib/lpAbTest";
 import { geVariantForLead } from "@/lib/geAbTest";
-import { responseWindow } from "@/lib/salesHours";
+import { sendGenerateLead } from "@/lib/leadEvents";
+import { responseWindow, SALES_HOURS, CLOSED_DATES } from "@/lib/salesHours";
 
-// Response-time wording, keyed by responseWindow() in lib/salesHours.js.
-// Inside sales hours we keep the 20 minute promise.
+// Keep in sync with SM_MOVE_SIZE in components/StepEstimateForm.js so
+// SmartMoving always matches an existing move size (with volume) instead of
+// auto-creating blank duplicate sizes.
+const SM_MOVE_SIZE = {
+  "4+ bedrooms": "4 Bedroom",
+  "3 bedrooms": "3 Bedroom",
+  "3+ bedrooms": "3 Bedroom",
+  "2 bedrooms": "2 Bedroom",
+  "1 bedroom": "1 Bedroom",
+  "1 bedroom or studio": "1 Bedroom",
+  "1 bedroom or a few items": "1 Bedroom",
+  "A few items": "Room or Less",
+  Office: "Office / Commercial",
+};
+
+// Inline multi-step estimate card used across the site (homepage, /contact/,
+// town pages, service pages). Starts directly on Question 1 ("How far are you
+// moving?") with tap-to-advance cards, using the same question tree and
+// SmartMoving move-size mapping as /get-estimate/ (StepEstimateForm.js).
+//
+// Only the final phone screen wraps a real <form> with type="submit"; every
+// intermediate card and advance button is type="button", so GTM's form-submit
+// trigger and lead submission can never fire early.
+
+const GA4 = "G-97Z4EHJM63";
+const MAX_DAYS_AHEAD = 540;
+const TRUCK_IMG = { src: "/images/ge-loader-truck.webp", width: 600, height: 261 };
+
 const RESPONSE_LINE = {
   now: "Typically responds in 20 min. or less",
   this_morning: "We reply first thing this morning",
   next_business: "We reply first thing the next business morning",
 };
-const THANKS = {
-  now: "We will reach out to you usually within 20 minutes.",
-  this_morning: "Our office is closed right now. We will reach out first thing this morning.",
-  next_business: "Our office is closed right now. We will reach out first thing the next business morning.",
+
+const ICON = {
+  pin: '<path d="M16 28s9-8.2 9-15a9 9 0 10-18 0c0 6.800 9 15 9 15z"/><circle cx="16" cy="13" r="3.2"/>',
+  road: '<path d="M11 4L5 28M21 4l6 24M16 5v4M16 14v4M16 23v4"/>',
+  state: '<circle cx="8" cy="23" r="3"/><circle cx="24" cy="8" r="3"/><path d="M11 23h7a4 4 0 004-4v-1a4 4 0 00-4-4h-4a4 4 0 01-4-4 2 2 0 012-2h9"/>',
+  lift: '<rect x="6" y="14" width="13" height="12" rx="1.5"/><path d="M6 19h13M12.500 14v5M24 26V7M20 11l4-4 4 4"/>',
+  house: '<path d="M4 15L16 5l12 10M7 13v14h18V13M13 27v-8h6v8"/>',
+  apt: '<rect x="7" y="4" width="18" height="24" rx="1.5"/><path d="M12 9h2M18 9h2M12 14h2M18 14h2M12 19h2M18 19h2M14 28v-4h4v4"/>',
+  condo: '<path d="M3 27V13l6.500-5 6.500 5v14M16 27V13l6.500-5 6.500 5v14M3 27h26M8 27v-6h3v6M21 27v-6h3v6"/>',
+  box: '<path d="M4 11l12-6 12 6v11l-12 6-12-6V11zM4 11l12 6 12-6M16 17v11M10 8l12 6"/>',
+  bed4: '<path d="M3 16L16 5l13 11M6 14v13h20V14M11 19h3M18 19h3M11 23h3M18 23h3"/>',
+  bed3: '<path d="M4 16L16 6l12 10M7 14v13h18V14M12 20h3M17 20h3M14.500 24h3"/>',
+  bed2: '<path d="M5 17L16 8l11 9M8 15v12h16V15M12 21h3M17 21h3"/>',
+  bed1: '<path d="M7 18l9-7 9 7M10 16v11h12V16M14.500 21h3"/>',
+  office: '<rect x="4" y="11" width="24" height="15" rx="2"/><path d="M12 11V8a2 2 0 012-2h4a2 2 0 012 2v3M4 18h24M14.500 18v2h3v-2"/>',
+  exact: '<rect x="5" y="7" width="22" height="20" rx="2"/><path d="M5 13h22M11 4v6M21 4v6M11.500 20l3 3 6-6"/>',
+  flex: '<rect x="5" y="7" width="22" height="20" rx="2"/><path d="M5 13h22M11 4v6M21 4v6M10 20h12M19 17l3 3-3 3M13 17l-3 3 3 3"/>',
+  unsure: '<circle cx="16" cy="16" r="11"/><path d="M12.500 13a3.500 3.500 0 116 2.500c-1.300 1.200-2.500 1.700-2.500 3.500M16 23v.200"/>',
 };
 
-// twoStep: homepage only. On phones (<=768px) the form splits into
-// step 1 (name, phone, move date) and step 2 (the rest). It is still ONE form
-// and ONE submission at the end of step 2; "Next" is a plain button, never a
-// submit, so nothing is sent (and GTM's form-submit trigger does not fire)
-// until the real submit. Desktop always gets the original single form.
-// design: homepage only (lib/homeDesign.js HOME_DESIGN). When set, it is sent
-// as home_design to Formspree and on generate_lead / form_submission_success;
-// other pages pass nothing and their payloads are unchanged.
-export default function EstimateForm({ dark = false, twoStep = false, design }) {
-  const [submitted, setSubmitted] = useState(false);
-  const [replyWindow, setReplyWindow] = useState(null); // null until mounted (SSR is static)
-  const [isPhone, setIsPhone] = useState(false);
-  const [step, setStep] = useState(1);
-  const step1Tracked = useRef(false);
-  const step2FirstRef = useRef(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [formData, setFormData] = useState({
-    name: "", phone: "", email: "", moveDate: "",
-    moveFrom: "", moveTo: "", moveSize: "", source: "",
-  });
+function Icon({ name }) {
+  return (
+    <svg
+      viewBox="0 0 32 32"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      dangerouslySetInnerHTML={{ __html: ICON[name] }}
+    />
+  );
+}
+
+const Hl = ({ children }) => <span className="isf-hl">{children}</span>;
+
+const sizeNext = (s) => (s.moveType === "Out of state" ? "zip2" : "zip1");
+
+const FLOW = {
+  move: {
+    p: 14,
+    label: "Step 1",
+    title: "How far are you moving?",
+    cards: [
+      { t: "Local", s: "Under 35 miles", i: "pin", save: { moveType: "Local" }, next: "type" },
+      { t: "Over an hour away", s: "More than 35 miles", i: "road", save: { moveType: "Over an hour away" }, next: "type" },
+      { t: "Out of state", s: "Long distance, door to door", i: "state", save: { moveType: "Out of state" }, next: "type" },
+      { t: "Loading or unloading help", s: "You drive, we lift", i: "lift", save: { moveType: "Labor only", homeType: "", size: "" }, next: "zip1" },
+    ],
+  },
+  type: {
+    p: 28,
+    label: "Step 2",
+    title: "What are we moving?",
+    cards: [
+      { t: "House", s: "Family owned and moving homes since 2011", i: "house", save: { homeType: "House" }, next: "size-house" },
+      { t: "Apartment", s: "Stairs and elevators are no problem", i: "apt", save: { homeType: "Apartment" }, next: "size-apartment" },
+      { t: "Condo or townhouse", s: "We work with your building's rules", i: "condo", save: { homeType: "Condo or townhouse" }, next: "size-condo" },
+      { t: "A few items or an office", s: "Something else? We handle it", i: "box", save: { homeType: "Other" }, next: "size-other" },
+    ],
+  },
+  "size-house": {
+    p: 42,
+    label: "Step 3",
+    title: <>How many bedrooms in your <Hl>house?</Hl></>,
+    cards: [
+      { t: "4+ bedrooms", s: "Experienced crews for big homes", i: "bed4", save: { size: "4+ bedrooms" }, next: sizeNext },
+      { t: "3 bedrooms", s: "Our most common move", i: "bed3", save: { size: "3 bedrooms" }, next: sizeNext },
+      { t: "2 bedrooms", s: "Quick and simple. We keep it that way", i: "bed2", save: { size: "2 bedrooms" }, next: sizeNext },
+      { t: "1 bedroom or a few items", s: "No job too small", i: "box", save: { size: "1 bedroom or a few items" }, next: sizeNext },
+    ],
+  },
+  "size-apartment": {
+    p: 42,
+    label: "Step 3",
+    title: <>How many bedrooms in your <Hl>apartment?</Hl></>,
+    cards: [
+      { t: "1 bedroom or studio", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom or studio" }, next: sizeNext },
+      { t: "2 bedrooms", s: "Our most common apartment move", i: "bed2", save: { size: "2 bedrooms" }, next: sizeNext },
+      { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: sizeNext },
+      { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: sizeNext },
+    ],
+  },
+  "size-condo": {
+    p: 42,
+    label: "Step 3",
+    title: <>How many bedrooms in your <Hl>condo?</Hl></>,
+    cards: [
+      { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: sizeNext },
+      { t: "2 bedrooms", s: "Our most common condo move", i: "bed2", save: { size: "2 bedrooms" }, next: sizeNext },
+      { t: "1 bedroom", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom" }, next: sizeNext },
+      { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: sizeNext },
+    ],
+  },
+  "size-other": {
+    p: 42,
+    label: "Step 3",
+    title: "What type of move?",
+    cards: [
+      { t: "Office", s: "We keep your business moving", i: "office", save: { homeType: "Office", size: "" }, next: sizeNext },
+      { t: "A few items", s: "No job too small", i: "box", save: { homeType: "A few items", size: "A few items" }, next: sizeNext },
+    ],
+  },
+  zip1: { p: 56, label: "Location", kind: "zip", two: false },
+  zip2: { p: 56, label: "Locations", kind: "zip", two: true },
+  when: {
+    p: 68,
+    label: "Timing",
+    title: "Tell us about your move date",
+    cards: [
+      { t: "I have an exact date", s: "Pick it on the next screen", i: "exact", save: { dateType: "Exact" }, next: "date" },
+      { t: "I have some flexibility", s: "Gives you the most options", i: "flex", save: { dateType: "Flexible" }, next: "date" },
+      { t: "Not sure yet", s: "You can still get a free estimate", i: "unsure", save: { dateType: "Not sure", moveDate: "" }, next: "loading" },
+    ],
+  },
+  date: { p: 76, label: "Move Date", kind: "date" },
+  loading: { p: 82, label: "Almost ready", kind: "loading" },
+  name: { p: 88, label: "Almost done", kind: "name" },
+  phone: { p: 95, label: "Final step", kind: "phone" },
+  thanks: { p: 100, label: "Complete", kind: "thanks" },
+};
+
+const EMPTY = {
+  moveType: "",
+  homeType: "",
+  size: "",
+  fromZip: "",
+  toZip: "",
+  dateType: "",
+  moveDate: "",
+  firstName: "",
+  phone: "",
+  textOk: false,
+};
+
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const pad = (n) => String(n).padStart(2, "0");
+
+function fmtPhone(v) {
+  let d = v.replace(/\D/g, "");
+  if (d[0] === "1") d = d.slice(1);
+  d = d.slice(0, 10);
+  if (d.length > 6) return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
+  if (d.length > 3) return `(${d.slice(0, 3)}) ${d.slice(3)}`;
+  return d;
+}
+
+function nextBusinessLabel(now = new Date()) {
+  try {
+    const p = {};
+    for (const { type, value } of new Intl.DateTimeFormat("en-US", {
+      timeZone: SALES_HOURS.timeZone,
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    }).formatToParts(now)) p[type] = value;
+    const y = Number(p.year), m = Number(p.month), d = Number(p.day);
+    for (let i = 1; i <= 14; i++) {
+      const dt = new Date(Date.UTC(y, m - 1, d + i, 12));
+      const ymd = dt.toISOString().slice(0, 10);
+      const wd = dt.getUTCDay();
+      if (SALES_HOURS.days.includes(wd) && !CLOSED_DATES.includes(ymd)) return `${DAY_NAMES[wd]} morning`;
+    }
+  } catch {}
+  return "the next business morning";
+}
+
+function track(name, params) {
+  try {
+    if (typeof window !== "undefined" && typeof window.gtag !== "undefined") {
+      window.gtag("event", name, { ...params, send_to: GA4 });
+    }
+  } catch {}
+}
+
+export default function EstimateForm({ dark = false, twoStep = false, design = null }) {
+  const [current, setCurrent] = useState("move");
+  const [hist, setHist] = useState([]);
+  const [data, setData] = useState(EMPTY);
+  const [picked, setPicked] = useState(null);
+  const [calMonth, setCalMonth] = useState(null);
+  const [loadingText, setLoadingText] = useState("Saving your move details");
+  const [err, setErr] = useState("");
+  const [sending, setSending] = useState(false);
+  const [replyWindow, setReplyWindow] = useState(null);
+  const [followUp, setFollowUp] = useState(null);
+  const [showAdOffer, setShowAdOffer] = useState(false);
   const [honeypot, setHoneypot] = useState("");
+
+  const inFlight = useRef(false);
   const openedAt = useRef(Date.now());
+  const cardRef = useRef(null);
+  const headingRef = useRef(null);
+  const inputRef = useRef(null);
+  const seenSteps = useRef(new Set());
+  const hasInteracted = useRef(false);
+  const pickTimer = useRef(null);
+  const currentRef = useRef("move");
 
-  const update = (field) => (e) => setFormData(prev => ({ ...prev, [field]: e.target.value }));
+  const save = (patch) => setData((d) => ({ ...d, ...patch }));
 
-  // Re-check sales hours on mount and every minute, so a tab left open past
-  // 5:00 PM switches wording. The thank-you screen reads the value at submit.
+  // Live response window text (rechecked every minute if tab stays open).
   useEffect(() => {
     const check = () => setReplyWindow(responseWindow());
     check();
@@ -57,84 +256,178 @@ export default function EstimateForm({ dark = false, twoStep = false, design }) 
     return () => clearInterval(t);
   }, []);
 
+  // Warm the small truck illustration once user interacts so loading step is instant.
   useEffect(() => {
-    if (!twoStep || typeof window === "undefined" || !window.matchMedia) return;
-    const mq = window.matchMedia("(max-width: 768px)");
-    const apply = () => setIsPhone(mq.matches);
-    apply();
-    mq.addEventListener ? mq.addEventListener("change", apply) : mq.addListener(apply);
-    return () => { mq.removeEventListener ? mq.removeEventListener("change", apply) : mq.removeListener(apply); };
-  }, [twoStep]);
-
-  const split = twoStep && isPhone; // phone two-step active (behavior only; layout is CSS)
-
-  const goToStep2 = (form) => {
-    // Native validation on the step 1 fields only.
-    for (const id of ["customer-name", "phone-number", "date"]) {
-      const el = form && form.querySelector(`#${id}`);
-      if (el && !el.reportValidity()) return;
+    if (current === "type" || current === "zip1") {
+      const im = new window.Image();
+      im.src = TRUCK_IMG.src;
     }
-    setStep(2);
-    // Funnel measurement only (no lead is created). Not a conversion: GTM's
-    // Ads tag listens for generate_lead, not this.
-    if (!step1Tracked.current) {
-      step1Tracked.current = true;
-      try {
-        if (typeof window.gtag !== "undefined") window.gtag("event", "estimate_step1_complete", { form_location: "homepage", send_to: "G-97Z4EHJM63" });
-      } catch {}
+  }, [current]);
+
+  useEffect(() => () => clearTimeout(pickTimer.current), []);
+
+  const keepCardInView = useCallback(() => {
+    if (typeof window === "undefined" || !cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    if (rect.top < 80) {
+      const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      cardRef.current.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
     }
+  }, []);
+
+  const go = useCallback((id, { replace = false } = {}) => {
+    const cur = currentRef.current;
+    hasInteracted.current = true;
+    setErr("");
+    setPicked(null);
+    if (!replace && cur !== "loading") setHist((h) => [...h, cur]);
+    currentRef.current = id;
+    setCurrent(id);
+  }, []);
+
+  const back = () => {
+    if (!hist.length) return;
+    setErr("");
+    setPicked(null);
+    const prev = hist[hist.length - 1];
+    currentRef.current = prev;
+    setCurrent(prev);
+    setHist(hist.slice(0, -1));
   };
 
-  // Enter/Go on the phone keyboard during step 1 advances instead of trying
-  // to submit a half-filled form.
-  const onFormKeyDown = (e) => {
-    if (split && step === 1 && e.key === "Enter" && e.target.tagName === "INPUT") {
-      e.preventDefault();
-      goToStep2(e.currentTarget);
-    }
+  const resetForm = () => {
+    clearTimeout(pickTimer.current);
+    setData(EMPTY);
+    setHist([]);
+    setPicked(null);
+    setErr("");
+    setCalMonth(null);
+    setFollowUp(null);
+    currentRef.current = "move";
+    setCurrent("move");
   };
 
+  // Funnel tracking (only after the visitor actually starts tapping) + gentle focus management.
   useEffect(() => {
-    if (split && step === 2 && step2FirstRef.current) step2FirstRef.current.focus({ preventScroll: false });
-  }, [split, step]);
+    if (!hasInteracted.current) return;
+    if (current === "phone") setShowAdOffer(boxOfferSeen());
+    if (current !== "loading" && !seenSteps.current.has(current)) {
+      seenSteps.current.add(current);
+      const pathname = typeof window !== "undefined" ? window.location.pathname : "/";
+      track("step_view", {
+        step_name: current,
+        step_progress: FLOW[current].p,
+        form_location: pathname,
+        form_style: "inline_step",
+        ge_variant: geVariantForLead(document.cookie),
+        ...(design ? { home_design: design } : {}),
+      });
+    }
+    keepCardInView();
+    if (current === "zip1" || current === "zip2" || current === "name" || current === "phone") {
+      if (inputRef.current) {
+        try { inputRef.current.focus({ preventScroll: true }); } catch { inputRef.current.focus(); }
+      }
+    } else if (headingRef.current) {
+      try { headingRef.current.focus({ preventScroll: true }); } catch { headingRef.current.focus(); }
+    }
+  }, [current, design, keepCardInView]);
 
-  const handleSubmit = async (e) => {
+  // Brief loading transition before asking for contact info.
+  useEffect(() => {
+    if (current !== "loading") return;
+    setLoadingText("Saving your move details");
+    const t1 = setTimeout(() => setLoadingText("Getting your estimate ready"), 800);
+    const t2 = setTimeout(() => go("name", { replace: true }), 1600);
+    return () => { clearTimeout(t1); clearTimeout(t2); };
+  }, [current, go]);
+
+  const pickCard = (card, n) => {
+    if (picked !== null) return;
+    // Record the initial step start once the visitor taps an option.
+    if (current === "move" && !seenSteps.current.has("move")) {
+      seenSteps.current.add("move");
+      const pathname = typeof window !== "undefined" ? window.location.pathname : "/";
+      track("step_view", {
+        step_name: "move",
+        step_progress: FLOW.move.p,
+        form_location: pathname,
+        form_style: "inline_step",
+        ge_variant: geVariantForLead(document.cookie),
+        ...(design ? { home_design: design } : {}),
+      });
+    }
+    const nextData = { ...data, ...card.save };
+    setData(nextData);
+    setPicked(n);
+    const nxt = typeof card.next === "function" ? card.next(nextData) : card.next;
+    pickTimer.current = setTimeout(() => go(nxt), 150);
+  };
+
+  const advanceZip = (two) => {
+    const ok = /^\d{5}$/.test(data.fromZip) && (!two || /^\d{5}$/.test(data.toZip));
+    if (!ok) {
+      setErr("Enter a 5 digit zip code.");
+      return;
+    }
+    if (!two && data.toZip) save({ toZip: "" });
+    go("when");
+  };
+
+  const advanceName = () => {
+    const cleaned = data.firstName.trim();
+    if (cleaned.length < 2) {
+      setErr("Enter your first name.");
+      return;
+    }
+    save({ firstName: cleaned });
+    go("phone");
+  };
+
+  const submitLead = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    if (sending || inFlight.current) return;
+    const digits = data.phone.replace(/\D/g, "");
+    if (digits.length !== 10) {
+      setErr("Enter a 10 digit phone number.");
+      return;
+    }
+    inFlight.current = true;
+    setSending(true);
+    setErr("");
 
-    // Leads go through /api/lead (server-side spam filter + Formspree +
-    // SmartMoving forwarding). Provider keys live server-side only.
     try {
-      const smPayload = {
-        FullName: formData.name,
-        PhoneNumber: formData.phone,
-        Email: formData.email,
-        UserOptIn: true,
-      };
-      if (formData.moveDate) smPayload.MoveDate = formData.moveDate.replace(/-/g, "");
-      if (formData.moveSize) smPayload.MoveSize = formData.moveSize;
-      if (formData.source) smPayload.ReferralSource = formData.source;
-      if (formData.moveFrom) smPayload.OriginAddressFull = formData.moveFrom;
-      if (formData.moveTo) smPayload.DestinationAddressFull = formData.moveTo;
+      const sizeAnswer = data.size || (data.homeType === "Office" ? "Office" : "");
+      const smSize = SM_MOVE_SIZE[sizeAnswer] || "";
+      const boxOffer = boxOfferSeen() ? "shown" : "not_shown";
+      const noteParts = [
+        "INLINE STEP FORM",
+        data.moveType,
+        data.homeType,
+        sizeAnswer && `Size: ${sizeAnswer}`,
+        data.dateType,
+        `Text OK: ${data.textOk ? "yes" : "no"}`,
+      ];
+      if (boxOffer === "shown") noteParts.push(BOX_OFFER_NOTE);
 
+      const smPayload = {
+        FullName: data.firstName,
+        PhoneNumber: data.phone,
+        UserOptIn: Boolean(data.textOk),
+        Notes: noteParts.filter(Boolean).join(" | "),
+      };
+      if (data.moveDate) smPayload.MoveDate = data.moveDate.replace(/-/g, "");
+      if (smSize) smPayload.MoveSize = smSize;
+      if (data.fromZip) smPayload.OriginAddressFull = data.fromZip;
+      if (data.toZip) smPayload.DestinationAddressFull = data.toZip;
       Object.assign(smPayload, getSmartMovingAttribution());
 
-      // Homepage free box offer (Google Ads visitors only). Notes is already
-      // accepted by SmartMoving (ReferralForm sends it through /api/lead).
-      const boxOffer = boxOfferSeen() ? "shown" : "not_shown";
-      if (boxOffer === "shown") smPayload.Notes = BOX_OFFER_NOTE;
-
-      // Same id goes to the OpenAI pixel (event_id) and the server-side
-      // Conversions API (oaiEventId) so OpenAI dedupes to one conversion.
+      const attribution = getAttribution();
       const oaiEventId = crypto.randomUUID();
-
-      // Landing page split test: set by middleware.js for Google Ads traffic
-      // only. Goes to Formspree + GA4 so leads can be counted per variant;
-      // NOT added to the SmartMoving payload (unknown fields may be rejected).
       const lpVariant = readVariantCookie(document.cookie) || "not_in_test";
-      // /get-estimate/ vs homepage split test (middleware.js): "home" visitors
-      // land here, so their leads carry the group too. Formspree + GA4 only.
       const geVariant = geVariantForLead(document.cookie);
+      const hv = document.cookie.split("; ").find((c) => c.startsWith("hero_ab_test="))?.split("=")[1] || "not_set";
+      const pathname = window.location.pathname || "/";
 
       const leadRes = await fetch("/api/lead/", {
         method: "POST",
@@ -143,302 +436,404 @@ export default function EstimateForm({ dark = false, twoStep = false, design }) 
           form: "estimate",
           hp: honeypot,
           elapsedMs: Date.now() - openedAt.current,
-          formspree: { ...formData, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer, ...(design ? { home_design: design } : {}) },
+          formspree: {
+            name: data.firstName,
+            phone: data.phone,
+            moveType: data.moveType,
+            homeType: data.homeType,
+            moveSize: sizeAnswer,
+            moveDate: data.moveDate || data.dateType,
+            dateType: data.dateType,
+            moveFrom: data.fromZip,
+            moveTo: data.toZip,
+            textOk: data.textOk ? "yes" : "no",
+            form_style: "inline_step",
+            page_path: pathname,
+            lp_variant: lpVariant,
+            ge_variant: geVariant,
+            box_offer: boxOffer,
+            ...(design ? { home_design: design } : {}),
+            utm_source: attribution.utm_source || "",
+            utm_medium: attribution.utm_medium || "",
+            utm_campaign: attribution.utm_campaign || "",
+            utm_term: attribution.utm_term || "",
+            utm_content: attribution.utm_content || "",
+            gclid: attribution.gclid || "",
+            fbclid: attribution.fbclid || "",
+            landing_page: attribution.landing_page || "",
+            referrer: attribution.referrer || "",
+          },
           smartmoving: smPayload,
           oaiEventId,
           pageUrl: window.location.href,
         }),
       });
       const res = await leadRes.json().catch(() => ({}));
-      // Success only when the server confirms the lead was accepted. On any
-      // failure keep the entered details on screen so the customer can retry.
       if (!leadRes.ok || res.ok === false) {
-        setError(res.error || `Something went wrong sending your request. Please try again, or call us at ${COMPANY.phone}.`);
-        setLoading(false);
+        setErr(res.error || `Something went wrong sending your request. Please try again, or call us at ${COMPANY.phone}.`);
+        setSending(false);
+        inFlight.current = false;
         return;
       }
-      // Conversion events fire ONLY on a confirmed accepted submit, never on
-      // button clicks, page views, or failed sends - ad campaigns optimize on
-      // these.
-      if (typeof fbq === "function") fbq("track", "Lead");
-      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
-      // send_to is required for GA4: GTM claims untargeted gtag() pushes and
-      // (since container v35) has no GA4 tag, so without it the event never
-      // reaches G-97Z4EHJM63. GTM's Ads conversion trigger still fires on this
-      // same push, send_to does not suppress it.
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer, ...(design ? { home_design: design } : {}), send_to: "G-97Z4EHJM63" }); }
-      setSubmitted(true);
-    } catch (err) {
-      console.error("Lead submission error:", err);
-      setError(`We could not send your request (connection problem). Please try again, or call us at ${COMPANY.phone}.`);
-    }
 
-    setLoading(false);
+      // Conversion events ONLY on confirmed accepted leads (never on quiet spam).
+      if (!res.s) {
+        if (typeof window.fbq === "function") window.fbq("track", "Lead");
+        if (typeof window.oaiq === "function") {
+          window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
+        }
+        sendGenerateLead(oaiEventId, {
+          event_category: "form",
+          event_label: "estimate_form",
+          form_style: "inline_step",
+          hero_variant: hv,
+          lp_variant: lpVariant,
+          ge_variant: geVariant,
+          box_offer: boxOffer,
+          ...(design ? { home_design: design } : {}),
+        });
+        track("form_submission_success", {
+          form_location: pathname,
+          form_style: "inline_step",
+          lp_variant: lpVariant,
+          ge_variant: geVariant,
+          ...(design ? { home_design: design } : {}),
+        });
+        if (typeof window.clarity === "function") window.clarity("set", "form_completed", "true");
+      }
+
+      const win = responseWindow();
+      setFollowUp(
+        win === "now"
+          ? { open: true }
+          : { open: false, label: win === "this_morning" ? "this morning" : nextBusinessLabel() }
+      );
+      go("thanks", { replace: true });
+    } catch (e2) {
+      console.error("Inline step lead submission error:", e2);
+      setErr(`We could not send your request (connection problem). Please try again, or call us at ${COMPANY.phone}.`);
+    }
+    setSending(false);
+    inFlight.current = false;
   };
 
-  // ─── Styles ───
-  const bg = dark ? "rgba(255,255,255,0.06)" : "#fff";
-  const inputBg = "#FFFFFF";
-  const inputColor = "#000000";
-  const inputBorder = "#969a9d";
-  const labelColor = dark ? "rgba(255,255,255,0.75)" : "#6B7280";
+  const step = FLOW[current];
+  const showBack = hist.length > 0 && current !== "loading" && current !== "thanks";
+  const pct = step.p;
 
-  const inputStyle = {
-    width: "100%", padding: "12px 14px", borderRadius: 6,
-    border: `1px solid ${inputBorder}`, background: inputBg,
-    color: inputColor, fontFamily: "var(--font-body)", fontSize: 14,
-    outline: "none", boxSizing: "border-box",
-  };
+  const qHeading = (children) => (
+    <h2 className="isf-q" ref={headingRef} tabIndex={-1}>{children}</h2>
+  );
 
-  const optionStyle = { background: "#FFFFFF", color: "#000000", fontFamily: "var(--font-body)" };
-
-  const labelStyle = {
-    display: "block", fontFamily: "var(--font-heading)", fontSize: 12,
-    fontWeight: 600, color: labelColor, marginBottom: 4,
-    textTransform: "uppercase", letterSpacing: "0.04em",
-  };
-
-  // ─── Success State ───
-  const successTracked = useRef(false);
-  useEffect(() => {
-    if (!submitted || successTracked.current) return;
-    successTracked.current = true;
-    const hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || "(not set)";
-    const loc = window.location.pathname === "/" ? "homepage" : window.location.pathname;
-    if (window.gtag) {
-      const lv = readVariantCookie(document.cookie) || "not_in_test";
-      window.gtag("event", "form_submission_success", { hero_variant: hv, form_location: loc, lp_variant: lv, ge_variant: geVariantForLead(document.cookie), ...(design ? { home_design: design } : {}), send_to: "G-97Z4EHJM63" });
-    }
-    if (window.clarity) {
-      window.clarity("set", "form_completed", "true");
-    }
-  }, [submitted, design]);
-
-  if (submitted) {
-    const textColor = dark ? "#fff" : "#1A1A2E";
-    const mutedColor = dark ? "rgba(255,255,255,0.6)" : "#6B7280";
-    const cardBg = dark ? "rgba(255,255,255,0.06)" : "#fff";
-    const cardBorder = dark ? "rgba(255,255,255,0.1)" : "#E5E7EB";
-    const confirmBg = dark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.02)";
-    const confirmBorder = dark ? "rgba(255,255,255,0.15)" : "#E5E7EB";
-
-    const blogCards = [
-      { icon: "\uD83D\uDCCB", title: "What Happens Next", desc: "A step-by-step walk-through of our estimate process from your request to move day", href: "/blog/what-happens-after-you-request-an-estimate/" },
-      { icon: "\uD83D\uDCE6", title: "Moving Supplies Checklist", desc: "The 12 supplies worth buying before move day, and what you can skip", href: "/blog/moving-supplies-checklist/" },
-      { icon: "\uD83C\uDFE1", title: "New to Connecticut?", desc: "Everything you need to know about relocating to CT from someone who moves families here", href: "/blog/relocating-to-connecticut-guide/" },
-    ];
-
-    return (
-      <div style={{
-        background: bg, borderRadius: 12, padding: "32px 24px",
-        border: dark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #E5E7EB",
-      }}>
-        <style>{`
-          @keyframes checkEntrance {
-            0% { transform: scale(0); opacity: 0; }
-            70% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1); }
-          }
-          .checkmark-entrance {
-            animation: checkEntrance 400ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-          }
-          @media (prefers-reduced-motion: reduce) {
-            .checkmark-entrance { animation: none; transform: scale(1); opacity: 1; }
-          }
-          .blog-card-link { transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease; }
-          .blog-card-link:hover, .blog-card-link:active { transform: translateY(-2px); }
-          .blog-card-link .card-arrow { transition: transform 150ms ease; }
-          .blog-card-link:hover .card-arrow { transform: translateX(3px); }
-        `}</style>
-
-        {/* Confirmation Card */}
-        <div style={{
-          textAlign: "center", marginBottom: 28, padding: "32px 24px",
-          background: confirmBg, border: `1px solid ${confirmBorder}`, borderRadius: 16,
-        }}>
-          <div className="checkmark-entrance" style={{
-            width: 72, height: 72, borderRadius: "50%", background: "#16A34A",
-            display: "inline-flex", alignItems: "center", justifyContent: "center",
-            marginBottom: 16, filter: "drop-shadow(0 4px 12px rgba(22, 163, 74, 0.4))",
-          }}>
-            <Check size={36} stroke="#fff" />
-          </div>
-          <h3 style={{
-            fontFamily: "var(--font-heading)", fontWeight: 800,
-            fontSize: "clamp(26px, 4vw, 34px)", color: textColor, marginBottom: 8,
-          }}>
-            Estimate Request Received!
-          </h3>
-          <p style={{
-            fontFamily: "var(--font-body)", fontSize: 15, lineHeight: 1.5,
-            color: textColor, marginBottom: 20,
-          }}>
-            {THANKS[replyWindow] || THANKS.now}
-          </p>
-          <p style={{
-            fontFamily: "var(--font-body)", fontSize: 13, color: mutedColor, marginBottom: 14,
-          }}>
-            Need help right now?
-          </p>
-          <a href={COMPANY.phoneLink} style={{
-            display: "inline-flex", alignItems: "center", gap: 10,
-            background: "#FBCB0B", color: "#000", fontFamily: "var(--font-heading)",
-            fontWeight: 700, fontSize: 15, padding: "14px 32px", borderRadius: 8,
-            textDecoration: "none", minHeight: 44,
-          }}>
-            <Phone size={18} /> (888) 553-4503
-          </a>
-        </div>
-
-        {/* Divider */}
-        <div style={{ textAlign: "center", margin: "0 0 20px", position: "relative" }}>
-          <div style={{ position: "absolute", top: "50%", left: 0, right: 0, height: 1, background: cardBorder }} />
-          <span style={{
-            position: "relative", background: bg, padding: "0 12px",
-            fontFamily: "var(--font-body)", fontSize: 12, color: mutedColor,
-            textTransform: "uppercase", letterSpacing: "0.05em",
-          }}>While you wait</span>
-        </div>
-
-        {/* Blog Cards */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-          {blogCards.map((card, i) => (
-            <Link key={i} href={card.href} className="blog-card-link" style={{
-              display: "flex", alignItems: "center", gap: 16,
-              background: cardBg, border: `1px solid ${cardBorder}`, borderRadius: 10,
-              padding: "18px 16px", textDecoration: "none",
-            }}
-            onMouseEnter={e => { e.currentTarget.style.borderColor = "#D4A017"; e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)"; }}
-            onMouseLeave={e => { e.currentTarget.style.borderColor = cardBorder; e.currentTarget.style.boxShadow = "none"; }}
+  let body;
+  if (step.cards) {
+    body = (
+      <div className="isf-body">
+        {qHeading(step.title)}
+        <div className={`isf-cards${step.cards.length === 2 ? " isf-cards-2" : ""}${step.cards.length === 3 ? " isf-cards-3" : ""}`}>
+          {step.cards.map((c, n) => (
+            <button
+              key={c.t}
+              type="button"
+              aria-label={`${c.t}. ${c.s}`}
+              className={`isf-opt${picked === n ? " picked" : ""}`}
+              onClick={() => pickCard(c, n)}
             >
-              <span style={{ fontSize: 28, lineHeight: 1, flexShrink: 0 }}>{card.icon}</span>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: textColor, marginBottom: 3 }}>{card.title}</div>
-                <div style={{ fontFamily: "var(--font-body)", fontSize: 12, color: mutedColor, lineHeight: 1.5 }}>{card.desc}</div>
-              </div>
-              <span className="card-arrow" style={{ color: "#D4A017", fontSize: 20, flexShrink: 0, fontWeight: 700 }}>&rsaquo;</span>
-            </Link>
+              <span className="isf-opt-t">{c.t}</span>
+              <span className="isf-opt-foot">
+                <span className="isf-opt-s">{c.s}</span>
+                <Icon name={c.i} />
+              </span>
+            </button>
           ))}
         </div>
       </div>
     );
+  } else if (step.kind === "zip") {
+    const two = step.two;
+    const title = two
+      ? "Where are you moving from and to?"
+      : (data.moveType === "Labor only" ? "Where do you need our movers?" : "Where are you moving from?");
+    const ok = /^\d{5}$/.test(data.fromZip) && (!two || /^\d{5}$/.test(data.toZip));
+    const onZip = (field) => (e) => {
+      save({ [field]: e.target.value.replace(/\D/g, "").slice(0, 5) });
+      setErr("");
+    };
+    const onZipKey = (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        advanceZip(two);
+      }
+    };
+    body = (
+      <div className="isf-body">
+        {qHeading(title)}
+        <div className="isf-fields">
+          <div className="isf-field">
+            <label htmlFor="isf-fromZip">{two ? "Moving from (zip code)" : "Your zip code"}</label>
+            <input
+              ref={inputRef}
+              id="isf-fromZip"
+              inputMode="numeric"
+              autoComplete="postal-code"
+              maxLength={5}
+              placeholder="06082"
+              value={data.fromZip}
+              onChange={onZip("fromZip")}
+              onKeyDown={onZipKey}
+            />
+          </div>
+          {two && (
+            <div className="isf-field">
+              <label htmlFor="isf-toZip">Moving to (zip code)</label>
+              <input
+                id="isf-toZip"
+                inputMode="numeric"
+                maxLength={5}
+                placeholder="29577"
+                value={data.toZip}
+                onChange={onZip("toZip")}
+                onKeyDown={onZipKey}
+              />
+            </div>
+          )}
+          {err && <p className="isf-err" role="alert">{err}</p>}
+          <button type="button" className="isf-cta" disabled={!ok} onClick={() => advanceZip(two)}>
+            Continue
+          </button>
+        </div>
+      </div>
+    );
+  } else if (step.kind === "date") {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const maxDate = new Date(today.getTime());
+    maxDate.setDate(maxDate.getDate() + MAX_DAYS_AHEAD);
+    const cm = calMonth || new Date(today.getFullYear(), today.getMonth(), 1);
+    const y = cm.getFullYear(), m = cm.getMonth();
+    const first = new Date(y, m, 1).getDay();
+    const days = new Date(y, m + 1, 0).getDate();
+    const atStart = y === today.getFullYear() && m === today.getMonth();
+    const atEnd = new Date(y, m + 1, 1) > maxDate;
+    const cells = [];
+    for (let b = 0; b < first; b++) cells.push(<i key={`b${b}`} />);
+    for (let d = 1; d <= days; d++) {
+      const dt = new Date(y, m, d);
+      const disabled = dt < today || dt > maxDate;
+      const isToday = dt.getTime() === today.getTime();
+      cells.push(
+        <button
+          key={d}
+          type="button"
+          disabled={disabled}
+          className={isToday ? "today" : undefined}
+          aria-label={`${MONTHS[m]} ${d}`}
+          onClick={() => {
+            save({ moveDate: `${y}-${pad(m + 1)}-${pad(d)}` });
+            go("loading");
+          }}
+        >
+          {d}
+        </button>
+      );
+    }
+    body = (
+      <div className="isf-body">
+        {qHeading(data.dateType === "Flexible" ? "About when are you moving?" : "Pick your move date")}
+        <p className="isf-sub">You can change it later.</p>
+        <div className="isf-cal">
+          <div className="isf-calhead">
+            <button type="button" aria-label="Previous month" disabled={atStart} onClick={() => setCalMonth(new Date(y, m - 1, 1))}>&lsaquo;</button>
+            <strong>{MONTHS[m]} {y}</strong>
+            <button type="button" aria-label="Next month" disabled={atEnd} onClick={() => setCalMonth(new Date(y, m + 1, 1))}>&rsaquo;</button>
+          </div>
+          <div className="isf-grid">
+            {["S", "M", "T", "W", "T", "F", "S"].map((w, i) => <span key={i}>{w}</span>)}
+            {cells}
+          </div>
+        </div>
+      </div>
+    );
+  } else if (step.kind === "loading") {
+    body = (
+      <div className="isf-body isf-center">
+        {qHeading(loadingText)}
+        <Image
+          className="isf-truck"
+          src={TRUCK_IMG.src}
+          width={TRUCK_IMG.width}
+          height={TRUCK_IMG.height}
+          alt="Castle Express Moving & Storage truck"
+          unoptimized
+        />
+        <p className="isf-sub">This only takes a second.</p>
+      </div>
+    );
+  } else if (step.kind === "name") {
+    const ok = data.firstName.trim().length >= 2;
+    body = (
+      <div className="isf-body">
+        {qHeading(<>Almost done. <Hl>Who should we ask for?</Hl></>)}
+        <div className="isf-fields">
+          <div className="isf-field">
+            <label htmlFor="isf-firstName">First name</label>
+            <input
+              ref={inputRef}
+              id="isf-firstName"
+              autoComplete="given-name"
+              autoCapitalize="words"
+              maxLength={40}
+              placeholder="Your first name"
+              value={data.firstName}
+              onChange={(e) => { save({ firstName: e.target.value }); setErr(""); }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  advanceName();
+                }
+              }}
+            />
+          </div>
+          {err && <p className="isf-err" role="alert">{err}</p>}
+          <button type="button" className="isf-cta" disabled={!ok} onClick={advanceName}>
+            Continue
+          </button>
+        </div>
+      </div>
+    );
+  } else if (step.kind === "phone") {
+    const ok = data.phone.replace(/\D/g, "").length === 10;
+    body = (
+      <div className="isf-body">
+        {qHeading(<>{data.firstName}, where should we call with your <Hl>free estimate?</Hl></>)}
+        {showAdOffer && (
+          <div className="isf-offer">
+            <Icon name="box" />
+            <span><strong>20 free moving boxes</strong> when you book a walk-through estimate.</span>
+          </div>
+        )}
+        <form className="isf-fields" noValidate onSubmit={submitLead}>
+          <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", height: 0, overflow: "hidden" }}>
+            <label htmlFor="isf-website">Website</label>
+            <input id="isf-website" name="website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+          </div>
+          <div className="isf-field">
+            <label htmlFor="isf-phone">Phone number</label>
+            <input
+              ref={inputRef}
+              id="isf-phone"
+              type="tel"
+              inputMode="tel"
+              autoComplete="tel"
+              placeholder="(860) 555-0123"
+              value={data.phone}
+              onChange={(e) => { save({ phone: fmtPhone(e.target.value) }); setErr(""); }}
+            />
+          </div>
+          <label className="isf-check" htmlFor="isf-textOk">
+            <input
+              type="checkbox"
+              id="isf-textOk"
+              checked={data.textOk}
+              onChange={(e) => save({ textOk: e.target.checked })}
+            />
+            <span>You can also text me about my estimate. (Optional)</span>
+          </label>
+          {err && <p className="isf-err" role="alert">{err}</p>}
+          <button className="isf-cta" type="submit" disabled={!ok || sending}>
+            {sending ? "Sending..." : "Get my free estimate"}
+          </button>
+          <p className="isf-fine">
+            By tapping the button you agree that Castle Express Moving &amp; Storage may call you at this number about your move.
+          </p>
+        </form>
+      </div>
+    );
+  } else {
+    const open = !followUp || followUp.open;
+    const moving = [data.homeType, data.size]
+      .filter((x) => x && x !== "Other")
+      .filter((x, i, a) => a.indexOf(x) === i)
+      .join(", ");
+    let dateLabel = data.dateType === "Not sure" ? "Not sure yet" : "";
+    if (data.moveDate) {
+      const [yy, mm, dd] = data.moveDate.split("-").map(Number);
+      dateLabel = `${MONTHS[mm - 1].slice(0, 3)} ${dd}, ${yy}`;
+    }
+    const rows = [
+      ["Move", data.moveType],
+      ["Moving", moving],
+      ["From", data.fromZip],
+      ["To", data.toZip],
+      ["Date", dateLabel],
+      ["Call", data.phone],
+    ].filter(([, v]) => v);
+    body = (
+      <div className="isf-body isf-center">
+        {qHeading(<>Thanks, {data.firstName}. We will call you <Hl>{open ? "shortly." : `${followUp.label}.`}</Hl></>)}
+        <p className="isf-sub">
+          {open
+            ? "Keep your phone handy. The call comes from our Enfield office."
+            : "Our office is closed right now. You are first on the list when we open."}
+        </p>
+        <dl className="isf-recap">
+          {rows.map(([k, v]) => (
+            <div key={k} style={{ display: "contents" }}>
+              <dt>{k}</dt>
+              <dd>{v}</dd>
+            </div>
+          ))}
+        </dl>
+        <p className="isf-sub">
+          Rather call us?{" "}
+          <a href={COMPANY.phoneLink} style={{ color: "inherit", fontWeight: 700, textDecoration: "underline" }}>
+            888-553-4503
+          </a>
+        </p>
+        <button type="button" className="isf-reset" onClick={resetForm}>
+          Start another estimate
+        </button>
+      </div>
+    );
   }
 
-  // ─── Form ───
-  // Phone layout for twoStep lives in globals.css (.ef-two-step, <=768px):
-  // one column, 16px inputs (iOS zooms on focus below 16px), and only the
-  // current step's fields. CSS, not JS, so the server HTML already has the
-  // step 1 layout on phones (no layout shift at hydration). Desktop and every
-  // other page keep the original 2-column form.
-  const fieldStyle = inputStyle;
-  const s1 = twoStep ? "ef-s1" : undefined;
-  const s2 = twoStep ? "ef-s2" : undefined;
-  const responseLine = replyWindow === null ? "\u00A0" : RESPONSE_LINE[replyWindow] || RESPONSE_LINE.now;
-
   return (
-    <form id="estimate-form" onSubmit={handleSubmit} onKeyDown={twoStep ? onFormKeyDown : undefined} className={twoStep ? "ef-two-step" : undefined} data-step={twoStep ? step : undefined} style={{
-      background: bg, borderRadius: 12, padding: "28px 24px",
-      border: dark ? "1px solid rgba(255,255,255,0.1)" : "1px solid #E5E7EB",
-      scrollMarginTop: 88,
-    }}>
-      {/* Title row. On phones (twoStep) the step counter sits at the right
-          end of this row to keep step 1 inside the first screen. */}
-      <div className={twoStep ? "ef-head" : undefined}>
-        <h3 style={{
-          fontFamily: "var(--font-heading)", fontWeight: 800,
-          fontSize: 22, color: dark ? "#fff" : "#1A1A2E", margin: "0 0 4px 0",
-        }}>Get Your Free Estimate</h3>
-        {twoStep && (
-          <p aria-live="polite" className="ef-phone-only ef-step" style={{
-            fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 12, letterSpacing: "0.04em",
-            textTransform: "uppercase", color: "#D4A017", margin: 0, whiteSpace: "nowrap",
-          }}>Step {step} of 2</p>
-        )}
-      </div>
-      <p style={{
-        fontFamily: "var(--font-body)", fontSize: 13,
-        color: dark ? "rgba(255,255,255,0.75)" : "#6B7280", margin: "0 0 20px 0",
-      }} className={twoStep ? "ef-response" : undefined}>{responseLine}</p>
-      {/* Honeypot: invisible to humans, bots auto-fill it. Named "website"
-          because that's what form-filler bots look for. */}
-      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", height: 0, overflow: "hidden" }}>
-        <label htmlFor="website-field">Website</label>
-        <input id="website-field" name="website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
-      </div>
-
-      {/* All 8 fields stay mounted in one form (step 2 fields are only hidden
-          on phones during step 1), so the submit payload is identical. */}
-      <div className={twoStep ? "ef-grid" : undefined} style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
-        <div className={s1}>
-          <label htmlFor="customer-name" style={labelStyle}>Name</label>
-          <input id="customer-name" name="name" style={fieldStyle} placeholder="Your full name" autoComplete="name" value={formData.name} onChange={update("name")} required aria-label="Name" />
-        </div>
-        <div className={s1}>
-          <label htmlFor="phone-number" style={labelStyle}>Phone</label>
-          <input id="phone-number" name="phone" style={fieldStyle} placeholder="(860) 555-0123" type="tel" autoComplete="tel" value={formData.phone} onChange={update("phone")} required aria-label="Phone" />
-        </div>
-        <div className={s2}>
-          <label htmlFor="email" style={labelStyle}>Email</label>
-          <input id="email" name="email" ref={step2FirstRef} style={fieldStyle} placeholder="you@email.com" type="email" autoComplete="email" value={formData.email} onChange={update("email")} required aria-label="Email" />
-        </div>
-        <div className={s1}>
-          <label htmlFor="date" style={labelStyle}>Move Date</label>
-          <input id="date" name="moveDate" style={fieldStyle} type="date" value={formData.moveDate} onChange={update("moveDate")} aria-label="Move Date" />
-        </div>
-        <div className={s2}>
-          <label htmlFor="origin-full" style={labelStyle}>Moving From</label>
-          <input id="origin-full" name="moveFrom" style={fieldStyle} placeholder="City, State or ZIP" value={formData.moveFrom} onChange={update("moveFrom")} aria-label="Moving From" />
-        </div>
-        <div className={s2}>
-          <label htmlFor="destination-full" style={labelStyle}>Moving To</label>
-          <input id="destination-full" name="moveTo" style={fieldStyle} placeholder="City, State or ZIP" value={formData.moveTo} onChange={update("moveTo")} aria-label="Moving To" />
-        </div>
-        <div className={s2}>
-          <label htmlFor="move-size" style={labelStyle}>Move Size</label>
-          <select id="move-size" name="moveSize" style={{ ...fieldStyle, appearance: "auto" }} value={formData.moveSize} onChange={update("moveSize")} aria-label="Move Size">
-            <option value="" style={optionStyle}>Select size...</option>
-            {MOVE_SIZES.map(s => <option key={s} value={s} style={optionStyle}>{s}</option>)}
-          </select>
-        </div>
-        <div className={s2}>
-          <label htmlFor="how-did-you-hear-about-us" style={labelStyle}>How did you find us?</label>
-          <select id="how-did-you-hear-about-us" name="source" style={{ ...fieldStyle, appearance: "auto" }} value={formData.source} onChange={update("source")} aria-label="How did you find us?">
-            <option value="" style={optionStyle}>Select...</option>
-            {LEAD_SOURCES.map(s => <option key={s} value={s} style={optionStyle}>{s}</option>)}
-          </select>
-        </div>
-      </div>
-
-      <div style={{ marginTop: 16 }}>
-        {error && (
-          <p role="alert" style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#DC2626", background: "#FEF2F2", border: "1px solid #FECACA", borderRadius: 6, padding: "10px 12px", margin: "0 0 12px 0" }}>
-            {error}
-          </p>
-        )}
-        {twoStep && (
-          // type="button": advancing is NOT a submit (no lead, no GTM form event).
-          <button type="button" onClick={(e) => goToStep2(e.currentTarget.form)} className="btn btn-primary btn-full ef-next">
-            Next: Move Details <ArrowRight />
+    <div
+      id="estimate-form"
+      ref={cardRef}
+      className={`isf-card${dark ? " isf-dark" : ""}${twoStep ? " isf-hero" : ""}`}
+      data-step={current}
+      aria-label="Free moving estimate"
+    >
+      <div className="isf-top">
+        {showBack ? (
+          <button type="button" className="isf-back" onClick={back} aria-label="Go back one step">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M15 5l-7 7 7 7" />
+            </svg>
+            Back
           </button>
+        ) : (
+          <span className="isf-eyebrow">Free Moving Estimate</span>
         )}
-        <button type="submit" disabled={loading} className={`btn btn-primary btn-full${twoStep ? " ef-submit" : ""}`} style={{ opacity: loading ? 0.7 : 1 }}>
-          {loading ? "Submitting..." : error ? <>Try Again <ArrowRight /></> : <>Get Free Estimate <ArrowRight /></>}
-        </button>
-        {twoStep && (
-          <button type="button" className="ef-back" onClick={() => setStep(1)} style={{
-            display: "block", margin: "10px auto 0", background: "none", border: "none", padding: "10px 12px",
-            minHeight: 44, cursor: "pointer", fontFamily: "var(--font-heading)", fontWeight: 600, fontSize: 14,
-            color: dark ? "rgba(255,255,255,0.8)" : "#6B7280", textDecoration: "underline", textUnderlineOffset: 3,
-          }}>Back to step 1</button>
-        )}
+        <span className="isf-meta">
+          {current === "move" ? (
+            <>
+              <span className={`isf-dot${replyWindow === "now" ? " live" : ""}`} aria-hidden="true" />
+              {RESPONSE_LINE[replyWindow || "now"]}
+            </>
+          ) : (
+            step.label
+          )}
+        </span>
       </div>
-      <p style={{
-        fontFamily: "var(--font-body)", fontSize: 11,
-        color: dark ? "rgba(255,255,255,0.75)" : "#999",
-        marginTop: 10, textAlign: "center",
-      }}>
-        By submitting, you agree to our Terms of Service and Privacy Policy.
-      </p>
-    </form>
+      <div className="isf-bar" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={pct} aria-label="Estimate form progress">
+        <div style={{ width: `${pct}%` }} />
+      </div>
+      {body}
+      {current === "move" && (
+        <p className="isf-foot-note">Takes about 30 seconds. No obligation.</p>
+      )}
+    </div>
   );
 }

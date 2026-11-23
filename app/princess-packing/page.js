@@ -123,7 +123,7 @@ export default function PrincessPackingPage() {
             <div style={{ marginTop: 48, display: "flex", gap: 32, flexWrap: "wrap" }}>
               {[
                 { num: "4.9★", label: "Google Rating" },
-                { num: "200+", label: "Reviews" },
+                { num: "220+", label: "Reviews" },
                 { num: "Since 2011", label: "Castle Express Moving & Storage" },
               ].map((t, i) => (
                 <div key={i}>

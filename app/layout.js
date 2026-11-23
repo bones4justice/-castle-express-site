@@ -8,16 +8,12 @@ import LpAbTracker from "@/components/LpAbTracker";
 import ChromeGate from "@/components/ChromeGate";
 import { localBusinessJsonLd } from "@/lib/structuredData";
 import { heroVariantScript } from "@/lib/heroVariantScript";
+import { TRACKER_LOADER_SCRIPT } from "@/lib/trackerLoaderScript";
+import "./globals.css";
 
-// Vercel PREVIEW builds (branch / PR / CLI deploys) do not load GTM, GA4, the
-// Meta and OpenAI pixels, or Clarity, so review clicks and test submissions
-// never reach production reporting or ad conversions. The dataLayer/gtag shim
-// still runs, so every event is still pushed to window.dataLayer for testing.
-// Only an explicit "preview"/"development" turns trackers off: production,
-// and any build where VERCEL_ENV is missing, load everything exactly as before.
+// Allow ?hero=A|B inspection override only on Vercel preview/dev builds.
 const IS_PREVIEW = process.env.VERCEL_ENV === "preview" || process.env.VERCEL_ENV === "development";
 const HERO_VARIANT_SCRIPT = heroVariantScript({ allowOverride: IS_PREVIEW });
-import "./globals.css";
 
 const merriweather = Merriweather({
   subsets: ["latin"],
@@ -48,7 +44,7 @@ export const metadata = {
   title: {
     default: "Castle Express Moving & Storage | CT & MA Movers Since 2011",
   },
-  description: "Family-owned movers in Enfield, CT serving Hartford County & Western MA since 2011. 200+ five-star reviews, honest estimates. Call (888) 553-4503.",
+  description: "Family-owned movers in Enfield, CT serving Hartford County & Western MA since 2011. 220+ five-star reviews, honest estimates. Call (888) 553-4503.",
   // WARNING: this canonical is inherited by ANY page that doesn't set its own
   // `alternates`: a page added without one silently canonicalizes to the
   // homepage (deindexing itself). Every new page must set its own canonical.
@@ -59,13 +55,13 @@ export const metadata = {
     url: SITE_URL,
     siteName: "Castle Express Moving & Storage",
     title: "Castle Express Moving & Storage | CT & MA Movers Since 2011",
-    description: "Family-owned moving company serving Hartford County, CT and Western MA. Transparent pricing, professional crews, 200+ 5-star reviews.",
+    description: "Family-owned moving company serving Hartford County, CT and Western MA. Transparent pricing, professional crews, 220+ 5-star reviews.",
     images: [{ url: "/images/og-default.jpg", width: 1200, height: 630, alt: "Castle Express moving truck at a Connecticut home" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Castle Express Moving & Storage | CT & MA Movers Since 2011",
-    description: "Family-owned moving company serving Hartford County, CT and Western MA. Transparent pricing, professional crews, 200+ 5-star reviews.",
+    description: "Family-owned moving company serving Hartford County, CT and Western MA. Transparent pricing, professional crews, 220+ 5-star reviews.",
     images: ["/images/og-default.jpg"],
   },
   robots: { index: true, follow: true },
@@ -79,47 +75,31 @@ export default function RootLayout({ children }) {
         <script dangerouslySetInnerHTML={{ __html: HERO_VARIANT_SCRIPT }} />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/apple-icon.png" />
-        {!IS_PREVIEW && <Script id="google-tag-manager" strategy="afterInteractive">{`
-          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KLR2TQC');
-        `}</Script>}
-        <Script id="google-analytics" strategy="afterInteractive">{`
-          // GA4 is loaded here and only here. The GTM container must not
-          // contain a Google tag for G-97Z4EHJM63 (it was paused Oct 2026);
-          // if one is added back, every page view will count twice. GTM
-          // still owns the Google Ads tag, the call tracking, and the
-          // generate_lead conversion trigger, which reads these gtag()
-          // pushes - so the dataLayer shim stays defined for every visitor,
-          // bot or not; only the GA4 loader + config are gated below.
+        {/* Tag Manager, GA4, Meta, OpenAI and Clarity: production host only,
+            and held back until they are needed. See lib/trackerLoaderScript.js. */}
+        <script dangerouslySetInnerHTML={{ __html: TRACKER_LOADER_SCRIPT }} />
+        <Script id="phone-click-tracking" strategy="afterInteractive">{`
+          // The gtag() shim and every tag loader live in
+          // lib/trackerLoaderScript.js (inlined in <head> above). This block
+          // only wires the phone-link click tracking.
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
-          window.gtag = window.gtag || gtag;
-          // Data-center headless browsers (Moses Lake, Ashburn, Singapore,
-          // San Jose, Des Moines) were ~200 GA4 "Direct" sessions a week.
-          // Do not load GA4 for them. GTM, Clarity and the Meta pixel load
-          // exactly as before.
-          var ua = navigator.userAgent || '';
-          var isBot = navigator.webdriver === true
-            || ua.indexOf('HeadlessChrome') !== -1
-            || /bot|crawler|spider|python-requests|curl/i.test(ua);
-          if (!isBot && !${IS_PREVIEW}) {
-            var ga = document.createElement('script');
-            ga.async = true;
-            ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-97Z4EHJM63';
-            document.head.appendChild(ga);
-            gtag('js', new Date());
-            gtag('config', 'G-97Z4EHJM63');
-          }
           document.addEventListener('click', function(e) {
             var link = e.target.closest('a[href^="tel:"]');
             if (link) {
+              // Meta "Contact" for the call. Tag Manager sends one too once it
+              // has loaded; duplicates are dropped in lib/trackerLoaderScript.js.
+              if (typeof window.fbq === 'function') window.fbq('track', 'Contact');
+
               var el = link.closest('.mobile-sticky-cta') ? 'sticky' : link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark,.home-hero') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
               var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'not_set';
               var lv = (document.cookie.match(/lp_ab=(landing|service)/) || [])[1] || 'not_in_test';
+              var gv = (document.cookie.match(/ge_ab=(form|home)/) || [])[1] || 'not_in_test';
               // send_to is required for GA4 (GTM claims untargeted pushes and
               // has no GA4 tag since container v35). Verified live 2026-10-19:
               // GTM's Website Phone Calls tag fires the same wcm pair on this
               // push with or without send_to.
-              var cp = { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv, lp_variant: lv, send_to: 'G-97Z4EHJM63' };
+              var cp = { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv, lp_variant: lv, ge_variant: gv, send_to: 'G-97Z4EHJM63' };
               // Homepage redesign marker (lib/homeDesign.js); absent on the old design.
               var hd = document.querySelector('[data-home-design]');
               if (hd) cp.home_design = hd.getAttribute('data-home-design');
@@ -149,33 +129,14 @@ export default function RootLayout({ children }) {
             }
           });
         `}</Script>
-        {!IS_PREVIEW && <Script id="facebook-pixel" strategy="lazyOnload">{`
-          !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', '1423378058969444');
-          fbq('init', '893903650293022');
-          fbq('track', 'PageView');
-        `}</Script>}
-        {!IS_PREVIEW && <Script id="openai-pixel" strategy="lazyOnload">{`
-          !function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");
-          oaiq("init",{pixelId:"CPxY6DboesSjpsV4bFGcp4",debug:false});
-        `}</Script>}
-        {!IS_PREVIEW && <Script id="microsoft-clarity" strategy="lazyOnload">{`
-          (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-          })(window, document, "clarity", "script", "wcqd0mksz9");
-          var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'unknown';
-          window.clarity('set', 'hero_variant', hv);
-        `}</Script>}
       </head>
       <body>
         {!IS_PREVIEW && <noscript>
           <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLR2TQC" height="0" width="0" style={{display:"none",visibility:"hidden"}}></iframe>
         </noscript>}
         {/* No Meta Pixel <noscript> image fallbacks: the JS pixel fires
-            PageView for both pixels, so the noscript images only double-counted
-            PageView on normal (JS-on) loads. */}
+            PageView, so the noscript images only double-counted PageView on
+            normal (JS-on) loads. */}
         {/* Sitewide LocalBusiness JSON-LD. The full MovingCompany graph is
             added on the homepage only (see app/page.js + lib/structuredData.js). */}
         <script

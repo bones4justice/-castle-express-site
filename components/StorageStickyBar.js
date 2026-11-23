@@ -31,7 +31,8 @@ function setCookie(name, value, days) {
 
 function fireEvent(eventName) {
   if (typeof window !== "undefined" && window.gtag) {
-    window.gtag("event", eventName, { page_path: window.location.pathname });
+    // send_to is required for GA4: GTM claims untargeted gtag() pushes.
+    window.gtag("event", eventName, { page_path: window.location.pathname, send_to: "G-97Z4EHJM63" });
   }
 }
 

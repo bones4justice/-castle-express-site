@@ -25,6 +25,23 @@ const FORMS = {
     formspree: "https://formspree.io/f/xnjojwly",
     providerKey: process.env.SMARTMOVING_REFERRAL_PROVIDER_KEY,
   },
+  // Promo / packing forms (2026-11-22). These used to post straight to
+  // Formspree from the browser, so their leads never reached SmartMoving and
+  // had no spam filter or failure alert. Each keeps the Formspree inbox it
+  // always used; in SmartMoving they arrive under the website provider with
+  // the form named at the start of Notes.
+  postcard: {
+    formspree: "https://formspree.io/f/xnjojwly",
+    providerKey: process.env.SMARTMOVING_PROVIDER_KEY,
+  },
+  "storage-offer": {
+    formspree: "https://formspree.io/f/xnjojwly",
+    providerKey: process.env.SMARTMOVING_PROVIDER_KEY,
+  },
+  packing: {
+    formspree: "https://formspree.io/f/xpqjkjga",
+    providerKey: process.env.SMARTMOVING_PROVIDER_KEY,
+  },
 };
 
 const BRANCH_ID = "352498a1-e171-40cd-8b35-ac5d011720d0";
@@ -112,16 +129,31 @@ async function reportWriteFailure(target, formName, detail) {
 // A real name word of 3+ letters virtually always contains a vowel.
 // Catches bot names like "Jchr Pzqhzctzd". Diacritics are folded to ASCII
 // first so real names like Björn or Françoise never trip the check.
+//
+// Two narrow exceptions (2026-11-22) so real customers are not dropped:
+//  - common vowel-less titles and business abbreviations ("Mrs. Linda Smith",
+//    "Smith & Sons LLC", "Hartford Property Mgmt") skip the vowel test;
+//  - a generational ordinal ("John Smith 3rd") is the only digit allowed.
+// Every other word is still checked, so "Mrs Pzqhzctzd" stays blocked.
+const NAME_ABBREVIATIONS = new Set([
+  "mr", "mrs", "ms", "mx", "dr", "jr", "sr", "md", "phd", "dds", "rn",
+  "llc", "inc", "ltd", "llp", "pllc", "corp", "mgmt", "svc", "svcs", "dept",
+  "bldg", "ctr",
+]);
+
 function isGibberishName(name) {
   if (!name || name.trim().length < 2) return true;
-  if (/\d/.test(name)) return true;
   if (/https?:|www\./i.test(name)) return true;
   const ascii = name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
   const words = ascii.trim().split(/\s+/);
-  const gibberish = words.filter(
-    (w) => w.replace(/[^a-z]/gi, "").length >= 3 && !/[aeiouy]/i.test(w)
-  );
-  return gibberish.length > 0;
+  for (const w of words) {
+    const core = w.toLowerCase().replace(/[^a-z0-9]/g, "");
+    if (/\d/.test(core) && !/^(1st|2nd|3rd|[4-9]th)$/.test(core)) return true;
+    const letters = core.replace(/[^a-z]/g, "");
+    if (NAME_ABBREVIATIONS.has(letters)) continue;
+    if (letters.length >= 3 && !/[aeiouy]/.test(letters)) return true;
+  }
+  return false;
 }
 
 // NANP: 10 digits (optionally 11 with leading 1); area code and exchange
@@ -175,9 +207,16 @@ const FIRST_SIZE_OPTIONS = new Set(["Studio", "Studio / 1 Bedroom"]);
 // The under-3-seconds rule and every other spam check still apply.
 const DEFAULT_DROPDOWN_EXEMPT_LANDINGS = new Set(["get-estimate"]);
 
+// The promo / packing forms are outside this rule too: it was calibrated on
+// the sitewide estimate forms only (Joe, 10/25), the postcard form requires a
+// move date, and the other two have no size dropdown at all. Every other spam
+// check still applies to them.
+const DEFAULT_DROPDOWN_EXEMPT_FORMS = new Set(["postcard", "storage-offer", "packing"]);
+
 function isDefaultDropdownSpam(body) {
   const fs = body.formspree || {};
   const sm = body.smartmoving || {};
+  if (DEFAULT_DROPDOWN_EXEMPT_FORMS.has(body.form)) return false;
   if (
     DEFAULT_DROPDOWN_EXEMPT_LANDINGS.has(body.landing) ||
     DEFAULT_DROPDOWN_EXEMPT_LANDINGS.has(fs.landing)
@@ -325,8 +364,11 @@ export async function POST(request) {
     console.warn(
       `[lead-spam] blocked ${body.form} lead from ${ip}: ${reason}`
     );
-    // Fake success — don't teach the bot what tripped.
-    return Response.json({ ok: true });
+    // Fake success — don't teach the bot what tripped. The `s` flag tells our
+    // own forms to show the thank-you screen but NOT fire ad/analytics
+    // conversions, so blocked bots stop being counted as leads by Google
+    // and Meta. It reveals nothing about which rule matched.
+    return Response.json({ ok: true, s: 1 });
   }
 
   // Honest typos get a real, fixable error (the forms display it).

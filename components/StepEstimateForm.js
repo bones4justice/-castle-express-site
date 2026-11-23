@@ -5,6 +5,7 @@ import { COMPANY } from "@/content";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import { readVariantCookie } from "@/lib/lpAbTest";
 import { geVariantForLead } from "@/lib/geAbTest";
+import { sendGenerateLead } from "@/lib/leadEvents";
 import { BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
 import { responseWindow, SALES_HOURS, CLOSED_DATES } from "@/lib/salesHours";
 
@@ -153,7 +154,12 @@ const DAY_NAMES = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Frid
 const pad = (n) => String(n).padStart(2, "0");
 
 function fmtPhone(v) {
-  const d = v.replace(/\D/g, "").slice(0, 10);
+  // Autofill often supplies "+1 (860) 555-0123". No US area code starts with
+  // 1, so a leading 1 is always the country code: drop it before trimming to
+  // 10 digits (it used to shift every digit and lose the last one).
+  let d = v.replace(/\D/g, "");
+  if (d[0] === "1") d = d.slice(1);
+  d = d.slice(0, 10);
   if (d.length > 6) return `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`;
   if (d.length > 3) return `(${d.slice(0, 3)}) ${d.slice(3)}`;
   return d;
@@ -194,6 +200,7 @@ export default function StepEstimateForm() {
   const [loadingText, setLoadingText] = useState("Saving your move details");
   const [err, setErr] = useState("");
   const [sending, setSending] = useState(false);
+  const inFlight = useRef(false); // one submission at a time (state alone lags a fast double tap)
   const [followUp, setFollowUp] = useState(null);
   const [honeypot, setHoneypot] = useState("");
   const openedAt = useRef(Date.now());
@@ -268,9 +275,10 @@ export default function StepEstimateForm() {
 
   const submitLead = async (e) => {
     e.preventDefault();
-    if (sending) return;
+    if (sending || inFlight.current) return;
     const digits = data.phone.replace(/\D/g, "");
     if (digits.length !== 10) { setErr("Enter a 10 digit phone number."); return; }
+    inFlight.current = true;
     setSending(true);
     setErr("");
     try {
@@ -334,16 +342,20 @@ export default function StepEstimateForm() {
       if (!leadRes.ok || res.ok === false) {
         setErr(res.error || `Something went wrong sending your request. Please try again, or call us at ${COMPANY.phone}.`);
         setSending(false);
+        inFlight.current = false;
         return;
       }
-      // Conversion events ONLY on a confirmed accepted submit.
+      // Conversion events ONLY on a confirmed accepted submit. res.s = the
+      // server quietly discarded this as spam: thank-you screen, no conversions.
+      if (!res.s) {
       if (typeof window.fbq === "function") window.fbq("track", "Lead");
       if (typeof window.oaiq === "function")
         window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       // GTM's Ads conversion trigger fires on this same generate_lead push.
-      track("generate_lead", { event_category: "form", event_label: EVENT_LABEL, lp_variant: lpVariant, ge_variant: geVariant, box_offer: "shown" });
+      sendGenerateLead(oaiEventId, { event_category: "form", event_label: EVENT_LABEL, lp_variant: lpVariant, ge_variant: geVariant, box_offer: "shown" });
       track("form_submission_success", { form_location: "/get-estimate", lp_variant: lpVariant, ge_variant: geVariant });
       if (typeof window.clarity === "function") window.clarity("set", "form_completed", "true");
+      }
 
       const win = responseWindow();
       setFollowUp(win === "now" ? { open: true } : { open: false, label: win === "this_morning" ? "this morning" : nextBusinessLabel() });
@@ -354,6 +366,7 @@ export default function StepEstimateForm() {
       setErr(`We could not send your request (connection problem). Please try again, or call us at ${COMPANY.phone}.`);
     }
     setSending(false);
+    inFlight.current = false;
   };
 
   /* ---------- screens ---------- */
@@ -538,7 +551,7 @@ export default function StepEstimateForm() {
         <dl className="ge-recap">
           {rows.map(([k, v]) => <div key={k} style={{ display: "contents" }}><dt>{k}</dt><dd>{v}</dd></div>)}
         </dl>
-        <p className="ge-sub">Rather call us? 888-553-4503</p>
+        <p className="ge-sub">Rather call us? <a href="tel:18885534503" style={{ color: "inherit", fontWeight: 700, textDecoration: "underline" }}>888-553-4503</a></p>
       </>
     );
   }

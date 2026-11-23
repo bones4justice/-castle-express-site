@@ -231,14 +231,14 @@ const nextConfig = {
       { source: '/offer/', destination: '/contact/', permanent: true },
       { source: '/reviews-accreditation', destination: '/about/', permanent: true },
       { source: '/reviews-accreditation/', destination: '/about/', permanent: true },
-      { source: '/commercial-mover', destination: '/services/', permanent: true },
-      { source: '/commercial-mover/', destination: '/services/', permanent: true },
+      { source: '/commercial-mover', destination: '/services/commercial-moving/', permanent: true },
+      { source: '/commercial-mover/', destination: '/services/commercial-moving/', permanent: true },
       { source: '/residential-mover', destination: '/services/residential-moving/', permanent: true },
       { source: '/residential-mover/', destination: '/services/residential-moving/', permanent: true },
-      { source: '/storage-with-climate-control', destination: '/services/', permanent: true },
-      { source: '/storage-with-climate-control/', destination: '/services/', permanent: true },
-      { source: '/specialty-moving-service', destination: '/services/', permanent: true },
-      { source: '/specialty-moving-service/', destination: '/services/', permanent: true },
+      { source: '/storage-with-climate-control', destination: '/services/storage/', permanent: true },
+      { source: '/storage-with-climate-control/', destination: '/services/storage/', permanent: true },
+      { source: '/specialty-moving-service', destination: '/services/specialty-moving/', permanent: true },
+      { source: '/specialty-moving-service/', destination: '/services/specialty-moving/', permanent: true },
       // Old sitemap URLs
       { source: '/post-sitemap.xml', destination: '/sitemap.xml', permanent: true },
       { source: '/sitemaps.xml', destination: '/sitemap.xml', permanent: true },
@@ -582,8 +582,8 @@ const nextConfig = {
       // Brochure QR: printed tri-fold points at /Adam (a rep who left). Next
       // routes are case-sensitive, so cover both cases. permanent: false (307)
       // so browsers don't cache it forever if the target ever changes.
-      { source: '/Adam', destination: '/brochure', permanent: false },
-      { source: '/adam', destination: '/brochure', permanent: false },
+      { source: '/Adam', destination: '/brochure/', permanent: false },
+      { source: '/adam', destination: '/brochure/', permanent: false },
 
       // Root-level blog slugs missing the /blog/ prefix (generated from BLOG_SLUGS above)
       ...blogPrefixRedirects,
