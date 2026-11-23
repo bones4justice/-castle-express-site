@@ -551,7 +551,7 @@ export default function StepEstimateForm() {
         <dl className="ge-recap">
           {rows.map(([k, v]) => <div key={k} style={{ display: "contents" }}><dt>{k}</dt><dd>{v}</dd></div>)}
         </dl>
-        <p className="ge-sub">Rather call us? 888-553-4503</p>
+        <p className="ge-sub">Rather call us? <a href="tel:18885534503" style={{ color: "inherit", fontWeight: 700, textDecoration: "underline" }}>888-553-4503</a></p>
       </>
     );
   }

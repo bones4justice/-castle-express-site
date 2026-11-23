@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, ArrowRight } from "@/components/Icons";
 import { OFFERS } from "./offers";
+import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import styles from "./postcard-form.module.css";
 
 const HOME_SIZES = ["Studio", "1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4+ Bedrooms"];
@@ -9,7 +10,9 @@ const HOME_SIZES = ["Studio", "1 Bedroom", "2 Bedrooms", "3 Bedrooms", "4+ Bedro
 export default function PostcardForm() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const openedAt = useRef(Date.now());
   const [formData, setFormData] = useState({
     firstName: "", lastName: "", phone: "", email: "",
     moveFrom: "", moveTo: "", moveDate: "", homeSize: "", notes: "",
@@ -41,21 +44,55 @@ export default function PostcardForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(false);
+    setError("");
+    const fallback = "Something went wrong sending your request. Please try again, or call us at 1-888-553-4503.";
     try {
-      const response = await fetch("https://formspree.io/f/xnjojwly", {
+      // Leads go through /api/lead (server-side spam filter + Formspree +
+      // SmartMoving), same as the estimate forms, so postcard leads land in
+      // the CRM with their ad attribution instead of only in an inbox.
+      const smPayload = {
+        FullName: `${formData.firstName} ${formData.lastName}`.trim(),
+        PhoneNumber: formData.phone,
+        Email: formData.email,
+        UserOptIn: true,
+        Notes: `POSTCARD OFFER - ${selectedOffer || "no offer selected"}${formData.notes ? " | Notes: " + formData.notes : ""}`,
+      };
+      if (formData.moveDate) smPayload.MoveDate = formData.moveDate.replace(/-/g, "");
+      if (formData.homeSize) smPayload.MoveSize = formData.homeSize;
+      if (formData.moveFrom) smPayload.OriginAddressFull = formData.moveFrom;
+      if (formData.moveTo) smPayload.DestinationAddressFull = formData.moveTo;
+      Object.assign(smPayload, getSmartMovingAttribution());
+
+      const oaiEventId = crypto.randomUUID();
+      const response = await fetch("/api/lead/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          ...formData,
-          offerSelected: selectedOffer,
-          formType: "Postcard Landing Page",
+          form: "postcard",
+          hp: honeypot,
+          elapsedMs: Date.now() - openedAt.current,
+          formspree: {
+            ...formData,
+            ...getAttribution(),
+            offerSelected: selectedOffer,
+            formType: "Postcard Landing Page",
+          },
+          smartmoving: smPayload,
+          oaiEventId,
+          pageUrl: window.location.href,
         }),
       });
-      if (!response.ok) throw new Error("submit failed");
+      const res = await response.json().catch(() => ({}));
+      if (!response.ok || res.ok === false) {
+        setError(res.error || fallback);
+        setLoading(false);
+        return;
+      }
+      // res.s = quietly discarded as spam: thank-you screen, no conversions.
+      if (!res.s) {
       // Non-estimate form: Contact, not Lead (keeps the estimate campaign clean).
       if (typeof window.fbq !== "undefined") window.fbq("track", "Contact");
-      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" });
+      if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "postcard_form", hero_variant: hv, send_to: "G-97Z4EHJM63" }); }
       if (typeof window.gtag !== "undefined") {
         window.gtag("event", "postcard_submit", {
@@ -65,9 +102,10 @@ export default function PostcardForm() {
           send_to: "G-97Z4EHJM63",
         });
       }
+      }
       setSubmitted(true);
     } catch {
-      setError(true);
+      setError(fallback);
     }
     setLoading(false);
   };
@@ -90,6 +128,11 @@ export default function PostcardForm() {
 
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
+      {/* Honeypot: invisible to humans, bots auto-fill it. */}
+      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", top: "auto", height: 0, overflow: "hidden" }}>
+        <label htmlFor="postcard-website-field">Website</label>
+        <input id="postcard-website-field" name="website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
+      </div>
       <div className={styles.formRow}>
         <div className={styles.field}>
           <label className={styles.label}>First Name *</label>
@@ -168,9 +211,8 @@ export default function PostcardForm() {
         {loading ? "Submitting..." : <>Send My Free Estimate Request <ArrowRight /></>}
       </button>
       {error && (
-        <p style={{ color: "#B91C1C", fontSize: 14, marginTop: 10, textAlign: "center" }}>
-          Something went wrong sending your request. Please try again, or call us at{" "}
-          <a href="tel:18885534503" style={{ color: "#B91C1C", fontWeight: 700 }}>1-888-553-4503</a>.
+        <p role="alert" style={{ color: "#B91C1C", fontSize: 14, marginTop: 10, textAlign: "center" }}>
+          {error}
         </p>
       )}
     </form>
