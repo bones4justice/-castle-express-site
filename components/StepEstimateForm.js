@@ -5,6 +5,7 @@ import { COMPANY } from "@/content";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import { readVariantCookie } from "@/lib/lpAbTest";
 import { geVariantForLead } from "@/lib/geAbTest";
+import { sendGenerateLead } from "@/lib/leadEvents";
 import { BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
 import { responseWindow, SALES_HOURS, CLOSED_DATES } from "@/lib/salesHours";
 
@@ -199,6 +200,7 @@ export default function StepEstimateForm() {
   const [loadingText, setLoadingText] = useState("Saving your move details");
   const [err, setErr] = useState("");
   const [sending, setSending] = useState(false);
+  const inFlight = useRef(false); // one submission at a time (state alone lags a fast double tap)
   const [followUp, setFollowUp] = useState(null);
   const [honeypot, setHoneypot] = useState("");
   const openedAt = useRef(Date.now());
@@ -273,9 +275,10 @@ export default function StepEstimateForm() {
 
   const submitLead = async (e) => {
     e.preventDefault();
-    if (sending) return;
+    if (sending || inFlight.current) return;
     const digits = data.phone.replace(/\D/g, "");
     if (digits.length !== 10) { setErr("Enter a 10 digit phone number."); return; }
+    inFlight.current = true;
     setSending(true);
     setErr("");
     try {
@@ -339,6 +342,7 @@ export default function StepEstimateForm() {
       if (!leadRes.ok || res.ok === false) {
         setErr(res.error || `Something went wrong sending your request. Please try again, or call us at ${COMPANY.phone}.`);
         setSending(false);
+        inFlight.current = false;
         return;
       }
       // Conversion events ONLY on a confirmed accepted submit. res.s = the
@@ -348,7 +352,7 @@ export default function StepEstimateForm() {
       if (typeof window.oaiq === "function")
         window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
       // GTM's Ads conversion trigger fires on this same generate_lead push.
-      track("generate_lead", { event_category: "form", event_label: EVENT_LABEL, lp_variant: lpVariant, ge_variant: geVariant, box_offer: "shown" });
+      sendGenerateLead(oaiEventId, { event_category: "form", event_label: EVENT_LABEL, lp_variant: lpVariant, ge_variant: geVariant, box_offer: "shown" });
       track("form_submission_success", { form_location: "/get-estimate", lp_variant: lpVariant, ge_variant: geVariant });
       if (typeof window.clarity === "function") window.clarity("set", "form_completed", "true");
       }
@@ -362,6 +366,7 @@ export default function StepEstimateForm() {
       setErr(`We could not send your request (connection problem). Please try again, or call us at ${COMPANY.phone}.`);
     }
     setSending(false);
+    inFlight.current = false;
   };
 
   /* ---------- screens ---------- */

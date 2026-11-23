@@ -4,6 +4,7 @@ import { COMPANY } from "@/content";
 import { Check, ArrowRight, Phone } from "@/components/Icons";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import { readVariantCookie } from "@/lib/lpAbTest";
+import { sendGenerateLead } from "@/lib/leadEvents";
 
 // Two-step, ad-only estimate form for /free-estimate. Submission is IDENTICAL
 // to the sitewide EstimateForm: it POSTs to /api/lead/ (server spam filter ->
@@ -39,6 +40,7 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "", eve
   const [honeypot, setHoneypot] = useState("");
   const openedAt = useRef(Date.now());
   const quiet = useRef(false); // true when the server discarded the send as spam
+  const inFlight = useRef(false); // one submission at a time (double tap / Enter + tap)
 
   const update = (field) => (e) =>
     setFormData((prev) => ({ ...prev, [field]: e.target.value }));
@@ -58,6 +60,8 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "", eve
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (inFlight.current) return;
+    inFlight.current = true;
     setLoading(true);
     try {
       const smPayload = {
@@ -102,6 +106,7 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "", eve
       if (!leadRes.ok || res.ok === false) {
         setError(res.error || "Something went wrong sending your request. Please try again, or call us at 1-888-553-4503.");
         setLoading(false);
+        inFlight.current = false;
         return;
       }
       // Same conversion signals the sitewide form fires - ONLY on a confirmed
@@ -113,19 +118,16 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "", eve
       if (typeof fbq === "function") fbq("track", "Lead");
       if (typeof window.oaiq === "function")
         window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
-      // send_to is required for GA4: GTM claims untargeted gtag() pushes and
-      // (since container v35) has no GA4 tag; GTM's Ads conversion trigger
-      // still fires on this same push.
-      if (typeof window.gtag !== "undefined")
-        window.gtag("event", "generate_lead", {
-          event_category: "form",
-          // Default "free_estimate_landing"; the /brochure page passes
-          // "brochure_landing" so brochure leads are distinguishable from the
-          // /free-estimate ads split test in GA4 and the lead pipeline.
-          event_label: eventLabel,
-          lp_variant: lpVariant,
-          send_to: "G-97Z4EHJM63",
-        });
+      // Once per accepted submission (lib/leadEvents.js). GTM's Ads conversion
+      // trigger fires on this same push.
+      sendGenerateLead(oaiEventId, {
+        event_category: "form",
+        // Default "free_estimate_landing"; the /brochure page passes
+        // "brochure_landing" so brochure leads are distinguishable from the
+        // /free-estimate ads split test in GA4 and the lead pipeline.
+        event_label: eventLabel,
+        lp_variant: lpVariant,
+      });
       }
       setSubmitted(true);
     } catch (err) {
@@ -133,6 +135,7 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "", eve
       setError("We could not send your request (connection problem). Please try again, or call us at 1-888-553-4503.");
     }
     setLoading(false);
+    inFlight.current = false;
   };
 
   const successTracked = useRef(false);

@@ -3,11 +3,12 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { MOVE_SIZES, LEAD_SOURCES, COMPANY } from "@/content";
 import { Check, ArrowRight, Phone } from "@/components/Icons";
-import { getSmartMovingAttribution } from "@/lib/utm";
+import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import { boxOfferSeen, BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
 import { readVariantCookie } from "@/lib/lpAbTest";
 import { geVariantForLead } from "@/lib/geAbTest";
 import { responseWindow } from "@/lib/salesHours";
+import { sendGenerateLead } from "@/lib/leadEvents";
 
 // Response-time wording, keyed by responseWindow() in lib/salesHours.js.
 // Inside sales hours we keep the 20 minute promise.
@@ -43,6 +44,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
   const [honeypot, setHoneypot] = useState("");
   const openedAt = useRef(Date.now());
   const quiet = useRef(false); // true when the server discarded the send as spam
+  const inFlight = useRef(false); // one submission at a time (double tap / Enter + tap)
 
   const update = (field) => (e) => setFormData(prev => ({ ...prev, [field]: e.target.value }));
 
@@ -98,6 +100,8 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (inFlight.current) return;
+    inFlight.current = true;
     setLoading(true);
 
     // Leads go through /api/lead (server-side spam filter + Formspree +
@@ -141,7 +145,9 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
           form: "estimate",
           hp: honeypot,
           elapsedMs: Date.now() - openedAt.current,
-          formspree: { ...formData, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer },
+          // UTM + click ids ride along to Formspree too, so the lead keeps its
+          // ad attribution even if the SmartMoving write fails.
+          formspree: { ...formData, ...getAttribution(), lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer },
           smartmoving: smPayload,
           oaiEventId,
           pageUrl: window.location.href,
@@ -153,6 +159,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
       if (!leadRes.ok || res.ok === false) {
         setError(res.error || `Something went wrong sending your request. Please try again, or call us at ${COMPANY.phone}.`);
         setLoading(false);
+        inFlight.current = false;
         return;
       }
       // Conversion events fire ONLY on a confirmed accepted submit, never on
@@ -164,11 +171,10 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
       if (!quiet.current) {
       if (typeof fbq === "function") fbq("track", "Lead");
       if (typeof window.oaiq === "function") window.oaiq("measure", "lead_created", { type: "customer_action" }, { event_id: oaiEventId });
-      // send_to is required for GA4: GTM claims untargeted gtag() pushes and
-      // (since container v35) has no GA4 tag, so without it the event never
-      // reaches G-97Z4EHJM63. GTM's Ads conversion trigger still fires on this
-      // same push, send_to does not suppress it.
-      if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer, send_to: "G-97Z4EHJM63" }); }
+      // Once per accepted submission (lib/leadEvents.js). GTM's Ads conversion
+      // trigger fires on this same push.
+      const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set';
+      sendGenerateLead(oaiEventId, { event_category: "form", event_label: "estimate_form", hero_variant: hv, lp_variant: lpVariant, ge_variant: geVariant, box_offer: boxOffer });
       }
       setSubmitted(true);
     } catch (err) {
@@ -177,6 +183,7 @@ export default function EstimateForm({ dark = false, twoStep = false }) {
     }
 
     setLoading(false);
+    inFlight.current = false;
   };
 
   // ─── Styles ───

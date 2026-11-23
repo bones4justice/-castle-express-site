@@ -34,7 +34,9 @@ export default function TownsWeServe({ limit = PRIORITY_TOWN_SLUGS.length, light
           <div className="section-label" style={{ justifyContent: "center" }}><span>Towns We Serve</span></div>
           <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Local Movers Across Hartford County &amp; Western MA</h2>
           <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
-            Castle Express Moving &amp; Storage has served these communities from our Enfield, CT facility since 2011. Find your town for local details and a free estimate.
+            Castle Express Moving &amp; Storage has served these communities since 2011. We are{" "}
+            <Link href="/movers-enfield-ct/" style={{ color: "inherit", fontWeight: 600 }}>Enfield movers</Link>{" "}
+            first, working from our own facility in town. Find your town for local details and a free estimate.
           </p>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
