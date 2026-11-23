@@ -49,6 +49,7 @@ export default function Footer() {
               { label: "Giving Back", href: "/giving-back/" },
               { label: "Reviews", href: "/reviews/" },
               { label: "Service Areas", href: "/service-areas/" },
+              { label: "Enfield Movers", href: "/movers-enfield-ct/" },
               { label: "Blog", href: "/blog/" },
               { label: "Contact", href: "/contact/" },
             ].map(s => (
