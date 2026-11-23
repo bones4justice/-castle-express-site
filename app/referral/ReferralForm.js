@@ -1,7 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import { Check, ArrowRight } from "@/components/Icons";
-import { getSmartMovingAttribution } from "@/lib/utm";
+import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 
 const ROLES = [
   "Property Manager",
@@ -50,11 +50,13 @@ const initialForm = {
   notes: "",
 };
 
+const REFERRAL_FALLBACK = "Something went wrong. Please try again, or call us at 1-888-553-4503.";
+
 export default function ReferralForm() {
   const [formData, setFormData] = useState(initialForm);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const openedAt = useRef(Date.now());
 
@@ -65,7 +67,7 @@ export default function ReferralForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
-    setError(false);
+    setError("");
 
     // Leads go through /api/lead (server-side spam filter + Formspree +
     // SmartMoving forwarding). Provider keys live server-side only.
@@ -93,15 +95,17 @@ export default function ReferralForm() {
           form: "referral",
           hp: honeypot,
           elapsedMs: Date.now() - openedAt.current,
-          formspree: formData,
+          formspree: { ...formData, ...getAttribution() },
           smartmoving: smPayload,
           oaiEventId,
           pageUrl: window.location.href,
         }),
       });
-      const result = response.ok ? await response.json() : { ok: false };
-      if (!result.ok) {
-        setError(true);
+      // A fixable typo (phone, email, date) comes back with its own message,
+      // so read the body on a failed response too.
+      const result = await response.json().catch(() => ({ ok: false }));
+      if (!response.ok || !result.ok) {
+        setError(result.error || REFERRAL_FALLBACK);
         setSubmitting(false);
         return;
       }
@@ -114,7 +118,7 @@ export default function ReferralForm() {
       if (typeof window.gtag !== "undefined") { const hv = document.cookie.split('; ').find(c => c.startsWith('hero_ab_test='))?.split('=')[1] || 'not_set'; window.gtag("event", "generate_lead", { event_category: "form", event_label: "referral_form", hero_variant: hv, send_to: "G-97Z4EHJM63" }); }
       }
     } catch {
-      setError(true);
+      setError(REFERRAL_FALLBACK);
       setSubmitting(false);
       return;
     }
@@ -126,7 +130,7 @@ export default function ReferralForm() {
   const reset = () => {
     setFormData(initialForm);
     setSubmitted(false);
-    setError(false);
+    setError("");
   };
 
   if (submitted) {
@@ -228,7 +232,7 @@ export default function ReferralForm() {
       <div style={{ marginTop: 24 }}>
         {error && (
           <p style={{ color: "#EF4444", fontSize: 14, textAlign: "center", marginBottom: 12 }}>
-            Something went wrong. Please try again or call us directly.
+            {error}
           </p>
         )}
         <button type="submit" disabled={submitting} className="btn btn-primary" style={{ width: "100%", cursor: submitting ? "wait" : "pointer", opacity: submitting ? 0.7 : 1 }}>

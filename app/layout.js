@@ -40,7 +40,7 @@ export const metadata = {
   title: {
     default: "Castle Express Moving & Storage | CT & MA Movers Since 2011",
   },
-  description: "Family-owned movers in Enfield, CT serving Hartford County & Western MA since 2011. 200+ five-star reviews, honest estimates. Call (888) 553-4503.",
+  description: "Family-owned movers in Enfield, CT serving Hartford County & Western MA since 2011. 220+ five-star reviews, honest estimates. Call (888) 553-4503.",
   // WARNING: this canonical is inherited by ANY page that doesn't set its own
   // `alternates`: a page added without one silently canonicalizes to the
   // homepage (deindexing itself). Every new page must set its own canonical.
@@ -51,13 +51,13 @@ export const metadata = {
     url: SITE_URL,
     siteName: "Castle Express Moving & Storage",
     title: "Castle Express Moving & Storage | CT & MA Movers Since 2011",
-    description: "Family-owned moving company serving Hartford County, CT and Western MA. Transparent pricing, professional crews, 200+ 5-star reviews.",
+    description: "Family-owned moving company serving Hartford County, CT and Western MA. Transparent pricing, professional crews, 220+ 5-star reviews.",
     images: [{ url: "/images/og-default.jpg", width: 1200, height: 630, alt: "Castle Express moving truck at a Connecticut home" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Castle Express Moving & Storage | CT & MA Movers Since 2011",
-    description: "Family-owned moving company serving Hartford County, CT and Western MA. Transparent pricing, professional crews, 200+ 5-star reviews.",
+    description: "Family-owned moving company serving Hartford County, CT and Western MA. Transparent pricing, professional crews, 220+ 5-star reviews.",
     images: ["/images/og-default.jpg"],
   },
   robots: { index: true, follow: true },
@@ -90,11 +90,12 @@ export default function RootLayout({ children }) {
               var el = link.closest('.mobile-sticky-cta') ? 'sticky' : link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
               var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'not_set';
               var lv = (document.cookie.match(/lp_ab=(landing|service)/) || [])[1] || 'not_in_test';
+              var gv = (document.cookie.match(/ge_ab=(form|home)/) || [])[1] || 'not_in_test';
               // send_to is required for GA4 (GTM claims untargeted pushes and
               // has no GA4 tag since container v35). Verified live 2026-10-19:
               // GTM's Website Phone Calls tag fires the same wcm pair on this
               // push with or without send_to.
-              gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv, lp_variant: lv, send_to: 'G-97Z4EHJM63' });
+              gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv, lp_variant: lv, ge_variant: gv, send_to: 'G-97Z4EHJM63' });
               // Desktop fallback: tel: links don't dial on a computer with no calling
               // app, so the click feels dead. Copy the number + confirm so the CTA still
               // does something. Mobile (and desktops with a real dialer) keep dialing,

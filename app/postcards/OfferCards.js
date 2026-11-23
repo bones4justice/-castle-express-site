@@ -24,7 +24,7 @@ export default function OfferCards() {
     window.dispatchEvent(new CustomEvent("postcard:select-offer", { detail: { slug, label } }));
     document.getElementById("estimate")?.scrollIntoView({ behavior: "smooth", block: "start" });
     if (typeof window.gtag !== "undefined") {
-      window.gtag("event", "select_offer", { event_category: "postcard", event_label: label, offer_slug: slug });
+      window.gtag("event", "select_offer", { event_category: "postcard", event_label: label, offer_slug: slug, send_to: "G-97Z4EHJM63" });
     }
   };
 
