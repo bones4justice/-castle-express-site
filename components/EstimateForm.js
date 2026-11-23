@@ -4,11 +4,11 @@ import Link from "next/link";
 import { MOVE_SIZES, LEAD_SOURCES, COMPANY } from "@/content";
 import { Check, ArrowRight, Phone } from "@/components/Icons";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
-import { sendGenerateLead } from "@/lib/leadEvents";
 import { boxOfferSeen, BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
 import { readVariantCookie } from "@/lib/lpAbTest";
 import { geVariantForLead } from "@/lib/geAbTest";
 import { responseWindow } from "@/lib/salesHours";
+import { sendGenerateLead } from "@/lib/leadEvents";
 
 // Response-time wording, keyed by responseWindow() in lib/salesHours.js.
 // Inside sales hours we keep the 20 minute promise.
