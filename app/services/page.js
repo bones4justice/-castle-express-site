@@ -3,6 +3,7 @@ import { SERVICES, SERVICE_PAGES, FAQ } from "@/content";
 import { Check, ArrowRight } from "@/components/Icons";
 import { IconResidential, IconCommercial, IconPacking, IconStorage, IconPiano, IconLongDistance } from "@/components/BrandIcons";
 import TownsWeServe from "@/components/TownsWeServe";
+import { InteriorHero } from "@/components/InteriorKit";
 
 export const metadata = {
   title: "Our Moving Services | Castle Express Moving & Storage",
@@ -22,43 +23,41 @@ const ICONS = {
 
 export default function ServicesPage() {
   return (
-    <>
-      <section className="section-dark" style={{ padding: "60px 24px", textAlign: "center", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-loading.webp)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.1, pointerEvents: "none" }} />
-        <div className="section-label" style={{ justifyContent: "center" }}><span>Our Services</span></div>
-        <h1 className="heading-2 text-white">Everything You Need for a Stress-Free Move</h1>
-        <p className="body-md text-white-muted" style={{ maxWidth: 520, margin: "8px auto 0" }}>Accurate estimates. No hidden fees. Professional crews. Every time.</p>
-      </section>
+    <div className="ip">
+      <InteriorHero
+        compact
+        eyebrow="Our Services"
+        title="Everything You Need for a Stress-Free Move"
+        image="/images/truck-loading.webp"
+        imageAlt="Castle Express crew loading a moving truck"
+      >
+        <p>Accurate estimates. No hidden fees. Professional crews. Every time.</p>
+      </InteriorHero>
 
-      <section className="section section-light">
-        <div className="container-md" style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+      <section className="ip-svc-section">
+        <div className="ip-svc-grid">
           {SERVICES.map((svc) => {
             return (
-              <Link key={svc.id} href={`/services/${svc.slug}/`} className="card grid-2" style={{ alignItems: "start", gap: 32, textDecoration: "none", cursor: "pointer" }}>
-                <div>
-                  <div className="icon-badge" style={{ marginBottom: 16 }}>{ICONS[svc.id]}</div>
-                  <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 10 }}>{svc.title}</h2>
-                  <p className="body-sm text-gray" style={{ lineHeight: 1.7, marginBottom: 16 }}>{svc.fullDesc}</p>
-                  <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#D4A017", display: "inline-flex", alignItems: "center", gap: 4 }}>
-                    Learn More <ArrowRight />
-                  </span>
+              <Link key={svc.id} href={`/services/${svc.slug}/`} className="ip-svc">
+                <div className="ip-svc-top">
+                  <div className="ip-svc-icon">{ICONS[svc.id]}</div>
+                  <h2>{svc.title}</h2>
                 </div>
-                <div>
-                  <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, color: "#D4A017", textTransform: "uppercase", letterSpacing: "0.05em", marginBottom: 12 }}>What's Included</h3>
+                <p className="ip-svc-desc">{svc.fullDesc}</p>
+                <h3>What's Included</h3>
+                <div className="ip-svc-feats">
                   {svc.features.map((f, j) => (
-                    <div key={j} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                      <Check />
-                      <span className="body-sm" style={{ color: "#1A1A2E" }}>{f}</span>
-                    </div>
+                    <div key={j}><Check /> <span>{f}</span></div>
                   ))}
                 </div>
+                <span className="ip-svc-more">Learn More <ArrowRight /></span>
               </Link>
             );
           })}
         </div>
       </section>
 
-      <section className="section" style={{ paddingTop: 0 }}>
+      <section className="section ip-svc-also">
         <div className="container-md text-center">
           <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 22, color: "#1A1A2E", marginBottom: 8 }}>More Moving Services</h2>
           <p className="body-sm text-gray" style={{ marginBottom: 20 }}>Looking for something more specific? These pages cover our most requested moves.</p>
@@ -80,25 +79,25 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section-light ip-body">
         <div className="container-sm">
           <h2 className="heading-2">How Our Pricing Works</h2>
           <p className="body-md text-gray" style={{ lineHeight: 1.8, marginBottom: 24 }}>
             We believe in transparent, upfront pricing. Your estimate is based on the size of your home, distance, and any special services you need. Once we assess your move, you get a clear, detailed estimate accurate within 10% - no surprises, no hidden fees.
           </p>
           {FAQ.map((faq, i) => (
-            <div key={i} style={{ padding: "16px 0", borderBottom: "1px solid #E5E7EB" }}>
+            <div key={i} className="ip-qa">
               <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 15, color: "#1A1A2E", marginBottom: 6 }}>{faq.q}</h3>
               <p className="body-sm text-gray">{faq.a}</p>
             </div>
           ))}
           <div className="text-center" style={{ marginTop: 32 }}>
-            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate <ArrowRight /></Link>
+            <Link href="/contact/" className="ip-btn ip-btn-primary">Get Your Free Estimate <ArrowRight /></Link>
           </div>
         </div>
       </section>
 
-      <TownsWeServe light />
-    </>
+      <TownsWeServe />
+    </div>
   );
 }

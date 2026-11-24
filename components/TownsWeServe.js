@@ -2,8 +2,7 @@ import Link from "next/link";
 import { CITY_DATA } from "@/lib/cityData";
 import { MapPin, ChevronRight } from "@/components/Icons";
 
-// Priority towns for internal linking. Homepage shows the first 12;
-// service pages show all 15. Order = rough priority.
+// Default order for service-page town links.
 export const PRIORITY_TOWN_SLUGS = [
   "movers-enfield-ct",
   "movers-windsor-ct",
@@ -22,8 +21,8 @@ export const PRIORITY_TOWN_SLUGS = [
   "movers-longmeadow-ma",
 ];
 
-export default function TownsWeServe({ limit = PRIORITY_TOWN_SLUGS.length, light = false }) {
-  const towns = PRIORITY_TOWN_SLUGS.slice(0, limit)
+export default function TownsWeServe({ limit = PRIORITY_TOWN_SLUGS.length, light = false, slugs = PRIORITY_TOWN_SLUGS }) {
+  const towns = slugs.slice(0, limit)
     .map(slug => CITY_DATA.find(c => c.slug === slug))
     .filter(Boolean);
 
@@ -32,14 +31,14 @@ export default function TownsWeServe({ limit = PRIORITY_TOWN_SLUGS.length, light
       <div className="container">
         <div className="text-center" style={{ marginBottom: 32 }}>
           <div className="section-label" style={{ justifyContent: "center" }}><span>Towns We Serve</span></div>
-          <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Local Movers Across Hartford County &amp; Western MA</h2>
+          <h2 className="heading-2 towns-title">Local Movers Across Hartford County &amp; Western MA</h2>
           <p className="body-md text-gray" style={{ maxWidth: 600, margin: "12px auto 0" }}>
             Castle Express Moving &amp; Storage has served these communities since 2011. We are{" "}
             <Link href="/movers-enfield-ct/" style={{ color: "inherit", fontWeight: 600 }}>Enfield movers</Link>{" "}
             first, working from our own facility in town. Find your town for local details and a free estimate.
           </p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
+        <div className="towns-grid">
           {towns.map(city => (
             <Link key={city.slug} href={`/${city.slug}/`} className="location-chip" style={{ textDecoration: "none" }}>
               <MapPin size={16} />

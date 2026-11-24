@@ -115,9 +115,10 @@ check("source: each estimate form calls sendGenerateLead exactly once", () => {
 });
 
 check("source: step buttons are not submit buttons", () => {
-  // "Next: Move Details" (homepage) and "Continue" (/free-estimate) must be
-  // type="button" so they can never submit the form or reach the lead code.
-  for (const [rel, label] of [["components/EstimateForm.js", "Next: Move Details"], ["components/LandingEstimateForm.js", "Continue"]]) {
+  // Intermediate "Continue" buttons in the inline step form (EstimateForm) and
+  // /free-estimate (LandingEstimateForm) must be type="button" so they can
+  // never submit the form or reach the lead code.
+  for (const [rel, label] of [["components/EstimateForm.js", "Continue"], ["components/LandingEstimateForm.js", "Continue"]]) {
     const src = read(rel);
     const at = src.indexOf(label);
     assert.ok(at > 0, `${rel}: label "${label}" not found`);

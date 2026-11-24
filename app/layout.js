@@ -7,9 +7,13 @@ import AttributionCapture from "@/components/AttributionCapture";
 import LpAbTracker from "@/components/LpAbTracker";
 import ChromeGate from "@/components/ChromeGate";
 import { localBusinessJsonLd } from "@/lib/structuredData";
-import { HERO_VARIANT_SCRIPT } from "@/lib/heroVariantScript";
+import { heroVariantScript } from "@/lib/heroVariantScript";
 import { TRACKER_LOADER_SCRIPT } from "@/lib/trackerLoaderScript";
 import "./globals.css";
+
+// Allow ?hero=A|B inspection override only on Vercel preview/dev builds.
+const IS_PREVIEW = process.env.VERCEL_ENV === "preview" || process.env.VERCEL_ENV === "development";
+const HERO_VARIANT_SCRIPT = heroVariantScript({ allowOverride: IS_PREVIEW });
 
 const merriweather = Merriweather({
   subsets: ["latin"],
@@ -30,7 +34,7 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-dm-sans",
   display: "swap",
-  weight: ["300", "400", "500", "600"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
 const SITE_URL = "https://www.castleexpressmoving.com";
@@ -87,7 +91,7 @@ export default function RootLayout({ children }) {
               // has loaded; duplicates are dropped in lib/trackerLoaderScript.js.
               if (typeof window.fbq === 'function') window.fbq('track', 'Contact');
 
-              var el = link.closest('.mobile-sticky-cta') ? 'sticky' : link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
+              var el = link.closest('.mobile-sticky-cta') ? 'sticky' : link.closest('header') ? 'header' : link.closest('footer') ? 'footer' : link.closest('.section-dark,.home-hero') ? 'hero' : link.closest('.cta-section,.text-center') ? 'cta' : 'page';
               var hv = (document.cookie.match(/hero_ab_test=([^;]+)/) || [])[1] || 'not_set';
               var lv = (document.cookie.match(/lp_ab=(landing|service)/) || [])[1] || 'not_in_test';
               var gv = (document.cookie.match(/ge_ab=(form|home)/) || [])[1] || 'not_in_test';
@@ -95,7 +99,11 @@ export default function RootLayout({ children }) {
               // has no GA4 tag since container v35). Verified live 2026-10-19:
               // GTM's Website Phone Calls tag fires the same wcm pair on this
               // push with or without send_to.
-              gtag('event', 'click_phone', { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv, lp_variant: lv, ge_variant: gv, send_to: 'G-97Z4EHJM63' });
+              var cp = { event_category: 'engagement', event_label: el + '_phone', hero_variant: hv, lp_variant: lv, ge_variant: gv, send_to: 'G-97Z4EHJM63' };
+              // Homepage redesign marker (lib/homeDesign.js); absent on the old design.
+              var hd = document.querySelector('[data-home-design]');
+              if (hd) cp.home_design = hd.getAttribute('data-home-design');
+              gtag('event', 'click_phone', cp);
               // Desktop fallback: tel: links don't dial on a computer with no calling
               // app, so the click feels dead. Copy the number + confirm so the CTA still
               // does something. Mobile (and desktops with a real dialer) keep dialing,
@@ -123,12 +131,12 @@ export default function RootLayout({ children }) {
         `}</Script>
       </head>
       <body>
-        <noscript>
+        {!IS_PREVIEW && <noscript>
           <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLR2TQC" height="0" width="0" style={{display:"none",visibility:"hidden"}}></iframe>
-        </noscript>
+        </noscript>}
         {/* No Meta Pixel <noscript> image fallbacks: the JS pixel fires
-            PageView for both pixels, so the noscript images only double-counted
-            PageView on normal (JS-on) loads. */}
+            PageView, so the noscript images only double-counted PageView on
+            normal (JS-on) loads. */}
         {/* Sitewide LocalBusiness JSON-LD. The full MovingCompany graph is
             added on the homepage only (see app/page.js + lib/structuredData.js). */}
         <script

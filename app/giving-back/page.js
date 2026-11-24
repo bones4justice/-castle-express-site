@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "@/components/Icons";
+import { InteriorHero, EstimateBand } from "@/components/InteriorKit";
+
 import data from "@/data/feeding-america.json";
 
 export const metadata = {
@@ -34,11 +36,11 @@ function currentYearMonth() {
 }
 
 const C = {
-  black: "#000000",
+  black: "#1A1A2E",
   white: "#FFFFFF",
-  gold: "#FBCB0B",
-  gray: "#969a9d",
-  light: "#ebeced",
+  gold: "#FFC003",
+  gray: "#5F6472",
+  light: "#FDF8F2",
 };
 
 const DEFAULT_ORG = "Feeding America";
@@ -108,35 +110,26 @@ export default function GivingBackPage() {
   const fontBody = "var(--font-body), Merriweather, Georgia, serif";
 
   return (
-    <>
+    <div className="ip">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }} />
 
       {/* Hero */}
-      <section style={{ background: C.black, color: C.white, padding: "80px 24px 60px", textAlign: "center" }}>
-        <div style={{ maxWidth: 880, margin: "0 auto" }}>
-          <div style={{ display: "inline-flex", alignItems: "center", gap: 10, padding: "6px 14px", border: `1px solid ${C.gold}`, borderRadius: 999, marginBottom: 24, color: C.gold, fontFamily: fontBody, fontSize: 12, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-            <span>Castle Express Gives Back</span>
+      <InteriorHero compact eyebrow="Castle Express Gives Back" title="Every Move Helps Feed a Family">
+        <p>
+          Every time we finish a move, we give <strong>$5 to help feed families</strong>. Some of that money goes to <strong>Feeding America</strong>, which helps people all across the country. Some goes to the <strong>Enfield Food Shelf</strong>, which helps people right here in our hometown. They turn every dollar into meals for families who need them.{showActiveBanner ? <> Right now <strong>{data.matchPartner}</strong> is matching every dollar we give, so each dollar counts twice.</> : ""} Here&apos;s what we&apos;ve done so far.
+        </p>
+        {showActiveBanner && (
+          <div role="status" className="ip-notice">
+            <span aria-hidden="true">&#128276;</span>
+            <span>Donations doubled this month thanks to the {data.matchPartner} match</span>
           </div>
-          <h1 style={{ fontFamily: fontHead, fontWeight: 900, fontSize: "clamp(32px, 5vw, 52px)", lineHeight: 1.15, margin: "0 0 20px" }}>
-            Every Move Helps Feed a Family
-          </h1>
-          <p style={{ fontFamily: fontBody, fontSize: 17, lineHeight: 1.8, color: C.light, margin: "0 auto", maxWidth: 720 }}>
-            Every time we finish a move, we give <strong style={{ color: C.gold }}>$5 to help feed families</strong>. Some of that money goes to <strong style={{ color: C.gold }}>Feeding America</strong>, which helps people all across the country. Some goes to the <strong style={{ color: C.gold }}>Enfield Food Shelf</strong>, which helps people right here in our hometown. They turn every dollar into meals for families who need them.{showActiveBanner ? <> Right now <strong style={{ color: C.gold }}>{data.matchPartner}</strong> is matching every dollar we give, so each dollar counts twice.</> : ""} Here&apos;s what we&apos;ve done so far.
-          </p>
-
-          {showActiveBanner && (
-            <div role="status" style={{ marginTop: 28, display: "inline-flex", alignItems: "center", gap: 10, padding: "12px 20px", background: C.gold, color: C.black, borderRadius: 8, fontFamily: fontBody, fontWeight: 700, fontSize: 15, maxWidth: 640 }}>
-              <span aria-hidden="true">&#128276;</span>
-              <span>Donations doubled this month thanks to the {data.matchPartner} match</span>
-            </div>
-          )}
-        </div>
-      </section>
+        )}
+      </InteriorHero>
 
       {/* Monthly History Table */}
       <section style={{ background: C.light, color: C.black, padding: "72px 24px" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: fontHead, fontWeight: 900, fontSize: "clamp(24px, 3vw, 32px)", textAlign: "center", margin: "0 0 32px" }}>
+          <h2 style={{ fontFamily: fontHead, fontWeight: 800, fontSize: "clamp(24px, 3vw, 32px)", textAlign: "center", margin: "0 0 32px" }}>
             Monthly History
           </h2>
           <div style={{ overflowX: "auto", background: C.white, borderRadius: 12, boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
@@ -200,7 +193,7 @@ export default function GivingBackPage() {
             <Image src="/images/feeding-america-logo.png" alt="Feeding America" width={160} height={160} style={{ objectFit: "contain" }} />
           </a>
           <div>
-            <h2 style={{ fontFamily: fontHead, fontWeight: 900, fontSize: "clamp(22px, 2.6vw, 28px)", margin: "0 0 14px" }}>
+            <h2 style={{ fontFamily: fontHead, fontWeight: 800, fontSize: "clamp(22px, 2.6vw, 28px)", margin: "0 0 14px" }}>
               About Feeding America
             </h2>
             <p style={{ fontFamily: fontBody, fontSize: 15, lineHeight: 1.8, color: C.black, margin: "0 0 14px" }}>
@@ -220,7 +213,7 @@ export default function GivingBackPage() {
             <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={110} height={112} style={{ objectFit: "contain" }} />
           </a>
           <div>
-            <h2 style={{ fontFamily: fontHead, fontWeight: 900, fontSize: "clamp(22px, 2.6vw, 28px)", margin: "0 0 14px" }}>
+            <h2 style={{ fontFamily: fontHead, fontWeight: 800, fontSize: "clamp(22px, 2.6vw, 28px)", margin: "0 0 14px" }}>
               About the Enfield Food Shelf
             </h2>
             <p style={{ fontFamily: fontBody, fontSize: 15, lineHeight: 1.8, color: C.black, margin: "0 0 14px" }}>
@@ -240,7 +233,7 @@ export default function GivingBackPage() {
             <Image src="/images/wreaths-across-america-logo.png" alt="Wreaths Across America" width={230} height={56} style={{ objectFit: "contain" }} />
           </a>
           <div>
-            <h2 style={{ fontFamily: fontHead, fontWeight: 900, fontSize: "clamp(22px, 2.6vw, 28px)", margin: "0 0 14px" }}>
+            <h2 style={{ fontFamily: fontHead, fontWeight: 800, fontSize: "clamp(22px, 2.6vw, 28px)", margin: "0 0 14px" }}>
               About Wreaths Across America
             </h2>
             <p style={{ fontFamily: fontBody, fontSize: 15, lineHeight: 1.8, color: C.black, margin: "0 0 14px" }}>
@@ -256,7 +249,7 @@ export default function GivingBackPage() {
       {/* CTA */}
       <section style={{ background: C.gold, color: C.black, padding: "72px 24px", textAlign: "center" }}>
         <div style={{ maxWidth: 720, margin: "0 auto" }}>
-          <h2 style={{ fontFamily: fontHead, fontWeight: 900, fontSize: "clamp(28px, 3.6vw, 40px)", margin: "0 0 14px" }}>
+          <h2 style={{ fontFamily: fontHead, fontWeight: 800, fontSize: "clamp(28px, 3.6vw, 40px)", margin: "0 0 14px" }}>
             Book your move, feed a family.
           </h2>
           <p style={{ fontFamily: fontBody, fontSize: 16, lineHeight: 1.7, margin: "0 0 28px", color: C.black }}>
@@ -267,7 +260,7 @@ export default function GivingBackPage() {
           </Link>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 

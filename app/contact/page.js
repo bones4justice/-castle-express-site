@@ -3,6 +3,7 @@ import { COMPANY } from "@/content";
 import { CITY_DATA } from "@/lib/cityData";
 import { Phone, MapPin, Clock, Shield } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
+import { InteriorHero } from "@/components/InteriorKit";
 
 export const metadata = {
   title: "Contact Us | Castle Express Moving & Storage",
@@ -13,18 +14,23 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <>
-      <section className="section-dark" style={{ padding: "60px 24px", textAlign: "center" }}>
-        <div className="section-label" style={{ justifyContent: "center" }}><span>Get In Touch</span></div>
-        <h1 className="heading-2 text-white">Request Your Free Estimate</h1>
-        <p className="body-md text-white-muted" style={{ maxWidth: 520, margin: "8px auto 0" }}>
-          Fill out the form below or call us directly. We typically respond within 20 minutes. Based in <Link href="/movers-enfield-ct/" style={{ color: "#D4A017", fontWeight: 600 }}>Enfield, CT</Link>, we serve <Link href="/movers-hartford-ct/" style={{ color: "#D4A017", fontWeight: 600 }}>Hartford</Link>, <Link href="/movers-springfield-ma/" style={{ color: "#D4A017", fontWeight: 600 }}>Springfield</Link>, and <Link href="/service-areas/" style={{ color: "#D4A017", fontWeight: 600 }}>{CITY_DATA.length} towns across CT &amp; MA</Link>.
+    <div className="ip">
+      <InteriorHero
+        compact
+        eyebrow="Get In Touch"
+        title="Request Your Free Estimate"
+        actions={<a href={COMPANY.phoneLink} className="ip-btn ip-btn-outline ip-contact-call"><Phone size={18} /> {COMPANY.phone}</a>}
+      >
+        <p>
+          Fill out the form below or call us directly. We typically respond within 20 minutes. Based in <Link href="/movers-enfield-ct/">Enfield, CT</Link>, we serve <Link href="/movers-hartford-ct/">Hartford</Link>, <Link href="/movers-springfield-ma/">Springfield</Link>, and <Link href="/service-areas/">{CITY_DATA.length} towns across CT &amp; MA</Link>.
         </p>
-      </section>
+      </InteriorHero>
 
-      <section className="section section-light">
+      <section className="section section-light ip-body ip-contact">
         <div className="container-md grid-2" style={{ alignItems: "start" }}>
-          <EstimateForm />
+          <div className="ip-estimate ip-estimate-inline">
+            <EstimateForm />
+          </div>
           <div>
             <div className="card" style={{ marginBottom: 20 }}>
               <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginBottom: 16 }}>Contact Information</h2>
@@ -38,7 +44,7 @@ export default function ContactPage() {
                   <div>
                     <div style={{ fontFamily: "var(--font-heading)", fontSize: 12, fontWeight: 600, color: "#6B7280", textTransform: "uppercase", letterSpacing: "0.04em" }}>{item.label}</div>
                     {item.href ? (
-                      <a href={item.href} {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})} style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "#1A1A2E", fontWeight: 600, textDecoration: "none" }}>{item.value}</a>
+                      <a href={item.href} {...(item.href.startsWith("http") ? { target: "_blank", rel: "noopener noreferrer" } : {})} className={item.bold ? "ip-contact-phone" : "ip-contact-link"} style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "#1A1A2E", fontWeight: 600, textDecoration: "none" }}>{item.value}</a>
                     ) : (
                       <div style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "#1A1A2E" }}>{item.value}</div>
                     )}
@@ -55,12 +61,12 @@ export default function ContactPage() {
               <div style={{ fontFamily: "var(--font-body)", fontSize: 13, color: "#6B7280", lineHeight: 1.8 }}>
                 {COMPANY.mc} · USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit}<br />
                 A+ BBB Rating · {COMPANY.reviewCount} Google Reviews ({COMPANY.reviewAvg} avg)<br />
-                <Link href="/services/" style={{ color: "#D4A017", fontWeight: 600, fontSize: 13 }}>View our services</Link>
+                <Link href="/services/" className="ip-contact-link" style={{ fontWeight: 700, fontSize: 13 }}>View our services</Link>
               </div>
             </div>
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

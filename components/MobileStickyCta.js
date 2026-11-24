@@ -16,7 +16,9 @@ export default function MobileStickyCta() {
 
   useEffect(() => {
     document.body.classList.add("has-mobile-sticky");
-    const target = document.querySelector(".hero-form");
+    // The redesigned hero lays .hero-form out as display:contents on phones
+    // (no box, so it never "intersects"); watch the card itself there.
+    const target = document.querySelector(".hv2-card") || document.querySelector(".hero-form");
     let io;
     if (target && "IntersectionObserver" in window) {
       io = new IntersectionObserver(([entry]) => setFormVisible(entry.isIntersecting), { threshold: 0 });

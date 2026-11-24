@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Phone } from "@/components/Icons";
 import PackingEstimateForm from "./PackingEstimateForm";
+import EstimateScrollButton from "@/components/EstimateScrollButton";
 
 const PINK = "#F72585";
 const PINK_SOFT = "#fce4ef";
@@ -94,12 +95,12 @@ export default function PrincessPackingPage() {
   };
 
   return (
-    <>
+    <div className="pp-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
 
       {/* ─── HERO ─── */}
-      <section style={{ background: "#0d0d0d", padding: "70px 24px 60px" }}>
+      <section className="pp-hero" style={{ background: "#0d0d0d", padding: "70px 24px 60px" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 48, alignItems: "center" }}>
           <div>
             <p style={{ fontSize: 12, letterSpacing: "0.2em", textTransform: "uppercase", color: PINK, fontWeight: 700, fontFamily: "var(--font-heading)", marginBottom: 20 }}>
@@ -112,9 +113,9 @@ export default function PrincessPackingPage() {
               Reduces stress. Protects what matters. Completed by an experienced, all-female professional team before your move even begins.
             </p>
             <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
-              <a href="#request" style={{ background: PINK, color: "#fff", fontFamily: "var(--font-heading)", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "16px 34px", textDecoration: "none", display: "inline-block" }}>
+              <EstimateScrollButton style={{ background: PINK, color: "#fff", fontFamily: "var(--font-heading)", fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", padding: "16px 34px", textDecoration: "none", display: "inline-block" }}>
                 Request a Packing Estimate
-              </a>
+              </EstimateScrollButton>
               <a href="#pricing" style={{ color: "rgba(255,255,255,0.6)", fontFamily: "var(--font-heading)", fontSize: 13, fontWeight: 600, letterSpacing: "0.06em", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.2)", paddingBottom: 2 }}>
                 View Packages
               </a>
@@ -141,7 +142,7 @@ export default function PrincessPackingPage() {
       </section>
 
       {/* ─── BADGE STRIP ─── */}
-      <div style={{ background: PINK, padding: "14px 24px", textAlign: "center" }}>
+      <div className="pp-badges" style={{ background: PINK, padding: "14px 24px", textAlign: "center" }}>
         <p style={{ fontSize: 12, letterSpacing: "0.15em", textTransform: "uppercase", color: "#fff", fontWeight: 700, fontFamily: "var(--font-heading)", lineHeight: 2 }}>
           White-Glove Service &nbsp;·&nbsp; Professional Team &nbsp;·&nbsp; Room-by-Room Labeling &nbsp;·&nbsp; All Materials Included &nbsp;·&nbsp; Reserved in Advance &nbsp;·&nbsp; Maximum 1 Major Pack Per Day &nbsp;·&nbsp; A+ BBB Rating
         </p>
@@ -286,9 +287,9 @@ export default function PrincessPackingPage() {
         <p style={{ fontFamily: "var(--font-body)", fontSize: 17, color: "rgba(255,255,255,0.85)", maxWidth: 520, margin: "0 auto 36px", lineHeight: 1.7 }}>
           Reduces stress. Protects what matters. Before your move even begins.
         </p>
-        <a href="#request" style={{ display: "inline-block", background: "#fff", color: PINK, fontSize: 13, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", padding: "17px 44px", textDecoration: "none", fontFamily: "var(--font-heading)" }}>
+        <EstimateScrollButton style={{ display: "inline-block", background: "#fff", color: PINK, fontSize: 13, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", padding: "17px 44px", textDecoration: "none", fontFamily: "var(--font-heading)" }}>
           Request a Packing Estimate
-        </a>
+        </EstimateScrollButton>
       </section>
 
       {/* ─── BEFORE YOU BOOK ─── */}
@@ -311,8 +312,8 @@ export default function PrincessPackingPage() {
       </section>
 
       {/* ─── ESTIMATE FORM ─── */}
-      <section style={{ background: "#0d0d0d", padding: "80px 24px" }} id="request">
-        <div style={{ maxWidth: 680, margin: "0 auto" }}>
+      <section className="pp-request" style={{ background: "#0d0d0d", padding: "80px 24px" }} id="request">
+        <div id="estimate-form" style={{ maxWidth: 680, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 44 }}>
             <p style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: PINK, fontWeight: 700, fontFamily: "var(--font-heading)", marginBottom: 14 }}>Request an Estimate</p>
             <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: 32, color: "#fff", marginBottom: 14 }}>Reserve your packing date.</h2>
@@ -328,6 +329,6 @@ export default function PrincessPackingPage() {
           </p>
         </div>
       </section>
-    </>
+    </div>
   );
 }

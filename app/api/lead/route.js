@@ -1,3 +1,5 @@
+import { describeEstimateRoute } from "@/lib/estimateRoute";
+
 // Server-side lead proxy with spam filtering.
 //
 // Forms POST here instead of hitting Formspree / SmartMoving directly from the
@@ -217,6 +219,7 @@ function isDefaultDropdownSpam(body) {
   const fs = body.formspree || {};
   const sm = body.smartmoving || {};
   if (DEFAULT_DROPDOWN_EXEMPT_FORMS.has(body.form)) return false;
+  if (fs.form_style === "inline_step") return false;
   if (
     DEFAULT_DROPDOWN_EXEMPT_LANDINGS.has(body.landing) ||
     DEFAULT_DROPDOWN_EXEMPT_LANDINGS.has(fs.landing)
@@ -376,6 +379,19 @@ export async function POST(request) {
   if (fieldError) {
     console.warn(`[lead-validation] ${body.form} from ${ip}: ${fieldError}`);
     return Response.json({ ok: false, error: fieldError }, { status: 400 });
+  }
+
+  // Older preview clients explicitly selected a truck. The timing-first form
+  // supplies only locations, so sales receives no assumed service selection.
+  const fs = body.formspree;
+  if (body.form === "estimate" && ["Truck and crew", "Moving estimate"].includes(fs?.moveType)) {
+    const route = describeEstimateRoute(fs.moveFrom, fs.moveTo, fs.moveType);
+    if (fs.moveType === "Truck and crew") fs.requestedService = fs.moveType;
+    fs.moveType = route.moveType;
+    fs.moveRoute = route.description;
+    if (body.smartmoving) {
+      body.smartmoving.Notes = [body.smartmoving.Notes, route.description].filter(Boolean).join(" | ");
+    }
   }
 
   // Success = at least one durable sink accepted the lead. Either sink alone

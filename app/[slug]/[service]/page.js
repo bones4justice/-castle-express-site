@@ -6,6 +6,15 @@ import { SERVICE_SUBPAGES, TOWN_SERVICE_INTROS, SUBPAGE_TOWNS, SUBPAGE_SERVICES 
 import { COMPANY } from "@/content";
 import { MapPin, Phone, Check, Star, Shield, ArrowRight, ChevronRight } from "@/components/Icons";
 import EstimateForm from "@/components/EstimateForm";
+import { InteriorHero, HeroActions, EstimateBand } from "@/components/InteriorKit";
+import { TOWN_HERO_PHOTOS, DEFAULT_TOWN_HERO_PHOTO } from "@/lib/interiorDesign";
+
+// Header photo by service type (Enfield keeps its own town photo).
+const SERVICE_PHOTOS = {
+  "residential-movers": "/images/truck-residential.webp",
+  "commercial-movers": "/images/truck-brick-building.webp",
+  "packing-services": "/images/truck-loading.webp",
+};
 
 export async function generateStaticParams() {
   const params = [];
@@ -87,38 +96,25 @@ export default function ServiceSubpage({ params }) {
     : CITY_DATA.filter(c => c.slug !== city.slug && c.state === city.state).slice(0, 6);
 
   return (
-    <>
+    <div className="ip">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
 
       {/* HERO */}
-      <section className="section-dark" style={{ padding: "70px 24px 50px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, backgroundImage: "url(/images/truck-residential.jpg)", backgroundSize: "cover", backgroundPosition: "center", opacity: 0.1, pointerEvents: "none" }} />
-        <div style={{ position: "relative", maxWidth: 1200, margin: "0 auto" }}>
-          {/* Breadcrumb */}
-          <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 16, flexWrap: "wrap" }}>
-            <Link href="/" style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Home</Link>
-            <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
-            <Link href={`/${city.slug}/`} style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "rgba(255,255,255,0.5)", textDecoration: "none" }}>Movers in {city.town}, {city.state}</Link>
-            <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 12 }}>/</span>
-            <span style={{ fontFamily: "var(--font-heading)", fontSize: 12, color: "#D4A017" }}>{svc.serviceTitle}</span>
-          </div>
-
-          <h1 className="heading-1" style={{ color: "#FFFFFF", marginBottom: 16, fontSize: "clamp(28px, 4vw, 44px)" }}>
-            {svc.serviceTitle} in {city.town}, {city.stateFull}
-          </h1>
-          <p className="body-lg text-white-muted" style={{ maxWidth: 640, marginBottom: 24 }}>
-            Castle Express Moving &amp; Storage provides professional {svc.serviceTitle.toLowerCase()} in {city.town} and throughout {city.stateFull}. Family-owned since {COMPANY.founded}. {city.slug === "movers-enfield-ct" ? "Based right here in Enfield." : `Located in Enfield, CT, just ${city.drive} away.`}
-          </p>
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link href="/contact/" className="btn btn-primary">Get Free Estimate <ArrowRight /></Link>
-            <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> {COMPANY.phone}</a>
-          </div>
-        </div>
-      </section>
+      <InteriorHero
+        crumbs={[{ label: "Home", href: "/" }, { label: `Movers in ${city.town}, ${city.state}`, href: `/${city.slug}/` }, { label: svc.serviceTitle }]}
+        title={`${svc.serviceTitle} in ${city.town}, ${city.stateFull}`}
+        image={TOWN_HERO_PHOTOS[city.slug] || SERVICE_PHOTOS[params.service] || DEFAULT_TOWN_HERO_PHOTO}
+        imageAlt={`Castle Express moving truck on a job near ${city.town}, ${city.state}`}
+        actions={<HeroActions scrollToForm />}
+      >
+        <p>
+          Castle Express Moving &amp; Storage provides professional {svc.serviceTitle.toLowerCase()} in {city.town} and throughout {city.stateFull}. Family-owned since {COMPANY.founded}. {city.slug === "movers-enfield-ct" ? "Based right here in Enfield." : `Located in Enfield, CT, just ${city.drive} away.`}
+        </p>
+      </InteriorHero>
 
       {/* TRUST BAR */}
-      <section className="trust-bar">
+      <section className="trust-bar tb-v2">
         {[
           { icon: <Shield size={18} />, label: "A+ BBB Rating" },
           { icon: <Star />, label: `${COMPANY.reviewAvg}\u2605 Google (${COMPANY.reviewCount} Reviews)` },
@@ -129,7 +125,7 @@ export default function ServiceSubpage({ params }) {
       </section>
 
       {/* MAIN CONTENT */}
-      <section className="section">
+      <section className="section ip-body">
         <div className="container grid-2" style={{ alignItems: "start" }}>
           {/* Left - Content */}
           <div>
@@ -150,7 +146,7 @@ export default function ServiceSubpage({ params }) {
                 </h3>
                 {section.items.map((item, ii) => (
                   <div key={ii} style={{ display: "flex", gap: 14, marginBottom: 12 }}>
-                    <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
+                    <div className="ip-check" style={{ width: 24, height: 24, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
                       <Check size={14} />
                     </div>
                     <span className="body-md" style={{ color: "#1A1A2E" }}>{item}</span>
@@ -174,7 +170,7 @@ export default function ServiceSubpage({ params }) {
                 "Same-day quotes, typically respond in 20 minutes",
               ].map((feat, i) => (
                 <div key={i} style={{ display: "flex", gap: 14, marginBottom: 12 }}>
-                  <div style={{ width: 24, height: 24, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
+                  <div className="ip-check" style={{ width: 24, height: 24, borderRadius: "50%", background: "#FFF9EC", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: 2 }}>
                     <Check size={14} />
                   </div>
                   <span className="body-md" style={{ color: "#1A1A2E" }}>{feat}</span>
@@ -210,25 +206,16 @@ export default function ServiceSubpage({ params }) {
           </div>
 
           {/* Right - Estimate Form */}
-          <div style={{ position: "sticky", top: 96 }}>
+          <div className="ip-estimate">
             <EstimateForm />
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section section-dark text-center">
-        <div style={{ maxWidth: 600, margin: "0 auto" }}>
-          <h2 className="heading-2 text-white">{city.cta}</h2>
-          <p className="body-md text-white-muted" style={{ marginBottom: 28 }}>
-            Call us at <a href={COMPANY.phoneLink} style={{ color: "#D4A017", fontWeight: 600 }}>{COMPANY.phone}</a> or fill out the form above. We typically respond in 20 minutes or less.
-          </p>
-          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
-            <Link href="/contact/" className="btn btn-primary">Get Your Free Estimate</Link>
-            <a href={COMPANY.phoneLink} className="btn btn-white"><Phone size={18} /> {COMPANY.phone}</a>
-          </div>
-        </div>
-      </section>
-    </>
+      <EstimateBand scrollToForm title={city.cta}>
+        Call us at <a href={COMPANY.phoneLink}>{COMPANY.phone}</a> or fill out the form above. We typically respond in 20 minutes or less.
+      </EstimateBand>
+    </div>
   );
 }

@@ -4,14 +4,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { COMPANY, SERVICES, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
-import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, Phone } from "@/components/Icons";
-import { IconResidential, IconCommercial, IconPacking, IconStorage, IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
+import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, Phone, MapPin } from "@/components/Icons";
+import { LineTruck, LineOffice, LineBox, LineStorage } from "@/components/ServiceLineIcons";
+import { IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
 import EstimateForm from "@/components/EstimateForm";
 import TownsWeServe from "@/components/TownsWeServe";
 import AdBoxOffer from "@/components/AdBoxOffer";
 import MobileStickyCta from "@/components/MobileStickyCta";
 import EstimateScrollButton from "@/components/EstimateScrollButton";
 import HeroAbTracker from "@/components/HeroAbTracker";
+import { HOME_DESIGN } from "@/lib/homeDesign";
 import { homepageJsonLd } from "@/lib/structuredData";
 import feedingAmericaData from "@/data/feeding-america.json";
 
@@ -30,80 +32,84 @@ function SectionLabel({ children }) {
 
 export default function HomePage() {
 
-  const serviceIcons = [
-    <IconResidential key="h" size={96} />,
-    <IconCommercial key="b" size={96} />,
-    <IconPacking key="bx" size={96} />,
-    <IconStorage key="s" size={96} />,
+  const serviceLineIcons = [
+    <LineTruck key="t" />,
+    <LineOffice key="o" />,
+    <LineBox key="b" />,
+    <LineStorage key="s" />,
   ];
 
   return (
-    <>
+    <div className="castle-home">
       {/* Homepage structured data: single @graph array combining LocalBusiness
           + the full MovingCompany node (see lib/structuredData.js). */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd()) }}
       />
-      {/* ─── HERO ─── */}
-      {/* Hero A/B variant + background preload: inline script in app/layout.js
-          <head> (lib/heroVariantScript.js), runs before first paint. */}
-      <section className="section-dark home-hero" aria-label="Hero" style={{ padding: "80px 24px 60px", position: "relative", overflow: "hidden" }}>
-        {/* Decorative 12%-opacity background texture (CSS: .hero-bg in globals.css). */}
-        <div className="hero-bg" aria-hidden="true" />
-        <div style={{ position: "absolute", top: 0, right: 0, width: "40%", height: "100%", background: "linear-gradient(135deg, transparent 40%, rgba(212,160,23,0.07) 100%)", pointerEvents: "none" }} />
-        <div className="container grid-2 hero-grid" style={{ alignItems: "center" }}>
+      {/* ─── HERO (Nov 2026 redesign, lib/homeDesign.js) ─── */}
+      {/* The headline variants share the form, photo and supporting copy. */}
+      <section className="home-hero hero-v2" aria-label="Hero" data-home-design={HOME_DESIGN}>
+        <div className="container hero-grid">
           <div className="hero-copy">
             <div className="hero-label">
-              <div className="hv-a"><SectionLabel>Connecticut &amp; Massachusetts</SectionLabel></div>
-              <div className="hv-b" style={{ marginBottom: 12 }}>
-                <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, letterSpacing: "0.08em", textTransform: "uppercase", color: "#D4A017" }}>Connecticut &amp; Massachusetts</span>
-              </div>
+              <SectionLabel>Family-owned in Enfield since {COMPANY.founded}</SectionLabel>
             </div>
-            <h1 className="heading-1 hero-h1" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal", color: "#fff", marginBottom: 20 }}>
+            <h1 className="hero-h1">
               <span className="hv-a">Professional Movers in <span className="text-gold">CT &amp; MA</span></span>
-              <span className="hv-b">Looking for the<br /><span className="text-gold">Perfect Mover?</span></span>
+              <span className="hv-b">Looking for the{" "}<br /><span className="text-gold">Perfect Mover?</span></span>
             </h1>
-            <p className="body-lg text-white-muted hero-intro" style={{ marginBottom: 28, maxWidth: 520 }}>
-              <span className="hv-a">Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own.</span>
-              <span className="hv-b">Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and experienced crews who treat your belongings like their own.</span>
+            <p className="hero-intro">
+              Our crews move homes and businesses across Hartford County and Western Massachusetts.
+              You get a clear estimate with no hidden fees.
             </p>
-            {/* Google Ads visitors only; renders nothing for everyone else.
-                On phones it sits directly above the estimate form. */}
-            <div className="hero-offer"><AdBoxOffer /></div>
+            <p className="hv2-promise">Thoughtful service. Clear estimates. No hidden fees.</p>
             {/* Plain proof points (not links, styled as text). Only
                 "5-Star Reviews" is a link. */}
-            <div className="hero-badges" style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: "8px 18px", marginBottom: 32 }}>
+            <div className="hero-badges">
               {["Licensed & Insured", "Accurate Estimates"].map(item => (
-                <span key={item} style={{ fontFamily: "var(--font-body)", fontWeight: 400, fontSize: 14, color: "rgba(255,255,255,0.7)", cursor: "default" }}>{item}</span>
+                <span key={item} className="hv2-badge">{item}</span>
               ))}
-              <Link href="/reviews/" style={{ display: "inline-flex", alignItems: "center", gap: 6, fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 14, color: "#FBCB0B", textDecoration: "underline", textUnderlineOffset: 3 }}>
+              <Link href="/reviews/" className="hv2-badge-link">
                 <Star size={14} /> 5-Star Reviews
               </Link>
             </div>
-            <div className="hero-ctas" style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <div className="hero-ctas">
               <EstimateScrollButton className="btn btn-primary">Get Free Estimate <ArrowRight /></EstimateScrollButton>
-              <a href={COMPANY.phoneLink} className="btn btn-outline-light"><Phone size={18} /> (888) 553-4503</a>
+              <a href={COMPANY.phoneLink} className="btn hv2-call"><Phone size={18} /> (888) 553-4503</a>
             </div>
-            {/* Compact trust row. On phones the review line moves up under
-                the headline (the one line of proof) and the license line
-                drops below the form. */}
-            <div className="hero-reviews" style={{ marginTop: 20 }}>
-              <Link href="/reviews/" aria-label="Read our Google reviews" style={{ display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none" }}>
-                <span style={{ display: "inline-flex", gap: 2 }}>{[1, 2, 3, 4, 5].map(i => <Star key={i} size={14} />)}</span>
-                <span style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 13, color: "#fff", textDecoration: "underline", textUnderlineOffset: 3 }}>
-                  {COMPANY.reviewAvg} from {COMPANY.reviewCount} Google reviews
-                </span>
+            <div className="hero-reviews">
+              <Link href="/reviews/" aria-label="Read our Google reviews" className="hv2-reviews">
+                <span className="hv2-stars">{[1, 2, 3, 4, 5].map(i => <Star key={i} size={14} />)}</span>
+                <span className="hv2-reviews-text">{COMPANY.reviewAvg} from {COMPANY.reviewCount} Google reviews</span>
               </Link>
             </div>
-            <div className="hero-legal" style={{ marginTop: 4 }}>
-              <span style={{ fontFamily: "var(--font-body)", fontSize: 12, color: "rgba(255,255,255,0.65)" }}>
-                Family-owned, since {COMPANY.founded} · USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit} · {COMPANY.mc}
-              </span>
+            <div className="hero-legal">
+              <span>USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit} · {COMPANY.mc}</span>
             </div>
+            {/* Phones load the tighter driveway photo below the estimate form. */}
+            <picture className="hv2-media">
+              <source media="(max-width: 768px)" srcSet="/images/hero-drive-tight-640.webp 640w, /images/hero-drive-tight-956.webp 956w" sizes="calc(100vw - 32px)" width={956} height={600} />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/hero-drive-wide-1346.webp"
+                srcSet="/images/hero-drive-wide-800.webp 800w, /images/hero-drive-wide-1346.webp 1346w"
+                sizes="(min-width: 1240px) calc(50vw + 180px), (min-width: 1200px) calc(100vw - 444px), (min-width: 1024px) calc(120vw - 586px), (min-width: 769px) 720px, 100vw"
+                width={1346}
+                height={757}
+                alt="Castle Express Moving truck parked in the driveway of a customer&apos;s home under a bright morning sky"
+                fetchPriority="high"
+                decoding="async"
+              />
+            </picture>
           </div>
           <div className="hero-form">
-            <EstimateForm dark twoStep />
+            {/* Google Ads visitors only; renders nothing for everyone else.
+                On phones it sits directly above the estimate form. */}
+            <div className="hero-offer"><AdBoxOffer /></div>
+            <div className="hv2-card">
+              <EstimateForm twoStep design={HOME_DESIGN} />
+            </div>
           </div>
         </div>
       </section>
@@ -111,7 +117,7 @@ export default function HomePage() {
       <HeroAbTracker />
 
       {/* ─── TRUST BAR ─── */}
-      <section className="trust-bar" aria-label="Trust indicators">
+      <section className="trust-bar tb-v2" aria-label="Trust indicators">
         {[
           { icon: <IconBBB size={28} />, label: "A+ BBB Rating" },
           { icon: <IconGoogle size={28} />, label: `${COMPANY.reviewAvg}★ on Google (${COMPANY.reviewCount} reviews)`, href: "/reviews/" },
@@ -126,45 +132,50 @@ export default function HomePage() {
         ))}
       </section>
 
-      {/* ─── SERVICES ─── */}
-      <section className="section section-light" aria-label="Services">
+      {/* ─── SERVICES ───
+          Same four services, links and wording; restyled white cards with
+          yellow line icons on an ivory band (Nov 2026 redesign). */}
+      <section className="section svc-v2" aria-label="Services">
         <div className="container">
-          <div className="text-center" style={{ marginBottom: 48 }}>
+          <div className="svc-v2-head">
             <SectionLabel>What We Do</SectionLabel>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Full-Service Moving Solutions</h2>
-            <p className="body-md text-gray" style={{ maxWidth: 560, margin: "0 auto" }}>
+            <h2 className="svc-v2-title">Full-Service Moving Solutions</h2>
+            <p className="svc-v2-intro">
               From packing your first box to placing the last piece of furniture, we handle every detail of your move.
             </p>
           </div>
-          <div className="grid-auto">
+          <div className="svc-v2-grid">
             {SERVICES.slice(0, 4).map((svc, i) => (
-              <Link key={svc.id} href={`/services/${svc.slug}/`} className="card" style={{ textDecoration: "none", position: "relative", cursor: "pointer" }}>
-                {svc.popular && (
-                  <div style={{ position: "absolute", top: 16, right: 16, background: "#FFF9EC", color: "#D4A017", fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 11, padding: "4px 10px", borderRadius: 20 }}>Most Popular</div>
-                )}
-                <div className="icon-badge" style={{ marginBottom: 16 }}>{serviceIcons[i]}</div>
-                <h3 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginBottom: 8 }}>{svc.title}</h3>
-                <p className="body-sm text-gray">{svc.shortDesc}</p>
+              <Link key={svc.id} href={`/services/${svc.slug}/`} className="svc-v2-card">
+                <span className="svc-v2-icon">{serviceLineIcons[i]}</span>
+                <span className="svc-v2-body">
+                  <span className="svc-v2-name">
+                    <h3>{svc.title}</h3>
+                    {svc.popular && <span className="svc-v2-pill">Most Popular</span>}
+                  </span>
+                  <p>{svc.shortDesc}</p>
+                </span>
               </Link>
             ))}
           </div>
-          <div className="text-center" style={{ marginTop: 32 }}>
-            <Link href="/services/" className="btn btn-outline">View All Services <ChevronRight /></Link>
+          <div className="svc-v2-more">
+            <Link href="/services/" className="btn svc-v2-all">View All Services <ChevronRight /></Link>
           </div>
+          <p className="svc-v2-address"><span><MapPin size={20} /> 4 Niblick Rd, Enfield CT 06082</span></p>
         </div>
       </section>
 
       {/* ─── WHY CASTLE ─── */}
-      <section className="section" aria-label="Why Castle Express">
+      <section className="section home-story" aria-label="Why Castle Express">
         <div className="container grid-2">
           <div>
             <SectionLabel>Why Castle Express</SectionLabel>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Built on Values, Not Just Trucks</h2>
+            <h2 className="heading-2">Built on Values, Not Just Trucks</h2>
             <p className="body-md text-gray" style={{ marginBottom: 16 }}>
-              Joe Caronna started Castle Express in {COMPANY.founded} with one truck and a commitment to treat every customer like family. Today we operate a fleet of {COMPANY.truckCount} trucks from our {COMPANY.facilitySize} sq ft facility in {COMPANY.city}, {COMPANY.state} - but the values haven't changed.
+              Joe Caronna started Castle Express in {COMPANY.founded} with one truck and a commitment to treat every customer like family. Today we operate a fleet of {COMPANY.truckCount} trucks from our {COMPANY.facilitySize} sq ft facility in {COMPANY.city}, {COMPANY.state}.
             </p>
             <p className="body-md text-gray" style={{ marginBottom: 28 }}>
-              Whether you're moving across town in Enfield or relocating from Hartford to Springfield, our moving company handles residential moves, commercial relocations, full-service packing, <Link href="/services/storage/" style={{ color: "inherit", textDecoration: "underline" }}>climate-controlled storage in Enfield, CT</Link>, and specialty items like pianos and gun safes. Every move includes a detailed walkthrough, furniture protection, and careful placement at your new home.
+              Our crews walk through your move with you, protect your furniture, and place it where you want it. Between homes? We offer <Link href="/services/storage/" style={{ color: "inherit", textDecoration: "underline" }}>climate-controlled storage in Enfield, CT</Link>.
             </p>
             {[
               { title: "Accurate Estimates", desc: "Detailed estimates built from a full inventory of your move. No surprise charges." },
@@ -201,12 +212,27 @@ export default function HomePage() {
               </div>
             ))}
             </div>
+            <section className="home-impact" aria-labelledby="home-impact-title">
+              <h2 id="home-impact-title">Every Move Feeds Families</h2>
+              <p>We give $5 from every completed move to help Feeding America and the Enfield Food Shelf feed families.</p>
+              <p><strong>{GIVING_BACK_TOTAL_MEALS.toLocaleString("en-US")} meals provided with our customers so far.</strong></p>
+              <Link href="/giving-back/" className="home-impact-link">See Our Impact <ArrowRight size={16} /></Link>
+              <div className="home-impact-partners">
+                <a href="https://www.feedingamerica.org/" target="_blank" rel="noopener noreferrer">
+                  <Image src="/images/feeding-america-logo.png" alt="Feeding America" width={72} height={54} />
+                </a>
+                <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer">
+                  <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={46} height={46} />
+                </a>
+              </div>
+              <p className="home-impact-note">We also support <a href="https://www.stjude.org/">St. Jude Children's Research Hospital</a>.</p>
+            </section>
           </div>
         </div>
       </section>
 
       {/* ─── REVIEWS TRUST STRIP ─── */}
-      <section className="section section-light" aria-label="Customer reviews summary">
+      <section className="section section-light home-reviews" aria-label="Customer reviews summary">
         <div className="container text-center">
           <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
             <Link href="/reviews/" aria-label="Read all Google reviews" style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 12, textDecoration: "none" }}>
@@ -223,7 +249,10 @@ export default function HomePage() {
       </section>
 
       {/* ─── TOWNS WE SERVE ─── */}
-      <TownsWeServe limit={12} />
+      <TownsWeServe slugs={[
+        "movers-enfield-ct", "movers-windsor-ct", "movers-suffield-ct",
+        "movers-hartford-ct", "movers-longmeadow-ma", "movers-springfield-ma",
+      ]} />
 
       {/* ─── PHOTO STRIP ─── */}
       <section style={{ padding: "0", overflow: "hidden" }} aria-label="Photo gallery">
@@ -276,7 +305,7 @@ export default function HomePage() {
         <div className="container">
           <div className="text-center" style={{ marginBottom: 32 }}>
             <div className="section-label" style={{ justifyContent: "center" }}><span>Follow Us</span></div>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal", overflowWrap: "anywhere" }}>@castleexpressmovingandstorage</h2>
+            <h2 className="heading-2" style={{ overflowWrap: "anywhere" }}>@castleexpressmovingandstorage</h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
             {[
@@ -296,7 +325,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── FAQ (native HTML + FAQPage schema) ─── */}
-      <section className="section" aria-label="Frequently asked questions">
+      <section className="section home-faq" aria-label="Frequently asked questions">
         <div className="container-sm">
           <script
             type="application/ld+json"
@@ -314,60 +343,16 @@ export default function HomePage() {
           />
           <div className="text-center" style={{ marginBottom: 40 }}>
             <div className="section-label" style={{ justifyContent: "center" }}><span>Common Questions</span></div>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Frequently Asked Questions</h2>
+            <h2 className="heading-2">Frequently Asked Questions</h2>
           </div>
-          <div>
-            {FAQ.map((item, i) => (
-              <div key={i} style={{ padding: "16px 0", borderBottom: "1px solid #E5E7EB" }}>
-                <p style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 8 }}>{item.q}</p>
-                <p className="body-sm text-gray" style={{ lineHeight: 1.7 }}>{item.a}</p>
-              </div>
+          <div className="home-questions">
+            {FAQ.map(item => (
+              <details key={item.q}>
+                <summary>{item.q}<ChevronRight size={18} /></summary>
+                <p>{item.a}</p>
+              </details>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ─── EVERY MOVE FEEDS FAMILIES ─── */}
-      <section style={{ padding: "60px 24px 48px", textAlign: "center", background: "#f9f9f9" }} aria-label="Every move feeds families">
-        <div style={{ maxWidth: 600, margin: "0 auto" }}>
-          <div style={{ width: 48, height: 3, background: "#FBCB0B", margin: "0 auto 20px", borderRadius: 2 }} />
-          <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "clamp(22px, 3.5vw, 28px)", color: "#1A1A2E", lineHeight: 1.2, marginBottom: 24 }}>
-            Every Move Feeds Families
-          </h2>
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 28, flexWrap: "wrap", marginBottom: 24 }}>
-            <a href="https://www.feedingamerica.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
-              <Image src="/images/feeding-america-logo.png" alt="Feeding America" width={200} height={80} style={{ objectFit: "contain" }} />
-            </a>
-            <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "#000000", borderRadius: 12, width: 80, height: 80 }}>
-              <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={58} height={59} style={{ objectFit: "contain" }} />
-            </a>
-          </div>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#374151", lineHeight: 1.8 }}>
-            Every time we finish a move, Castle Express Moving &amp; Storage gives $5 to help feed families. That money goes to Feeding America and to the Enfield Food Shelf right here in our hometown. Moving is about new beginnings, and we want those new beginnings to reach more people than just our customers.
-          </p>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#1A1A2E", fontWeight: 700, lineHeight: 1.7, marginTop: 20 }}>
-            Together with our customers, we&apos;ve provided {GIVING_BACK_TOTAL_MEALS.toLocaleString("en-US")} meals so far.
-          </p>
-          <Link href="/giving-back/" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 16, fontFamily: "var(--font-body)", fontSize: 14, fontWeight: 700, color: "#1A1A2E", textDecoration: "none", borderBottom: "2px solid #FBCB0B", paddingBottom: 2 }}>
-            See Our Impact <ArrowRight size={16} />
-          </Link>
-        </div>
-      </section>
-
-      {/* ─── GIVING BACK ─── */}
-      <section style={{ padding: "40px 24px 32px", textAlign: "center" }} aria-label="Giving back">
-        <div style={{ maxWidth: 600, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 32, flexWrap: "wrap", marginBottom: 16 }}>
-            <a href="https://www.stjude.org/" target="_blank" rel="noopener noreferrer" className="grayscale-hover">
-              <Image src="/images/st-jude-logo.jpg" alt="St. Jude Children's Research Hospital" width={90} height={90} style={{ borderRadius: 8, objectFit: "contain" }} />
-            </a>
-            <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" className="grayscale-hover">
-              <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={90} height={90} style={{ objectFit: "contain" }} />
-            </a>
-          </div>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "#969a9d", lineHeight: 1.6 }}>
-            Proud to support St. Jude Children's Research Hospital and the Enfield Food Shelf.
-          </p>
         </div>
       </section>
 
@@ -375,7 +360,7 @@ export default function HomePage() {
       <section className="section section-dark text-center" aria-label="Get a free estimate">
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
           <SectionLabel>Ready to Move?</SectionLabel>
-          <h2 className="heading-2 text-white" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Let's Get You Where You're Going</h2>
+          <h2 className="heading-2 text-white">Let's Get You Where You're Going</h2>
           <p className="body-md text-white-muted" style={{ marginBottom: 32 }}>
             Call today for a free, no-obligation estimate. We'll walk you through every step of your move.
           </p>
@@ -385,6 +370,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
