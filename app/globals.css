@@ -2020,6 +2020,28 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
 .home-impact .home-impact-note { font-size: 14px; }
 .home-impact-note a { text-decoration: underline; }
 .castle-home .home-reviews { padding-block: 28px; }
+/* Featured Google review, right under the trust bar. */
+.home-quote { padding: 36px 24px 8px; background: #FFFBF3; }
+.home-quote-card {
+  max-width: 820px; margin: 0 auto; padding: 28px 32px; background: #fff;
+  border: 1px solid #F0E6D2; border-left: 5px solid #FFC003; border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(26, 26, 46, 0.06);
+  font-family: var(--font-dm-sans), Arial, sans-serif;
+}
+.home-quote-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.home-quote-stars { display: inline-flex; gap: 3px; color: #F5A800; }
+.home-quote-source { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #5F6472; }
+.home-quote-card blockquote { margin: 0; font-size: 18px; line-height: 1.6; color: #1A1A2E; }
+.home-quote-card figcaption { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 14px; margin-top: 16px; }
+.home-quote-name { font-weight: 800; font-size: 16px; color: #1A1A2E; }
+.home-quote-meta { font-size: 14px; color: #5F6472; }
+.home-quote-link { margin-left: auto; display: inline-flex; align-items: center; gap: 2px; font-size: 14px; font-weight: 700; color: #7A5600; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 600px) {
+  .home-quote { padding: 24px 16px 4px; }
+  .home-quote-card { padding: 20px 18px; }
+  .home-quote-card blockquote { font-size: 16.5px; }
+  .home-quote-link { margin-left: 0; width: 100%; margin-top: 4px; }
+}
 .towns-title { font-family: Merriweather, serif; font-weight: 700; }
 .towns-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
 .castle-home .towns-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 800px; margin-inline: auto; }

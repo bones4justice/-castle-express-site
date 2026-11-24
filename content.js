@@ -1542,7 +1542,17 @@ export const FAQ = [
 // re-pull and swap entries; update COMPANY.reviewCount while you're in here.
 export const GOOGLE_PLACE_ID = "ChIJr4ERfGj75okR-pvWu2PbwSk";
 
+// Shown on the homepage right under the trust bar (Joe's pick, 2026-11-24).
+// Also the first entry of GOOGLE_REVIEWS below.
+export const FEATURED_REVIEW = {
+  author: "Leigh Ackerman",
+  rating: 5,
+  date: "November 2026",
+  text: "Had 3 phenomenal guys move my furniture local. They did a great job... Lovell, Mel and Rafael were professional and very considerate. Asked me where I wanted the furniture placed. They took their time and wrapped everything so no damage occurred. I would definitely recommend these guys and Castle Express moving.",
+};
+
 export const GOOGLE_REVIEWS = [
+  FEATURED_REVIEW,
   {
     author: "Louise Durej",
     rating: 5,
