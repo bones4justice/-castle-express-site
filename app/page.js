@@ -3,7 +3,7 @@
 // big content.js data no longer has to download and run on phones.
 import Link from "next/link";
 import Image from "next/image";
-import { COMPANY, SERVICES, ALL_CITIES, CITY_PAGES, FAQ } from "@/content";
+import { COMPANY, SERVICES, ALL_CITIES, CITY_PAGES, FAQ, FEATURED_REVIEW } from "@/content";
 import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, Phone, MapPin } from "@/components/Icons";
 import { LineTruck, LineOffice, LineBox, LineStorage } from "@/components/ServiceLineIcons";
 import { IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
@@ -130,6 +130,24 @@ export default function HomePage() {
         ) : (
           <div key={i} className="trust-item"><span style={{ display: "inline-flex", verticalAlign: "middle" }}>{item.icon}</span> {item.label}</div>
         ))}
+      </section>
+
+      {/* ─── FEATURED GOOGLE REVIEW ─── */}
+      <section className="home-quote" aria-label="Customer review">
+        <figure className="home-quote-card">
+          <div className="home-quote-top">
+            <span className="home-quote-stars" role="img" aria-label={`${FEATURED_REVIEW.rating} out of 5 stars`}>
+              {[1, 2, 3, 4, 5].map(i => <Star key={i} size={18} />)}
+            </span>
+            <span className="home-quote-source"><IconGoogle size={18} /> Google review</span>
+          </div>
+          <blockquote>{FEATURED_REVIEW.text}</blockquote>
+          <figcaption>
+            <span className="home-quote-name">{FEATURED_REVIEW.author}</span>
+            <span className="home-quote-meta">Local move · {FEATURED_REVIEW.date}</span>
+            <Link href="/reviews/" className="home-quote-link">Read more reviews <ChevronRight size={16} /></Link>
+          </figcaption>
+        </figure>
       </section>
 
       {/* ─── SERVICES ───
