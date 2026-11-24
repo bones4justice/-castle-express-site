@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { SERVICES, SERVICE_PAGES, FAQ } from "@/content";
 import { Check, ArrowRight } from "@/components/Icons";
-import { IconResidential, IconCommercial, IconPacking, IconStorage, IconPiano, IconLongDistance } from "@/components/BrandIcons";
+import BrandSetIcon from "@/components/BrandSetIcon";
 import TownsWeServe from "@/components/TownsWeServe";
 import { InteriorHero } from "@/components/InteriorKit";
 
@@ -13,12 +13,12 @@ export const metadata = {
 };
 
 const ICONS = {
-  residential: <IconResidential size={96} />,
-  commercial: <IconCommercial size={96} />,
-  packing: <IconPacking size={96} />,
-  storage: <IconStorage size={96} />,
-  specialty: <IconPiano size={96} />,
-  longdistance: <IconLongDistance size={96} />,
+  residential: <BrandSetIcon name="residential-moving" size={44} />,
+  commercial: <BrandSetIcon name="commercial-moving" size={44} />,
+  packing: <BrandSetIcon name="full-service-packing" size={44} />,
+  storage: <BrandSetIcon name="climate-controlled-storage" size={44} />,
+  specialty: <BrandSetIcon name="specialty-moving" size={44} />,
+  longdistance: <BrandSetIcon name="long-distance-moving" size={44} />,
 };
 
 export default function ServicesPage() {
