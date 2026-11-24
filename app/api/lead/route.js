@@ -219,6 +219,7 @@ function isDefaultDropdownSpam(body) {
   const fs = body.formspree || {};
   const sm = body.smartmoving || {};
   if (DEFAULT_DROPDOWN_EXEMPT_FORMS.has(body.form)) return false;
+  if (fs.form_style === "inline_step") return false;
   if (
     DEFAULT_DROPDOWN_EXEMPT_LANDINGS.has(body.landing) ||
     DEFAULT_DROPDOWN_EXEMPT_LANDINGS.has(fs.landing)
