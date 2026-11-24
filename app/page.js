@@ -89,7 +89,7 @@ export default function HomePage() {
             </div>
             {/* Phones load the tighter driveway photo below the estimate form. */}
             <picture className="hv2-media">
-              <source media="(max-width: 768px)" srcSet="/images/hero-drive-tight-640.webp 640w, /images/hero-drive-tight-956.webp 956w" sizes="calc(100vw - 32px)" width={956} height={600} />
+              <source media="(max-width: 768px)" srcSet="/images/hero-drive-phone-640.webp 640w, /images/hero-drive-phone-800.webp 800w, /images/hero-drive-phone-956.webp 956w" sizes="calc(100vw - 32px)" width={956} height={600} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/images/hero-drive-wide-1346.webp"
