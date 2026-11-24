@@ -21,6 +21,7 @@ import { boxOfferSeen, BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
 import { readVariantCookie } from "@/lib/lpAbTest";
 import { geVariantForLead } from "@/lib/geAbTest";
 import { sendGenerateLead } from "@/lib/leadEvents";
+import BrandSetIcon from "@/components/BrandSetIcon";
 import { responseWindow } from "@/lib/salesHours";
 
 // Inline 5-step estimate card used across the site (homepage, /contact/,
@@ -67,6 +68,7 @@ function Icon({ name, size = 24, strokeWidth = 1.85 }) {
       strokeLinecap="round"
       strokeLinejoin="round"
       aria-hidden="true"
+      style={{ pointerEvents: "none" }}
       dangerouslySetInnerHTML={{ __html: ICONS[name] || "" }}
     />
   );
@@ -388,7 +390,7 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
               <Icon name="check" size={12} strokeWidth={3} />
             </span>
             <span className="isf-opt-icon" aria-hidden="true">
-              <Icon name={opt.icon} size={26} strokeWidth={1.75} />
+              {opt.brand ? <BrandSetIcon name={opt.brand} size={34} /> : <Icon name={opt.icon} size={26} strokeWidth={1.75} />}
             </span>
             <span className="isf-opt-label">{opt.label}</span>
           </button>

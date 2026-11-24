@@ -5,8 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { COMPANY, SERVICES, ALL_CITIES, CITY_PAGES, FAQ, FEATURED_REVIEW } from "@/content";
 import { Shield, Star, Award, Clock, Check, Home, Building, Box, ArrowRight, ChevronRight, Phone, MapPin } from "@/components/Icons";
-import { LineTruck, LineOffice, LineBox, LineStorage } from "@/components/ServiceLineIcons";
-import { IconBBB, IconGoogle, IconLicensed, IconLocation } from "@/components/BrandIcons";
+import BrandSetIcon from "@/components/BrandSetIcon";
 import EstimateForm from "@/components/EstimateForm";
 import TownsWeServe from "@/components/TownsWeServe";
 import AdBoxOffer from "@/components/AdBoxOffer";
@@ -32,12 +31,8 @@ function SectionLabel({ children }) {
 
 export default function HomePage() {
 
-  const serviceLineIcons = [
-    <LineTruck key="t" />,
-    <LineOffice key="o" />,
-    <LineBox key="b" />,
-    <LineStorage key="s" />,
-  ];
+  // Official brand icon per service (lib/brandIconSet.js), in SERVICES order.
+  const serviceIconNames = ["residential-moving", "commercial-moving", "full-service-packing", "climate-controlled-storage"];
 
   return (
     <div className="castle-home">
@@ -119,10 +114,10 @@ export default function HomePage() {
       {/* ─── TRUST BAR ─── */}
       <section className="trust-bar tb-v2" aria-label="Trust indicators">
         {[
-          { icon: <IconBBB size={28} />, label: "A+ BBB Rating" },
-          { icon: <IconGoogle size={28} />, label: `${COMPANY.reviewAvg}★ on Google (${COMPANY.reviewCount} reviews)`, href: "/reviews/" },
-          { icon: <IconLicensed size={28} />, label: `Licensed & Insured · USDOT ${COMPANY.usdot}` },
-          { icon: <IconLocation size={28} />, label: `Family-Owned Since ${COMPANY.founded}` },
+          { icon: <BrandSetIcon name="bbb-rating" size={32} />, label: "A+ BBB Rating" },
+          { icon: <BrandSetIcon name="google-rating" size={32} />, label: `${COMPANY.reviewAvg}★ on Google (${COMPANY.reviewCount} reviews)`, href: "/reviews/" },
+          { icon: <BrandSetIcon name="licensed-insured" size={32} />, label: `Licensed & Insured · USDOT ${COMPANY.usdot}` },
+          { icon: <BrandSetIcon name="family-owned" size={32} />, label: `Family-Owned Since ${COMPANY.founded}` },
         ].map((item, i) => item.href ? (
           <Link key={i} href={item.href} className="trust-item" style={{ textDecoration: "none", color: "inherit" }}>
             <span style={{ display: "inline-flex", verticalAlign: "middle" }}>{item.icon}</span> {item.label}
@@ -139,7 +134,7 @@ export default function HomePage() {
             <span className="home-quote-stars" role="img" aria-label={`${FEATURED_REVIEW.rating} out of 5 stars`}>
               {[1, 2, 3, 4, 5].map(i => <Star key={i} size={18} />)}
             </span>
-            <span className="home-quote-source"><IconGoogle size={18} /> Google review</span>
+            <span className="home-quote-source"><BrandSetIcon name="google-rating" size={20} /> Google review</span>
           </div>
           <blockquote>{FEATURED_REVIEW.text}</blockquote>
           <figcaption>
@@ -165,7 +160,7 @@ export default function HomePage() {
           <div className="svc-v2-grid">
             {SERVICES.slice(0, 4).map((svc, i) => (
               <Link key={svc.id} href={`/services/${svc.slug}/`} className="svc-v2-card">
-                <span className="svc-v2-icon">{serviceLineIcons[i]}</span>
+                <span className="svc-v2-icon"><BrandSetIcon name={serviceIconNames[i]} size={60} /></span>
                 <span className="svc-v2-body">
                   <span className="svc-v2-name">
                     <h3>{svc.title}</h3>
