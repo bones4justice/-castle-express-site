@@ -1,3 +1,5 @@
+import { describeEstimateRoute } from "@/lib/estimateRoute";
+
 // Server-side lead proxy with spam filtering.
 //
 // Forms POST here instead of hitting Formspree / SmartMoving directly from the
@@ -376,6 +378,19 @@ export async function POST(request) {
   if (fieldError) {
     console.warn(`[lead-validation] ${body.form} from ${ip}: ${fieldError}`);
     return Response.json({ ok: false, error: fieldError }, { status: 400 });
+  }
+
+  // Both step forms send the requested service. Enrich only new truck leads,
+  // keeping the complete ZIP index off visitors' devices.
+  if (body.form === "estimate" && body.formspree?.moveType === "Truck and crew") {
+    const fs = body.formspree;
+    const route = describeEstimateRoute(fs.moveFrom, fs.moveTo);
+    fs.requestedService = fs.moveType;
+    fs.moveType = route.moveType;
+    fs.moveRoute = route.description;
+    if (body.smartmoving) {
+      body.smartmoving.Notes = [body.smartmoving.Notes, route.description].filter(Boolean).join(" | ");
+    }
   }
 
   // Success = at least one durable sink accepted the lead. Either sink alone

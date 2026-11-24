@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
+import { HELP_OPTIONS, HELP_QUESTION, CALLBACK_NOTE, validMoveZips } from "@/lib/estimateHelp";
+import { Truck } from "@/components/Icons";
 import { COMPANY } from "@/content";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import { readVariantCookie } from "@/lib/lpAbTest";
@@ -35,9 +37,6 @@ const TRUCK_IMG = { src: "/images/ge-loader-truck.webp", width: 600, height: 261
 
 /* ---------- icons (inner SVG markup from the prototype, static strings) ---------- */
 const ICON = {
-  pin: '<path d="M16 28s9-8.2 9-15a9 9 0 10-18 0c0 6.800 9 15 9 15z"/><circle cx="16" cy="13" r="3.2"/>',
-  road: '<path d="M11 4L5 28M21 4l6 24M16 5v4M16 14v4M16 23v4"/>',
-  state: '<circle cx="8" cy="23" r="3"/><circle cx="24" cy="8" r="3"/><path d="M11 23h7a4 4 0 004-4v-1a4 4 0 00-4-4h-4a4 4 0 01-4-4 2 2 0 012-2h9"/>',
   lift: '<rect x="6" y="14" width="13" height="12" rx="1.5"/><path d="M6 19h13M12.500 14v5M24 26V7M20 11l4-4 4 4"/>',
   house: '<path d="M4 15L16 5l12 10M7 13v14h18V13M13 27v-8h6v8"/>',
   apt: '<rect x="7" y="4" width="18" height="24" rx="1.5"/><path d="M12 9h2M18 9h2M12 14h2M18 14h2M12 19h2M18 19h2M14 28v-4h4v4"/>',
@@ -54,6 +53,7 @@ const ICON = {
 };
 
 function Icon({ name }) {
+  if (name === "truck") return <Truck aria-hidden="true" />;
   return (
     <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
       aria-hidden="true" dangerouslySetInnerHTML={{ __html: ICON[name] }} />
@@ -70,46 +70,39 @@ function Tick() {
 
 const Hl = ({ children }) => <span className="ge-hl">{children}</span>;
 
-/* ---------- the question tree (prototype FLOW) ---------- */
-const sizeNext = (s) => (s.moveType === "Out of state" ? "zip2" : "zip1");
-
+/* ---------- the question tree ---------- */
 const FLOW = {
-  move: { p: 10, title: "How far are you moving?", cards: [
-    { t: "Local", s: "Under 35 miles", i: "pin", save: { moveType: "Local" }, next: "type" },
-    { t: "Over an hour away", s: "More than 35 miles", i: "road", save: { moveType: "Over an hour away" }, next: "type" },
-    { t: "Out of state", s: "Long distance, door to door", i: "state", save: { moveType: "Out of state" }, next: "type" },
-    { t: "Loading or unloading help", s: "You drive, we do the lifting", i: "lift", save: { moveType: "Labor only", homeType: "", size: "" }, next: "zip1" },
-  ] },
-  type: { p: 20, title: "What are we moving?", cards: [
+  move: { p: 10, title: HELP_QUESTION, cards: HELP_OPTIONS },
+  type: { p: 30, title: "What are we moving?", cards: [
     { t: "House", s: "Family owned and moving homes since 2011", i: "house", save: { homeType: "House" }, next: "size-house" },
     { t: "Apartment", s: "Stairs and elevators are no problem", i: "apt", save: { homeType: "Apartment" }, next: "size-apartment" },
     { t: "Condo or townhouse", s: "We work with your building's rules", i: "condo", save: { homeType: "Condo or townhouse" }, next: "size-condo" },
     { t: "A few items or an office", s: "Something else? We handle it", i: "box", save: { homeType: "Other" }, next: "size-other" },
   ] },
-  "size-house": { p: 30, title: <>How many bedrooms in your <Hl>house?</Hl></>, cards: [
-    { t: "4+ bedrooms", s: "Experienced crews for big homes", i: "bed4", save: { size: "4+ bedrooms" }, next: sizeNext },
-    { t: "3 bedrooms", s: "Our most common move", i: "bed3", save: { size: "3 bedrooms" }, next: sizeNext },
-    { t: "2 bedrooms", s: "Quick and simple. We keep it that way", i: "bed2", save: { size: "2 bedrooms" }, next: sizeNext },
-    { t: "1 bedroom or a few items", s: "No job too small", i: "box", save: { size: "1 bedroom or a few items" }, next: sizeNext },
+  "size-house": { p: 40, title: <>How many bedrooms in your <Hl>house?</Hl></>, cards: [
+    { t: "4+ bedrooms", s: "Experienced crews for big homes", i: "bed4", save: { size: "4+ bedrooms" }, next: "when" },
+    { t: "3 bedrooms", s: "Our most common move", i: "bed3", save: { size: "3 bedrooms" }, next: "when" },
+    { t: "2 bedrooms", s: "Quick and simple. We keep it that way", i: "bed2", save: { size: "2 bedrooms" }, next: "when" },
+    { t: "1 bedroom or a few items", s: "No job too small", i: "box", save: { size: "1 bedroom or a few items" }, next: "when" },
   ] },
-  "size-apartment": { p: 30, title: <>How many bedrooms in your <Hl>apartment?</Hl></>, cards: [
-    { t: "1 bedroom or studio", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom or studio" }, next: sizeNext },
-    { t: "2 bedrooms", s: "Our most common apartment move", i: "bed2", save: { size: "2 bedrooms" }, next: sizeNext },
-    { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: sizeNext },
-    { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: sizeNext },
+  "size-apartment": { p: 40, title: <>How many bedrooms in your <Hl>apartment?</Hl></>, cards: [
+    { t: "1 bedroom or studio", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom or studio" }, next: "when" },
+    { t: "2 bedrooms", s: "Our most common apartment move", i: "bed2", save: { size: "2 bedrooms" }, next: "when" },
+    { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: "when" },
+    { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: "when" },
   ] },
-  "size-condo": { p: 30, title: <>How many bedrooms in your <Hl>condo?</Hl></>, cards: [
-    { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: sizeNext },
-    { t: "2 bedrooms", s: "Our most common condo move", i: "bed2", save: { size: "2 bedrooms" }, next: sizeNext },
-    { t: "1 bedroom", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom" }, next: sizeNext },
-    { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: sizeNext },
+  "size-condo": { p: 40, title: <>How many bedrooms in your <Hl>condo?</Hl></>, cards: [
+    { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: "when" },
+    { t: "2 bedrooms", s: "Our most common condo move", i: "bed2", save: { size: "2 bedrooms" }, next: "when" },
+    { t: "1 bedroom", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom" }, next: "when" },
+    { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: "when" },
   ] },
-  "size-other": { p: 30, title: "What type of move?", cards: [
-    { t: "Office", s: "We keep your business moving", i: "office", save: { homeType: "Office", size: "" }, next: sizeNext },
-    { t: "A few items", s: "No job too small", i: "box", save: { homeType: "A few items", size: "A few items" }, next: sizeNext },
+  "size-other": { p: 40, title: "What type of move?", cards: [
+    { t: "Office", s: "We keep your business moving", i: "office", save: { homeType: "Office", size: "" }, next: "when" },
+    { t: "A few items", s: "No job too small", i: "box", save: { homeType: "A few items", size: "A few items" }, next: "when" },
   ] },
   zip1: { p: 40, kind: "zip", two: false },
-  zip2: { p: 40, kind: "zip", two: true },
+  zip2: { p: 20, kind: "zip", two: true },
   when: { p: 50, title: "Tell us about your move date", cards: [
     { t: "I have an exact date", s: "Pick it on the next screen", i: "exact", save: { dateType: "Exact" }, next: "date" },
     { t: "I have some flexibility", s: "Gives you the most options", i: "flex", save: { dateType: "Flexible" }, next: "date" },
@@ -222,6 +215,7 @@ export default function StepEstimateForm() {
 
   const back = () => {
     if (!hist.length) return;
+    clearTimeout(pickTimer.current);
     setErr("");
     setPicked(null);
     currentRef.current = hist[hist.length - 1];
@@ -250,7 +244,7 @@ export default function StepEstimateForm() {
   useEffect(() => {
     if (current !== "loading") return;
     setLoadingText("Saving your move details");
-    const t1 = setTimeout(() => setLoadingText("Getting your estimate ready"), 1000);
+    const t1 = setTimeout(() => setLoadingText("Preparing your callback request"), 1000);
     const t2 = setTimeout(() => go("name", { replace: true }), 2000);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, [current, go]);
@@ -266,11 +260,9 @@ export default function StepEstimateForm() {
 
   const pickCard = (card, n) => {
     if (picked !== null) return;
-    const nextData = { ...data, ...card.save };
-    setData(nextData);
+    save(card.save);
     setPicked(n);
-    const nxt = typeof card.next === "function" ? card.next(nextData) : card.next;
-    pickTimer.current = setTimeout(() => go(nxt), 160);
+    pickTimer.current = setTimeout(() => go(card.next), 160);
   };
 
   const submitLead = async (e) => {
@@ -385,7 +377,7 @@ export default function StepEstimateForm() {
       <>
         <p className="ge-eyebrow">Enfield, CT &middot; Family owned since 2011</p>
         <h1>Let our family move <Hl>yours.</Hl></h1>
-        <p className="ge-sub">Answer a few quick questions and get your free moving estimate. It takes about a minute.</p>
+        <p className="ge-sub">Answer a few quick questions. {CALLBACK_NOTE}</p>
         <button className="ge-cta" type="button" onClick={() => go("move")}>Get my free estimate</button>
         <ul className="ge-proof">
           <li><Tick /><span>Local and long distance moves across Connecticut and Massachusetts</span></li>
@@ -401,6 +393,7 @@ export default function StepEstimateForm() {
     screen = (
       <>
         {h2(<>{step.title}</>)}
+        {current === "move" && <p className="ge-sub">{CALLBACK_NOTE}</p>}
         <div className="ge-cards">
           {step.cards.map((c, n) => (
             <button key={c.t} type="button" aria-label={`${c.t}. ${c.s}`} className={`ge-card${picked === n ? " picked" : ""}`} onClick={() => pickCard(c, n)}>
@@ -413,8 +406,8 @@ export default function StepEstimateForm() {
     );
   } else if (step.kind === "zip") {
     const two = step.two;
-    const title = two ? "Where are you moving from and to?" : (data.moveType === "Labor only" ? "Where do you need our movers?" : "Where are you moving from?");
-    const ok = /^\d{5}$/.test(data.fromZip) && (!two || /^\d{5}$/.test(data.toZip));
+    const title = two ? "Where are you moving from and to?" : "Where do you need our crew?";
+    const ok = validMoveZips(data.fromZip, two ? data.toZip : "");
     const onZip = (field) => (e) => { save({ [field]: e.target.value.replace(/\D/g, "").slice(0, 5) }); setErr(""); };
     screen = (
       <>
@@ -422,17 +415,16 @@ export default function StepEstimateForm() {
         <form className="ge-fields" noValidate onSubmit={(e) => {
           e.preventDefault();
           if (!ok) { setErr("Enter a 5 digit zip code."); return; }
-          if (!two && data.toZip) save({ toZip: "" });
-          go("when");
+          go(two ? "type" : "when");
         }}>
           <div className="ge-field">
-            <label htmlFor="ge-fromZip">{two ? "Moving from (zip code)" : "Your zip code"}</label>
+            <label htmlFor="ge-fromZip">{two ? "Pickup ZIP code" : "Job location ZIP code"}</label>
             <input id="ge-fromZip" inputMode="numeric" autoComplete="postal-code" maxLength={5} placeholder="06082" value={data.fromZip} onChange={onZip("fromZip")} />
           </div>
           {two && (
             <div className="ge-field">
-              <label htmlFor="ge-toZip">Moving to (zip code)</label>
-              <input id="ge-toZip" inputMode="numeric" maxLength={5} placeholder="29577" value={data.toZip} onChange={onZip("toZip")} />
+              <label htmlFor="ge-toZip">Destination ZIP code (if known)</label>
+              <input id="ge-toZip" inputMode="numeric" maxLength={5} placeholder="01106" value={data.toZip} onChange={onZip("toZip")} />
             </div>
           )}
           <p className="ge-err" role="alert">{err}</p>
@@ -542,7 +534,7 @@ export default function StepEstimateForm() {
       const [yy, mm, dd] = data.moveDate.split("-").map(Number);
       dateLabel = `${MONTHS[mm - 1].slice(0, 3)} ${dd}, ${yy}`;
     }
-    const rows = [["Move", data.moveType], ["Moving", moving], ["From", data.fromZip], ["To", data.toZip], ["Date", dateLabel], ["Call", data.phone]]
+    const rows = [["Move", data.moveType], ["Moving", moving], [data.moveType === "Labor only" ? "Job ZIP" : "From", data.fromZip], ["To", data.toZip], ["Date", dateLabel], ["Call", data.phone]]
       .filter(([, v]) => v);
     screen = (
       <>
@@ -558,7 +550,7 @@ export default function StepEstimateForm() {
 
   return (
     <div className="ge-page">
-      <style>{CSS}</style>
+      <style dangerouslySetInnerHTML={{ __html: CSS }} />
       <div className="ge-shell">
         <div className="ge-app">
           <header className="ge-top">
