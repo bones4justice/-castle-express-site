@@ -40,7 +40,7 @@ export default function HomePage() {
   ];
 
   return (
-    <>
+    <div className="castle-home">
       {/* Homepage structured data: single @graph array combining LocalBusiness
           + the full MovingCompany node (see lib/structuredData.js). */}
       <script
@@ -48,30 +48,21 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(homepageJsonLd()) }}
       />
       {/* ─── HERO (Nov 2026 redesign, lib/homeDesign.js) ─── */}
-      {/* Hero A/B copy (hv-a / hv-b) is unchanged: html[data-hero] is set by
-          the inline script in app/layout.js <head> before first paint.
-          Layout (globals.css .hero-v2): phones keep the form-first order with
-          the truck photo under the form; from 769px the photo sits in its
-          own box in the copy column, beside (or above) the estimate card,
-          cropped by CSS to a band framed on the truck. Headline and card
-          are never laid over the photo. */}
+      {/* The headline variants share the form, photo and supporting copy. */}
       <section className="home-hero hero-v2" aria-label="Hero" data-home-design={HOME_DESIGN}>
         <div className="container hero-grid">
           <div className="hero-copy">
             <div className="hero-label">
-              <div className="hv-a"><SectionLabel>Connecticut &amp; Massachusetts</SectionLabel></div>
-              <div className="hv-b"><span className="hv2-eyebrow">Connecticut &amp; Massachusetts</span></div>
+              <SectionLabel>Family-owned in Enfield since {COMPANY.founded}</SectionLabel>
             </div>
             <h1 className="hero-h1">
               <span className="hv-a">Professional Movers in <span className="text-gold">CT &amp; MA</span></span>
               <span className="hv-b">Looking for the{" "}<br /><span className="text-gold">Perfect Mover?</span></span>
             </h1>
             <p className="hero-intro">
-              <span className="hv-a">Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and professional crews who treat your belongings like their own.</span>
-              <span className="hv-b">Castle Express is a family-owned moving company serving Hartford County and Western Massachusetts since 2011. Accurate estimates, no hidden fees, and experienced crews who treat your belongings like their own.</span>
+              Our crews move homes and businesses across Hartford County and Western Massachusetts.
+              You get a clear estimate with no hidden fees.
             </p>
-            {/* Brand promise: same line for both hero variants (outside the
-                A/B copy, which stays word-for-word). */}
             <p className="hv2-promise">Thoughtful service. Clear estimates. No hidden fees.</p>
             {/* Plain proof points (not links, styled as text). Only
                 "5-Star Reviews" is a link. */}
@@ -94,12 +85,9 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="hero-legal">
-              <span>Family-owned, since {COMPANY.founded} · USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit} · {COMPANY.mc}</span>
+              <span>USDOT {COMPANY.usdot} · CT Permit {COMPANY.ctPermit} · {COMPANY.mc}</span>
             </div>
-            {/* Hero photo (real Castle Express truck, truck on the right):
-                phones get the tighter shot under the form; larger screens
-                the wide yard shot, cropped by CSS to a band framed on the
-                truck. Plain <picture> so each screen downloads one WebP. */}
+            {/* Phones load the tighter driveway photo below the estimate form. */}
             <picture className="hv2-media">
               <source media="(max-width: 768px)" srcSet="/images/hero-drive-tight-640.webp 640w, /images/hero-drive-tight-956.webp 956w" sizes="calc(100vw - 32px)" width={956} height={600} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -178,16 +166,16 @@ export default function HomePage() {
       </section>
 
       {/* ─── WHY CASTLE ─── */}
-      <section className="section" aria-label="Why Castle Express">
+      <section className="section home-story" aria-label="Why Castle Express">
         <div className="container grid-2">
           <div>
             <SectionLabel>Why Castle Express</SectionLabel>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Built on Values, Not Just Trucks</h2>
+            <h2 className="heading-2">Built on Values, Not Just Trucks</h2>
             <p className="body-md text-gray" style={{ marginBottom: 16 }}>
-              Joe Caronna started Castle Express in {COMPANY.founded} with one truck and a commitment to treat every customer like family. Today we operate a fleet of {COMPANY.truckCount} trucks from our {COMPANY.facilitySize} sq ft facility in {COMPANY.city}, {COMPANY.state} - but the values haven't changed.
+              Joe Caronna started Castle Express in {COMPANY.founded} with one truck and a commitment to treat every customer like family. Today we operate a fleet of {COMPANY.truckCount} trucks from our {COMPANY.facilitySize} sq ft facility in {COMPANY.city}, {COMPANY.state}.
             </p>
             <p className="body-md text-gray" style={{ marginBottom: 28 }}>
-              Whether you're moving across town in Enfield or relocating from Hartford to Springfield, our moving company handles residential moves, commercial relocations, full-service packing, <Link href="/services/storage/" style={{ color: "inherit", textDecoration: "underline" }}>climate-controlled storage in Enfield, CT</Link>, and specialty items like pianos and gun safes. Every move includes a detailed walkthrough, furniture protection, and careful placement at your new home.
+              Our crews walk through your move with you, protect your furniture, and place it where you want it. Between homes? We offer <Link href="/services/storage/" style={{ color: "inherit", textDecoration: "underline" }}>climate-controlled storage in Enfield, CT</Link>.
             </p>
             {[
               { title: "Accurate Estimates", desc: "Detailed estimates built from a full inventory of your move. No surprise charges." },
@@ -224,12 +212,27 @@ export default function HomePage() {
               </div>
             ))}
             </div>
+            <section className="home-impact" aria-labelledby="home-impact-title">
+              <h2 id="home-impact-title">Every Move Feeds Families</h2>
+              <p>We give $5 from every completed move to help Feeding America and the Enfield Food Shelf feed families.</p>
+              <p><strong>{GIVING_BACK_TOTAL_MEALS.toLocaleString("en-US")} meals provided with our customers so far.</strong></p>
+              <Link href="/giving-back/" className="home-impact-link">See Our Impact <ArrowRight size={16} /></Link>
+              <div className="home-impact-partners">
+                <a href="https://www.feedingamerica.org/" target="_blank" rel="noopener noreferrer">
+                  <Image src="/images/feeding-america-logo.png" alt="Feeding America" width={72} height={54} />
+                </a>
+                <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer">
+                  <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={46} height={46} />
+                </a>
+              </div>
+              <p className="home-impact-note">We also support <a href="https://www.stjude.org/">St. Jude Children's Research Hospital</a>.</p>
+            </section>
           </div>
         </div>
       </section>
 
       {/* ─── REVIEWS TRUST STRIP ─── */}
-      <section className="section section-light" aria-label="Customer reviews summary">
+      <section className="section section-light home-reviews" aria-label="Customer reviews summary">
         <div className="container text-center">
           <div style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 12 }}>
             <Link href="/reviews/" aria-label="Read all Google reviews" style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 12, textDecoration: "none" }}>
@@ -246,7 +249,10 @@ export default function HomePage() {
       </section>
 
       {/* ─── TOWNS WE SERVE ─── */}
-      <TownsWeServe limit={12} />
+      <TownsWeServe slugs={[
+        "movers-enfield-ct", "movers-windsor-ct", "movers-suffield-ct",
+        "movers-hartford-ct", "movers-longmeadow-ma", "movers-springfield-ma",
+      ]} />
 
       {/* ─── PHOTO STRIP ─── */}
       <section style={{ padding: "0", overflow: "hidden" }} aria-label="Photo gallery">
@@ -299,7 +305,7 @@ export default function HomePage() {
         <div className="container">
           <div className="text-center" style={{ marginBottom: 32 }}>
             <div className="section-label" style={{ justifyContent: "center" }}><span>Follow Us</span></div>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal", overflowWrap: "anywhere" }}>@castleexpressmovingandstorage</h2>
+            <h2 className="heading-2" style={{ overflowWrap: "anywhere" }}>@castleexpressmovingandstorage</h2>
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 16 }}>
             {[
@@ -319,7 +325,7 @@ export default function HomePage() {
       </section>
 
       {/* ─── FAQ (native HTML + FAQPage schema) ─── */}
-      <section className="section" aria-label="Frequently asked questions">
+      <section className="section home-faq" aria-label="Frequently asked questions">
         <div className="container-sm">
           <script
             type="application/ld+json"
@@ -337,60 +343,16 @@ export default function HomePage() {
           />
           <div className="text-center" style={{ marginBottom: 40 }}>
             <div className="section-label" style={{ justifyContent: "center" }}><span>Common Questions</span></div>
-            <h2 className="heading-2" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Frequently Asked Questions</h2>
+            <h2 className="heading-2">Frequently Asked Questions</h2>
           </div>
-          <div>
-            {FAQ.map((item, i) => (
-              <div key={i} style={{ padding: "16px 0", borderBottom: "1px solid #E5E7EB" }}>
-                <p style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 16, color: "#1A1A2E", marginBottom: 8 }}>{item.q}</p>
-                <p className="body-sm text-gray" style={{ lineHeight: 1.7 }}>{item.a}</p>
-              </div>
+          <div className="home-questions">
+            {FAQ.map(item => (
+              <details key={item.q}>
+                <summary>{item.q}<ChevronRight size={18} /></summary>
+                <p>{item.a}</p>
+              </details>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ─── EVERY MOVE FEEDS FAMILIES ─── */}
-      <section style={{ padding: "60px 24px 48px", textAlign: "center", background: "#f9f9f9" }} aria-label="Every move feeds families">
-        <div style={{ maxWidth: 600, margin: "0 auto" }}>
-          <div style={{ width: 48, height: 3, background: "#FBCB0B", margin: "0 auto 20px", borderRadius: 2 }} />
-          <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 800, fontSize: "clamp(22px, 3.5vw, 28px)", color: "#1A1A2E", lineHeight: 1.2, marginBottom: 24 }}>
-            Every Move Feeds Families
-          </h2>
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 28, flexWrap: "wrap", marginBottom: 24 }}>
-            <a href="https://www.feedingamerica.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-block" }}>
-              <Image src="/images/feeding-america-logo.png" alt="Feeding America" width={200} height={80} style={{ objectFit: "contain" }} />
-            </a>
-            <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", background: "#000000", borderRadius: 12, width: 80, height: 80 }}>
-              <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={58} height={59} style={{ objectFit: "contain" }} />
-            </a>
-          </div>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 15, color: "#374151", lineHeight: 1.8 }}>
-            Every time we finish a move, Castle Express Moving &amp; Storage gives $5 to help feed families. That money goes to Feeding America and to the Enfield Food Shelf right here in our hometown. Moving is about new beginnings, and we want those new beginnings to reach more people than just our customers.
-          </p>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 16, color: "#1A1A2E", fontWeight: 700, lineHeight: 1.7, marginTop: 20 }}>
-            Together with our customers, we&apos;ve provided {GIVING_BACK_TOTAL_MEALS.toLocaleString("en-US")} meals so far.
-          </p>
-          <Link href="/giving-back/" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 16, fontFamily: "var(--font-body)", fontSize: 14, fontWeight: 700, color: "#1A1A2E", textDecoration: "none", borderBottom: "2px solid #FBCB0B", paddingBottom: 2 }}>
-            See Our Impact <ArrowRight size={16} />
-          </Link>
-        </div>
-      </section>
-
-      {/* ─── GIVING BACK ─── */}
-      <section style={{ padding: "40px 24px 32px", textAlign: "center" }} aria-label="Giving back">
-        <div style={{ maxWidth: 600, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 32, flexWrap: "wrap", marginBottom: 16 }}>
-            <a href="https://www.stjude.org/" target="_blank" rel="noopener noreferrer" className="grayscale-hover">
-              <Image src="/images/st-jude-logo.jpg" alt="St. Jude Children's Research Hospital" width={90} height={90} style={{ borderRadius: 8, objectFit: "contain" }} />
-            </a>
-            <a href="https://www.enfieldfoodshelf.org/" target="_blank" rel="noopener noreferrer" className="grayscale-hover">
-              <Image src="/images/enfield-food-shelf-logo.png" alt="Enfield Food Shelf" width={90} height={90} style={{ objectFit: "contain" }} />
-            </a>
-          </div>
-          <p style={{ fontFamily: "var(--font-body)", fontSize: 14, color: "#969a9d", lineHeight: 1.6 }}>
-            Proud to support St. Jude Children's Research Hospital and the Enfield Food Shelf.
-          </p>
         </div>
       </section>
 
@@ -398,7 +360,7 @@ export default function HomePage() {
       <section className="section section-dark text-center" aria-label="Get a free estimate">
         <div style={{ maxWidth: 600, margin: "0 auto" }}>
           <SectionLabel>Ready to Move?</SectionLabel>
-          <h2 className="heading-2 text-white" style={{ fontFamily: "Merriweather, serif", fontWeight: 700, fontStyle: "normal" }}>Let's Get You Where You're Going</h2>
+          <h2 className="heading-2 text-white">Let's Get You Where You're Going</h2>
           <p className="body-md text-white-muted" style={{ marginBottom: 32 }}>
             Call today for a free, no-obligation estimate. We'll walk you through every step of your move.
           </p>
@@ -408,6 +370,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
