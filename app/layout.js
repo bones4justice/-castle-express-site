@@ -19,6 +19,10 @@ const merriweather = Merriweather({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
+  // Not preloaded: the Nov 2026 design sets nearly everything in DM Sans, and
+  // preloading both Merriweather files (about 200 KB) delayed the phone hero
+  // photo. Pages that still use it fetch it when the CSS asks for it.
+  preload: false,
   weight: ["300", "400", "700"],
   style: ["normal", "italic"],
 });
@@ -27,6 +31,7 @@ const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-cormorant",
   display: "swap",
+  preload: false,
   weight: ["400", "500", "600", "700"],
 });
 
