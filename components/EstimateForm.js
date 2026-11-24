@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import { HELP_OPTIONS, HELP_QUESTION, CALLBACK_NOTE, validMoveZips } from "@/lib/estimateHelp";
-import { Truck } from "@/components/Icons";
+import { TIMING_OPTIONS, TIMING_QUESTION, CALLBACK_NOTE, sizeStepFor } from "@/lib/estimateHelp";
+import EstimateTownFields from "@/components/EstimateTownFields";
 import { COMPANY } from "@/content";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import { boxOfferSeen, BOX_OFFER_NOTE } from "@/components/AdBoxOffer";
@@ -27,8 +27,7 @@ const SM_MOVE_SIZE = {
 };
 
 // Inline multi-step estimate card used across the site (homepage, /contact/,
-// town pages, service pages). Starts with the help needed, using the same
-// service choices and
+// town pages, service pages). Starts with moving dates and shares the
 // SmartMoving move-size mapping as /get-estimate/ (StepEstimateForm.js).
 //
 // Only the final phone screen wraps a real <form> with type="submit"; every
@@ -46,7 +45,6 @@ const RESPONSE_LINE = {
 };
 
 const ICON = {
-  lift: '<rect x="6" y="14" width="13" height="12" rx="1.5"/><path d="M6 19h13M12.500 14v5M24 26V7M20 11l4-4 4 4"/>',
   house: '<path d="M4 15L16 5l12 10M7 13v14h18V13M13 27v-8h6v8"/>',
   apt: '<rect x="7" y="4" width="18" height="24" rx="1.5"/><path d="M12 9h2M18 9h2M12 14h2M18 14h2M12 19h2M18 19h2M14 28v-4h4v4"/>',
   condo: '<path d="M3 27V13l6.500-5 6.500 5v14M16 27V13l6.500-5 6.500 5v14M3 27h26M8 27v-6h3v6M21 27v-6h3v6"/>',
@@ -62,7 +60,6 @@ const ICON = {
 };
 
 function Icon({ name }) {
-  if (name === "truck") return <Truck aria-hidden="true" />;
   return (
     <svg
       viewBox="0 0 32 32"
@@ -80,21 +77,21 @@ function Icon({ name }) {
 const Hl = ({ children }) => <span className="isf-hl">{children}</span>;
 
 const FLOW = {
-  move: {
+  when: {
     p: 14,
     label: "Step 1",
-    title: HELP_QUESTION,
-    cards: HELP_OPTIONS,
+    title: TIMING_QUESTION,
+    cards: TIMING_OPTIONS,
   },
   type: {
     p: 42,
     label: "Move details",
-    title: "What are we moving?",
+    title: "What are you moving out of?",
     cards: [
-      { t: "House", s: "Family owned and moving homes since 2011", i: "house", save: { homeType: "House" }, next: "size-house" },
-      { t: "Apartment", s: "Stairs and elevators are no problem", i: "apt", save: { homeType: "Apartment" }, next: "size-apartment" },
-      { t: "Condo or townhouse", s: "We work with your building's rules", i: "condo", save: { homeType: "Condo or townhouse" }, next: "size-condo" },
-      { t: "A few items or an office", s: "Something else? We handle it", i: "box", save: { homeType: "Other" }, next: "size-other" },
+      { t: "House", s: "Family owned and moving homes since 2011", i: "house", save: { homeType: "House", size: "" }, next: "towns" },
+      { t: "Apartment", s: "Stairs and elevators are no problem", i: "apt", save: { homeType: "Apartment", size: "" }, next: "towns" },
+      { t: "Condo or townhouse", s: "We work with your building's rules", i: "condo", save: { homeType: "Condo or townhouse", size: "" }, next: "towns" },
+      { t: "A few items or an office", s: "Something else? We handle it", i: "box", save: { homeType: "Other", size: "" }, next: "towns" },
     ],
   },
   "size-house": {
@@ -102,10 +99,10 @@ const FLOW = {
     label: "Move size",
     title: <>How many bedrooms in your <Hl>house?</Hl></>,
     cards: [
-      { t: "4+ bedrooms", s: "Experienced crews for big homes", i: "bed4", save: { size: "4+ bedrooms" }, next: "when" },
-      { t: "3 bedrooms", s: "Our most common move", i: "bed3", save: { size: "3 bedrooms" }, next: "when" },
-      { t: "2 bedrooms", s: "Quick and simple. We keep it that way", i: "bed2", save: { size: "2 bedrooms" }, next: "when" },
-      { t: "1 bedroom or a few items", s: "No job too small", i: "box", save: { size: "1 bedroom or a few items" }, next: "when" },
+      { t: "4+ bedrooms", s: "Experienced crews for big homes", i: "bed4", save: { size: "4+ bedrooms" }, next: "loading" },
+      { t: "3 bedrooms", s: "Our most common move", i: "bed3", save: { size: "3 bedrooms" }, next: "loading" },
+      { t: "2 bedrooms", s: "Quick and simple. We keep it that way", i: "bed2", save: { size: "2 bedrooms" }, next: "loading" },
+      { t: "1 bedroom or a few items", s: "No job too small", i: "box", save: { size: "1 bedroom or a few items" }, next: "loading" },
     ],
   },
   "size-apartment": {
@@ -113,10 +110,10 @@ const FLOW = {
     label: "Move size",
     title: <>How many bedrooms in your <Hl>apartment?</Hl></>,
     cards: [
-      { t: "1 bedroom or studio", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom or studio" }, next: "when" },
-      { t: "2 bedrooms", s: "Our most common apartment move", i: "bed2", save: { size: "2 bedrooms" }, next: "when" },
-      { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: "when" },
-      { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: "when" },
+      { t: "1 bedroom or studio", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom or studio" }, next: "loading" },
+      { t: "2 bedrooms", s: "Our most common apartment move", i: "bed2", save: { size: "2 bedrooms" }, next: "loading" },
+      { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: "loading" },
+      { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: "loading" },
     ],
   },
   "size-condo": {
@@ -124,10 +121,10 @@ const FLOW = {
     label: "Move size",
     title: <>How many bedrooms in your <Hl>condo?</Hl></>,
     cards: [
-      { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: "when" },
-      { t: "2 bedrooms", s: "Our most common condo move", i: "bed2", save: { size: "2 bedrooms" }, next: "when" },
-      { t: "1 bedroom", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom" }, next: "when" },
-      { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: "when" },
+      { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: "loading" },
+      { t: "2 bedrooms", s: "Our most common condo move", i: "bed2", save: { size: "2 bedrooms" }, next: "loading" },
+      { t: "1 bedroom", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom" }, next: "loading" },
+      { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: "loading" },
     ],
   },
   "size-other": {
@@ -135,23 +132,13 @@ const FLOW = {
     label: "Move size",
     title: "What type of move?",
     cards: [
-      { t: "Office", s: "We keep your business moving", i: "office", save: { homeType: "Office", size: "" }, next: "when" },
-      { t: "A few items", s: "No job too small", i: "box", save: { homeType: "A few items", size: "A few items" }, next: "when" },
+      { t: "Office", s: "We keep your business moving", i: "office", save: { homeType: "Office", size: "" }, next: "loading" },
+      { t: "A few items", s: "No job too small", i: "box", save: { homeType: "A few items", size: "A few items" }, next: "loading" },
     ],
   },
-  zip1: { p: 56, label: "Location", kind: "zip", two: false },
-  zip2: { p: 28, label: "Locations", kind: "zip", two: true },
-  when: {
-    p: 68,
-    label: "Timing",
-    title: "Tell us about your move date",
-    cards: [
-      { t: "I have an exact date", s: "Pick it on the next screen", i: "exact", save: { dateType: "Exact" }, next: "date" },
-      { t: "I have some flexibility", s: "Gives you the most options", i: "flex", save: { dateType: "Flexible" }, next: "date" },
-      { t: "Not sure yet", s: "You can still get a free estimate", i: "unsure", save: { dateType: "Not sure", moveDate: "" }, next: "loading" },
-    ],
-  },
-  date: { p: 76, label: "Move Date", kind: "date" },
+  towns: { p: 48, label: "Locations", kind: "towns" },
+  date: { p: 24, label: "Move date", kind: "date" },
+  timeframe: { p: 24, label: "Timing", kind: "timeframe" },
   loading: { p: 82, label: "Almost ready", kind: "loading" },
   name: { p: 88, label: "Almost done", kind: "name" },
   phone: { p: 95, label: "Final step", kind: "phone" },
@@ -159,12 +146,11 @@ const FLOW = {
 };
 
 const EMPTY = {
-  moveType: "",
   homeType: "",
   size: "",
-  fromZip: "",
-  toZip: "",
-  dateType: "",
+  fromTown: "",
+  toTown: "",
+  dateType: "", timeframe: "",
   moveDate: "",
   firstName: "",
   phone: "",
@@ -216,7 +202,7 @@ function track(name, params) {
 }
 
 export default function EstimateForm({ dark = false, twoStep = false, design = null }) {
-  const [current, setCurrent] = useState("move");
+  const [current, setCurrent] = useState("when");
   const [hist, setHist] = useState([]);
   const [data, setData] = useState(EMPTY);
   const [picked, setPicked] = useState(null);
@@ -237,7 +223,7 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
   const seenSteps = useRef(new Set());
   const hasInteracted = useRef(false);
   const pickTimer = useRef(null);
-  const currentRef = useRef("move");
+  const currentRef = useRef("when");
 
   const save = (patch) => setData((d) => ({ ...d, ...patch }));
 
@@ -251,7 +237,7 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
 
   // Warm the small truck illustration once user interacts so loading step is instant.
   useEffect(() => {
-    if (current === "type" || current === "zip1") {
+    if (current === "type") {
       const im = new window.Image();
       im.src = TRUCK_IMG.src;
     }
@@ -297,8 +283,8 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
     setErr("");
     setCalMonth(null);
     setFollowUp(null);
-    currentRef.current = "move";
-    setCurrent("move");
+    currentRef.current = "when";
+    setCurrent("when");
   };
 
   // Funnel tracking (only after the visitor actually starts tapping) + gentle focus management.
@@ -318,7 +304,7 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
       });
     }
     keepCardInView();
-    if (current === "zip1" || current === "zip2" || current === "name" || current === "phone") {
+    if (current === "towns" || current === "timeframe" || current === "name" || current === "phone") {
       if (inputRef.current) {
         try { inputRef.current.focus({ preventScroll: true }); } catch { inputRef.current.focus(); }
       }
@@ -339,12 +325,12 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
   const pickCard = (card, n) => {
     if (picked !== null) return;
     // Record the initial step start once the visitor taps an option.
-    if (current === "move" && !seenSteps.current.has("move")) {
-      seenSteps.current.add("move");
+    if (current === "when" && !seenSteps.current.has("when")) {
+      seenSteps.current.add("when");
       const pathname = typeof window !== "undefined" ? window.location.pathname : "/";
       track("step_view", {
-        step_name: "move",
-        step_progress: FLOW.move.p,
+        step_name: "when",
+        step_progress: FLOW.when.p,
         form_location: pathname,
         form_style: "inline_step",
         ge_variant: geVariantForLead(document.cookie),
@@ -354,15 +340,6 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
     save(card.save);
     setPicked(n);
     pickTimer.current = setTimeout(() => go(card.next), 150);
-  };
-
-  const advanceZip = (two) => {
-    const ok = validMoveZips(data.fromZip, two ? data.toZip : "");
-    if (!ok) {
-      setErr("Enter a 5 digit zip code.");
-      return;
-    }
-    go(two ? "type" : "when");
   };
 
   const advanceName = () => {
@@ -393,10 +370,9 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
       const boxOffer = boxOfferSeen() ? "shown" : "not_shown";
       const noteParts = [
         "INLINE STEP FORM",
-        data.moveType,
         data.homeType,
         sizeAnswer && `Size: ${sizeAnswer}`,
-        data.dateType,
+        data.timeframe || data.dateType,
         `Text OK: ${data.textOk ? "yes" : "no"}`,
       ];
       if (boxOffer === "shown") noteParts.push(BOX_OFFER_NOTE);
@@ -409,8 +385,8 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
       };
       if (data.moveDate) smPayload.MoveDate = data.moveDate.replace(/-/g, "");
       if (smSize) smPayload.MoveSize = smSize;
-      if (data.fromZip) smPayload.OriginAddressFull = data.fromZip;
-      if (data.toZip) smPayload.DestinationAddressFull = data.toZip;
+      if (data.fromTown) smPayload.OriginAddressFull = data.fromTown;
+      if (data.toTown) smPayload.DestinationAddressFull = data.toTown;
       Object.assign(smPayload, getSmartMovingAttribution());
 
       const attribution = getAttribution();
@@ -430,13 +406,14 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
           formspree: {
             name: data.firstName,
             phone: data.phone,
-            moveType: data.moveType,
+            moveType: "Moving estimate",
             homeType: data.homeType,
             moveSize: sizeAnswer,
-            moveDate: data.moveDate || data.dateType,
+            moveDate: data.moveDate || data.timeframe || data.dateType,
             dateType: data.dateType,
-            moveFrom: data.fromZip,
-            moveTo: data.toZip,
+            timeframe: data.timeframe,
+            moveFrom: data.fromTown,
+            moveTo: data.toTown,
             textOk: data.textOk ? "yes" : "no",
             form_style: "inline_step",
             page_path: pathname,
@@ -540,58 +517,27 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
         </div>
       </div>
     );
-  } else if (step.kind === "zip") {
-    const two = step.two;
-    const title = two
-      ? "Where are you moving from and to?"
-      : "Where do you need our crew?";
-    const ok = validMoveZips(data.fromZip, two ? data.toZip : "");
-    const onZip = (field) => (e) => {
-      save({ [field]: e.target.value.replace(/\D/g, "").slice(0, 5) });
-      setErr("");
-    };
-    const onZipKey = (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        advanceZip(two);
-      }
-    };
+  } else if (step.kind === "towns") {
     body = (
       <div className="isf-body">
-        {qHeading(title)}
+        {qHeading("What town are you moving from?")}
+        <EstimateTownFields prefix="isf" data={data} save={save} inputRef={inputRef}
+          onContinue={() => go(sizeStepFor(data.homeType))} />
+      </div>
+    );
+  } else if (step.kind === "timeframe") {
+    body = (
+      <div className="isf-body">
+        {qHeading("About when are you thinking?")}
         <div className="isf-fields">
           <div className="isf-field">
-            <label htmlFor="isf-fromZip">{two ? "Pickup ZIP code" : "Job location ZIP code"}</label>
-            <input
-              ref={inputRef}
-              id="isf-fromZip"
-              inputMode="numeric"
-              autoComplete="postal-code"
-              maxLength={5}
-              placeholder="06082"
-              value={data.fromZip}
-              onChange={onZip("fromZip")}
-              onKeyDown={onZipKey}
-            />
+            <label htmlFor="isf-timeframe">Rough timeframe</label>
+            <input id="isf-timeframe" ref={inputRef} value={data.timeframe} maxLength={80}
+              placeholder="Next month, late spring, after closing..."
+              onChange={e => save({ timeframe: e.target.value })}
+              onKeyDown={e => { if (e.key === "Enter" && data.timeframe.trim()) go("type"); }} />
           </div>
-          {two && (
-            <div className="isf-field">
-              <label htmlFor="isf-toZip">Destination ZIP code (if known)</label>
-              <input
-                id="isf-toZip"
-                inputMode="numeric"
-                maxLength={5}
-                placeholder="01106"
-                value={data.toZip}
-                onChange={onZip("toZip")}
-                onKeyDown={onZipKey}
-              />
-            </div>
-          )}
-          {err && <p className="isf-err" role="alert">{err}</p>}
-          <button type="button" className="isf-cta" disabled={!ok} onClick={() => advanceZip(two)}>
-            Continue
-          </button>
+          <button className="isf-cta" type="button" disabled={!data.timeframe.trim()} onClick={() => go("type")}>Continue</button>
         </div>
       </div>
     );
@@ -621,7 +567,7 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
           aria-label={`${MONTHS[m]} ${d}`}
           onClick={() => {
             save({ moveDate: `${y}-${pad(m + 1)}-${pad(d)}` });
-            go("loading");
+            go("type");
           }}
         >
           {d}
@@ -630,7 +576,7 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
     }
     body = (
       <div className="isf-body">
-        {qHeading(data.dateType === "Flexible" ? "About when are you moving?" : "Pick your move date")}
+        {qHeading("Pick your move date")}
         <p className="isf-sub">You can change it later.</p>
         <div className="isf-cal">
           <div className="isf-calhead">
@@ -746,16 +692,15 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
       .filter((x) => x && x !== "Other")
       .filter((x, i, a) => a.indexOf(x) === i)
       .join(", ");
-    let dateLabel = data.dateType === "Not sure" ? "Not sure yet" : "";
+    let dateLabel = data.timeframe || (data.dateType === "Not sure" ? "Just planning" : "");
     if (data.moveDate) {
       const [yy, mm, dd] = data.moveDate.split("-").map(Number);
       dateLabel = `${MONTHS[mm - 1].slice(0, 3)} ${dd}, ${yy}`;
     }
     const rows = [
-      ["Move", data.moveType],
       ["Moving", moving],
-      [data.moveType === "Labor only" ? "Job ZIP" : "From", data.fromZip],
-      ["To", data.toZip],
+      ["From", data.fromTown],
+      ["To", data.toTown],
       ["Date", dateLabel],
       ["Call", data.phone],
     ].filter(([, v]) => v);
@@ -808,7 +753,7 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
           <span className="isf-eyebrow">Free Moving Estimate</span>
         )}
         <span className="isf-meta">
-          {current === "move" ? (
+          {current === "when" ? (
             <>
               <span className={`isf-dot${replyWindow === "now" ? " live" : ""}`} aria-hidden="true" />
               {RESPONSE_LINE[replyWindow || "now"]}
@@ -822,7 +767,7 @@ export default function EstimateForm({ dark = false, twoStep = false, design = n
         <div style={{ width: `${pct}%` }} />
       </div>
       {body}
-      {current === "move" && (
+      {current === "when" && (
         <p className="isf-foot-note">{CALLBACK_NOTE}</p>
       )}
     </div>

@@ -380,12 +380,12 @@ export async function POST(request) {
     return Response.json({ ok: false, error: fieldError }, { status: 400 });
   }
 
-  // Both step forms send the requested service. Enrich only new truck leads,
-  // keeping the complete ZIP index off visitors' devices.
-  if (body.form === "estimate" && body.formspree?.moveType === "Truck and crew") {
-    const fs = body.formspree;
-    const route = describeEstimateRoute(fs.moveFrom, fs.moveTo);
-    fs.requestedService = fs.moveType;
+  // Older preview clients explicitly selected a truck. The timing-first form
+  // supplies only locations, so sales receives no assumed service selection.
+  const fs = body.formspree;
+  if (body.form === "estimate" && ["Truck and crew", "Moving estimate"].includes(fs?.moveType)) {
+    const route = describeEstimateRoute(fs.moveFrom, fs.moveTo, fs.moveType);
+    if (fs.moveType === "Truck and crew") fs.requestedService = fs.moveType;
     fs.moveType = route.moveType;
     fs.moveRoute = route.description;
     if (body.smartmoving) {

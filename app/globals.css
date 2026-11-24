@@ -1380,6 +1380,12 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   .isf-opt svg { width: 24px; height: 24px; }
   .isf-foot-note { margin-top: 10px; }
 }
+@media (max-width: 768px) {
+  .isf-card[data-step="when"] .isf-opt {
+    min-height: 50px; flex-direction: row; align-items: center; justify-content: space-between;
+  }
+  .isf-card[data-step="when"] .isf-opt-s { display: none; }
+}
 @media (max-width: 360px) {
   .isf-opt-t { font-size: 13.5px; }
   .isf-opt { min-height: 92px; }

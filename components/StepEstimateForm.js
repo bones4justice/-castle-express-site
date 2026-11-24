@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
-import { HELP_OPTIONS, HELP_QUESTION, CALLBACK_NOTE, validMoveZips } from "@/lib/estimateHelp";
-import { Truck } from "@/components/Icons";
+import { TIMING_OPTIONS, TIMING_QUESTION, CALLBACK_NOTE, sizeStepFor } from "@/lib/estimateHelp";
+import EstimateTownFields from "@/components/EstimateTownFields";
 import { COMPANY } from "@/content";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import { readVariantCookie } from "@/lib/lpAbTest";
@@ -37,7 +37,6 @@ const TRUCK_IMG = { src: "/images/ge-loader-truck.webp", width: 600, height: 261
 
 /* ---------- icons (inner SVG markup from the prototype, static strings) ---------- */
 const ICON = {
-  lift: '<rect x="6" y="14" width="13" height="12" rx="1.5"/><path d="M6 19h13M12.500 14v5M24 26V7M20 11l4-4 4 4"/>',
   house: '<path d="M4 15L16 5l12 10M7 13v14h18V13M13 27v-8h6v8"/>',
   apt: '<rect x="7" y="4" width="18" height="24" rx="1.5"/><path d="M12 9h2M18 9h2M12 14h2M18 14h2M12 19h2M18 19h2M14 28v-4h4v4"/>',
   condo: '<path d="M3 27V13l6.500-5 6.500 5v14M16 27V13l6.500-5 6.500 5v14M3 27h26M8 27v-6h3v6M21 27v-6h3v6"/>',
@@ -53,7 +52,6 @@ const ICON = {
 };
 
 function Icon({ name }) {
-  if (name === "truck") return <Truck aria-hidden="true" />;
   return (
     <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
       aria-hidden="true" dangerouslySetInnerHTML={{ __html: ICON[name] }} />
@@ -72,43 +70,38 @@ const Hl = ({ children }) => <span className="ge-hl">{children}</span>;
 
 /* ---------- the question tree ---------- */
 const FLOW = {
-  move: { p: 10, title: HELP_QUESTION, cards: HELP_OPTIONS },
-  type: { p: 30, title: "What are we moving?", cards: [
-    { t: "House", s: "Family owned and moving homes since 2011", i: "house", save: { homeType: "House" }, next: "size-house" },
-    { t: "Apartment", s: "Stairs and elevators are no problem", i: "apt", save: { homeType: "Apartment" }, next: "size-apartment" },
-    { t: "Condo or townhouse", s: "We work with your building's rules", i: "condo", save: { homeType: "Condo or townhouse" }, next: "size-condo" },
-    { t: "A few items or an office", s: "Something else? We handle it", i: "box", save: { homeType: "Other" }, next: "size-other" },
+  when: { p: 10, title: TIMING_QUESTION, cards: TIMING_OPTIONS },
+  type: { p: 30, title: "What are you moving out of?", cards: [
+    { t: "House", s: "Family owned and moving homes since 2011", i: "house", save: { homeType: "House", size: "" }, next: "towns" },
+    { t: "Apartment", s: "Stairs and elevators are no problem", i: "apt", save: { homeType: "Apartment", size: "" }, next: "towns" },
+    { t: "Condo or townhouse", s: "We work with your building's rules", i: "condo", save: { homeType: "Condo or townhouse", size: "" }, next: "towns" },
+    { t: "A few items or an office", s: "Something else? We handle it", i: "box", save: { homeType: "Other", size: "" }, next: "towns" },
   ] },
   "size-house": { p: 40, title: <>How many bedrooms in your <Hl>house?</Hl></>, cards: [
-    { t: "4+ bedrooms", s: "Experienced crews for big homes", i: "bed4", save: { size: "4+ bedrooms" }, next: "when" },
-    { t: "3 bedrooms", s: "Our most common move", i: "bed3", save: { size: "3 bedrooms" }, next: "when" },
-    { t: "2 bedrooms", s: "Quick and simple. We keep it that way", i: "bed2", save: { size: "2 bedrooms" }, next: "when" },
-    { t: "1 bedroom or a few items", s: "No job too small", i: "box", save: { size: "1 bedroom or a few items" }, next: "when" },
+    { t: "4+ bedrooms", s: "Experienced crews for big homes", i: "bed4", save: { size: "4+ bedrooms" }, next: "loading" },
+    { t: "3 bedrooms", s: "Our most common move", i: "bed3", save: { size: "3 bedrooms" }, next: "loading" },
+    { t: "2 bedrooms", s: "Quick and simple. We keep it that way", i: "bed2", save: { size: "2 bedrooms" }, next: "loading" },
+    { t: "1 bedroom or a few items", s: "No job too small", i: "box", save: { size: "1 bedroom or a few items" }, next: "loading" },
   ] },
   "size-apartment": { p: 40, title: <>How many bedrooms in your <Hl>apartment?</Hl></>, cards: [
-    { t: "1 bedroom or studio", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom or studio" }, next: "when" },
-    { t: "2 bedrooms", s: "Our most common apartment move", i: "bed2", save: { size: "2 bedrooms" }, next: "when" },
-    { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: "when" },
-    { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: "when" },
+    { t: "1 bedroom or studio", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom or studio" }, next: "loading" },
+    { t: "2 bedrooms", s: "Our most common apartment move", i: "bed2", save: { size: "2 bedrooms" }, next: "loading" },
+    { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: "loading" },
+    { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: "loading" },
   ] },
   "size-condo": { p: 40, title: <>How many bedrooms in your <Hl>condo?</Hl></>, cards: [
-    { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: "when" },
-    { t: "2 bedrooms", s: "Our most common condo move", i: "bed2", save: { size: "2 bedrooms" }, next: "when" },
-    { t: "1 bedroom", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom" }, next: "when" },
-    { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: "when" },
+    { t: "3+ bedrooms", s: "Experienced crews for any size", i: "bed3", save: { size: "3+ bedrooms" }, next: "loading" },
+    { t: "2 bedrooms", s: "Our most common condo move", i: "bed2", save: { size: "2 bedrooms" }, next: "loading" },
+    { t: "1 bedroom", s: "Quick and simple. We keep it that way", i: "bed1", save: { size: "1 bedroom" }, next: "loading" },
+    { t: "A few items", s: "No job too small", i: "box", save: { size: "A few items" }, next: "loading" },
   ] },
   "size-other": { p: 40, title: "What type of move?", cards: [
-    { t: "Office", s: "We keep your business moving", i: "office", save: { homeType: "Office", size: "" }, next: "when" },
-    { t: "A few items", s: "No job too small", i: "box", save: { homeType: "A few items", size: "A few items" }, next: "when" },
+    { t: "Office", s: "We keep your business moving", i: "office", save: { homeType: "Office", size: "" }, next: "loading" },
+    { t: "A few items", s: "No job too small", i: "box", save: { homeType: "A few items", size: "A few items" }, next: "loading" },
   ] },
-  zip1: { p: 40, kind: "zip", two: false },
-  zip2: { p: 20, kind: "zip", two: true },
-  when: { p: 50, title: "Tell us about your move date", cards: [
-    { t: "I have an exact date", s: "Pick it on the next screen", i: "exact", save: { dateType: "Exact" }, next: "date" },
-    { t: "I have some flexibility", s: "Gives you the most options", i: "flex", save: { dateType: "Flexible" }, next: "date" },
-    { t: "Not sure yet", s: "You can still get a free estimate", i: "unsure", save: { dateType: "Not sure", moveDate: "" }, next: "loading" },
-  ] },
-  date: { p: 60, kind: "date" },
+  towns: { p: 35, kind: "towns" },
+  date: { p: 20, kind: "date" },
+  timeframe: { p: 20, kind: "timeframe" },
   loading: { p: 70, kind: "loading" },
   name: { p: 80, kind: "name" },
   phone: { p: 90, kind: "phone" },
@@ -137,8 +130,8 @@ export const SM_MOVE_SIZE = {
 };
 
 const EMPTY = {
-  moveType: "", homeType: "", size: "", fromZip: "", toZip: "",
-  dateType: "", moveDate: "", firstName: "", phone: "", textOk: false,
+  homeType: "", size: "", fromTown: "", toTown: "",
+  dateType: "", timeframe: "", moveDate: "", firstName: "", phone: "", textOk: false,
 };
 
 const MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -277,7 +270,7 @@ export default function StepEstimateForm() {
       // Office leads have no size answer; their size comes from homeType.
       const sizeAnswer = data.size || (data.homeType === "Office" ? "Office" : "");
       const smSize = SM_MOVE_SIZE[sizeAnswer] || "";
-      const notes = ["STEP FORM", data.moveType, data.homeType, sizeAnswer && `Size: ${sizeAnswer}`, data.dateType, `Text OK: ${data.textOk ? "yes" : "no"}`]
+      const notes = ["STEP FORM", data.homeType, sizeAnswer && `Size: ${sizeAnswer}`, data.timeframe || data.dateType, `Text OK: ${data.textOk ? "yes" : "no"}`]
         .filter(Boolean).join(" | ");
 
       const smPayload = {
@@ -289,8 +282,8 @@ export default function StepEstimateForm() {
       };
       if (data.moveDate) smPayload.MoveDate = data.moveDate.replace(/-/g, "");
       if (smSize) smPayload.MoveSize = smSize;
-      if (data.fromZip) smPayload.OriginAddressFull = data.fromZip;
-      if (data.toZip) smPayload.DestinationAddressFull = data.toZip;
+      if (data.fromTown) smPayload.OriginAddressFull = data.fromTown;
+      if (data.toTown) smPayload.DestinationAddressFull = data.toTown;
       Object.assign(smPayload, getSmartMovingAttribution());
 
       const attribution = getAttribution();
@@ -311,15 +304,16 @@ export default function StepEstimateForm() {
             // ingest (fetch_website_leads.py) keep reading them.
             name: data.firstName,
             phone: data.phone,
-            moveFrom: data.fromZip,
-            moveTo: data.toZip,
+            moveFrom: data.fromTown,
+            moveTo: data.toTown,
             moveSize: data.size,
             moveDate: data.moveDate,
             ...attribution,
             landing: LANDING,
-            moveType: data.moveType,
+            moveType: "Moving estimate",
             homeType: data.homeType,
             dateType: data.dateType,
+            timeframe: data.timeframe,
             textOk: data.textOk ? "yes" : "no",
             lp_variant: lpVariant,
             ge_variant: geVariant,
@@ -378,7 +372,7 @@ export default function StepEstimateForm() {
         <p className="ge-eyebrow">Enfield, CT &middot; Family owned since 2011</p>
         <h1>Let our family move <Hl>yours.</Hl></h1>
         <p className="ge-sub">Answer a few quick questions. {CALLBACK_NOTE}</p>
-        <button className="ge-cta" type="button" onClick={() => go("move")}>Get my free estimate</button>
+        <button className="ge-cta" type="button" onClick={() => go("when")}>Get my free estimate</button>
         <ul className="ge-proof">
           <li><Tick /><span>Local and long distance moves across Connecticut and Massachusetts</span></li>
           <li><Tick /><span>Experienced crews and our own trucks</span></li>
@@ -393,8 +387,8 @@ export default function StepEstimateForm() {
     screen = (
       <>
         {h2(<>{step.title}</>)}
-        {current === "move" && <p className="ge-sub">{CALLBACK_NOTE}</p>}
-        <div className="ge-cards">
+        {current === "when" && <p className="ge-sub">{CALLBACK_NOTE}</p>}
+        <div className={current === "when" ? "ge-cards ge-timing" : "ge-cards"}>
           {step.cards.map((c, n) => (
             <button key={c.t} type="button" aria-label={`${c.t}. ${c.s}`} className={`ge-card${picked === n ? " picked" : ""}`} onClick={() => pickCard(c, n)}>
               <span className="t">{c.t}</span>
@@ -404,32 +398,28 @@ export default function StepEstimateForm() {
         </div>
       </>
     );
-  } else if (step.kind === "zip") {
-    const two = step.two;
-    const title = two ? "Where are you moving from and to?" : "Where do you need our crew?";
-    const ok = validMoveZips(data.fromZip, two ? data.toZip : "");
-    const onZip = (field) => (e) => { save({ [field]: e.target.value.replace(/\D/g, "").slice(0, 5) }); setErr(""); };
+  } else if (step.kind === "towns") {
     screen = (
       <>
-        {h2(<>{title}</>)}
-        <form className="ge-fields" noValidate onSubmit={(e) => {
-          e.preventDefault();
-          if (!ok) { setErr("Enter a 5 digit zip code."); return; }
-          go(two ? "type" : "when");
-        }}>
+        {h2("What town are you moving from?")}
+        <EstimateTownFields prefix="ge" data={data} save={save}
+          onContinue={() => go(sizeStepFor(data.homeType))} />
+      </>
+    );
+  } else if (step.kind === "timeframe") {
+    screen = (
+      <>
+        {h2("About when are you thinking?")}
+        <div className="ge-fields">
           <div className="ge-field">
-            <label htmlFor="ge-fromZip">{two ? "Pickup ZIP code" : "Job location ZIP code"}</label>
-            <input id="ge-fromZip" inputMode="numeric" autoComplete="postal-code" maxLength={5} placeholder="06082" value={data.fromZip} onChange={onZip("fromZip")} />
+            <label htmlFor="ge-timeframe">Rough timeframe</label>
+            <input id="ge-timeframe" value={data.timeframe} maxLength={80}
+              placeholder="Next month, late spring, after closing..."
+              onChange={e => save({ timeframe: e.target.value })}
+              onKeyDown={e => { if (e.key === "Enter" && data.timeframe.trim()) go("type"); }} />
           </div>
-          {two && (
-            <div className="ge-field">
-              <label htmlFor="ge-toZip">Destination ZIP code (if known)</label>
-              <input id="ge-toZip" inputMode="numeric" maxLength={5} placeholder="01106" value={data.toZip} onChange={onZip("toZip")} />
-            </div>
-          )}
-          <p className="ge-err" role="alert">{err}</p>
-          <button className="ge-cta" type="submit" disabled={!ok}>Continue</button>
-        </form>
+          <button className="ge-cta" type="button" disabled={!data.timeframe.trim()} onClick={() => go("type")}>Continue</button>
+        </div>
       </>
     );
   } else if (step.kind === "date") {
@@ -448,12 +438,12 @@ export default function StepEstimateForm() {
       const isToday = dt.getTime() === today.getTime();
       cells.push(
         <button key={d} type="button" disabled={disabled} className={isToday ? "today" : undefined} aria-label={`${MONTHS[m]} ${d}`}
-          onClick={() => { save({ moveDate: `${y}-${pad(m + 1)}-${pad(d)}` }); go("loading"); }}>{d}</button>
+          onClick={() => { save({ moveDate: `${y}-${pad(m + 1)}-${pad(d)}` }); go("type"); }}>{d}</button>
       );
     }
     screen = (
       <>
-        {h2(<>{data.dateType === "Flexible" ? "About when are you moving?" : "Pick your move date"}</>)}
+        {h2(<>{"Pick your move date"}</>)}
         <p className="ge-sub">You can change it later.</p>
         <div className="ge-cal">
           <div className="ge-calhead">
@@ -529,12 +519,12 @@ export default function StepEstimateForm() {
     screenClass += " ge-center";
     const open = !followUp || followUp.open;
     const moving = [data.homeType, data.size].filter((x) => x && x !== "Other").filter((x, i, a) => a.indexOf(x) === i).join(", ");
-    let dateLabel = data.dateType === "Not sure" ? "Not sure yet" : "";
+    let dateLabel = data.timeframe || (data.dateType === "Not sure" ? "Just planning" : "");
     if (data.moveDate) {
       const [yy, mm, dd] = data.moveDate.split("-").map(Number);
       dateLabel = `${MONTHS[mm - 1].slice(0, 3)} ${dd}, ${yy}`;
     }
-    const rows = [["Move", data.moveType], ["Moving", moving], [data.moveType === "Labor only" ? "Job ZIP" : "From", data.fromZip], ["To", data.toZip], ["Date", dateLabel], ["Call", data.phone]]
+    const rows = [["Moving", moving], ["From", data.fromTown], ["To", data.toTown], ["Date", dateLabel], ["Call", data.phone]]
       .filter(([, v]) => v);
     screen = (
       <>
@@ -610,6 +600,9 @@ const CSS = `
 .ge-street{width:100%;height:auto;display:block;margin-top:auto}
 .ge-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ge-card{appearance:none;border:1.5px solid var(--mist);background:#f7f7f8;border-radius:var(--radius);padding:14px 12px 12px;min-height:138px;text-align:left;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;gap:12px;transition:border-color .12s,background .12s,transform .12s}
+.ge-timing{grid-template-columns:1fr}
+.ge-timing .ge-card{min-height:54px;flex-direction:row;align-items:center}
+.ge-timing .s{display:none}
 .ge-card:hover{border-color:var(--steel)}
 .ge-card:active{transform:scale(.985)}
 .ge-card.picked{border-color:var(--ink);background:var(--gold)}
