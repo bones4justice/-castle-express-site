@@ -101,15 +101,15 @@ export default function HomePage() {
                 the wide yard shot, cropped by CSS to a band framed on the
                 truck. Plain <picture> so each screen downloads one WebP. */}
             <picture className="hv2-media">
-              <source media="(max-width: 768px)" srcSet="/images/hero-real-tight-640.webp 640w, /images/hero-real-tight-956.webp 956w" sizes="calc(100vw - 32px)" width={956} height={600} />
+              <source media="(max-width: 768px)" srcSet="/images/hero-drive-tight-640.webp 640w, /images/hero-drive-tight-956.webp 956w" sizes="calc(100vw - 32px)" width={956} height={600} />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/hero-real-wide-1346.webp"
-                srcSet="/images/hero-real-wide-800.webp 800w, /images/hero-real-wide-1346.webp 1346w"
+                src="/images/hero-drive-wide-1346.webp"
+                srcSet="/images/hero-drive-wide-800.webp 800w, /images/hero-drive-wide-1346.webp 1346w"
                 sizes="(min-width: 1240px) calc(50vw + 180px), (min-width: 1200px) calc(100vw - 444px), (min-width: 1024px) calc(120vw - 586px), (min-width: 769px) 720px, 100vw"
                 width={1346}
                 height={757}
-                alt="Castle Express Moving box truck parked in the driveway of a customer's home on a sunny morning"
+                alt="Castle Express Moving truck parked in the driveway of a customer&apos;s home under a bright morning sky"
                 fetchPriority="high"
                 decoding="async"
               />
