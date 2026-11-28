@@ -295,6 +295,13 @@ function spamReason(body) {
   const sm = body.smartmoving || {};
   const fs = body.formspree || {};
   if (body.hp) return "honeypot filled";
+  if (body.form === "estimate") {
+    // Tabs opened before this release send their elapsed time instead.
+    const age = body.renderedAt === undefined ? body.elapsedMs : Date.now() - body.renderedAt;
+    if (body.renderedAt !== undefined && (!Number.isSafeInteger(body.renderedAt) || body.renderedAt <= 0))
+      return "invalid estimate render time";
+    if (!Number.isFinite(age) || age < 4000) return "missing or recent estimate render time";
+  }
   if (typeof body.elapsedMs === "number" && body.elapsedMs < 3000)
     return `filled too fast (${body.elapsedMs}ms)`;
   if (isGibberishName(sm.FullName)) return `gibberish name: ${sm.FullName}`;

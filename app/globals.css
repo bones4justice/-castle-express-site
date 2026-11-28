@@ -2068,3 +2068,8 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   body:has(.castle-home) .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; margin-bottom: 28px; }
   body:has(.castle-home) .footer-grid > :first-child { grid-column: 1 / -1; }
 }
+
+.isf-town-suggestions { display: flex; flex-wrap: wrap; gap: 4px; }
+.isf-town-suggestions button { min-height: 44px; padding: 4px 10px; font: inherit; color: inherit; background: white; border: 1px solid #ccc; border-radius: 6px; }
+.isf-spinner { display: inline-block; width: 1em; height: 1em; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: isf-spin .8s linear infinite; }
+@keyframes isf-spin { to { transform: rotate(360deg); } }
