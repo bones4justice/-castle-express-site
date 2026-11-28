@@ -300,7 +300,7 @@ function spamReason(body) {
     const age = body.renderedAt === undefined ? body.elapsedMs : Date.now() - body.renderedAt;
     if (body.renderedAt !== undefined && (!Number.isSafeInteger(body.renderedAt) || body.renderedAt <= 0))
       return "invalid estimate render time";
-    if (!Number.isFinite(age) || age < 4000) return "missing or recent estimate render time";
+    if (!Number.isFinite(age) || age < 8000) return "missing or recent estimate render time";
   }
   if (typeof body.elapsedMs === "number" && body.elapsedMs < 3000)
     return `filled too fast (${body.elapsedMs}ms)`;

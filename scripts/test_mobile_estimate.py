@@ -11,6 +11,20 @@ from playwright.sync_api import expect, sync_playwright
 
 
 class MobileEstimateTest(unittest.TestCase):
+    def test_estimate_minimum_time(self):
+        base = os.getenv("ESTIMATE_TEST_URL", "http://127.0.0.1:3000")
+        with sync_playwright() as pw:
+            api = pw.request.new_context(base_url=base)
+            # An incomplete phone stops the request before any provider writes.
+            body = {"form": "estimate", "smartmoving": {"FullName": "Taylor Morgan", "PhoneNumber": "123"}}
+            fast = api.post("/api/lead/", data={**body, "elapsedMs": 7999})
+            self.assertEqual(fast.status, 200)
+            self.assertEqual(fast.json(), {"ok": True, "s": 1})
+            eligible = api.post("/api/lead/", data={**body, "elapsedMs": 8000})
+            self.assertEqual(eligible.status, 400)
+            self.assertIn("phone", eligible.json()["error"])
+            api.dispose()
+
     def test_five_steps(self):
         base = os.getenv("ESTIMATE_TEST_URL", "http://127.0.0.1:3000")
         tags = dict(utm_source="google", utm_medium="cpc", utm_campaign="mobile-test",
@@ -36,6 +50,12 @@ class MobileEstimateTest(unittest.TestCase):
 
                     page.route("**/*", route_request)
                     page.goto(base + path + "?" + urlencode(tags) + "&ge_ab=form")
+                    if path == "/":
+                        badge = page.get_by_role("link", name="Read our Google reviews", exact=True)
+                        expect(badge).to_have_attribute("href", "/reviews/")
+                        badge.tap()
+                        expect(page).to_have_url(base + "/reviews/")
+                        page.go_back()
                     for text in ["Local", "House", "2 BR"]:
                         page.get_by_role("button", name=text, exact=True).tap()
                     origin = page.get_by_label("Moving from", exact=True)
