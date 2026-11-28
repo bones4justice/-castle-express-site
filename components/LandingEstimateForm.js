@@ -93,7 +93,7 @@ export default function LandingEstimateForm({ idPrefix = "le", version = "", eve
         body: JSON.stringify({
           form: "estimate",
           hp: honeypot,
-          elapsedMs: Date.now() - openedAt.current,
+          renderedAt: openedAt.current,
           // landing names the page the lead came from: the printed brochure QR
           // page reuses this form, so tag it apart from the /free-estimate ads page.
           formspree: { ...formData, ...attribution, landing: version === "brochure" ? "brochure" : "free-estimate", version, lp_variant: lpVariant },

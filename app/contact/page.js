@@ -19,7 +19,7 @@ export default function ContactPage() {
         compact
         eyebrow="Get In Touch"
         title="Request Your Free Estimate"
-        actions={<a href={COMPANY.phoneLink} className="ip-btn ip-btn-outline ip-contact-call"><Phone size={18} /> {COMPANY.phone}</a>}
+        actions={<a href="tel:+18885534503" className="ip-btn ip-btn-outline ip-contact-call"><Phone size={18} /> {COMPANY.phone}</a>}
       >
         <p>
           Fill out the form below or call us directly. We typically respond within 20 minutes. Based in <Link href="/movers-enfield-ct/">Enfield, CT</Link>, we serve <Link href="/movers-hartford-ct/">Hartford</Link>, <Link href="/movers-springfield-ma/">Springfield</Link>, and <Link href="/service-areas/">{CITY_DATA.length} towns across CT &amp; MA</Link>.
@@ -35,9 +35,9 @@ export default function ContactPage() {
             <div className="card" style={{ marginBottom: 20 }}>
               <h2 style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18, color: "#1A1A2E", marginBottom: 16 }}>Contact Information</h2>
               {[
-                { icon: <Phone size={18} />, label: "Phone", value: COMPANY.phone, href: COMPANY.phoneLink, bold: true },
+                { icon: <Phone size={18} />, label: "Phone", value: COMPANY.phone, href: "tel:+18885534503", bold: true },
                 { icon: <MapPin size={18} />, label: "Address", value: COMPANY.fullAddress, href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(COMPANY.fullAddress)}` },
-                { icon: <Clock size={18} />, label: "Availability", value: COMPANY.hours },
+                { icon: <Clock size={18} />, label: "Availability", value: COMPANY.hours, href: "tel:+18885534503" },
               ].map((item, i) => (
                 <div key={i} style={{ display: "flex", gap: 12, marginBottom: 16, alignItems: "flex-start" }}>
                   <div className="icon-badge icon-badge-sm">{item.icon}</div>

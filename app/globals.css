@@ -471,6 +471,10 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
 .hero-v2 a:focus-visible, .hero-v2 button:focus-visible { outline: 3px solid var(--hv2-ink); outline-offset: 2px; }
 .hero-v2 .hero-reviews { margin-top: 16px; }
 .hero-v2 .hv2-reviews { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; }
+@media (hover: hover) {
+  .hero-v2 .hv2-reviews:hover .hv2-reviews-text { text-decoration-thickness: 2px; }
+}
+.hero-v2 .hv2-reviews:active { transform: translateY(1px); opacity: 0.8; }
 .hero-v2 .hv2-stars { display: inline-flex; gap: 2px; }
 .hero-v2 .hv2-reviews-text {
   font-family: var(--font-dm-sans), Arial, sans-serif; font-weight: 700; font-size: 14px;
@@ -2068,3 +2072,8 @@ html:not([data-hero="B"]) .hv-b { display: none !important; }
   body:has(.castle-home) .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; margin-bottom: 28px; }
   body:has(.castle-home) .footer-grid > :first-child { grid-column: 1 / -1; }
 }
+
+.isf-town-suggestions { display: flex; flex-wrap: wrap; gap: 4px; }
+.isf-town-suggestions button { min-height: 44px; padding: 4px 10px; font: inherit; color: inherit; background: white; border: 1px solid #ccc; border-radius: 6px; }
+.isf-spinner { display: inline-block; width: 1em; height: 1em; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: isf-spin .8s linear infinite; }
+@keyframes isf-spin { to { transform: rotate(360deg); } }

@@ -1,4 +1,5 @@
 "use client";
+import EstimateTownInput from "@/components/EstimateTownInput";
 import { useState, useEffect, useRef, useCallback, useId } from "react";
 import Image from "next/image";
 import {
@@ -16,7 +17,7 @@ import {
   nextBusinessLabel,
   ICONS,
 } from "@/lib/estimateHelp";
-import { COMPANY, SERVICE_AREAS } from "@/content";
+import { COMPANY } from "@/content";
 import { getSmartMovingAttribution, getAttribution } from "@/lib/utm";
 import { readVariantCookie } from "@/lib/lpAbTest";
 import { geVariantForLead } from "@/lib/geAbTest";
@@ -35,7 +36,7 @@ const GA4 = "G-97Z4EHJM63";
 const EVENT_LABEL = "get_estimate_step";
 const LANDING = "get-estimate";
 const MAX_DAYS_AHEAD = 540;
-const NEARBY_TOWNS = Object.values(SERVICE_AREAS).flat();
+
 const HERO_IMG = { src: "/images/ge-hero-street.webp", width: 1000, height: 254 };
 
 const EMPTY = {
@@ -96,7 +97,7 @@ export default function StepEstimateForm() {
   const [honeypot, setHoneypot] = useState("");
   const openedAt = useRef(Date.now());
   const headingRef = useRef(null);
-  const inputRef = useRef(null);
+  const [invalidField, setInvalidField] = useState("");
   const seenSteps = useRef(new Set());
   const pickTimer = useRef(null);
   const currentRef = useRef("service");
@@ -107,6 +108,7 @@ export default function StepEstimateForm() {
     const cur = currentRef.current;
     setTouched(true);
     setErr("");
+    setInvalidField("");
     setPicked(null);
     setShowCal(false);
     setDir("fwd");
@@ -120,6 +122,7 @@ export default function StepEstimateForm() {
     if (!hist.length) return;
     clearTimeout(pickTimer.current);
     setErr("");
+    setInvalidField("");
     setPicked(null);
     setShowCal(false);
     setDir("back");
@@ -140,9 +143,7 @@ export default function StepEstimateForm() {
         ge_variant: geVariantForLead(document.cookie),
       });
     }
-    if (current === "locations" && inputRef.current) {
-      try { inputRef.current.focus({ preventScroll: true }); } catch { inputRef.current.focus(); }
-    } else if (current !== "service" && headingRef.current) {
+    if (current !== "service" && headingRef.current) {
       try { headingRef.current.focus({ preventScroll: true }); } catch { headingRef.current.focus(); }
     }
     if (typeof window !== "undefined") window.scrollTo(0, 0);
@@ -175,17 +176,25 @@ export default function StepEstimateForm() {
     go("contact");
   };
 
+  const flagContactField = (field, message) => {
+    setInvalidField(field);
+    setErr(message);
+    const input = document.getElementById(`${uid}-${field}`);
+    input.focus({ preventScroll: true });
+    input.scrollIntoView({ block: "center", behavior: "instant" });
+  };
+
   const submitLead = async (e) => {
     e.preventDefault();
     if (sending || inFlight.current) return;
     const cleanedName = data.fullName.trim();
     if (cleanedName.length < 2) {
-      setErr("Please enter your name.");
+      flagContactField("name", "Please enter your name.");
       return;
     }
     const digits = data.phone.replace(/\D/g, "");
     if (digits.length !== 10) {
-      setErr("Please enter a 10-digit phone number.");
+      flagContactField("phone", "Please enter a 10-digit phone number.");
       return;
     }
     inFlight.current = true;
@@ -244,7 +253,7 @@ export default function StepEstimateForm() {
           form: "estimate",
           landing: LANDING,
           hp: honeypot,
-          elapsedMs: Date.now() - openedAt.current,
+          renderedAt: openedAt.current,
           formspree: {
             name: cleanedName,
             phone: data.phone,
@@ -459,56 +468,37 @@ export default function StepEstimateForm() {
         </h2>
         <p className="isf-sub">A town or ZIP code, either works.</p>
         <div className="isf-fields">
-          <div className="isf-field">
-            <label htmlFor={`${uid}-from`}>{isStorage ? "Picking up from" : "Moving from"}</label>
-            <div className="isf-input-wrap">
-              <span className="isf-input-ico" aria-hidden="true"><Icon name="pin" size={16} /></span>
-              <input
-                id={`${uid}-from`}
-                ref={inputRef}
-                list={`${uid}-towns`}
-                autoComplete="section-origin address-level2"
-                maxLength={100}
-                placeholder="Town or ZIP (e.g. Enfield, CT)"
-                value={data.fromTown}
-                onChange={(e) => { save({ fromTown: e.target.value }); setErr(""); }}
-                onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); advanceLocations(); } }}
-              />
-            </div>
-          </div>
+          <EstimateTownInput
+            id={`${uid}-from`} label={isStorage ? "Picking up from" : "Moving from"}
+            icon={<Icon name="pin" size={16} />} placeholder="Town or ZIP (e.g. Enfield, CT)"
+            value={data.fromTown} onChange={(fromTown) => save({ fromTown })}
+            error={!fromReady && (isStorage ? "Enter your pickup town or ZIP code." : "Enter the town or ZIP code you are moving from.")}
+            onNext={() => {
+              if (!fromReady) return;
+              if (!isStorage && !data.notSureDest) document.getElementById(`${uid}-to`)?.focus();
+              else advanceLocations();
+            }}
+          />
           {!isStorage && (
             <>
-              <div className="isf-field">
-                <label htmlFor={`${uid}-to`}>Moving to</label>
-                <div className="isf-input-wrap">
-                  <span className="isf-input-ico" aria-hidden="true"><Icon name="pin" size={16} /></span>
-                  <input
-                    id={`${uid}-to`}
-                    list={`${uid}-towns`}
-                    autoComplete="section-destination address-level2"
-                    maxLength={100}
-                    placeholder="Town or ZIP (e.g. Longmeadow, MA)"
-                    value={data.notSureDest ? "" : data.toTown}
-                    disabled={data.notSureDest}
-                    onChange={(e) => { save({ toTown: e.target.value }); setErr(""); }}
-                    onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); advanceLocations(); } }}
-                  />
-                </div>
-              </div>
+              <EstimateTownInput
+                id={`${uid}-to`} label="Moving to" icon={<Icon name="pin" size={16} />}
+                placeholder="Town or ZIP (e.g. Longmeadow, MA)" disabled={data.notSureDest}
+                value={data.notSureDest ? "" : data.toTown} onChange={(toTown) => save({ toTown })}
+                error={!toReady && "Enter a valid destination town or ZIP code."}
+                onNext={() => { if (canContinue) advanceLocations(); }}
+              />
               <label className="isf-check" htmlFor={`${uid}-nosure`}>
                 <input
                   type="checkbox"
                   id={`${uid}-nosure`}
                   checked={data.notSureDest}
-                  onChange={(e) => { save({ notSureDest: e.target.checked, toTown: e.target.checked ? "" : data.toTown }); setErr(""); }}
+                  onChange={(e) => { save({ notSureDest: e.target.checked, toTown: e.target.checked ? "" : data.toTown }); setInvalidField(""); setErr(""); }}
                 />
                 <span>I don&apos;t know the destination yet</span>
               </label>
             </>
           )}
-          <datalist id={`${uid}-towns`}>
-            {NEARBY_TOWNS.map((t) => <option key={t} value={t} />)}
-          </datalist>
         </div>
         {err && <p className="isf-err" role="alert">{err}</p>}
       </div>
@@ -533,6 +523,43 @@ export default function StepEstimateForm() {
             ? "When do you need storage, and where should we send your estimate?"
             : "When are you moving, and where should we send your estimate?"}
         </h2>
+        <div className="isf-fields isf-fields-tight">
+          <div className="isf-input-wrap">
+            <span className="isf-input-ico" aria-hidden="true"><Icon name="user" size={16} /></span>
+            <input
+              id={`${uid}-name`}
+              type="text"
+              name="name"
+              aria-invalid={invalidField === "name"}
+              aria-describedby={invalidField === "name" ? `${uid}-contact-error` : undefined}
+              autoComplete="name"
+              autoCapitalize="words"
+              aria-label="Your name"
+              maxLength={60}
+              placeholder="Your name"
+              value={data.fullName}
+              onChange={(e) => { save({ fullName: e.target.value }); setInvalidField(""); setErr(""); }}
+            />
+          </div>
+          {invalidField === "name" && <p id={`${uid}-contact-error`} className="isf-err" role="alert">{err}</p>}
+          <div className="isf-input-wrap">
+            <span className="isf-input-ico" aria-hidden="true"><Icon name="phone" size={16} /></span>
+            <input
+              id={`${uid}-phone`}
+              type="tel"
+              name="phone"
+              aria-invalid={invalidField === "phone"}
+              aria-describedby={invalidField === "phone" ? `${uid}-contact-error` : undefined}
+              inputMode="tel"
+              autoComplete="tel"
+              aria-label="Phone number"
+              placeholder="(860) 555-0123"
+              value={data.phone}
+              onChange={(e) => { save({ phone: fmtPhone(e.target.value) }); setInvalidField(""); setErr(""); }}
+            />
+          </div>
+          {invalidField === "phone" && <p id={`${uid}-contact-error`} className="isf-err" role="alert">{err}</p>}
+        </div>
         <div className="isf-when">
           <div className="isf-chips" role="group" aria-label="Move timing">
             <button
@@ -573,52 +600,22 @@ export default function StepEstimateForm() {
           <label htmlFor={`${uid}-website`}>Website</label>
           <input id={`${uid}-website`} name="website" type="text" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
         </div>
-        <div className="isf-fields isf-fields-tight">
-          <div className="isf-input-wrap">
-            <span className="isf-input-ico" aria-hidden="true"><Icon name="user" size={16} /></span>
-            <input
-              id={`${uid}-name`}
-              type="text"
-              name="name"
-              autoComplete="name"
-              autoCapitalize="words"
-              aria-label="Your name"
-              maxLength={60}
-              placeholder="Your name"
-              value={data.fullName}
-              onChange={(e) => { save({ fullName: e.target.value }); setErr(""); }}
-            />
-          </div>
-          <div className="isf-input-wrap">
-            <span className="isf-input-ico" aria-hidden="true"><Icon name="phone" size={16} /></span>
-            <input
-              id={`${uid}-phone`}
-              type="tel"
-              name="phone"
-              inputMode="tel"
-              autoComplete="tel"
-              aria-label="Phone number"
-              placeholder="(860) 555-0123"
-              value={data.phone}
-              onChange={(e) => { save({ phone: fmtPhone(e.target.value) }); setErr(""); }}
-            />
-          </div>
-          <label className="isf-check" htmlFor={`${uid}-textOk`}>
-            <input
-              type="checkbox"
-              id={`${uid}-textOk`}
-              checked={data.textOk}
-              onChange={(e) => save({ textOk: e.target.checked })}
-            />
-            <span>You can also text me about my estimate (optional)</span>
-          </label>
-        </div>
-        {err && <p className="isf-err" role="alert">{err}</p>}
+        <label className="isf-check" htmlFor={`${uid}-textOk`}>
+          <input
+            type="checkbox"
+            id={`${uid}-textOk`}
+            checked={data.textOk}
+            onChange={(e) => save({ textOk: e.target.checked })}
+          />
+          <span>You can also text me about my estimate (optional)</span>
+        </label>
+        {err && !invalidField && <p className="isf-err" role="alert">{err}</p>}
         <div className="isf-nav isf-nav-inline">
           <button type="button" className="isf-btn-ghost" onClick={back}>
             <Icon name="back" size={15} strokeWidth={2.2} /> Back
           </button>
-          <button type="submit" className="isf-btn-primary isf-btn-submit" disabled={sending}>
+          <button type="submit" className="isf-btn-primary isf-btn-submit" disabled={sending} aria-busy={sending}>
+            {sending && <span className="isf-spinner" aria-hidden="true" />}
             {sending ? "Sending..." : "Get My Free Estimate"}
           </button>
         </div>
